@@ -1,102 +1,147 @@
 package egovframework.com.user.vo;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Length;
 
 public class UserVo {
 
-	@NotNull
-	@Email
-	@Length(min=1)
-	private String email;
-	private String user_seq;
-	@NotNull
-	@Size(min=1, max=20)
+	@NotEmpty
+	@Size(min=1)
+	private String user_id;
+	@NotEmpty
+	private String name;
+	@NotEmpty
+	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z]).{8,15})", message = "영문자, 숫자가 포함된 8~15자리로 입력해 주세요.")
 	private String pw;
+	@Email
+	private String email;
+	private String phone;
+	private String channel;
+	private String reg_date;
+	private String last_login_date;
+	private String email_chk;
+	private String talk_chk;
+	private String sms_chk;
+	private String auth_type;
 	
-	private String phone_num;
-	private String nickname;
-	private String pwCheck;
 	private String key = "daul";
-	private boolean useCookie;
-	private String status;
-	private String file;
-	
-	
-	
-	public String getFile() {
-		return file;
+
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setFile(String file) {
-		this.file = file;
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getStatus() {
-		return status;
+
+	public String getName() {
+		return name;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public String getUser_seq() {
-		return user_seq;
-	}
-	public void setUser_seq(String user_seq) {
-		this.user_seq = user_seq;
-	}
-	public String getPhone_num() {
-		return phone_num;
-	}
-	public void setPhone_num(String phone_num) {
-		this.phone_num = phone_num;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	public String getPwCheck() {
-		return pwCheck;
-	}
-	public void setPwCheck(String pwCheck) {
-		this.pwCheck = pwCheck;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	public boolean isUseCookie() {
-		return useCookie;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setUseCookie(boolean useCookie) {
-		this.useCookie = useCookie;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+
+	public String getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+
+	public String getLast_login_date() {
+		return last_login_date;
+	}
+
+	public void setLast_login_date(String last_login_date) {
+		this.last_login_date = last_login_date;
+	}
+
+	public String getEmail_chk() {
+		return email_chk;
+	}
+
+	public void setEmail_chk(String email_chk) {
+		this.email_chk = email_chk;
+	}
+
+	public String getTalk_chk() {
+		return talk_chk;
+	}
+
+	public void setTalk_chk(String talk_chk) {
+		this.talk_chk = talk_chk;
+	}
+
+	public String getSms_chk() {
+		return sms_chk;
+	}
+
+	public void setSms_chk(String sms_chk) {
+		this.sms_chk = sms_chk;
+	}
+
+	public String getAuth_type() {
+		return auth_type;
+	}
+
+	public void setAuth_type(String auth_type) {
+		this.auth_type = auth_type;
+	}
+
 	public String getKey() {
 		return key;
 	}
+
 	public void setKey(String key) {
 		this.key = key;
 	}
+
 	public String getPwKey() {
 		return getPw() + getKey();
 	}
+	
 	@Override
 	public String toString() {
-		return "UserVo [email=" + email + ", user_seq=" + user_seq + ", pw=" + pw + ", phone_num=" + phone_num
-				+ ", nickname=" + nickname + ", pwCheck=" + pwCheck + ", key=" + key + ", useCookie=" + useCookie
-				+ ", status=" + status + ", file=" + file + "]";
+		return "UserVo [user_id=" + user_id + ", name=" + name + ", pw=" + pw + ", email=" + email + ", phone=" + phone
+				+ ", channel=" + channel + ", reg_date=" + reg_date + ", last_login_date=" + last_login_date
+				+ ", email_chk=" + email_chk + ", talk_chk=" + talk_chk + ", sms_chk=" + sms_chk + ", auth_type="
+				+ auth_type + ", key=" + key + "]";
 	}
-	
 	
 }

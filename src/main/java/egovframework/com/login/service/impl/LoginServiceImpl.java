@@ -15,8 +15,8 @@ public class LoginServiceImpl implements LoginService {
 	private LoginMapper loginMapper;
 	
 	@Override
-	public UserVo login(UserVo vo) throws Exception {
-		return loginMapper.selectLoginCheck(vo);
+	public UserVo selectUser(UserVo vo) throws Exception {
+		return loginMapper.selectUser(vo);
 	}
 
 }

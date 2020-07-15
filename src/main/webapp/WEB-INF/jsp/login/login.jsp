@@ -9,47 +9,57 @@
       <div class="panel-body">
         <div class="brand">
           <img class="brand-img" src="${pageContext.request.contextPath}/images/logo-colored.png" alt="...">
-          <h2 class="brand-text font-size-18">Remark</h2>
+          <h2 class="brand-text font-size-18">관리자 로그인</h2>
         </div>
-        <form:form method="post" action="/sub/login.do" modelAttribute="subVo">
+        <form id="login-form">
           <div class="form-group form-material floating" data-plugin="formMaterial">
-            <form:input type="text" class="form-control" path="email"/>
-            <label class="floating-label">Email</label>
-            <form:errors path="email"/>
+            <input type="text" class="form-control" id="user_id" name="user_id"/>
+            <label class="floating-label">ID</label>
           </div>
           <div class="form-group form-material floating" data-plugin="formMaterial">
-            <form:input type="password" class="form-control" path="pw"/>
-            <label class="floating-label">Password</label>
-            <form:errors path="pw"/>
+            <input type="password" class="form-control" id="pw" name="pw"/>
+            <label class="floating-label">PASSWORD</label>
           </div>
-          <!-- <div class="form-group clearfix">
-            <div class="checkbox-custom checkbox-inline checkbox-primary checkbox-lg float-left">
-              <input type="checkbox" id="inputCheckbox" name="remember">
-              <label for="inputCheckbox">Remember me</label>
-            </div>
-            <a class="float-right" href="forgot-password.html">Forgot password?</a>
-          </div> -->
-          <button type="submit" class="btn btn-primary btn-block btn-lg mt-40">Sign in</button>
-        </form:form>
-        <p>Still no account? Please go to <a href="/sub/signUpPage.do">Sign up</a></p>
+          <span class="text-left" id="chk-error"></span>
+          <button type="button" class="btn btn-primary btn-block btn-lg mt-40" id="login-btn">로그인</button>
+        </form>
       </div>
     </div>
-
-    <footer class="page-copyright page-copyright-inverse">
-      <p>WEBSITE BY Creation Studio</p>
-      <p>© 2018. All RIGHT RESERVED.</p>
-      <div class="social">
-        <a class="btn btn-icon btn-pure" href="javascript:void(0)">
-        <i class="icon bd-twitter" aria-hidden="true"></i>
-      </a>
-        <a class="btn btn-icon btn-pure" href="javascript:void(0)">
-        <i class="icon bd-facebook" aria-hidden="true"></i>
-      </a>
-        <a class="btn btn-icon btn-pure" href="javascript:void(0)">
-        <i class="icon bd-google-plus" aria-hidden="true"></i>
-      </a>
-      </div>
-    </footer>
   </div>
 </div>
 <!-- End Page -->
+<script type="text/javascript">
+	$("#user_id").keydown(function(key) {
+		if (key.keyCode === 13) login();
+	});
+	
+	$("#pw").keydown(function(key) {
+		if (key.keyCode === 13) login();
+	});
+	
+	$("#login-btn").click(function() {
+		login();
+	});
+	
+	function login() {
+		var request = $.ajax({
+			url: "/login/login.do",
+			method: "post",
+			data: $("#login-form").serialize()
+		});
+		request.done(function(data) {
+			console.log(data);
+			console.log("request done");
+			
+			if (data === "success") {
+				location.href = "${pageContext.request.contextPath}/main/main.do";
+			} else {
+				$("#chk-error").text(data);
+			}
+		});
+		request.fail(function(error) {
+			console.log(error);
+			console.log("request fail");
+		});
+	}
+</script>

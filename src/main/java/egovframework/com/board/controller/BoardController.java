@@ -78,7 +78,7 @@ public class BoardController {
       
        UserVo userVo = (UserVo) session.getAttribute("login");
        
-       vo.setReg_user(userVo.getUser_seq());
+       //vo.setReg_user(userVo.getUser_seq());
        boardService.insertBoard(vo,file);
        
         //boardService.insertBoard(commandMap);
