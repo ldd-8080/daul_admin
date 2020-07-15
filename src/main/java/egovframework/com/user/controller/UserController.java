@@ -30,6 +30,46 @@ public class UserController {
 	@Resource(name = "userService")
 	private UserService userService;
 	
+	@RequestMapping(value="/publicUserListPage.do")
+	public String publicUserListPage(ModelMap model) throws Exception{
+		List<Map<String, String>> userList = null;
+		
+		try {
+			userList = userService.selectPublicUserList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("userList", userList);
+		
+		return "user/publicUserList";
+	}
+	
+	@RequestMapping(value="/adminUserListPage.do")
+	public String adminUserListPage(ModelMap model) throws Exception{
+		List<Map<String, String>> userList = null;
+		
+		try {
+			userList = userService.selectAdminUserList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("userList", userList);
+		
+		return "user/adminUserList";
+	}
+	
+	@RequestMapping(value="publicUserDetailPage.do")
+	public String publicUserDetailPage() {
+		return "user/publicUserDetail";
+	}
+	
+	@RequestMapping(value="adminUserDetailPage.do")
+	public String adminUserDetailPage() {
+		return "user/adminUserDetail";
+	}
+	
 	@RequestMapping(value="/update.do", method = RequestMethod.POST)
 	public String userUpdate(@ModelAttribute @Valid UserVo vo, BindingResult result) throws Exception {
 		if (result.hasErrors()) {
@@ -74,27 +114,27 @@ public class UserController {
 		return "redirect:/main/main.do";
 	}
 	
-	@RequestMapping(value="/userDetailPage.do")
-	public String userDetailPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
-		UserVo user = selectUser(nickname);
-		
-		model.addAttribute("userVo", user);
-		
-		return "user/userDetail";
-	}
+//	@RequestMapping(value="/userDetailPage.do")
+//	public String userDetailPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
+//		UserVo user = selectUser(nickname);
+//		
+//		model.addAttribute("userVo", user);
+//		
+//		return "user/userDetail";
+//	}
 	
-	@RequestMapping(value="/userModifyPage.do")
-	public String userModifyPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
-		UserVo user = selectUser(nickname);
-		
-		model.addAttribute("userVo", user);
-		
-		return "user/userModify";
-	}
+//	@RequestMapping(value="/userModifyPage.do")
+//	public String userModifyPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
+//		UserVo user = selectUser(nickname);
+//		
+//		model.addAttribute("userVo", user);
+//		
+//		return "user/userModify";
+//	}
 	
-	private UserVo selectUser(String nickname) throws Exception {
+	private UserVo selectUser(String name) throws Exception {
 		UserVo vo = new UserVo();
-		vo.setNickname(nickname);
+		vo.setName(name);
 		
 		UserVo user = userService.selectUser(vo);
 		
@@ -105,35 +145,6 @@ public class UserController {
 	public String userDelete(UserVo vo) throws Exception {
 		try {
 			userService.deleteUser(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return "redirect:/user/userListPage.do";
-	}
-	
-	@RequestMapping(value="/userPwChkPage.do")
-	public String userPwChkPage(ModelMap model, @RequestParam("Nickname") String nickname) {
-		UserVo userVo = new UserVo();
-		userVo.setNickname(nickname);
-		model.addAttribute("userVo", userVo);
-		
-		return "user/userPwChk";
-	}
-	
-	@RequestMapping(value="/pwChk.do")
-	public String userPwCheck(UserVo vo, RedirectAttributes redirectAttributes) throws Exception {
-		try {
-			SecurityUtil securityUtil = new SecurityUtil();
-			String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
-			vo.setPw(EncryptPw);
-			
-			UserVo user = userService.selectUserPwCheck(vo);
-			
-			if (user != null) {
-				redirectAttributes.addAttribute("Nickname", vo.getNickname());
-				return "redirect:/user/userModifyPage.do";
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

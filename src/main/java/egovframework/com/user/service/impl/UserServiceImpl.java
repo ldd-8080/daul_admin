@@ -45,8 +45,13 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	}
 
 	@Override
-	public UserVo selectUserPwCheck(UserVo vo) throws Exception {
-		return userMapper.selectUserPwCheck(vo);
+	public List<Map<String, String>> selectPublicUserList() throws Exception {
+		return userMapper.selectPublicUserList();
+	}
+
+	@Override
+	public List<Map<String, String>> selectAdminUserList() throws Exception {
+		return userMapper.selectAdminUserList();
 	}
 
 }

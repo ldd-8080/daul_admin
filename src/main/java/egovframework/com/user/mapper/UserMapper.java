@@ -18,5 +18,7 @@ public interface UserMapper {
 
 	void deleteUser(UserVo vo) throws Exception;
 
-	UserVo selectUserPwCheck(UserVo vo) throws Exception;
+	List<Map<String, String>> selectPublicUserList() throws Exception;
+
+	List<Map<String, String>> selectAdminUserList() throws Exception;
 }

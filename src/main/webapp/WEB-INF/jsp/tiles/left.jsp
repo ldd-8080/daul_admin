@@ -13,84 +13,82 @@
                 <span class="site-menu-title">Dashboard</span>
             </a>
           </li>
+          <li class="site-menu-item has-sub">
+               <a href="javascript:void(0)">
+                   <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+                   <span class="site-menu-title">사용자</span>
+                   <span class="site-menu-arrow"></span>
+               </a>
+               <ul class="site-menu-sub">
+                 <li class="site-menu-item">
+                   <a class="animsition-link"  href="/user/publicUserListPage.do">                   
+                     <span class="site-menu-title">일반회원</span>
+                   </a>
+                 </li>
+                 <li class="site-menu-item">
+                   <a class="animsition-link" href="/user/adminUserListPage.do">                    
+                     <span class="site-menu-title">관리자</span>
+                   </a>
+                 </li>
+               </ul>
+           </li>
+     
            <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                        <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
-                        <span class="site-menu-title">사용자</span>
-                                <span class="site-menu-arrow"></span>
-                    </a>
-                <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                    <a class="animsition-link"  href="/user/userListPage.do">                   
-                      <span class="site-menu-title">사용자관리</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/">                    
-                      	<span class="site-menu-title">관리관리</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-        
-                <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                        <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
-                        <span class="site-menu-title">서비스</span>
-                                <span class="site-menu-arrow"></span>
-                    </a>
-                <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/board/boardList.do">
-                  
-                      <span class="site-menu-title">열린제안</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/">                    	
-                      	<span class="site-menu-title">설문조사</span>
-                    </a>
-                  </li> 
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/">                    
-                      	<span class="site-menu-title">나눔공모</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-        
-             <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                        <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
-                        <span class="site-menu-title">게시판</span>
-                                <span class="site-menu-arrow"></span>
-                    </a>
-                <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/board/boardList.do">                   
-                      <span class="site-menu-title">공지사항</span>
-                    </a>
-                  </li>
-                     <li class="site-menu-item">
-                    <a class="animsition-link" href="/faq/faqList.do">                    
-                      	<span class="site-menu-title">FAQ</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="/">                    
-                      	<span class="site-menu-title">Q&A</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+	           <a href="javascript:void(0)">
+	               <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+	               <span class="site-menu-title">서비스</span>
+	               <span class="site-menu-arrow"></span>
+	           </a>
+	           <ul class="site-menu-sub">
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/board/boardList.do">
+	                 <span class="site-menu-title">열린제안</span>
+	               </a>
+	             </li>
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/">                    	
+	                 <span class="site-menu-title">설문조사</span>
+	               </a>
+	             </li> 
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/">                    
+	               	 <span class="site-menu-title">나눔공모</span>
+	               </a>
+	             </li>
+	           </ul>
+           </li>
+   
+	       <li class="site-menu-item has-sub">
+	           <a href="javascript:void(0)">
+	               <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+	               <span class="site-menu-title">게시판</span>
+	               <span class="site-menu-arrow"></span>
+	           </a>
+	           <ul class="site-menu-sub">
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/board/boardList.do">                   
+	                 <span class="site-menu-title">공지사항</span>
+	               </a>
+	             </li>
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/faq/faqList.do">                    
+	                 <span class="site-menu-title">FAQ</span>
+	               </a>
+	             </li>
+	             <li class="site-menu-item">
+	               <a class="animsition-link" href="/">                    
+	                 <span class="site-menu-title">Q&A</span>
+	               </a>
+	             </li>
+	           </ul>
+	       </li>
         </ul>
       </div>
     </div>
   </div>
 
   <div class="site-menubar-footer">
-    <a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip"
-      data-original-title="Settings">
+    <a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Settings">
       <span class="icon md-settings" aria-hidden="true"></span>
     </a>
     <a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Lock">
@@ -101,5 +99,4 @@
     </a>
   </div>
    
-
 </div>
