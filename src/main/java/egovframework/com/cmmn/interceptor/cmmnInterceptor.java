@@ -34,6 +34,7 @@ public class cmmnInterceptor extends HandlerInterceptorAdapter {
 			if (httpSession.getAttribute(LOGIN) == null) {
 				log.debug(" =============비로그인==============");
 				response.sendRedirect("/login/loginPage.do");
+				return false;
 			}
 		} catch (Exception e) {
 			

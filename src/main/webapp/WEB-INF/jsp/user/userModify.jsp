@@ -74,9 +74,7 @@
 </div>
 
 <script type="text/javascript">
-	var pw = $("#pw").val();
-	
-	if (pw != null) {
+	if ($("#pw").val() != null) {
 		$("#pw").val("");
 	}
 

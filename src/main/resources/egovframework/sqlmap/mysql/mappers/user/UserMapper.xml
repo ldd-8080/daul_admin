@@ -3,22 +3,34 @@
 <mapper
 	namespace="egovframework.com.user.mapper.UserMapper">
 	
-	<update id="userUpdate">
-		UPDATE daul.out_user 
-		SET 
-		<if test="email != null and email != '' ">
-			email = #{email}
-		</if>
-		<if test="pw != null and pw != '' ">
-			pw = #{pw}
-		</if>
-		<if test="phone_num != null and phone_num != '' " >
-			,phone_num = #{phone_num}
-		</if>
-		<if test="nickname != null and nickname != '' " >
-			,nickname = #{nickname}
-		</if>
-		WHERE user_seq = #{user_seq}
+	<update id="updateUser">
+		UPDATE daul.user
+		   SET user_id = #{user_id}
+		     <if test="pw != null and pw != ''">
+		     , pw = #{pw}
+		     </if>
+		     <if test="auth_type != null and auth_type != ''">
+		     , auth_type = #{auth_type}
+		     </if>
+		     <if test="name != null and name != ''">
+		     , name = #{name}
+		     </if>
+		     <if test="phone != null and phone != ''">
+		     , phone = #{phone}
+		     </if>
+		     <if test="email != null and email != ''">
+		     , email = #{email}
+		     </if>
+		     <if test="email_chk != null and email_chk != ''">
+		     , email_chk = #{email_chk}
+		     </if>
+		     <if test="talk_chk != null and talk_chk != ''">
+		     , talk_chk = #{talk_chk}
+		     </if>
+		     <if test="sms_chk != null and sms_chk != ''">
+		     , sms_chk = #{sms_chk}
+		     </if>
+		 WHERE user_id = #{user_id}
 	</update>
 	
 	<insert id="createUser">
@@ -48,20 +60,25 @@
 	</select>
 	
 	<select id="selectUser" resultType="egovframework.com.user.vo.UserVo">
-		SELECT user_seq
-		     , email
+		SELECT user_id
+		     , name
 		     , pw
-		     , nickname
-		     , phone_num
-		     , status
-		  FROM daul.out_user
-		 WHERE nickname = #{nickname}
+		     , email
+		     , phone
+		     , channel
+		     , DATE_FORMAT(reg_date, '%Y-%m-%d')		as reg_date
+     		 , DATE_FORMAT(last_login_date, '%Y-%m-%d') as last_login_date
+		     , email_chk
+		     , talk_chk
+		     , sms_chk
+		     , auth_type
+		  FROM daul.user
+		 WHERE user_id = #{user_id}
 	</select>
 	
 	<delete id="deleteUser">
-		DELETE FROM daul.out_user
-		 WHERE email = #{email}
-		   AND nickname = #{nickname}
+		DELETE FROM daul.user
+		 WHERE user_id = #{user_id}
 	</delete>
 	
 	<select id="selectUserPwCheck" resultType="egovframework.com.user.vo.UserVo">

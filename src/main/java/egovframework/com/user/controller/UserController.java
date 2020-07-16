@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import egovframework.com.cmmn.SecurityUtil;
 import egovframework.com.user.service.UserService;
@@ -61,7 +60,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="publicUserDetailPage.do")
-	public String publicUserDetailPage() {
+	public String publicUserDetailPage(ModelMap model, @RequestParam("id") String id) throws Exception{
+		UserVo vo = new UserVo();
+		
+		try {
+			vo.setUser_id(id);
+			vo = userService.selectUser(vo);
+			System.out.println(vo);
+			model.addAttribute("userVo", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "user/publicUserDetail";
 	}
 	
@@ -71,14 +81,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/update.do", method = RequestMethod.POST)
-	public String userUpdate(@ModelAttribute @Valid UserVo vo, BindingResult result) throws Exception {
-		if (result.hasErrors()) {
-			log.debug("userUpdate Valid Error : " + result.getFieldError().getDefaultMessage());
-			return "user/userModify";
+	public String userUpdate(@ModelAttribute UserVo vo) throws Exception {
+		log.debug("UserVo : " + vo);
+		try {
+			userService.updateUser(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		userService.userUpdate(vo);
-		return "user/userList";
+		return "redirect:/user/publicUserListPage.do";
 	}
 	
 	@RequestMapping(value="/signUpPage.do")
@@ -149,6 +160,6 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/user/userListPage.do";
+		return "redirect:/user/publicUserListPage.do";
 	}
 }

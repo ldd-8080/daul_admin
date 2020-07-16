@@ -19,8 +19,8 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	private UserMapper userMapper;
 	
 	@Override
-	public void userUpdate(UserVo vo) throws Exception {
-		userMapper.userUpdate(vo);
+	public void updateUser(UserVo vo) throws Exception {
+		userMapper.updateUser(vo);
 		
 	}
 

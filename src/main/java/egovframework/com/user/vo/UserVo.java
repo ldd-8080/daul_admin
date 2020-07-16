@@ -15,6 +15,7 @@ public class UserVo {
 	@NotEmpty
 	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z]).{8,15})", message = "영문자, 숫자가 포함된 8~15자리로 입력해 주세요.")
 	private String pw;
+	private String new_pw;
 	@Email
 	private String email;
 	private String phone;
@@ -50,6 +51,14 @@ public class UserVo {
 
 	public void setPw(String pw) {
 		this.pw = pw;
+	}
+
+	public String getNew_pw() {
+		return new_pw;
+	}
+
+	public void setNew_pw(String new_pw) {
+		this.new_pw = new_pw;
 	}
 
 	public String getEmail() {
