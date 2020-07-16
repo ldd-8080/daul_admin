@@ -7,7 +7,7 @@
 <meta name="description" content="bootstrap material admin template">
 <meta name="author" content="">
 
-<title>Dashboard | Remark Material Admin Template</title>
+<title>e-DAUL</title>
 
 <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/images/apple-touch-icon.png">
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico">

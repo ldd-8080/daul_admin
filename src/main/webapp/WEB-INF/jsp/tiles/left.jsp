@@ -76,7 +76,7 @@
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/">                    
+	               <a class="animsition-link" href="/qna/qnaList.do">                    
 	                 <span class="site-menu-title">Q&A</span>
 	               </a>
 	             </li>

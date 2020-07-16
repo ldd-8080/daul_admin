@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper 
+	namespace="egovframework.com.qna.mapper.QnaMapper">
+
+	<select id="selectQnaList" resultType = "Map">
+	SELECT
+			qna_idx,
+			question,
+			content,
+			ref,
+			view_count,
+			create_user,
+			parent_qna_idx,
+			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
+			del_chk,
+			(select auth_type from `user` where user_id = create_user ) as auth_type 
+			
+		FROM daul.daul_qna
+		WHERE del_chk = 'N'
+		ORDER BY ref DESC;
+	</select>
+	
+	<select id = "selectQnaReplyIdx" resultType="String">
+		SELECT CONCAT(#{qna_idx},'-',LPAD(count(*),'2','0')) as 'qna_idx'
+		FROM daul_qna 
+		WHERE ref = #{qna_idx}
+	</select>
+	
+	<insert id = "insertQnaReply">
+		INSERT INTO daul_qna
+		(
+			qna_idx,
+			question,
+			content,
+			parent_qna_idx,
+			ref,
+			indent,
+			create_user,
+			create_date,
+			update_user,
+			update_date	
+		)
+		VALUES
+		(
+			#{qna_idx},
+			#{question},
+			#{content},
+			#{ref},
+			#{ref},
+			1,
+			#{create_user},
+			sysdate(),
+			#{update_user},
+			sysdate()
+			
+		) 
+	</insert>
+	
+	<update id = "updateQnaReply">
+		UPDATE
+			daul_qna
+		SET 
+			question = #{question},
+			content = #{content},
+			update_user = #{update_user},
+			update_date = sysdate()
+		WHERE 
+			qna_idx = #{qna_idx}
+	</update>
+	
+	<update id = "deleteQnaReply">
+		UPDATE
+			daul_qna
+		SET
+			del_chk = 'Y'
+		WHERE 
+			qna_idx = #{qna_idx}
+	</update>
+	
+		<update id = "deleteQnaAll">
+		UPDATE
+			daul_qna
+		SET
+			del_chk = 'Y'
+		WHERE 
+			ref= #{qna_idx}
+	</update>
+	
+	
+</mapper>

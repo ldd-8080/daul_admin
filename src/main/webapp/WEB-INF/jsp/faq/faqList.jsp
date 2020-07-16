@@ -3,11 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
     
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<script type="text/javascript">
-/* $(document).ready(function() {
-	$("#userTable").DataTable();
-}); */
-</script>
     
 <!-- Page -->
 <div class="page">
@@ -77,7 +72,7 @@
         <form id="faq-modal-form">
         	<div class="example-wrap">
         		<h4 class="example-title">작성자</h4>
-      			<input type="text" class="form-control" id="inputPlaceholder"  value="${login.email}"/>
+      			<input type="text" class="form-control" id="inputPlaceholder"  value="${login.user_id}"/>
     			<h4 class="example-title">질의</h4>
       			<textarea class="form-control"id="question" name="question" rows="5"></textarea>
       			<h4 class="example-title">응답</h4>
@@ -122,7 +117,6 @@
       			<textarea class="form-control"id="answer_update"name="answer" rows="5"></textarea>
       			
       			<input type="hidden" id="faq_idx_update" name="faq_idx"/>
-      			
       			
       		</div>
         	
