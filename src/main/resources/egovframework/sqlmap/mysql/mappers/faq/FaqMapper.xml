@@ -14,5 +14,56 @@
 			DATE_FORMAT(update_date, '%Y-%m-%d') as update_date,
 			del_chk
 		FROM daul.daul_faq
+		WHERE del_chk = 'N'
 	</select>
+	
+	<select id="selectFaqIdx" resultType="String">
+		SELECT CONCAT('FAQ-',LPAD(count(*)+1,'6','0')) as 'faq_idx'
+		FROM daul_faq
+	</select>
+	
+	<insert id = "insertFaq">
+		INSERT INTO daul_faq
+		(
+			faq_idx,
+			question,
+			answer,
+			create_user,
+			create_date,
+			update_user,
+			update_date	
+		)
+		VALUES
+		(
+			#{faq_idx},
+			#{question},
+			#{answer},
+			#{create_user},
+			sysdate(),
+			#{update_user},
+			sysdate()
+			
+		) 
+	</insert>
+	
+	<update id = "updateFaq">
+		UPDATE
+			daul_faq 
+		SET 
+			question = #{question},
+			answer = #{answer},
+			update_user = #{update_user},
+			update_date = sysdate()
+		WHERE 
+			faq_idx = #{faq_idx}
+	</update>
+	
+	<update id = "deleteFaq">
+		UPDATE
+			daul_faq
+		SET
+			del_chk = 'Y'
+		WHERE 
+			faq_idx = #{faq_idx}
+	</update>
 </mapper>

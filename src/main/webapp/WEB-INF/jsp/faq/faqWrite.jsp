@@ -15,7 +15,7 @@
     	<h4 class="example-title">질문</h4>
       	<form:input type="text" path="question" class="form-control" id="inputPlaceholder" placeholder=""/>
 		<h4 class="example-title">답변</h4>
-      	<form:textarea class="form-control" path="content" id="textareaDefault" rows="10"/>
+      	<form:textarea class="form-control" path="answer" id="textareaDefault" rows="10"/>
        	
 	<h4 class="example-title">File Upload</h4> 
 	<a href="#this" onclick="addFile()">파일추가</a>              
