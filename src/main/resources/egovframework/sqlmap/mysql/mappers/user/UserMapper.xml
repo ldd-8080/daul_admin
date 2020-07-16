@@ -34,18 +34,44 @@
 	</update>
 	
 	<insert id="createUser">
-		INSERT INTO daul.out_user
+		INSERT INTO daul.user
 			   (
-			     email
+			     user_id
+			   , name
 			   , pw
-			   , nickname
-			   , phone_num
+			   , email
+			   , phone
+			   , channel
+			   , reg_date
+			   <if test="email_chk != null and email_chk != ''">
+			   , email_chk 
+			   </if>
+			   <if test="talk_chk != null and talk_chk != ''">
+			   , talk_chk 
+			   </if>
+			   <if test="sms_chk != null and sms_chk != ''">
+			   , sms_chk 
+			   </if>
+			   , auth_type
 			   )
 		VALUES (
-				 #{email}
+				 #{user_id}
+			   , #{name}
 			   , #{pw}
-			   , #{nickname}
-			   , #{phone_num}
+			   , #{email}
+			   , #{phone}
+			   , #{channel}
+			   , SYSDATE()
+			   <if test="email_chk != null and email_chk != ''">
+			   , #{email_chk} 
+			   </if>
+			   <if test="talk_chk != null and talk_chk != ''">
+			   , #{talk_chk} 
+			   </if>
+			   <if test="sms_chk != null and sms_chk != ''">
+			   , #{sms_chk} 
+			   </if>
+			   , #{auth_type}
 			   )
 	</insert>
 	

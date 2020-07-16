@@ -162,4 +162,26 @@ public class UserController {
 		
 		return "redirect:/user/publicUserListPage.do";
 	}
+	
+	@RequestMapping(value="/userRegistPage.do")
+	public String userRegistPage(ModelMap model) {
+		model.addAttribute("userVo", new UserVo());
+		
+		return "user/userRegist";
+	}
+	
+	@RequestMapping(value="/create.do", method=RequestMethod.POST)
+	public String createUser(@Valid UserVo vo) throws Exception {
+		try {
+			SecurityUtil securityUtil = new SecurityUtil();
+			String encryptPw = securityUtil.encryptSHA256(vo.getPwKey());
+			vo.setPw(encryptPw);
+			
+			userService.createUser(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/user/publicUserListPage.do";
+	}
 }

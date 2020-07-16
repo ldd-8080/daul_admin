@@ -22,11 +22,11 @@
     					<div class="panel">
     						<div class="panel-body text-center">
     							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/images/placeholder.png" alt="...">
-    							<p class="form-control-plaintext"><b>회원가입일 : </b>${userVo.reg_date}</p>
-    							<p class="form-control-plaintext"><b>최종로그인 : </b>${userVo.last_login_date}</p>
+    							<%-- <p class="form-control-plaintext"><b>회원가입일 : </b>${userVo.reg_date}</p>
+    							<p class="form-control-plaintext"><b>최종로그인 : </b>${userVo.last_login_date}</p> --%>
     						</div>
     					</div>
-    					<div class="panel panel-bordered">
+    					<!-- <div class="panel panel-bordered">
     						<div class="panel-heading">
     							<h3 class="panel-title">활동현황</h3>
     						</div>
@@ -56,7 +56,7 @@
     								<input type="text" class="form-control"/>
     							</div>
     						</div>
-    					</div>
+    					</div> -->
     					<div class="panel panel-bordered">
     						<div class="panel-heading">
     							<h3 class="panel-title">수신여부</h3>
@@ -116,14 +116,14 @@
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">계정 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="channel"/>
+		    								<form:input type="text" class="form-control" path="channel" value="일반"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group form-material row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">유형 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="auth_type"/>
+		    								<form:input type="text" class="form-control" path="auth_type" value="public"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group form-material row">
@@ -133,12 +133,12 @@
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
-	    							<%-- <div class="form-group form-material row">
+	    							<div class="form-group form-material row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="password" class="form-control" placeholder="영문자, 숫자 혼합 8~15자리" path="new_pw"/>
-		    								<form:errors path="new_pw"/>
+		    								<form:input type="password" class="form-control" placeholder="영문자, 숫자 혼합 8~15자리" path="pw"/>
+		    								<form:errors path="pw"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group form-material row">
@@ -148,7 +148,7 @@
 		    								<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
 		    								<span class="text-left" id="pwChk-error"></span>
 		    							</div>
-	    							</div> --%>
+	    							</div>
 	    							<div class="form-group form-material row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 </label>
@@ -163,15 +163,14 @@
 		    								<form:input type="text" class="form-control" path="email"/>
 		    							</div>
 	    							</div>
-	    							<form:input type="hidden" path="email_chk"/>
-	    							<form:input type="hidden" path="talk_chk"/>
-	    							<form:input type="hidden" path="sms_chk"/>
+	    							<form:input type="hidden" path="email_chk" value="N"/>
+	    							<form:input type="hidden" path="talk_chk" value="N"/>
+	    							<form:input type="hidden" path="sms_chk" value="N"/>
 	    							<form:input type="hidden" path="reg_date"/>
 	    							<form:input type="hidden" path="last_login_date"/>
 	    							<div class="form-group form-material row">
 	    								<div class="col-md-9 offset-md-9">
-		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" formaction="/user/update.do">저장 </button>
-		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" formaction="/user/delete.do">삭제 </button>
+		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userCreate" formaction="/user/create.do">등록 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 	    								</div>
 	    							</div>
@@ -189,12 +188,8 @@
 	var pwFlag = false;
 	var pwRule = /^(?=.*[a-z])(?=.*[0-9]).{8,15}$/;
 	
-	/* if ($("#pw").val() != null) {
-		$("#pw").val("");
-	} */
-	
 	function passwordCheck() {
-		var pw = $("#new_pw").val();
+		var pw = $("#pw").val();
 		var pwChk = $("#pw-chk").val();
 
 		if (pw !== pwChk) {
@@ -217,6 +212,10 @@
 			}
 		}
 	}
+	
+	$("#pw").blur(function() {
+		passwordCheck();
+	});
 	
 	$("#pw-chk").blur(function() {
 		passwordCheck();
@@ -251,18 +250,15 @@
 		}
 	});
 	
-	$("#userSave").click(function() {
-		/* passwordCheck();
+	$("#userCreate").click(function() {
+		passwordCheck();
 		
 		if (pwFlag) {
 			alert("비밀번호를 확인해주세요.");
-			return;
-		} */
-		if (!confirm("수정하시겠습니까?")) return false;
-	});
-	
-	$("#userDelete").click(function() {
-		if (!confirm("삭제하시겠습니까?")) return false;
+			return false;
+		}
+		
+		if (!confirm("등록하시겠습니까?")) return false;
 	});
 	
 	$("#userList").click(function() {

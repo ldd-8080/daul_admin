@@ -50,6 +50,9 @@
 		            	</c:forEach>
 		            </tbody>
 		          </table>
+		          <div class="col-lg-12 mt-20">
+		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="publicUserCreate">등록</button>
+		          </div>
 		        </div>
 	    	</div>
 		</div>
@@ -64,6 +67,10 @@
 			console.log(id);
 			location.href = "${pageContext.request.contextPath}/user/publicUserDetailPage.do?id=" + id;
 		}
+	});
+	
+	$("#publicUserCreate").click(function() {
+		location.href = "${pageContext.request.contextPath}/user/userRegistPage.do";
 	});
 
 </script>
