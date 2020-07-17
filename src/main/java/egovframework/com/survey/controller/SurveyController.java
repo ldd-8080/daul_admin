@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.survey.service.SurveyService;
+import egovframework.com.survey.vo.SurveyVo;
 
 @Controller
 @RequestMapping(value="/survey")
@@ -33,4 +34,11 @@ public class SurveyController {
 		}
 		return "survey/surveyList";
 	}
+	
+	@RequestMapping(value="/surveyRegist.do")
+	public String surveyRegist(ModelMap model) {
+		model.addAttribute("surveyVo", new SurveyVo());
+		return "survey/surveyRegist";
+	}
+	
 }

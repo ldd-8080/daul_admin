@@ -34,7 +34,23 @@
 <script src="${pageContext.request.contextPath}/js/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script>
 <script src="${pageContext.request.contextPath}/js/asrange/jquery-asRange.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootbox/bootbox.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/jquery-ui/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-tmpl/tmpl.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-canvas-to-blob/canvas-to-blob.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-load-image/load-image.all.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-process.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-image.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-audio.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-video.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-validate.js"></script>
+<script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-ui.js"></script>
+<script src="${pageContext.request.contextPath}/js/dropify/dropify.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-datepicker.js"></script>
+<script src="${pageContext.request.contextPath}/js/multi-select/jquery.multi-select.js"></script>        
+        
+        
+        
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/Component.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin.js"></script>
@@ -67,3 +83,7 @@
 <script src="${pageContext.request.contextPath}/js/Plugin/datatables.js"></script>
 <script src="${pageContext.request.contextPath}/js/tables/datatable.js"></script>
 <script src="${pageContext.request.contextPath}/js/uikit/icon.js"></script>
+
+<script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script>
+        
+        

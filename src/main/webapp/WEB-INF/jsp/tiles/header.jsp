@@ -40,7 +40,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tables/datatable.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pages/register-v3.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fileupload/jquery.fileupload.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/fileupload/dropify.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datepicker/bootstrap-datepicker.css">
 
 <!-- Fonts -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/font-awesome/font-awesome.css">
@@ -60,6 +62,9 @@
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
+
+ <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> 
+ 
 <script type="text/javascript">
     Breakpoints();
     
