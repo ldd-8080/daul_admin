@@ -43,7 +43,7 @@
 	           </a>
 	           <ul class="site-menu-sub">
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/suggestion/suggestionListPage.do">
+	               <a class="animsition-link" href="/suggestion/suggestionList.do">
 	                 <span class="site-menu-title">열린제안</span>
 	               </a>
 	             </li>

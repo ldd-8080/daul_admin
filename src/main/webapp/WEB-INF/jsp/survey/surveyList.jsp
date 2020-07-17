@@ -68,7 +68,7 @@
 
 
 	$("#surveyRegistButton").click(function() {
-		location.href = "${pageContext.request.contextPath}/survey/surveyRegist.do";
+		location.href = "${pageContext.request.contextPath}/survey/surveyRegistPage.do";
 	});
 	
 </script>
