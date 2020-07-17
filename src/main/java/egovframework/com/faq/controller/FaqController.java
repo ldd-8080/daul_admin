@@ -34,7 +34,7 @@ public class FaqController {
 	private FaqService faqService;
 	
 	@RequestMapping(value="/faqList.do", method = RequestMethod.GET)
-	public String faqlist(ModelMap model) throws Exception{
+	public String faqList(ModelMap model) throws Exception{
 		
 		try{
 			List<Map<String, String>> faqList = faqService.selectFaqList();
