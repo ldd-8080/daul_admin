@@ -12,6 +12,9 @@ public class SurveyVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	
+	
+	
 	public String getSurvey_idx() {
 		return survey_idx;
 	}
