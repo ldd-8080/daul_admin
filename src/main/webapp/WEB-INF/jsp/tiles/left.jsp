@@ -43,12 +43,12 @@
 	           </a>
 	           <ul class="site-menu-sub">
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/suggestion/suggestionList.do">
+	               <a class="animsition-link" href="/suggestion/suggestionListPage.do">
 	                 <span class="site-menu-title">열린제안</span>
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/survey/surveyListPage.do">                    	
+	               <a class="animsition-link" href="/survey/surveyList.do">                    	
 	                 <span class="site-menu-title">설문조사</span>
 	               </a>
 	             </li> 
