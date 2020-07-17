@@ -12,7 +12,7 @@
 	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
 	      <li class="breadcrumb-item">사용자</li>
 	      <li class="breadcrumb-item">일반회원</li>
-	      <li class="breadcrumb-item active">회원상세</li>
+	      <li class="breadcrumb-item active">회원등록</li>
 	    </ol>
 	
 	    <div class="page-content">
@@ -22,41 +22,8 @@
     					<div class="panel">
     						<div class="panel-body text-center">
     							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/images/placeholder.png" alt="...">
-    							<%-- <p class="form-control-plaintext"><b>회원가입일 : </b>${userVo.reg_date}</p>
-    							<p class="form-control-plaintext"><b>최종로그인 : </b>${userVo.last_login_date}</p> --%>
     						</div>
     					</div>
-    					<!-- <div class="panel panel-bordered">
-    						<div class="panel-heading">
-    							<h3 class="panel-title">활동현황</h3>
-    						</div>
-    						<div class="panel-body">
-    							<div class="input-group">
-    								<div class="input-group-append">
-    									<span class="input-group-text">열린제안</span>
-    								</div>
-    								<input type="text" class="form-control"/>
-    							</div>
-    							<div class="input-group">
-    								<div class="input-group-append">
-    									<span class="input-group-text">설문참여</span>
-    								</div>
-    								<input type="text" class="form-control"/>
-    							</div>
-    							<div class="input-group">
-    								<div class="input-group-append">
-    									<span class="input-group-text">공모참여</span>
-    								</div>
-    								<input type="text" class="form-control"/>
-    							</div>
-    							<div class="input-group">
-    								<div class="input-group-append">
-    									<span class="input-group-text">답변활동</span>
-    								</div>
-    								<input type="text" class="form-control"/>
-    							</div>
-    						</div>
-    					</div> -->
     					<div class="panel panel-bordered">
     						<div class="panel-heading">
     							<h3 class="panel-title">수신여부</h3>
@@ -262,6 +229,6 @@
 	});
 	
 	$("#userList").click(function() {
-		location.href = "${pageContext.request.contextPath}/user/publicUserListPage.do";
+		location.href = "${pageContext.request.contextPath}/user/userListPage.do?auth_type=public";
 	});
 </script>

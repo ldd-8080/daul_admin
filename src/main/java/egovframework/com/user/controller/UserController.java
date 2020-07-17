@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -29,55 +31,44 @@ public class UserController {
 	@Resource(name = "userService")
 	private UserService userService;
 	
-	@RequestMapping(value="/publicUserListPage.do")
-	public String publicUserListPage(ModelMap model) throws Exception{
+	@RequestMapping(value="/userListPage.do")
+	public String userListPage(ModelMap model, @RequestParam("auth_type") String auth_type) throws Exception{
 		List<Map<String, String>> userList = null;
 		
 		try {
-			userList = userService.selectPublicUserList();
+			userList = userService.selectUserList(auth_type);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		model.addAttribute("userList", userList);
 		
-		return "user/publicUserList";
-	}
-	
-	@RequestMapping(value="/adminUserListPage.do")
-	public String adminUserListPage(ModelMap model) throws Exception{
-		List<Map<String, String>> userList = null;
-		
-		try {
-			userList = userService.selectAdminUserList();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if ("admin".equals(auth_type)) {
+			return "user/adminUserList";
+		} else {
+			return "user/publicUserList";
 		}
 		
-		model.addAttribute("userList", userList);
-		
-		return "user/adminUserList";
 	}
 	
-	@RequestMapping(value="publicUserDetailPage.do")
+	@RequestMapping(value="userDetailPage.do")
 	public String publicUserDetailPage(ModelMap model, @RequestParam("id") String id) throws Exception{
 		UserVo vo = new UserVo();
 		
 		try {
 			vo.setUser_id(id);
 			vo = userService.selectUser(vo);
-			System.out.println(vo);
-			model.addAttribute("userVo", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "user/publicUserDetail";
-	}
-	
-	@RequestMapping(value="adminUserDetailPage.do")
-	public String adminUserDetailPage() {
-		return "user/adminUserDetail";
+		model.addAttribute("userVo", vo);
+		
+		if ("admin".equals(vo.getAuth_type()) ) {
+			return "user/adminUserDetail";
+		} else {
+			return "user/publicUserDetail";
+		}
 	}
 	
 	@RequestMapping(value="/update.do", method = RequestMethod.POST)
@@ -89,67 +80,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/user/publicUserListPage.do";
-	}
-	
-	@RequestMapping(value="/signUpPage.do")
-	public String userSignUpPage(ModelMap model) {
-		model.addAttribute("userVo", new UserVo());
-		
-		return "user/signUp";
-	}
-	
-	@RequestMapping(value="/userListPage.do")
-	public String userListPage(ModelMap model) throws Exception{
-		List<Map<String, String>> userList = userService.selectUserList();
-		
-		model.addAttribute("userList", userList);
-		
-		return "user/userList";
-	}
-	
-	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
-	public String userSignUp(@Valid UserVo vo, BindingResult result) throws Exception {
-		System.out.println(vo);
-		if (result.hasErrors()) {
-			log.debug("userSignUp Valid Error : " + result.getFieldError().getDefaultMessage());
-			return "user/signUp";
-		}
-		
-		SecurityUtil securityUtil = new SecurityUtil();
-		String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
-		vo.setPw(EncryptPw);
-		
-		userService.createUser(vo);
-		
-		return "redirect:/main/main.do";
-	}
-	
-//	@RequestMapping(value="/userDetailPage.do")
-//	public String userDetailPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
-//		UserVo user = selectUser(nickname);
-//		
-//		model.addAttribute("userVo", user);
-//		
-//		return "user/userDetail";
-//	}
-	
-//	@RequestMapping(value="/userModifyPage.do")
-//	public String userModifyPage(ModelMap model, @RequestParam("Nickname") String nickname) throws Exception {
-//		UserVo user = selectUser(nickname);
-//		
-//		model.addAttribute("userVo", user);
-//		
-//		return "user/userModify";
-//	}
-	
-	private UserVo selectUser(String name) throws Exception {
-		UserVo vo = new UserVo();
-		vo.setName(name);
-		
-		UserVo user = userService.selectUser(vo);
-		
-		return user;
+		return "redirect:/user/userListPage.do?auth_type=" + vo.getAuth_type();
 	}
 	
 	@RequestMapping(value="/delete.do", method=RequestMethod.POST)
@@ -160,14 +91,18 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/user/publicUserListPage.do";
+		return "redirect:/user/userListPage.do?auth_type=" + vo.getAuth_type();
 	}
 	
 	@RequestMapping(value="/userRegistPage.do")
-	public String userRegistPage(ModelMap model) {
+	public String userRegistPage(ModelMap model, @RequestParam("auth_type") String auth_type) {
 		model.addAttribute("userVo", new UserVo());
 		
-		return "user/userRegist";
+		if ("admin".equals(auth_type)) {
+			return "user/adminUserRegist";
+		} else {
+			return "user/publicUserRegist";
+		}
 	}
 	
 	@RequestMapping(value="/create.do", method=RequestMethod.POST)
@@ -182,6 +117,50 @@ public class UserController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/user/publicUserListPage.do";
+		return "redirect:/user/userListPage.do?auth_type=" + vo.getAuth_type();
 	}
+	
+	@RequestMapping(value="/updateUserPw.do", method=RequestMethod.POST)
+	public ResponseEntity<?> updateUserPw(UserVo vo) throws Exception{
+		try {
+			System.out.println(vo);
+			if (vo.getPw() != null && !"".equals(vo.getPw())) {
+				SecurityUtil securityUtil = new SecurityUtil();
+				String encryptPw = securityUtil.encryptSHA256(vo.getPwKey());
+				vo.setPw(encryptPw);
+			}
+			
+			userService.updateUserPw(vo);
+			
+			return new ResponseEntity<>("success update user password", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+//	@RequestMapping(value="/signUpPage.do")
+//	public String userSignUpPage(ModelMap model) {
+//		model.addAttribute("userVo", new UserVo());
+//		
+//		return "user/signUp";
+//	}
+//	
+//	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
+//	public String userSignUp(@Valid UserVo vo, BindingResult result) throws Exception {
+//		System.out.println(vo);
+//		if (result.hasErrors()) {
+//			log.debug("userSignUp Valid Error : " + result.getFieldError().getDefaultMessage());
+//			return "user/signUp";
+//		}
+//		
+//		SecurityUtil securityUtil = new SecurityUtil();
+//		String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
+//		vo.setPw(EncryptPw);
+//		
+//		userService.createUser(vo);
+//		
+//		return "redirect:/main/main.do";
+//	}
 }

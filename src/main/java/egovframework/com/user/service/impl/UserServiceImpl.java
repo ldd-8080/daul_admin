@@ -30,11 +30,6 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	}
 
 	@Override
-	public List<Map<String, String>> selectUserList() throws Exception {
-		return userMapper.selectUserList();
-	}
-
-	@Override
 	public UserVo selectUser(UserVo vo) throws Exception {
 		return userMapper.selectUser(vo);
 	}
@@ -45,13 +40,13 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	}
 
 	@Override
-	public List<Map<String, String>> selectPublicUserList() throws Exception {
-		return userMapper.selectPublicUserList();
+	public void updateUserPw(UserVo vo) throws Exception {
+		userMapper.updateUserPw(vo);
 	}
 
 	@Override
-	public List<Map<String, String>> selectAdminUserList() throws Exception {
-		return userMapper.selectAdminUserList();
+	public List<Map<String, String>> selectUserList(String auth_type) throws Exception {
+		return userMapper.selectUserList(auth_type);
 	}
 
 }

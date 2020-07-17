@@ -133,6 +133,13 @@
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
+	    							<div class="form-group form-material row">
+	    								<div class="col-md-2"></div>
+		    							<label class="col-md-2 col-form-label">비밀번호 </label>
+		    							<div class="col-md-6">
+		    								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#pwChangeModal" id="pwChangeModalBtn">변경</button>
+		    							</div>
+	    							</div>
 	    							<%-- <div class="form-group form-material row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
@@ -146,7 +153,7 @@
 		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
 		    							<div class="col-md-6">
 		    								<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
-		    								<span class="text-left" id="pwChk-error"></span>
+		    								<span class="text-left" id="pw-chk-error"></span>
 		    							</div>
 	    							</div> --%>
 	    							<div class="form-group form-material row">
@@ -185,38 +192,76 @@
 	</div>
 <!-- End Page -->
 </div>
+
+<!-- 비밀번호 변경 모달 -->
+<div class="modal fade" id="pwChangeModal" aria-hidden="true" aria-labelledby="pwChangeModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple modal-center">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">x</span>
+        </button>
+        <h4 class="modal-title">비밀번호 변경</h4>
+      </div>
+      <div class="modal-body">
+    	<div class="col-md-1"></div>
+      	<form id="pwChangeForm">
+          <div class="form-group form-material row">
+			<div class="col-md-1"></div>
+			<label class="col-md-3 col-form-label">비밀번호 </label>
+			<div class="col-md-6">
+				<input type="password" class="form-control" id="pw" name="pw" placeholder="영문자, 숫자 혼합 8~15자리"/>
+			</div>
+		  </div>
+		  <div class="form-group form-material row">
+			<div class="col-md-1"></div>
+			<label class="col-md-3 col-form-label">비밀번호 확인 </label>
+			<div class="col-md-6">
+				<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
+				<span class="text-left" id="pw-chk-error"></span>
+			</div>
+		  </div>
+		  <input type="hidden" name="user_id" value="${userVo.user_id}"/>
+          <span class="text-left" id="chk-error"></span>
+          <button type="button" class="btn btn-primary btn-block mt-40 w-p50 float-right" id="pwChangeBtn">변경</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 비밀번호 변경 모달 끝 -->
 <script type="text/javascript">
 	var pwFlag = false;
 	var pwRule = /^(?=.*[a-z])(?=.*[0-9]).{8,15}$/;
 	
-	/* if ($("#pw").val() != null) {
-		$("#pw").val("");
-	} */
-	
 	function passwordCheck() {
-		var pw = $("#new_pw").val();
+		var pw = $("#pw").val();
 		var pwChk = $("#pw-chk").val();
 
 		if (pw !== pwChk) {
-			$("#pwChk-error").text("비밀번호가 일치하지 않습니다.");
+			$("#pw-chk-error").text("비밀번호가 일치하지 않습니다.");
 			pwFlag = true;
 			return;
 		} else {
-			$("#pwChk-error").text("");
+			$("#pw-chk-error").text("");
 			pwFlag = false;
 		}
 		
 		// 비밀번호가 빈값이 아닐때만 비밀번호 규칙 확인
 		if (pw !== "") {
 			if (!pwRule.test(pw)) {
-				$("#pwChk-error").text("영문자, 숫자가 포함된 8~15자리로 입력해 주세요.");
+				$("#pw-chk-error").text("영문자, 숫자가 포함된 8~15자리로 입력해 주세요.");
 				pwFlag = true;
 			} else {
-				$("#pwChk-error").text("");
+				$("#pw-chk-error").text("");
 				pwFlag = false;
 			}
 		}
 	}
+	
+	$("#pw").blur(function() {
+		passwordCheck();
+	});
 	
 	$("#pw-chk").blur(function() {
 		passwordCheck();
@@ -266,6 +311,39 @@
 	});
 	
 	$("#userList").click(function() {
-		location.href = "${pageContext.request.contextPath}/user/publicUserListPage.do";
+		location.href = "${pageContext.request.contextPath}/user/userListPage.do?auth_type=public";
+	});
+	
+	$("#pwChangeModalBtn").click(function() {
+		$("#pw").val("");
+		$("#pw-chk").val("");
+		$("#pw-chk-error").text("");
+	});
+	
+	$("#pwChangeBtn").click(function() {
+		passwordCheck();
+		
+		if (pwFlag) {
+			alert("비밀번호를 확인해주세요.");
+			return;
+		}
+		
+		if (!confirm("비밀번호를 변경하시겠습니까?")) return false;
+		
+		var request = $.ajax({
+			url: "/user/updateUserPw.do",
+			method: "post",
+			data: $("#pwChangeForm").serialize()
+		});
+		
+		request.done(function(data) {
+			console.log("DONE : ", data);
+			$("#modalCloseBtn").click();
+		});
+		
+		request.fail(function(error) {
+			console.log("FAIL : ", error);
+			alert("비밀번호 변경에 실패하였습니다.");
+		});
 	});
 </script>

@@ -65,12 +65,12 @@
 		} else {
 			var id = $(this).parent().children().eq(1).text();
 			console.log(id);
-			location.href = "${pageContext.request.contextPath}/user/publicUserDetailPage.do?id=" + id;
+			location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?id=" + id;
 		}
 	});
 	
 	$("#publicUserCreate").click(function() {
-		location.href = "${pageContext.request.contextPath}/user/userRegistPage.do";
+		location.href = "${pageContext.request.contextPath}/user/userRegistPage.do?auth_type=public";
 	});
 
 </script>
