@@ -63,7 +63,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
 
- <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> 
+<%-- <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> --%> 
  
 <script type="text/javascript">
     Breakpoints();

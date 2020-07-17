@@ -51,34 +51,28 @@
 		                    			<input type="file" id="input-file-now-custom-1" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
 		                  			</div>
 							</div>
-		               
-<div class="col-md-6 col-xl-4">
-              <!-- Example Date Range -->
-              <div class="example-wrap">
-                <h4 class="example-title">Date Range</h4>
-                <p>Set <code>name="start"</code> and <code>name="end"</code> for date
-                  range.</p>
-                <div class="example">
-                  <div class="input-daterange" data-plugin="datepicker">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          <i class="icon md-calendar" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <input type="text" class="form-control" name="start" />
-                    </div>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span calss="input-group-text">to</span>
-                      </div>
-                      <input type="text" class="form-control" name="end" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              </div>
-			                
+		                  	<div class="form-group row">
+								<div class="col-md-1"></div>
+								<label class="col-md-2 col-form-label">설문기간 </label>		
+									<div class="col-md-6 col-xl-4">
+										<div class="input-daterange" data-plugin="datepicker">
+											<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">
+														<i class="icon md-calendar" aria-hidden="true"></i>
+														</span>
+													</div>
+												<input type="text" class="form-control" name="start" />
+											</div>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span calss="input-group-text"> &nbsp;_&nbsp;</span>
+												</div>
+												<input type="text" class="form-control" name="end" />
+											</div>
+										</div>
+									</div>
+			                </div>
 			                
 				            <div class="form-group form-material row">
 								<div class="col-md-9 offset-md-9">
@@ -86,8 +80,6 @@
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 								</div>
 							</div>
-							
-                
 						</form:form>
 					</div>
 				</div>

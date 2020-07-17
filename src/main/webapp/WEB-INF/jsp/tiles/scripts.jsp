@@ -46,10 +46,11 @@
 <script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-validate.js"></script>
 <script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/dropify/dropify.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-datepicker.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-datepicker.js"></script> --%>
 <script src="${pageContext.request.contextPath}/js/multi-select/jquery.multi-select.js"></script>        
         
         
+<script src="${pageContext.request.contextPath}/js/bootstrap-datepicker/bootstrap-datepicker.js"></script>
         
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/Component.js"></script>
@@ -84,6 +85,6 @@
 <script src="${pageContext.request.contextPath}/js/tables/datatable.js"></script>
 <script src="${pageContext.request.contextPath}/js/uikit/icon.js"></script>
 
-<script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script> --%>
         
         
