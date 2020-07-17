@@ -85,6 +85,10 @@
 <script src="${pageContext.request.contextPath}/js/tables/datatable.js"></script>
 <script src="${pageContext.request.contextPath}/js/uikit/icon.js"></script>
 
+<script src="${pageContext.request.contextPath}/js/Plugin/select2.js"></script>
+<script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-select.js"></script>
+
+<script src="${pageContext.request.contextPath}/js/bootstrap-select/bootstrap-select.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script> --%>
         
         
