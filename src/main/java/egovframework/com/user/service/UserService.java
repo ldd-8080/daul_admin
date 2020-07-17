@@ -11,15 +11,9 @@ public interface UserService {
 
 	void createUser(UserVo vo) throws Exception;
 
-	List<Map<String, String>> selectUserList() throws Exception;
-
 	UserVo selectUser(UserVo vo) throws Exception;
 
 	void deleteUser(UserVo vo) throws Exception;
-
-	List<Map<String, String>> selectPublicUserList() throws Exception;
-
-	List<Map<String, String>> selectAdminUserList() throws Exception;
 
 	void updateUserPw(UserVo vo) throws Exception;
 

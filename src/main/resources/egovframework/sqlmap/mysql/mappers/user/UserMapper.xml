@@ -97,13 +97,6 @@
 		 WHERE user_id = #{user_id}
 	</delete>
 	
-	<select id="selectUserPwCheck" resultType="egovframework.com.user.vo.UserVo">
-		SELECT email
-		  FROM daul.out_user
-		 WHERE nickname = #{nickname}
-		   AND pw = #{pw}
-	</select>
-	
 	<select id="selectUserList" parameterType="String" resultType="Map">
 		SELECT user_id
 		     , name
@@ -119,40 +112,6 @@
 		     , auth_type
 		  FROM daul.user
 		 WHERE auth_type = #{auth_type}
-	</select>
-	
-	<select id="selectPublicUserList" resultType="Map">
-		SELECT user_id
-		     , name
-		     , pw
-		     , email
-		     , phone
-		     , channel
-		     , reg_date
-		     , last_login_date
-		     , email_chk
-		     , talk_chk
-		     , sms_chk
-		     , auth_type
-		  FROM daul.user
-		 WHERE auth_type != 'admin'
-	</select>
-	
-	<select id="selectAdminUserList" resultType="Map">
-		SELECT user_id
-		     , name
-		     , pw
-		     , email
-		     , phone
-		     , channel
-		     , reg_date
-		     , last_login_date
-		     , email_chk
-		     , talk_chk
-		     , sms_chk
-		     , auth_type
-		  FROM daul.user
-		 WHERE auth_type = 'admin'
 	</select>
 	
 	<update id="updateUserPw">

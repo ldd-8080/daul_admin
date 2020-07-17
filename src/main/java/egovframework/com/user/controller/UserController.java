@@ -71,11 +71,6 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="adminUserDetailPage.do")
-	public String adminUserDetailPage() {
-		return "user/adminUserDetail";
-	}
-	
 	@RequestMapping(value="/update.do", method = RequestMethod.POST)
 	public String userUpdate(@ModelAttribute UserVo vo) throws Exception {
 		log.debug("UserVo : " + vo);
@@ -86,30 +81,6 @@ public class UserController {
 		}
 		
 		return "redirect:/user/userListPage.do?auth_type=" + vo.getAuth_type();
-	}
-	
-	@RequestMapping(value="/signUpPage.do")
-	public String userSignUpPage(ModelMap model) {
-		model.addAttribute("userVo", new UserVo());
-		
-		return "user/signUp";
-	}
-	
-	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
-	public String userSignUp(@Valid UserVo vo, BindingResult result) throws Exception {
-		System.out.println(vo);
-		if (result.hasErrors()) {
-			log.debug("userSignUp Valid Error : " + result.getFieldError().getDefaultMessage());
-			return "user/signUp";
-		}
-		
-		SecurityUtil securityUtil = new SecurityUtil();
-		String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
-		vo.setPw(EncryptPw);
-		
-		userService.createUser(vo);
-		
-		return "redirect:/main/main.do";
 	}
 	
 	@RequestMapping(value="/delete.do", method=RequestMethod.POST)
@@ -168,4 +139,28 @@ public class UserController {
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
+	
+//	@RequestMapping(value="/signUpPage.do")
+//	public String userSignUpPage(ModelMap model) {
+//		model.addAttribute("userVo", new UserVo());
+//		
+//		return "user/signUp";
+//	}
+//	
+//	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
+//	public String userSignUp(@Valid UserVo vo, BindingResult result) throws Exception {
+//		System.out.println(vo);
+//		if (result.hasErrors()) {
+//			log.debug("userSignUp Valid Error : " + result.getFieldError().getDefaultMessage());
+//			return "user/signUp";
+//		}
+//		
+//		SecurityUtil securityUtil = new SecurityUtil();
+//		String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
+//		vo.setPw(EncryptPw);
+//		
+//		userService.createUser(vo);
+//		
+//		return "redirect:/main/main.do";
+//	}
 }
