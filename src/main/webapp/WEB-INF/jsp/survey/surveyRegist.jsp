@@ -19,29 +19,29 @@
 			<div class="mb-30">
 				<div class="panel">
 					<div class="panel-body">
-						<form:form method="post" modelAttribute="surveyVo">
+						<form id="survey-form">
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">작성자 </label>
 								<div class="col-md-8">
-									<form:input type="text" readonly="true" class="form-control" path="create_user"/>
-									<form:errors path="create_user"/>
+									<input type="text" readonly="true" class="form-control" name="create_user"/>
+									
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title"/>
-									<form:errors path="title"/>
+									<input type="text" class="form-control" name="title"/>
+					
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">설명 </label>
 								<div class="col-md-8">
-									<form:textarea type="text" class="form-control" path="content" rows ="5"/>
-									<form:errors path="content"/>
+									<textarea type="text" class="form-control" name="content" rows ="5">
+								</textarea>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -62,13 +62,13 @@
 														<i class="icon md-calendar" aria-hidden="true"></i>
 														</span>
 													</div>
-												<input type="text" class="form-control" name="start" />
+												<input type="text" class="form-control" name="s_date" />
 											</div>
 											<div class="input-group">
 												<div class="input-group-prepend">
 													<span calss="input-group-text"> &nbsp;_&nbsp;</span>
 												</div>
-												<input type="text" class="form-control" name="end" />
+												<input type="text" class="form-control" name="e_date" />
 											</div>
 										</div>
 									</div>
@@ -102,7 +102,7 @@
 							  <div class="form-group row">
 								<div class="col-md-3"></div>
 								<div class="col-md-7">
-									<input type="text" class="form-control"/>
+									<input type="text" class="form-control" name="question_content[]" />
 								</div>						
 								<div class="col-md-2">
 									<button type="button" class="btn btn-primary" id = "question-delete" >-</button>	
@@ -113,11 +113,11 @@
 							
 				            <div class="form-group form-material row">
 								<div class="col-md-9 offset-md-9">
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userCreate" formaction="/user/create.do">등록 </button>
+									<button type="button" class="btn btn-primary waves-effect waves-classic" id="surveyRegist" >등록 </button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 								</div>
 							</div>
-						</form:form>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -126,6 +126,42 @@
 </div>
 
 <script type="text/javascript">
+
+
+$(function() {
+
+	
+	$("#surveyRegist").click(function() {
+		registSurvey();
+	});	
+	
+});
+
+
+function registSurvey(){
+	var request = $.ajax({
+		url: "/survey/registSurvey.do",
+		method: "post",
+		//contentType: "application/json",
+		//dataType: "json",
+		data: $("#survey-form").serialize()
+	});
+	request.done(function(data) {
+		console.log(data);
+		console.log("request done");
+		
+		if (data === "success") {
+			location.href = "${pageContext.request.contextPath}/qna/qnaList.do";
+		} else {
+			//alert(data);
+			$("#chk-error").text(data);
+		}
+	});
+	request.fail(function(error) {
+		console.log(error);
+		console.log("request fail");
+	});
+}
 function addQuestion() {
     var str = " <div class='form-group row'>" +
     "<div class='col-md-3'></div>" +

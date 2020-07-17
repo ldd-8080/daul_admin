@@ -48,7 +48,7 @@
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/survey/surveyList.do">                    	
+	               <a class="animsition-link" href="/survey/surveyListPage.do">                    	
 	                 <span class="site-menu-title">설문조사</span>
 	               </a>
 	             </li> 

@@ -1,5 +1,7 @@
 package egovframework.com.survey.vo;
 
+import java.util.List;
+
 public class SurveyVo {
 	private String survey_idx;
 	private String title;
@@ -12,6 +14,16 @@ public class SurveyVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	private List<String> question_content;
+	
+	
+	
+	public List<String> getQuestion_content() {
+		return question_content;
+	}
+	public void setQuestion_content(List<String> question_content) {
+		this.question_content = question_content;
+	}
 	public String getSurvey_idx() {
 		return survey_idx;
 	}
@@ -77,6 +89,13 @@ public class SurveyVo {
 	}
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
+	}
+	@Override
+	public String toString() {
+		return "SurveyVo [survey_idx=" + survey_idx + ", title=" + title + ", content=" + content + ", survey_type="
+				+ survey_type + ", s_date=" + s_date + ", e_date=" + e_date + ", create_user=" + create_user
+				+ ", create_date=" + create_date + ", update_user=" + update_user + ", update_date=" + update_date
+				+ ", del_chk=" + del_chk + ", question_content=" + question_content + "]";
 	}
 	
 	

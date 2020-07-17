@@ -4,11 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,10 +41,23 @@ public class SurveyController {
 		return "survey/surveyList";
 	}
 	
-	@RequestMapping(value="/surveyRegist.do")
+	@RequestMapping(value="/surveyRegistPage.do")
 	public String surveyRegist(ModelMap model) {
 		model.addAttribute("surveyVo", new SurveyVo());
 		return "survey/surveyRegist";
 	}
+	
+	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
+	public ResponseEntity registSurvey(HttpSession session, @ModelAttribute SurveyVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		try {
+			System.out.println(vo);
+			
+	
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<>("error.", HttpStatus.OK);
+		}
+	}
+	
 	
 }
