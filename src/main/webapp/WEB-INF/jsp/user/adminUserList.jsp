@@ -44,6 +44,9 @@
 		            	</c:forEach>
 		            </tbody>
 		          </table>
+		          <div class="col-lg-12 mt-20">
+		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="adminUserCreate">등록</button>
+		          </div>
 		        </div>
 	    	</div>
 		</div>
@@ -56,8 +59,11 @@
 		} else {
 			var id = $(this).parent().children().eq(1).text();
 			
-			location.href = "${pageContext.request.contextPath}/user/adminUserDetailPage.do?id=" + id;
+			location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?id=" + id;
 		}
 	});
 
+	$("#adminUserCreate").click(function() {
+		location.href = "${pageContext.request.contextPath}/user/userRegistPage.do?auth_type=admin";
+	});
 </script>

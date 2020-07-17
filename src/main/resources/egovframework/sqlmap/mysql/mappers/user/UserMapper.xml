@@ -75,16 +75,6 @@
 			   )
 	</insert>
 	
-	<select id="selectUserList" resultType="Map">
-		SELECT user_seq
-		     , email
-		     , pw
-		     , nickname
-		     , phone_num
-		     , status
-		  FROM daul.out_user
-	</select>
-	
 	<select id="selectUser" resultType="egovframework.com.user.vo.UserVo">
 		SELECT user_id
 		     , name
@@ -112,6 +102,23 @@
 		  FROM daul.out_user
 		 WHERE nickname = #{nickname}
 		   AND pw = #{pw}
+	</select>
+	
+	<select id="selectUserList" parameterType="String" resultType="Map">
+		SELECT user_id
+		     , name
+		     , pw
+		     , email
+		     , phone
+		     , channel
+		     , reg_date
+		     , last_login_date
+		     , email_chk
+		     , talk_chk
+		     , sms_chk
+		     , auth_type
+		  FROM daul.user
+		 WHERE auth_type = #{auth_type}
 	</select>
 	
 	<select id="selectPublicUserList" resultType="Map">
@@ -147,4 +154,10 @@
 		  FROM daul.user
 		 WHERE auth_type = 'admin'
 	</select>
+	
+	<update id="updateUserPw">
+		UPDATE daul.user
+		   SET pw = #{pw}
+		 WHERE user_id = #{user_id}
+	</update>
 </mapper>

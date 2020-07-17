@@ -20,4 +20,8 @@ public interface UserService {
 	List<Map<String, String>> selectPublicUserList() throws Exception;
 
 	List<Map<String, String>> selectAdminUserList() throws Exception;
+
+	void updateUserPw(UserVo vo) throws Exception;
+
+	List<Map<String, String>> selectUserList(String auth_type) throws Exception;
 }

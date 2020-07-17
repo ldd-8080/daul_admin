@@ -54,4 +54,14 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 		return userMapper.selectAdminUserList();
 	}
 
+	@Override
+	public void updateUserPw(UserVo vo) throws Exception {
+		userMapper.updateUserPw(vo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectUserList(String auth_type) throws Exception {
+		return userMapper.selectUserList(auth_type);
+	}
+
 }

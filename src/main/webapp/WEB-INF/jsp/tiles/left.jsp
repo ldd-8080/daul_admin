@@ -21,12 +21,14 @@
                </a>
                <ul class="site-menu-sub">
                  <li class="site-menu-item">
-                   <a class="animsition-link"  href="/user/publicUserListPage.do">                   
+                   <!-- <a class="animsition-link"  href="/user/publicUserListPage.do"> -->                   
+                   <a class="animsition-link"  href="/user/userListPage.do?auth_type=public">                   
                      <span class="site-menu-title">일반회원</span>
                    </a>
                  </li>
                  <li class="site-menu-item">
-                   <a class="animsition-link" href="/user/adminUserListPage.do">                    
+                   <!-- <a class="animsition-link" href="/user/adminUserListPage.do"> -->                    
+                   <a class="animsition-link" href="/user/userListPage.do?auth_type=admin">                    
                      <span class="site-menu-title">관리자</span>
                    </a>
                  </li>

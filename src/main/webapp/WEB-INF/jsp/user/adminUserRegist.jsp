@@ -12,7 +12,7 @@
 	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
 	      <li class="breadcrumb-item">사용자</li>
 	      <li class="breadcrumb-item">관리자</li>
-	      <li class="breadcrumb-item active">관리자상세</li>
+	      <li class="breadcrumb-item active">관리자등록</li>
 	    </ol>
 	
 	    <div class="page-content">
@@ -50,7 +50,16 @@
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
-		    								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#pwChangeModal" id="pwChangeModalBtn">변경</button>
+		    								<form:input type="password" class="form-control" placeholder="영문자, 숫자 혼합 8~15자리" path="pw"/>
+		    								<form:errors path="pw"/>
+		    							</div>
+	    							</div>
+	    							<div class="form-group form-material row">
+	    								<div class="col-md-2"></div>
+		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
+		    							<div class="col-md-6">
+		    								<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
+		    								<span class="text-left" id="pwChk-error"></span>
 		    							</div>
 	    							</div>
 	    							<div class="form-group form-material row">
@@ -67,11 +76,11 @@
 		    								<form:input type="text" class="form-control" path="email"/>
 		    							</div>
 	    							</div>
-	    							<form:input type="hidden" path="auth_type"/>
+	    							<form:input type="hidden" path="channel" value="일반"/>
+	    							<form:input type="hidden" path="auth_type" value="admin"/>
 	    							<div class="form-group form-material row">
 	    								<div class="col-md-9 offset-md-9">
-		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" formaction="/user/update.do">저장 </button>
-		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" formaction="/user/delete.do">삭제 </button>
+		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userCreate" formaction="/user/create.do">등록 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 	    								</div>
 	    							</div>
@@ -85,44 +94,6 @@
 	</div>
 <!-- End Page -->
 </div>
-
-<!-- 비밀번호 변경 모달 -->
-<div class="modal fade" id="pwChangeModal" aria-hidden="true" aria-labelledby="pwChangeModal" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-center">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" id="modalCloseBtn" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
-        <h4 class="modal-title">비밀번호 변경</h4>
-      </div>
-      <div class="modal-body">
-    	<div class="col-md-1"></div>
-      	<form id="pwChangeForm">
-          <div class="form-group form-material row">
-			<div class="col-md-1"></div>
-			<label class="col-md-3 col-form-label">비밀번호 </label>
-			<div class="col-md-6">
-				<input type="password" class="form-control" id="pw" name="pw" placeholder="영문자, 숫자 혼합 8~15자리"/>
-			</div>
-		  </div>
-		  <div class="form-group form-material row">
-			<div class="col-md-1"></div>
-			<label class="col-md-3 col-form-label">비밀번호 확인 </label>
-			<div class="col-md-6">
-				<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
-				<span class="text-left" id="pw-chk-error"></span>
-			</div>
-		  </div>
-		  <input type="hidden" name="user_id" value="${userVo.user_id}"/>
-          <span class="text-left" id="chk-error"></span>
-          <button type="button" class="btn btn-primary btn-block mt-40 w-p50 float-right" id="pwChangeBtn">변경</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 비밀번호 변경 모달 끝 -->
 <script type="text/javascript">
 	var pwFlag = false;
 	var pwRule = /^(?=.*[a-z])(?=.*[0-9]).{8,15}$/;
@@ -132,21 +103,21 @@
 		var pwChk = $("#pw-chk").val();
 
 		if (pw !== pwChk) {
-			$("#pw-chk-error").text("비밀번호가 일치하지 않습니다.");
+			$("#pwChk-error").text("비밀번호가 일치하지 않습니다.");
 			pwFlag = true;
 			return;
 		} else {
-			$("#pw-chk-error").text("");
+			$("#pwChk-error").text("");
 			pwFlag = false;
 		}
 		
 		// 비밀번호가 빈값이 아닐때만 비밀번호 규칙 확인
 		if (pw !== "") {
 			if (!pwRule.test(pw)) {
-				$("#pw-chk-error").text("영문자, 숫자가 포함된 8~15자리로 입력해 주세요.");
+				$("#pwChk-error").text("영문자, 숫자가 포함된 8~15자리로 입력해 주세요.");
 				pwFlag = true;
 			} else {
-				$("#pw-chk-error").text("");
+				$("#pwChk-error").text("");
 				pwFlag = false;
 			}
 		}
@@ -160,48 +131,18 @@
 		passwordCheck();
 	});
 	
-	$("#userSave").click(function() {
-		if (!confirm("수정하시겠습니까?")) return false;
-	});
-	
-	$("#userDelete").click(function() {
-		if (!confirm("삭제하시겠습니까?")) return false;
-	});
-	
-	$("#userList").click(function() {
-		location.href = "${pageContext.request.contextPath}/user/userListPage.do?auth_type=admin";
-	});
-	
-	$("#pwChangeModalBtn").click(function() {
-		$("#pw").val("");
-		$("#pw-chk").val("");
-		$("#pw-chk-error").text("");
-	});
-	
-	$("#pwChangeBtn").click(function() {
+	$("#userCreate").click(function() {
 		passwordCheck();
 		
 		if (pwFlag) {
 			alert("비밀번호를 확인해주세요.");
-			return;
+			return false;
 		}
 		
-		if (!confirm("비밀번호를 변경하시겠습니까?")) return false;
-		
-		var request = $.ajax({
-			url: "/user/updateUserPw.do",
-			method: "post",
-			data: $("#pwChangeForm").serialize()
-		});
-		
-		request.done(function(data) {
-			console.log("DONE : ", data);
-			$("#modalCloseBtn").click();
-		});
-		
-		request.fail(function(error) {
-			console.log("FAIL : ", error);
-			alert("비밀번호 변경에 실패하였습니다.");
-		});
+		if (!confirm("등록하시겠습니까?")) return false;
+	});
+	
+	$("#userList").click(function() {
+		location.href = "${pageContext.request.contextPath}/user/userListPage.do?auth_type=admin";
 	});
 </script>
