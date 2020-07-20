@@ -1,5 +1,7 @@
 package egovframework.com.survey.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,13 +9,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +30,7 @@ import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value="/survey")
 public class SurveyController {
-	protected Log log = LogFactory.getLog(cmmnInterceptor.class);
+	protected Log log = LogFactory.getLog(SurveyController.class);
 	
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
@@ -50,44 +53,53 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
-	public ResponseEntity registSurvey(HttpSession session, @ModelAttribute SurveyVo vo,ModelMap model ,HttpServletRequest request, HttpServletResponse response, MultipartFile[] file) throws Exception{
+	public String registSurvey(HttpSession session, @ModelAttribute @Valid SurveyVo vo,ModelMap model ,HttpServletRequest request, 
+							   HttpServletResponse response, MultipartFile[] file, BindingResult bindingResult) throws Exception{
 
+		SurveyValidator surveyValidator = new SurveyValidator();
+		surveyValidator.validate(vo, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			return "survey/surveyRegist";
+		}
 		try {
-			
+	
+
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    vo.setCreate_user(userVo.getUser_id());		    
-
-			System.out.println(vo);
 			
-			String question_content = vo.getQuestion_content();
-			String[] questionArr = question_content.split(",");
+			String question_content_arr = vo.getQuestion_content();
+			String[] questionArr = question_content_arr.split(",");
 			
-			/*
-			 * 1.survey_idx 를 가져오기
-			 * 2.survey_main,survey_file 넣기
-			 * 3.questionArr 길이만큼 반복문 돌리
-			 * 4.qustion_idx뽑아서 survey_idx, question_idx, 항목내용 넣기
-			 * 
-			 */
+			vo.setSurvey_idx(surveyService.selectSurveyIdx());
 			
 			surveyService.registSurvey(vo,file);
+			
+			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
+			
 			for(int j = 0; j < questionArr.length ;j++) {
-				System.out.println(questionArr[j]);
+				String question_idx; 
+				String question_content;
+				
+				question_idx = vo.getSurvey_idx()+'-'+String.format("%02d",j+1);
+				question_content = questionArr[j];
+				
+				Map<String, Object> questionInfo = new HashMap<String, Object>();
+				
+				questionInfo.put("survey_idx", vo.getSurvey_idx());
+				questionInfo.put("question_idx", question_idx);
+				questionInfo.put("question_content", question_content);
+				questionList.add(questionInfo);			
 			}
 			
-	        for(int i=0; i<file.length; i++) {
-	            log.debug("================== file start ==================");
-	            log.debug("파일 이름: "+file[i].getName());
-	            log.debug("파일 실제 이름: "+file[i].getOriginalFilename());
-	            log.debug("파일 크기: "+file[i].getSize());
-	            log.debug("content type: "+file[i].getContentType());
-	            log.debug("================== file   END ==================");
-	        }
+			for(int i=0; i<questionList.size(); i++) {
+				surveyService.registQuestion(questionList.get(i));
+			}
 	        
-			return new ResponseEntity<>("success", HttpStatus.OK);
+			return "redirect:/survey/surveyList.do";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>("error.", HttpStatus.OK);
+			return "common/error.jsp";
 		}
 	}
 	

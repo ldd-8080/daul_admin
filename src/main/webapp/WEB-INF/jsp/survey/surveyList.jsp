@@ -42,7 +42,7 @@
 		            		<td id="seq_${status.index}">${result.survey_idx}</td>
 		            		<td>${result.title}</td>
 		            		<td>${result.content}</td>
-		            		<td>${result.s_date}-${result.e_date}</td>
+		            		<td>${result.s_date}&nbsp;-&nbsp;${result.e_date}</td>
 		            		<td>${result.create_date}</td>
 	            		</tr>
 		            	</c:forEach>

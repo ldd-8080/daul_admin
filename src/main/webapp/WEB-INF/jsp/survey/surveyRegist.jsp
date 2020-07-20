@@ -35,7 +35,7 @@
 									<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
 									<form:input type="text" class="form-control" path="title"/>
-									<form:errors path="title"/>
+									<form:errors style="color:red;" path="title"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -43,7 +43,7 @@
 									<label class="col-md-2 col-form-label">설명 </label>
 								<div class="col-md-8">
 									<form:textarea type="text" class="form-control" path="content" rows ="5"/>
-									<form:errors path="content"/>
+									<form:errors style="color:red;" path="content"/>
 								</div>   
 							</div>
 							<div class="form-group row">
@@ -64,13 +64,15 @@
 														<i class="icon md-calendar" aria-hidden="true"></i>
 														</span>
 													</div>
-												<input type="text" class="form-control" name="s_date" />
+												<form:input type="text" class="form-control" path="s_date" />
+												<form:errors style="color:red;" path="s_date"/>
 											</div>
 											<div class="input-group">
 												<div class="input-group-prepend">
 													<span calss="input-group-text"> &nbsp;_&nbsp;</span>
 												</div>
-												<input type="text" class="form-control" name="e_date" />
+												<form:input type="text" class="form-control" path="e_date" />
+												
 											</div>
 										</div>
 									</div>
@@ -117,4 +119,30 @@
 		</div>
 	</div>
 </div>
-	    	
+<script type="text/javascript">
+
+$("#registSurvey").click(function() {
+	
+	var rep_img = $("#input-file-now-custom-1").val();
+	
+	if(typeof rep_img == "undefined" || rep_img == '' || rep_img == null){
+		alert("대표사진을 넣어주세요.");
+		return false;
+	}
+
+		
+	if($("#question-list").children().length < 2){
+		alert("항목을 2개 이상 추가해주세요.");
+		return false;
+	}else{
+		
+	}
+	if (!confirm("등록하시겠습니까?")) return false;
+});
+
+
+
+
+
+
+</script>

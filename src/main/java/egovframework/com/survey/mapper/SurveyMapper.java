@@ -12,5 +12,6 @@ public interface SurveyMapper {
 	public String selectSurveyIdx() throws Exception;
 	void registSurvey(SurveyVo vo) throws Exception;
 	void insertFile(Map<String,Object> map) throws Exception;
+	void registQuestion(Map<String,Object> map) throws Exception;
 
 }

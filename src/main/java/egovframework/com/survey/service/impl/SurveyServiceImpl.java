@@ -21,10 +21,6 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 
 	@Resource(name="surveyMapper")
 	private SurveyMapper surveyMapper;
-	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
-	
 	@Override
 	public List<Map<String, String>> selectSurveyList() throws Exception {
 		
@@ -37,8 +33,7 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	@Override
 	public void registSurvey(SurveyVo vo, MultipartFile[] file ) throws Exception {
 		
-		System.out.println("surveyMapper.selectSurveyIdx() === " + surveyMapper.selectSurveyIdx() );
-		vo.setSurvey_idx(surveyMapper.selectSurveyIdx());
+		
 		surveyMapper.registSurvey(vo);
 		
 		FileVo fileVo = new FileVo();
@@ -46,14 +41,27 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		fileVo.setCreate_user(vo.getCreate_user());
 		fileVo.setIdx(vo.getSurvey_idx());
 		
+		FileUtils fileUtils = new FileUtils();
 		List<Map<String, Object>> fileList = fileUtils.parseFileInfo(fileVo, file);
 		System.out.println("fileList == " + fileList);
 		for(int i = 0; i<fileList.size(); i++) {
 			surveyMapper.insertFile(fileList.get(i));
-		}
-		
+		}		
+	}
+
+	@Override
+	public String selectSurveyIdx() throws Exception {
+		String surveyIdx = surveyMapper.selectSurveyIdx();
+		return surveyIdx;
+	}
+
+	@Override
+	public void registQuestion(Map<String, Object> map) throws Exception {
+		surveyMapper.registQuestion(map);
 		
 	}
+	
+	
 	
 
 	

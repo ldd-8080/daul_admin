@@ -3,9 +3,18 @@
 <mapper
 	namespace="egovframework.com.survey.mapper.SurveyMapper">
 	
-	<select id="selectSurveyList">
-		SELECT *
+	<select id="selectSurveyList" resultType="Map">
+		SELECT 
+			survey_idx,
+			title,
+			content,
+			DATE_FORMAT(s_date, '%Y-%m-%d') as s_date,
+			DATE_FORMAT(e_date, '%Y-%m-%d') as e_date,
+			survey_type,
+			create_user,
+			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date	
 		FROM daul.survey_main
+		WHERE del_chk = 'N'
 	</select>
 	
 	<select id="selectSurveyIdx" resultType="String">
@@ -64,6 +73,22 @@
             SYSDATE(),
             'REP'            
         )
+	</insert>
+	
+	<insert id = "registQuestion" parameterType = "hashmap">
+		INSERT INTO survey_question
+		(
+			question_idx,
+			survey_idx,
+			question_content
+		)
+		VALUES
+		(
+			#{question_idx},
+			#{survey_idx},
+			#{question_content}
+		)
+		
 	</insert>
 	
 	

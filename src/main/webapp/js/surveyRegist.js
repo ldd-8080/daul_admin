@@ -5,7 +5,7 @@ function addQuestion() {
     var str = " <div class='form-group row'>" +
     "<div class='col-md-3'></div>" +
     "<div class='col-md-7'>" +
-    "	<input type='text' class='form-control' name='question_content' />"+
+    "	<input type='text' class='form-control' name='question_content' id = 'question_content'/>"+
     "</div>"+
     "<div class='col-md-2'>" + 
     "<button type='button' class='btn btn-primary' id = 'question-delete' >-</button>"+

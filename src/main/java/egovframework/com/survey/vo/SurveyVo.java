@@ -1,9 +1,10 @@
 package egovframework.com.survey.vo;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
+
 public class SurveyVo {
+	
 	private String survey_idx;
 	private String title;
 	private String content;
@@ -15,7 +16,9 @@ public class SurveyVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+
 	private String question_content;
+
 	private String surveyFile;
 	
 	private List<String> question_contentList;
