@@ -27,10 +27,10 @@ public class FileUtils {
  
 	@Value("${file.uploadpath}")
 	private String filePath;
-    public List<Map<String, Object>> parseFileInfo(BoardVo vo, MultipartFile[] file) throws Exception {
+    public List<Map<String, Object>> parseFileInfo(FileVo vo, MultipartFile[] file) throws Exception {
 
-        String boardIDX = String.valueOf(vo.getBoard_idx());
-        String creaID = (String) vo.getReg_user();
+        String IDX = String.valueOf(vo.getIdx());
+        String creaID = (String) vo.getCreate_user();
         
         List<Map<String, Object>> fileList = new ArrayList<Map<String, Object>>();
 
@@ -56,11 +56,11 @@ public class FileUtils {
          
             Map<String, Object> fileInfo = new HashMap<String, Object>();
  
-            fileInfo.put("BOARD_IDX", boardIDX);
-            fileInfo.put("ORG_FILE_NAME", orgFileName);
-            fileInfo.put("SAVE_FILE_NAME", saveFileName);
-            fileInfo.put("FILE_SIZE", saveFileSize);
-            fileInfo.put("CREA_ID", creaID);
+            fileInfo.put("idx", IDX);
+            fileInfo.put("org_file_name", orgFileName);
+            fileInfo.put("save_file_name", saveFileName);
+            fileInfo.put("file_size", saveFileSize);
+            fileInfo.put("create_user", creaID);
             fileList.add(fileInfo);
         
         }

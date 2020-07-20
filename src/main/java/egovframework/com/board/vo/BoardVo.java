@@ -15,7 +15,6 @@ public class BoardVo {
 	private String board_idx;
 	private String file_idx;
 	
-	
 	public String getSave_file_name() {
 		return save_file_name;
 	}

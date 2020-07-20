@@ -13,6 +13,7 @@ import egovframework.com.board.mapper.BoardMapper;
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
 import egovframework.com.cmmn.util.FileUtils;
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("boardService")
@@ -51,8 +52,12 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public void insertBoard(BoardVo vo, MultipartFile[] file) throws Exception{
 		vo.setBoard_idx(boardMapper.selectBoardIdx());
 		boardMapper.insertBoard(vo);
+		
+		FileVo fileVo = new FileVo();
+		fileVo.setCreate_user(vo.getReg_user());
+		fileVo.setIdx(vo.getBoard_idx());
 		FileUtils fileUtils = new FileUtils();
-		List<Map<String, Object>> fileList = fileUtils.parseFileInfo(vo, file);
+		List<Map<String, Object>> fileList = fileUtils.parseFileInfo(fileVo, file);
 		for(int i = 0; i<fileList.size(); i++) {
 			boardMapper.insertFile(fileList.get(i));
 		}

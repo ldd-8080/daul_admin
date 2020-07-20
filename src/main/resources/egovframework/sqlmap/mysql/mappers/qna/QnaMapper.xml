@@ -37,9 +37,7 @@
 			ref,
 			indent,
 			create_user,
-			create_date,
-			update_user,
-			update_date	
+			create_date
 		)
 		VALUES
 		(
@@ -50,8 +48,6 @@
 			#{ref},
 			1,
 			#{create_user},
-			sysdate(),
-			#{update_user},
 			sysdate()
 			
 		) 
@@ -78,7 +74,7 @@
 			qna_idx = #{qna_idx}
 	</update>
 	
-		<update id = "deleteQnaAll">
+	<update id = "deleteQnaAll">
 		UPDATE
 			daul_qna
 		SET

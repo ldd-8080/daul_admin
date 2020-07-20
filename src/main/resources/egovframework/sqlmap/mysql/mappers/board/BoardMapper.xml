@@ -65,11 +65,11 @@
         )
         VALUES
         (
-            #{ BOARD_IDX},
+            #{ IDX},
             #{ ORG_FILE_NAME},
             #{ SAVE_FILE_NAME},
             #{ FILE_SIZE},
-            #{ CREA_ID},
+            #{ CREATE_USER},
             SYSDATE(),
             SYSDATE()
         )

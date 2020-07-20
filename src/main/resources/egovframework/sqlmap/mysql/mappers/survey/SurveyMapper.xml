@@ -7,4 +7,64 @@
 		SELECT *
 		FROM daul.survey_main
 	</select>
+	
+	<select id="selectSurveyIdx" resultType="String">
+		SELECT CONCAT('SV-',LPAD(count(*)+1,'6','0')) as 'survey_idx'
+		FROM survey_main 
+	</select>
+	
+	<insert id = "registSurvey">
+		INSERT INTO survey_main
+		(
+			survey_idx,
+			title,
+			content,
+			survey_type,
+			s_date,
+			e_date,
+			create_user,
+			create_date,
+			del_chk
+		)
+		VALUES
+		(
+			#{survey_idx},
+			#{title},
+			#{content},
+			#{survey_type},
+			#{s_date},
+			#{e_date},
+			#{create_user},
+			sysdate(),
+			'N'
+		)
+	
+	</insert>
+		
+	<insert id = "insertFile" parameterType = "hashmap">
+		INSERT INTO survey_attach
+        (
+            survey_idx,
+            org_file_name,
+            save_file_name,
+            file_size,
+            create_user,
+            del_chk,
+            create_date,
+            attach_type
+        )
+        VALUES
+        (
+            #{ IDX},
+            #{ ORG_FILE_NAME},
+            #{ SAVE_FILE_NAME},
+            #{ FILE_SIZE},
+            #{ CREATE_USER},
+            'N',
+            SYSDATE(),
+            'REP'            
+        )
+	</insert>
+	
+	
 </mapper>
