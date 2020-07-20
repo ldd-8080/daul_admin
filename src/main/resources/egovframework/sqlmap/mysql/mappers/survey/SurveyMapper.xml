@@ -55,11 +55,11 @@
         )
         VALUES
         (
-            #{ IDX},
-            #{ ORG_FILE_NAME},
-            #{ SAVE_FILE_NAME},
-            #{ FILE_SIZE},
-            #{ CREATE_USER},
+            #{ idx},
+            #{ org_file_name},
+            #{ save_file_name},
+            #{ file_size},
+            #{ create_user},
             'N',
             SYSDATE(),
             'REP'            
