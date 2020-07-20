@@ -64,7 +64,7 @@
 		if ($(this).get(0).cellIndex === 0) {
 		} else {
 			var id = $(this).parent().children().eq(1).text();
-			console.log(id);
+			
 			location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?id=" + id;
 		}
 	});
