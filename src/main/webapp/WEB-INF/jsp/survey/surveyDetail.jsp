@@ -159,7 +159,7 @@
 				              <div class="col-md-12">
 				                <!-- Example asProgress -->
 				                <div class="example-wrap">
-				              
+				              `
 				              <div class="row row-lg">
 				              <div class="col-md-12">
 				                <!-- Example asProgress -->
