@@ -16,7 +16,7 @@
 	      <li class="breadcrumb-item active">설문조사 상세</li>
 	    </ol>
         <div class="panel">
-	          <div class="panel-body container-fluid">
+	          <div class="panel-body container-fluid"> 
 
 	    <div class="example-wrap">
                   <div class="nav-tabs-horizontal" data-plugin="tabs">
