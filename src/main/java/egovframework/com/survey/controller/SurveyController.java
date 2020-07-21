@@ -1,5 +1,6 @@
 package egovframework.com.survey.controller;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.survey.service.SurveyService;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.com.user.vo.UserVo;
@@ -54,7 +55,7 @@ public class SurveyController {
 	
 	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
 	public String registSurvey(HttpSession session, @ModelAttribute @Valid SurveyVo vo,ModelMap model ,HttpServletRequest request, 
-							   HttpServletResponse response, MultipartFile[] file, BindingResult bindingResult) throws Exception{
+							   HttpServletResponse response, MultipartFile[] repFile, BindingResult bindingResult) throws Exception{
 
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
@@ -73,7 +74,7 @@ public class SurveyController {
 			
 			vo.setSurvey_idx(surveyService.selectSurveyIdx());
 			
-			surveyService.registSurvey(vo,file);
+			surveyService.registSurvey(vo,repFile);
 			
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
 			
@@ -103,5 +104,37 @@ public class SurveyController {
 		}
 	}
 	
+	@RequestMapping(value="/surveyDetail.do", method=RequestMethod.GET)
+	public String surveyDetail(ModelMap model, @RequestParam("survey_idx") String survey_idx) throws Exception{
+		SurveyVo surveyVo = new SurveyVo();
+		List<Map<String,String>> surveyQuestionList = new ArrayList();
+		try {
+			surveyVo.setSurvey_idx(survey_idx);
+			surveyVo = surveyService.selectSurveyDetail(surveyVo);
+			
+			surveyQuestionList = surveyService.selectSurveyQuestion(surveyVo);
 	
+		
+			
+		}catch(Exception e) {
+			
+		}
+		
+		model.addAttribute("surveyVo",surveyVo);
+		model.addAttribute("surveyQuestionList",surveyQuestionList);
+		
+		return "survey/surveyDetail";
+	}
+	
+	@RequestMapping(value="/getImg.do")
+	public void getImage( HttpServletRequest request, HttpServletResponse response)
+	throws Exception {
+	// TODO Auto-generated method stub
+	response.setContentType("application/png");
+	String url = "file:///Users/a2/attach/";
+	String filename = "1e0a4d203dd64e138f17906a5f1a4b63.png";
+	URL fileUrl = new URL(url+filename);
+	IOUtils.copy( fileUrl.openStream(), response.getOutputStream());
+	}
+			
 }

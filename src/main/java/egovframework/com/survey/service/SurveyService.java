@@ -12,4 +12,6 @@ public interface SurveyService {
 	public void registSurvey(SurveyVo vo, MultipartFile[] file) throws Exception;
 	public String selectSurveyIdx() throws Exception;
 	public void registQuestion(Map<String,Object> map) throws Exception;
+	public SurveyVo selectSurveyDetail(SurveyVo vo) throws Exception;
+	public List<Map<String,String>> selectSurveyQuestion(SurveyVo vo) throws Exception;
 }

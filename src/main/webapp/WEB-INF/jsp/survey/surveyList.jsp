@@ -60,9 +60,9 @@
 	$("#boardTable tr td").click(function(event) {
 		if ($(this).get(0).cellIndex === 0) {
 		} else {
-			var board_seq = $(this).parent().children().eq(0).text();
+			var survey_idx = $(this).parent().children().eq(0).text();
 			
-			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?board_seq=" + board_seq;
+			location.href = "${pageContext.request.contextPath}/survey/surveyDetail.do?survey_idx=" + survey_idx;
 		}
 	});
 

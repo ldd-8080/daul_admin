@@ -6,6 +6,7 @@ import java.util.List;
 public class SurveyVo {
 	
 	private String survey_idx;
+	private String question_idx;
 	private String title;
 	private String content;
 	private String survey_type;
@@ -25,6 +26,12 @@ public class SurveyVo {
 	
 	
 	
+	public String getQuestion_idx() {
+		return question_idx;
+	}
+	public void setQuestion_idx(String question_idx) {
+		this.question_idx = question_idx;
+	}
 	public String getSurveyFile() {
 		return surveyFile;
 	}

@@ -60,6 +60,21 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		surveyMapper.registQuestion(map);
 		
 	}
+
+	@Override
+	public SurveyVo selectSurveyDetail(SurveyVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return surveyMapper.selectSurveyDetail(vo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectSurveyQuestion(SurveyVo vo) throws Exception {
+		
+		List<Map<String,String>> list = new ArrayList();
+		
+		list = surveyMapper.selectSurveyQuestionList(vo);
+		return list;
+	}
 	
 	
 	

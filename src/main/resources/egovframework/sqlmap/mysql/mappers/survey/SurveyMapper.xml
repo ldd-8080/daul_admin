@@ -91,5 +91,26 @@
 		
 	</insert>
 	
+	<select id="selectSurveyDetail" resultType="egovframework.com.survey.vo.SurveyVo">
+		SELECT
+			survey_idx,
+			title,
+			content,
+			DATE_FORMAT(s_date, '%Y-%m-%d') as s_date,
+			DATE_FORMAT(e_date, '%Y-%m-%d') as e_date,
+			survey_type
+		FROM daul.survey_main
+		WHERE survey_idx = #{survey_idx}
+	
+	</select>
+	
+	<select id="selectSurveyQuestionList" resultType="Map">
+		SELECT 
+			question_idx,
+			question_content
+		FROM daul.survey_question
+		WHERE survey_idx = #{survey_idx}
+	</select>
+	
 	
 </mapper>

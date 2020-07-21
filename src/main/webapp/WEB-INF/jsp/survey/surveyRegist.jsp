@@ -50,7 +50,7 @@
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">대표이미지 </label>
 									<div class="col-md-8">
-		                    			<input type="file" id="input-file-now-custom-1" name="file" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+		                    			<input type="file" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
 		                  			</div>
 							</div>
 		                  	<div class="form-group row">
