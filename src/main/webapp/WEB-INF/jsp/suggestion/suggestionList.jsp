@@ -36,7 +36,7 @@
 		            <tbody>
 		            	<c:forEach var="suggestion" items="${suggestionList}" varStatus="status">
 		            	<tr>
-		            		<td id="seq_${status.index}">${suggestion.survey_idx}</td>
+		            		<td id="seq_${status.index}">${suggestion.suggestion_idx}</td>
 		            		<td>${suggestion.create_user}</td>
 		            		<td>${suggestion.title}</td>
 		            		<td>${suggestion.content}</td>
