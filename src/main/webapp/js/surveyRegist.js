@@ -1,5 +1,16 @@
 var idx = $("#question-list").children().length;
 
+$(document).ready(function(){
+	
+    $("button[id='question-delete']").on("click", function(e) {
+        e.preventDefault();
+        deleteFile($(this));
+    });
+    function deleteFile(obj) {
+        obj.parent().parent().remove();
+    }
+});
+
 function addQuestion() {
 	
     var str = " <div class='form-group row'>" +
@@ -18,10 +29,11 @@ function addQuestion() {
         e.preventDefault();
         deleteFile($(this));
     });
-    
     function deleteFile(obj) {
         obj.parent().parent().remove();
     }
+    
+  
     
     idx++;
 }

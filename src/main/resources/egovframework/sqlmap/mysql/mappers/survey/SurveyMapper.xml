@@ -71,7 +71,7 @@
             #{ create_user},
             'N',
             SYSDATE(),
-            'REP'            
+            #{ attach_type}           
         )
 	</insert>
 	
@@ -112,5 +112,29 @@
 		WHERE survey_idx = #{survey_idx}
 	</select>
 	
+	<update id="updateSurvey">
+		UPDATE daul.survey_main
+		   SET title = #{title},
+		       content = #{content},
+		       survey_type = #{survey_type},
+		       s_date = #{s_date},
+		       e_date = #{e_date},
+		       update_user = #{update_user},
+		       update_date = sysdate()
+		 WHERE survey_idx = #{survey_idx}
+	</update>
 	
+	<delete id = "deleteSurveyQuestion">
+		DELETE FROM daul.survey_question
+		WHERE survey_idx =  #{survey_idx}
+	</delete>
+	
+	<select id = "selectSurveyResult"  resultType="Map">
+		SELECT a.question_idx, a.question_content, count(a.question_content) as question_count
+		FROM survey_question a
+		LEFT JOIN survey_participation b 
+		ON a.question_idx = b.question_idx
+		WHERE a.survey_idx = #{survey_idx}
+		GROUP BY a.question_content,a.question_idx 
+	</select>
 </mapper>

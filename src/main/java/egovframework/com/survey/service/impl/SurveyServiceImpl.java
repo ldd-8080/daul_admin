@@ -50,6 +50,13 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	}
 
 	@Override
+	public void updateSurvey(SurveyVo vo, MultipartFile[] file) throws Exception {
+		// TODO Auto-generated method stub
+		surveyMapper.updateSurvey(vo);
+	}
+	
+	
+	@Override
 	public String selectSurveyIdx() throws Exception {
 		String surveyIdx = surveyMapper.selectSurveyIdx();
 		return surveyIdx;
@@ -75,7 +82,23 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		list = surveyMapper.selectSurveyQuestionList(vo);
 		return list;
 	}
-	
+
+	@Override
+	public void deleteSurveyQuestion(SurveyVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		surveyMapper.deleteSurveyQuestion(vo);
+		
+	}
+
+	@Override
+	public List<Map<String, String>> selectSurveyResult(SurveyVo vo) throws Exception {
+		List<Map<String,String>> list = new ArrayList();
+		
+		list = surveyMapper.selectSurveyResult(vo);
+		return list;
+	}
+
+
 	
 	
 

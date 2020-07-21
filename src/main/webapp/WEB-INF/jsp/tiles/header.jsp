@@ -44,7 +44,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fileupload/dropify.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datepicker/bootstrap-datepicker.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/select2/select2.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select/bootstrap-select.css">        
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select/bootstrap-select.css">  
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/progress-bars.css">      
 <!-- Fonts -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/font-awesome/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/material-design/material-design.min.css">

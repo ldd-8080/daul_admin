@@ -35,6 +35,7 @@
 								<div class="panel">
 									<div class="panel-body">
 										<form:form method="post" modelAttribute="surveyVo" enctype="multipart/form-data">
+										<form:input type="hidden" path="survey_idx"/>
 											<div class="form-group row">
 												<div class="col-md-1"></div>
 													<label class="col-md-2 col-form-label">작성자 </label>
@@ -70,7 +71,7 @@
 												<div class="col-md-1"></div>
 													<label class="col-md-2 col-form-label">대표이미지 </label>
 													<div class="col-md-8">
-						                    			<input type="file" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+						                    			<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
 						                  			</div>
 											</div>
 						                  	<div class="form-group row">
@@ -140,7 +141,7 @@
 											
 								            <div class="form-group form-material row">
 												<div class="col-md-9 offset-md-9">
-													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" formaction="/survey/registSurvey.do">수정 </button>
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" formaction="/survey/updateSurvey.do">수정 </button>
 													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 												</div>
 											</div>
@@ -152,12 +153,45 @@
 							</div>
 						</div>
                       </div>
-                      <img src="/survey/getImg.do"/>
+                      <!--두번째탭 -->
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                        Negant parvos fructu nostram mutans supplicii ac dissentias, maius tibi licebit
-                        ruinae philosophia. Salutatus repellere titillaret expetendum
-                        ipsi. Cupiditates intellegam exercitumque privatio concederetur,
-                        sempiternum, verbis malint dissensio nullas noctesque earumque.
+                      <div class="row row-lg">
+				              <div class="col-md-12">
+				                <!-- Example asProgress -->
+				                <div class="example-wrap">
+				              
+				                  <div class="row row-lg">
+				                    <div class="col-md-6">
+				                      <div class="example-wrap">
+				                        <h6 class="font-size-16">Percentage</h6>
+				                        <div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">
+				                          <div class="progress-bar" aria-valuemin="-100" aria-valuemax="0" aria-valuenow="-90"
+				                            role="progressbar">
+				                            <span class="progress-label"></span>
+				                          </div>
+				                        </div>
+				                        
+				                      </div>
+				                    </div>
+				                  </div>
+				                <!-- End Example asProgress -->
+				              </div> 
+				              <table>
+				              <thead>
+					              <tr>
+					                <th>투표수</th>
+					              </tr>
+					           </thead>
+				            <tbody>
+						        <c:forEach var="result" items="${surveyResult}" varStatus="status">
+						            	<tr id="question_count">
+						            		<td>${result.question_count}</td>
+					            		</tr>
+				            	</c:forEach>
+		            		</tbody>
+		            		</table>
+				            </div>
+				            </div>
                       </div>
                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                         Benivole horrent tantalo fuisset adamare fugiendam tractatos indicaverunt animis
@@ -174,5 +208,6 @@
 </div>
 
 <script type="text/javascript">
-
+/* 	var question_count = document.getElementById("#question_count").value;
+	console.log(question_count); */
 </script>
