@@ -1,10 +1,14 @@
 package egovframework.com.suggestion.controller;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -153,5 +157,16 @@ public class SuggestionController {
 		}
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getImg.do")
+	public void getImage( HttpServletRequest request, HttpServletResponse response)
+	throws Exception {
+	// TODO Auto-generated method stub
+	response.setContentType("application/png");
+	String url = "file:///Users/a1/attach/";
+	String filename = "59e357f2227e41f6beaf0d907cb6e02a.jpg";
+	URL fileUrl = new URL(url+filename);
+	IOUtils.copy( fileUrl.openStream(), response.getOutputStream());
 	}
 }

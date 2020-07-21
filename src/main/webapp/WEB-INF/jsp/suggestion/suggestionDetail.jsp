@@ -84,6 +84,12 @@
 </div>
 
 <script type="text/javascript">
+	$(window).on("load", function() {
+		var _repFileTarget = $("div[class='dropify-preview']");
+		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do'>");
+		_repFileTarget.attr("style", "display:block");
+	});
+	
 	//파일정보 가져오기
 	var fileList = new Array();
 	var public_file = {};
