@@ -53,4 +53,31 @@
 		     , #{attach_type}
 		     )
 	</insert>
+	
+	<select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
+		SELECT *
+		  FROM daul.suggestion_main
+		 WHERE del_chk != 'Y'
+	</select>
+	
+	<select id="selectSuggestion" resultType="egovframework.com.suggestion.vo.SuggestionVo">
+		SELECT *
+		  FROM daul.suggestion_main
+		 WHERE del_chk != 'Y'
+		   AND suggestion_idx = #{suggestion_idx}
+	</select>
+	
+	<select id="selectSuggestionAttach" resultType="hashmap">
+		SELECT *
+		  FROM daul.suggestion_attach
+		 WHERE del_chk != 'Y'
+		   AND suggestion_idx = #{idx}
+	</select>
+	
+	<update id="deleteFile">
+		UPDATE daul.suggestion_attach
+		   SET del_chk = 'Y'
+		 WHERE suggestion_idx = #{idx}
+		   AND save_file_name = #{save_file_name}
+	</update>
 </mapper>

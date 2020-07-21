@@ -37,17 +37,18 @@ public class FileUtils {
     	
     	List<Map<String, Object>> fileList = new ArrayList<Map<String, Object>>();
     	
-    	File target = new File("/Users/a1/attach/");
+    	File target = new File(filePath);
     	if(!target.exists()) target.mkdirs();
     	
     	// 첫번째 파일
     	if (file != null) {
     		for(int i=0; i<file.length; i++) {
+    			Long saveFileSize = file[i].getSize();
+    			if (saveFileSize == 0) continue;
     			
     			String orgFileName = file[i].getOriginalFilename();
     			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
     			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-    			Long saveFileSize = file[i].getSize();
     			
     			log.debug("================== file start ==================");
     			log.debug("파일 실제 이름: "+orgFileName);
@@ -56,7 +57,7 @@ public class FileUtils {
     			log.debug("content type: "+file[i].getContentType());
     			log.debug("================== file   END ==================");
     			
-    			target = new File("/Users/a1/attach/", saveFileName);
+    			target = new File(filePath, saveFileName);
     			file[i].transferTo(target);
     			
     			Map<String, Object> fileInfo = new HashMap<String, Object>();
@@ -75,11 +76,12 @@ public class FileUtils {
     	// 두번째 파일
     	if (file2 != null) {
     		for(int i=0; i<file2.length; i++) {
+    			Long saveFileSize = file2[i].getSize();
+    			if (saveFileSize == 0) continue;
     			
     			String orgFileName = file2[i].getOriginalFilename();
     			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
     			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-    			Long saveFileSize = file2[i].getSize();
     			
     			log.debug("================== file2 start ==================");
     			log.debug("파일 실제 이름: "+orgFileName);
@@ -88,7 +90,7 @@ public class FileUtils {
     			log.debug("content type: "+file2[i].getContentType());
     			log.debug("================== file2   END ==================");
     			
-    			target = new File("/Users/a1/attach/", saveFileName);
+    			target = new File(filePath, saveFileName);
     			file2[i].transferTo(target);
     			
     			Map<String, Object> fileInfo = new HashMap<String, Object>();
