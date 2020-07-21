@@ -160,38 +160,27 @@
 				                <!-- Example asProgress -->
 				                <div class="example-wrap">
 				              
+				              <div class="row row-lg">
+				              <div class="col-md-12">
+				                <!-- Example asProgress -->
+				                <div class="example-wrap">
+				              
 				                  <div class="row row-lg">
 				                    <div class="col-md-6">
-				                      <div class="example-wrap">
-				                        <h6 class="font-size-16">Percentage</h6>
-				                        <div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">
-				                          <div class="progress-bar" aria-valuemin="-100" aria-valuemax="0" aria-valuenow="-90"
-				                            role="progressbar">
-				                            <span class="progress-label"></span>
-				                          </div>
-				                        </div>
-				                        
+				                      <div class="example-wrap" id = "surveyResultDiv">
+				                      
+				                      
+				                      
 				                      </div>
+				                     </div>
 				                    </div>
+				                   </div>
 				                  </div>
-				                <!-- End Example asProgress -->
-				              </div> 
-				              <table>
-				              <thead>
-					              <tr>
-					                <th>투표수</th>
-					              </tr>
-					           </thead>
-				            <tbody>
-						        <c:forEach var="result" items="${surveyResult}" varStatus="status">
-						            	<tr id="question_count">
-						            		<td>${result.question_count}</td>
-					            		</tr>
-				            	</c:forEach>
-		            		</tbody>
-		            		</table>
-				            </div>
-				            </div>
+				                 </div>
+				               
+				            
+				            
+				            
                       </div>
                       <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                         Benivole horrent tantalo fuisset adamare fugiendam tractatos indicaverunt animis
@@ -210,4 +199,51 @@
 <script type="text/javascript">
 /* 	var question_count = document.getElementById("#question_count").value;
 	console.log(question_count); */
+	
+	
+	
+	
+	//파일정보 가져오기
+	var ResultList = new Array();
+	var sumCount= 0;
+	var ResultPerList = new Array();
+	<c:forEach var="result" items="${surveyResult}">
+		var result = {};
+		result.question_content = "${result.question_content}";
+		result.question_count = "${result.question_count}";
+		ResultList.push(result);
+	</c:forEach>
+	
+	if (ResultList.length > 0) {
+		for (var result of ResultList) {
+			sumCount += parseInt(result.question_count);
+		}
+		
+		for (var result2 of ResultList){
+			console.log((result2.question_count / sumCount) * 100);
+			result2.result_per = 100-((result2.question_count / sumCount) * 100);
+			if(isNaN(result2.result_per))result2.result_per=100;
+			ResultPerList.push(result2);
+		}
+	}
+	
+	console.log(ResultPerList);
+	
+	
+	if(ResultPerList.length > 0){
+		for(var resultPer of ResultPerList){
+			console.log(resultPer.question_content);
+			var str = '<h6 class="font-size-16">'+resultPer.question_content+' ('+resultPer.question_count+'표)</h6>'+
+			'<div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">'+
+			'<div class="progress-bar" aria-valuemin="-100" aria-valuemax="0" aria-valuenow="-' + resultPer.result_per+'" role="progressbar">'+
+			' <span class="progress-label"></span>' +
+			'</div>'+
+			'</div>';
+			
+			$("#surveyResultDiv").append(str);
+		}
+	}
+	
+	
+	
 </script>

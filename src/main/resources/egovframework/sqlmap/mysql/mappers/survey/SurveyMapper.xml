@@ -130,11 +130,12 @@
 	</delete>
 	
 	<select id = "selectSurveyResult"  resultType="Map">
-		SELECT a.question_idx, a.question_content, count(a.question_content) as question_count
+		SELECT a.question_idx, a.question_content, count(b.question_idx) as question_count
 		FROM survey_question a
 		LEFT JOIN survey_participation b 
 		ON a.question_idx = b.question_idx
 		WHERE a.survey_idx = #{survey_idx}
 		GROUP BY a.question_content,a.question_idx 
+		ORDER BY question_idx
 	</select>
 </mapper>

@@ -37,7 +37,7 @@ public class FileUtils {
     	
     	List<Map<String, Object>> fileList = new ArrayList<Map<String, Object>>();
     	
-    	File target = new File(filePath);
+    	File target = new File("/Users/a2/attach");
     	if(!target.exists()) target.mkdirs();
     	
     	// 첫번째 파일
@@ -57,7 +57,7 @@ public class FileUtils {
     			log.debug("content type: "+file[i].getContentType());
     			log.debug("================== file   END ==================");
     			
-    			target = new File(filePath, saveFileName);
+    			target = new File("/Users/a2/attach", saveFileName);
     			file[i].transferTo(target);
     			
     			Map<String, Object> fileInfo = new HashMap<String, Object>();
@@ -90,7 +90,7 @@ public class FileUtils {
     			log.debug("content type: "+file2[i].getContentType());
     			log.debug("================== file2   END ==================");
     			
-    			target = new File(filePath, saveFileName);
+    			target = new File("/Users/a2/attach", saveFileName);
     			file2[i].transferTo(target);
     			
     			Map<String, Object> fileInfo = new HashMap<String, Object>();
