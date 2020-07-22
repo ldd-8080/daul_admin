@@ -21,5 +21,5 @@ public interface SurveyService {
 	public List<Map<String,String>> selectParticipation(SurveyVo vo) throws Exception;
 	public void deleteParticipation(SurveyVo vo) throws Exception;
 	public List<Map<String,String>> selectSurveyFile(FileVo vo) throws Exception;
-		
+	public void insertFile(FileVo fileVo) throws Exception ;	
 }

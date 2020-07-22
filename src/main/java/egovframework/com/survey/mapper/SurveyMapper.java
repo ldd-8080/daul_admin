@@ -12,7 +12,6 @@ public interface SurveyMapper {
 	List<Map<String,String>> selectSurveyList() throws Exception;
 	public String selectSurveyIdx() throws Exception;
 	void registSurvey(SurveyVo vo) throws Exception;
-	void insertFile(FileVo vo) throws Exception;
 	void registQuestion(Map<String,Object> map) throws Exception;
 	public SurveyVo selectSurveyDetail(SurveyVo vo) throws Exception;
 	public List<Map<String,String>> selectSurveyQuestionList(SurveyVo vo) throws Exception;
@@ -22,5 +21,7 @@ public interface SurveyMapper {
 	public List<Map<String,String>> selectParticipation(SurveyVo vo) throws Exception;
 	public void deleteParticipation(SurveyVo vo) throws Exception;
 	public List<Map<String, String>> selectSurveyFile(FileVo vo) throws Exception;
-	
+
+	void insertFile(FileVo fileVo) throws Exception;
+
 }

@@ -60,8 +60,7 @@ public class SurveyController {
 	}
 	@Transactional
 	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
-	public String registSurvey(HttpSession session, @ModelAttribute @Valid SurveyVo vo,ModelMap model ,HttpServletRequest request, 
-							   HttpServletResponse response, MultipartFile[] repFile, BindingResult bindingResult) throws Exception{
+	public String registSurvey(HttpSession session, @ModelAttribute  SurveyVo vo, MultipartFile[] repFile, BindingResult bindingResult) throws Exception{
 
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
@@ -80,6 +79,17 @@ public class SurveyController {
 			vo.setSurvey_idx(surveyService.selectSurveyIdx());
 			
 			surveyService.registSurvey(vo,repFile);
+			
+			FileVo fileVo = new FileVo();
+			
+			fileVo.setCreate_user(vo.getCreate_user());
+			fileVo.setIdx(vo.getSurvey_idx());
+			
+			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, repFile);
+			System.out.println("fileList == " + fileList);
+			for(int i = 0; i<fileList.size(); i++) {
+				surveyService.insertFile(fileList.get(i));
+			}		
 			
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
 			

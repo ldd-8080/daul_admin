@@ -212,9 +212,6 @@
 </div>
 
 <script type="text/javascript">
-/* 	var question_count = document.getElementById("#question_count").value;
-	console.log(question_count); */
-	
 	$(window).on("load", function() {
 		console.log($("#s_date").val());
 		var _repFileTarget = $("div[class='dropify-preview']");
@@ -222,16 +219,11 @@
 		_repFileTarget.attr("style", "display:block");
 	});
 	
-	
-	
 	var s_date = document.getElementById("s_date").value;
 	
 	var today = formatDate(new Date())
 	
-	
-	
 	if(s_date <= today){
-		
 		document.getElementById('addQuestion').setAttribute('disabled', 'disabled');
 		$("button[name='question_delete']").attr("disabled", "disabled");
 		$("input[name='question_content']").attr("readonly", "true");
@@ -239,8 +231,6 @@
 		$("input[name='e_date']").attr("readonly", "true");
 		$("div[class='input-daterange']").attr("data-plugin", "");
 		$("select[name='survey_type']").attr("disabled", "disabled");
-		
-
 	}else{
 		
 	}
@@ -269,8 +259,6 @@
 			ResultPerList.push(result2);
 		}
 	}
-	
-	
 	
 	if(ResultPerList.length > 0){
 		var index = 1;
