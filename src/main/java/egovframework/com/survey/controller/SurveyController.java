@@ -119,10 +119,10 @@ public class SurveyController {
 
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    vo.setUpdate_user(userVo.getUser_id());		    
-			
+
 			String question_content_arr = vo.getQuestion_content();
 			String[] questionArr = question_content_arr.split(",");
-			
+	
 			surveyService.updateSurvey(vo,repFile);
 //			
 //			surveyService.registSurvey(vo,repFile);
@@ -130,6 +130,8 @@ public class SurveyController {
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
 			
 			surveyService.deleteSurveyQuestion(vo);
+		
+			
 			for(int j = 0; j < questionArr.length ;j++) {
 				String question_idx; 
 				String question_content;
@@ -160,6 +162,7 @@ public class SurveyController {
 		SurveyVo surveyVo = new SurveyVo();
 		List<Map<String,String>> surveyQuestionList = new ArrayList();
 		List<Map<String,String>> surveyResult = new ArrayList();
+		List<Map<String,String>> surveyParticipation = new ArrayList();
 		try {
 			surveyVo.setSurvey_idx(survey_idx);
 			surveyVo = surveyService.selectSurveyDetail(surveyVo);
@@ -170,14 +173,12 @@ public class SurveyController {
 			surveyResult = surveyService.selectSurveyResult(surveyVo);
 			System.out.println("surveyResult = " + surveyResult + ",surveyResult.size() = " + surveyResult.size());
 			
-			
-			
-			
+			surveyParticipation = surveyService.selectParticipation(surveyVo);
 			
 		}catch(Exception e) {
 			
 		}
-		
+		model.addAttribute("surveyParticipation", surveyParticipation);
 		model.addAttribute("surveyResult", surveyResult);
 		model.addAttribute("surveyVo",surveyVo);
 		model.addAttribute("surveyQuestionList",surveyQuestionList);

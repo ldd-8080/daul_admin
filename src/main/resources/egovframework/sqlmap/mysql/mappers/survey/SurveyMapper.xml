@@ -50,7 +50,7 @@
 	
 	</insert>
 		
-	<insert id = "insertFile" parameterType = "hashmap">
+	<insert id = "insertFile">
 		INSERT INTO survey_attach
         (
             survey_idx,
@@ -107,7 +107,8 @@
 	<select id="selectSurveyQuestionList" resultType="Map">
 		SELECT 
 			question_idx,
-			question_content
+			question_content,
+			q_seq
 		FROM daul.survey_question
 		WHERE survey_idx = #{survey_idx}
 	</select>
@@ -138,4 +139,22 @@
 		GROUP BY a.question_content,a.question_idx 
 		ORDER BY question_idx
 	</select>
+	
+	<select id = "selectParticipation" resultType="Map">
+		SELECT a.participation_user, b.name, b.email, b.phone, a.create_date, right(question_idx,1) as choose from survey_participation a
+		LEFT JOIN user b
+		ON a.participation_user = b.user_id
+		WHERE a.survey_idx  = #{survey_idx};
+	</select>
+	
+	<delete id = "deleteParticipation">
+		DELETE  
+		  FROM survey_participation 
+		 WHERE survey_idx  = #{survey_idx}
+		   AND q_seq NOT IN ( 
+		   		<foreach collection="q_seqList" item="item" separator=",">
+          			  #{item.value}
+        		</foreach> 
+        	);
+	</delete>
 </mapper>

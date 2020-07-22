@@ -17,4 +17,6 @@ public interface SurveyService {
 	public void updateSurvey(SurveyVo vo, MultipartFile[] file) throws Exception;
 	public void deleteSurveyQuestion(SurveyVo vo) throws Exception;
 	public List<Map<String,String>> selectSurveyResult(SurveyVo vo) throws Exception;
+	public List<Map<String,String>> selectParticipation(SurveyVo vo) throws Exception;
+	public void deleteParticipation(SurveyVo vo) throws Exception;
 }

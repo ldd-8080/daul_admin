@@ -77,7 +77,7 @@
 						                  	<div class="form-group row">
 												<div class="col-md-1"></div>
 												<label class="col-md-2 col-form-label">설문기간 </label>		
-													<div class="col-md-6 col-xl-4">
+													<div class="col-md-6 col-xl-5">
 														<div class="input-daterange" data-plugin="datepicker">
 															<div class="input-group">
 																	<div class="input-group-prepend">
@@ -85,14 +85,14 @@
 																		<i class="icon md-calendar" aria-hidden="true"></i>
 																		</span>
 																	</div>
-																<form:input type="text" class="form-control" path="s_date" />
+																<form:input type="text" class="form-control" name="s_date" id="s_date" path="s_date" />
 																<form:errors style="color:red;" path="s_date"/>
 															</div>
 															<div class="input-group">
 																<div class="input-group-prepend">
 																	<span calss="input-group-text"> &nbsp;_&nbsp;</span>
 																</div>
-																<form:input type="text" class="form-control" path="e_date" />
+																<form:input type="text" class="form-control" name="e_date" path="e_date" />
 																
 															</div>
 														</div>
@@ -119,20 +119,20 @@
 												<div class="col-md-1"></div>
 													<label class="col-md-2 col-form-label">설문 항목	</label>								
 												<div class="col-md-8">
-													<button type="button" class="btn btn-primary" onclick="addQuestion()">+ 항목 생성</button>		
+													<button type="button" class="btn btn-primary" id="addQuestion" onclick="addQuestion()">+ 항목 생성</button>		
 												</div>								
 											</div>
 											
 										  <div id = "question-list">
 							                <c:forEach var="result" items="${surveyQuestionList}" varStatus="status">
-								                
+								                	
 								              		<div class='form-group row'>
 													    <div class='col-md-3'></div>
 														    <div class='col-md-7'>
-														    	<input type='text' class='form-control' name='question_content' id = 'question_content' value=" ${ result.question_content}"/>
+														    	<input type='text' class='form-control' name='question-content' value=" ${ result.question_content}"/>
 														    </div>
 														    <div class='col-md-2'>
-														    	<button type='button' class='btn btn-primary' id = 'question-delete' >-</button>
+														    	<button type='button' class='btn btn-primary' name = 'question-delete'  >-</button>
 														    </div>
 												    </div>
 											 
@@ -145,54 +145,76 @@
 													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 												</div>
 											</div>
-											
-											
 										</form:form>
 									</div>
 								</div>
 							</div>
 						</div>
                       </div>
+                      
+                   
+                      
                       <!--두번째탭 -->
-                      <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                   <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                       <div class="row row-lg">
-				              <div class="col-md-12">
-				                <!-- Example asProgress -->
-				                <div class="example-wrap">
-				              `
-				              <div class="row row-lg">
-				              <div class="col-md-12">
-				                <!-- Example asProgress -->
-				                <div class="example-wrap">
-				              
-				                  <div class="row row-lg">
-				                    <div class="col-md-6">
-				                      <div class="example-wrap" id = "surveyResultDiv">
-				                      
-				                      
-				                      
-				                      </div>
-				                     </div>
-				                    </div>
-				                   </div>
-				                  </div>
-				                 </div>
-				               
-				            
-				            
-				            
-                      </div>
-                      <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                        Benivole horrent tantalo fuisset adamare fugiendam tractatos indicaverunt animis
-                        chaere, brevi minuendas, ubi angoribus iisque deorsum audita
-                        haec dedocendi utilitas. Panaetium erimus platonem varias
-                        imperitos animum, iudiciorumque operis multa disputando.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-</div>
+						  <div class="col-md-12">
+						  <h4>◦ 투표결과</h4>
+						  <br/>
+								<div class="row row-lg">
+								<div class="col-md-1"></div>
+									<div class="col-md-6">
+										<div class="example-wrap" id = "surveyResultDiv">
+										</div>
+									</div>
+								</div>
+		                   </div>
+		                </div>
+                
+                    <hr/>
+                    	<br/>
+                    	<div class='form-group row'>
+                      	<h4>◦ 참여자</h4><span>&nbsp;&nbsp;총${ surveyParticipation.size() }명</span>
+                      	</div>  
+						<br/>
+	                   <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
+			            <thead>
+			              <tr>
+			                <th>아이디</th>
+			                <th>이름</th>
+			                <th>이메일</th>
+			                <th>전화번호</th>
+			                <th>참여일</th>
+			                <th>선택</th>
+			              </tr>
+			            </thead>
+			            <tbody>
+			            	<c:forEach var="result" items="${surveyParticipation}" varStatus="status">
+			            	<tr>
+			            		<td id="seq_${status.index}">${result.participation_user}</td>
+			            		<td>${result.name}</td>
+			            		<td>${result.email}</td>
+			            		<td>${result.phone}</td>
+			            		<td>${result.create_date}</td>
+			            		<td>${result.choose}</td>
+		            		</tr>
+			            	</c:forEach>
+			            </tbody>
+			          </table>
+               		</div>
+                    <!--번째탭 -->
+                    <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
+                      Benivole horrent tantalo fuisset adamare fugiendam tractatos indicaverunt animis
+                      chaere, brevi minuendas, ubi angoribus iisque deorsum audita
+                      haec dedocendi utilitas. Panaetium erimus platonem varias
+                      imperitos animum, iudiciorumque operis multa disputando.
+             	    </div>
+                	      
+                	      
+             	     </div>
+         			</div> 
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -200,8 +222,26 @@
 /* 	var question_count = document.getElementById("#question_count").value;
 	console.log(question_count); */
 	
+	var s_date = document.getElementById("s_date").value;
+	
+	var today = formatDate(new Date())
 	
 	
+	
+	if(s_date <= today){
+		console.log("시작일 지남");
+		document.getElementById('addQuestion').setAttribute('disabled', 'disabled');
+		$("button[name='question-delete']").attr("disabled", "disabled");
+		$("input[name='question-content']").attr("readonly", "true");
+		$("input[name='s_date']").attr("readonly", "true");
+		$("input[name='e_date']").attr("readonly", "true");
+		$("div[class='input-daterange']").attr("data-plugin", "");
+		$("select[name='survey_type']").attr("disabled", "disabled");
+		
+
+	}else{
+		console.log("시작일 안 지남");
+	}
 	
 	//파일정보 가져오기
 	var ResultList = new Array();
@@ -231,16 +271,18 @@
 	
 	
 	if(ResultPerList.length > 0){
+		var index = 1;
 		for(var resultPer of ResultPerList){
 			console.log(resultPer.question_content);
-			var str = '<h6 class="font-size-16">'+resultPer.question_content+' ('+resultPer.question_count+'표)</h6>'+
+			var str = '<h6 class="font-size-16">' +index + '.&nbsp;' +resultPer.question_content+' ('+resultPer.question_count+'표)</h6>'+
 			'<div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">'+
 			'<div class="progress-bar" aria-valuemin="-100" aria-valuemax="0" aria-valuenow="-' + resultPer.result_per+'" role="progressbar">'+
-			' <span class="progress-label"></span>' +
+			'<span class="progress-label"></span>' +
 			'</div>'+
 			'</div>';
 			
 			$("#surveyResultDiv").append(str);
+			index++;
 		}
 	}
 	

@@ -42,7 +42,7 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		fileVo.setIdx(vo.getSurvey_idx());
 		
 		FileUtils fileUtils = new FileUtils();
-		List<Map<String, Object>> fileList = fileUtils.parseFileInfo(fileVo, file);
+		List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, file);
 		System.out.println("fileList == " + fileList);
 		for(int i = 0; i<fileList.size(); i++) {
 			surveyMapper.insertFile(fileList.get(i));
@@ -96,6 +96,21 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		
 		list = surveyMapper.selectSurveyResult(vo);
 		return list;
+	}
+
+	@Override
+	public List<Map<String, String>> selectParticipation(SurveyVo vo) throws Exception {
+		List<Map<String,String>> list = new ArrayList();
+		
+		list = surveyMapper.selectParticipation(vo);
+		return list;
+	}
+
+	@Override
+	public void deleteParticipation(SurveyVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		surveyMapper.deleteParticipation(vo);
+		
 	}
 
 

@@ -57,7 +57,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		fileVo.setCreate_user(vo.getReg_user());
 		fileVo.setIdx(vo.getBoard_idx());
 		FileUtils fileUtils = new FileUtils();
-		List<Map<String, Object>> fileList = fileUtils.parseFileInfo(fileVo, file);
+		List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, file);
 		for(int i = 0; i<fileList.size(); i++) {
 			boardMapper.insertFile(fileList.get(i));
 		}

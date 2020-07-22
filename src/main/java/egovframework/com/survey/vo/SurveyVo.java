@@ -22,10 +22,16 @@ public class SurveyVo {
 
 	private String surveyFile;
 	
-	private List<String> question_contentList;
+	private String q_seq;
 	
 	
 	
+	public String getQ_seq() {
+		return q_seq;
+	}
+	public void setQ_seq(String q_seq) {
+		this.q_seq = q_seq;
+	}
 	public String getQuestion_idx() {
 		return question_idx;
 	}
@@ -38,12 +44,7 @@ public class SurveyVo {
 	public void setSurveyFile(String surveyFile) {
 		this.surveyFile = surveyFile;
 	}
-	public List<String> getQuestion_contentList() {
-		return question_contentList;
-	}
-	public void setQuestion_contentList(List<String> question_contentList) {
-		this.question_contentList = question_contentList;
-	}
+
 	public String getQuestion_content() {
 		return question_content;
 	}
@@ -121,8 +122,8 @@ public class SurveyVo {
 		return "SurveyVo [survey_idx=" + survey_idx + ", title=" + title + ", content=" + content + ", survey_type="
 				+ survey_type + ", s_date=" + s_date + ", e_date=" + e_date + ", create_user=" + create_user
 				+ ", create_date=" + create_date + ", update_user=" + update_user + ", update_date=" + update_date
-				+ ", del_chk=" + del_chk + ", question_content=" + question_content + ", question_contentList="
-				+ question_contentList + ", surveyFile= " + surveyFile +"]";
+				+ ", del_chk=" + del_chk + ", question_content=" + question_content + ", q_seq="
+				+ q_seq + ", surveyFile= " + surveyFile +"]";
 	}
 
 	
