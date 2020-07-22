@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.cmmn.util.FileUtils;
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.service.SurveyService;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.com.user.vo.UserVo;
@@ -36,6 +38,9 @@ public class SurveyController {
 	
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
+	
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
 	
 	@RequestMapping(value="/surveyList", method = RequestMethod.GET)
 	public String surveyList(ModelMap model) throws Exception{
@@ -160,9 +165,12 @@ public class SurveyController {
 	@RequestMapping(value="/surveyDetail.do", method=RequestMethod.GET)
 	public String surveyDetail(ModelMap model, @RequestParam("survey_idx") String survey_idx) throws Exception{
 		SurveyVo surveyVo = new SurveyVo();
-		List<Map<String,String>> surveyQuestionList = new ArrayList();
-		List<Map<String,String>> surveyResult = new ArrayList();
-		List<Map<String,String>> surveyParticipation = new ArrayList();
+		FileVo fileVo = new FileVo();
+
+		List<Map<String, String>> fileList = null;
+		List<Map<String,String>> surveyQuestionList = new ArrayList<Map<String, String>>();
+		List<Map<String,String>> surveyResult = new ArrayList<Map<String, String>>();
+		List<Map<String,String>> surveyParticipation = new ArrayList<Map<String, String>>();
 		try {
 			surveyVo.setSurvey_idx(survey_idx);
 			surveyVo = surveyService.selectSurveyDetail(surveyVo);
@@ -175,6 +183,10 @@ public class SurveyController {
 			
 			surveyParticipation = surveyService.selectParticipation(surveyVo);
 			
+			fileVo.setIdx(survey_idx);
+			fileList = surveyService.selectSurveyFile(fileVo);
+			
+			System.out.println("fileList = = = = "+fileList);
 		}catch(Exception e) {
 			
 		}
@@ -188,14 +200,25 @@ public class SurveyController {
 	
 	
 	@RequestMapping(value="/getImg.do")
-	public void getImage( HttpServletRequest request, HttpServletResponse response)
-	throws Exception {
-	// TODO Auto-generated method stub
-	response.setContentType("application/png");
-	String url = "file:///Users/a2/attach/";
-	String filename = "1e0a4d203dd64e138f17906a5f1a4b63.png";
-	URL fileUrl = new URL(url+filename);
-	IOUtils.copy( fileUrl.openStream(), response.getOutputStream());
+	public void getImage(@RequestParam("survey_idx") String surveyIdx, HttpServletResponse response) throws Exception {
+		List<Map<String, String>> fileList = null;
+		
+		try {
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(surveyIdx);
+			fileVo.setAttach_type("repFile");
+			
+			fileList = surveyService.selectSurveyFile(fileVo);
+			
+			String saveFileName = "";
+			
+			if (!fileList.isEmpty() && fileList.size() > 0) {
+				saveFileName = fileList.get(0).get("save_file_name");
+				fileUtils.getImgFile(response, saveFileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 			
 }

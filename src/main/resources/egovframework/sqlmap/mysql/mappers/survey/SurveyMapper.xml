@@ -157,4 +157,17 @@
         		</foreach> 
         	);
 	</delete>
+	
+		<select id="selectSurveyFile" resultType="hashmap">
+		SELECT *
+		  FROM daul.survey_attach
+		 WHERE del_chk != 'Y'
+		   AND survey_idx = #{idx}
+		   <if test="attach_type != null and attach_type != ''">
+		   AND attach_type = #{attach_type}
+		   </if>
+	</select>
+	
+	
+	
 </mapper>

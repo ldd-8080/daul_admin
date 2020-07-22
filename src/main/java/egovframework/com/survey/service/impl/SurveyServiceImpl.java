@@ -113,6 +113,12 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		
 	}
 
+	@Override
+	public List<Map<String, String>> selectSurveyFile(FileVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return surveyMapper.selectSurveyFile(vo);
+	}
+
 
 	
 	

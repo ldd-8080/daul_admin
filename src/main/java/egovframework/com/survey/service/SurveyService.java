@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.vo.SurveyVo;
 
 public interface SurveyService {
@@ -19,4 +20,6 @@ public interface SurveyService {
 	public List<Map<String,String>> selectSurveyResult(SurveyVo vo) throws Exception;
 	public List<Map<String,String>> selectParticipation(SurveyVo vo) throws Exception;
 	public void deleteParticipation(SurveyVo vo) throws Exception;
+	public List<Map<String,String>> selectSurveyFile(FileVo vo) throws Exception;
+		
 }

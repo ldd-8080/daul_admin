@@ -62,17 +62,10 @@
 											</div>
 											<div class="form-group row">
 												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">대표이미지</label>
-													<div class="col-md-8" style="text-align:center">
-						                    			<img src="/survey/getImg.do"/>
-						                  			</div>
-											</div>
-											<div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">대표이미지 </label>
-													<div class="col-md-8">
-						                    			<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
-						                  			</div>
+												<label class="col-md-2 col-form-label">대표이미지 </label>
+												<div class="col-md-8">
+					                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+					                  			</div>
 											</div>
 						                  	<div class="form-group row">
 												<div class="col-md-1"></div>
@@ -129,10 +122,10 @@
 								              		<div class='form-group row'>
 													    <div class='col-md-3'></div>
 														    <div class='col-md-7'>
-														    	<input type='text' class='form-control' name='question-content' value=" ${ result.question_content}"/>
+														    	<input type='text' class='form-control' name='question_content' value=" ${ result.question_content}"/>
 														    </div>
 														    <div class='col-md-2'>
-														    	<button type='button' class='btn btn-primary' name = 'question-delete'  >-</button>
+														    	<button type='button' class='btn btn-primary' name = 'question_delete'  >-</button>
 														    </div>
 												    </div>
 											 
@@ -222,6 +215,15 @@
 /* 	var question_count = document.getElementById("#question_count").value;
 	console.log(question_count); */
 	
+	$(window).on("load", function() {
+		console.log($("#s_date").val());
+		var _repFileTarget = $("div[class='dropify-preview']");
+		_repFileTarget.find("span[class='dropify-render']").append("<img src='/survey/getImg.do?survey_idx=${surveyVo.survey_idx}'>");
+		_repFileTarget.attr("style", "display:block");
+	});
+	
+	
+	
 	var s_date = document.getElementById("s_date").value;
 	
 	var today = formatDate(new Date())
@@ -229,10 +231,10 @@
 	
 	
 	if(s_date <= today){
-		console.log("시작일 지남");
+		
 		document.getElementById('addQuestion').setAttribute('disabled', 'disabled');
-		$("button[name='question-delete']").attr("disabled", "disabled");
-		$("input[name='question-content']").attr("readonly", "true");
+		$("button[name='question_delete']").attr("disabled", "disabled");
+		$("input[name='question_content']").attr("readonly", "true");
 		$("input[name='s_date']").attr("readonly", "true");
 		$("input[name='e_date']").attr("readonly", "true");
 		$("div[class='input-daterange']").attr("data-plugin", "");
@@ -240,13 +242,14 @@
 		
 
 	}else{
-		console.log("시작일 안 지남");
+		
 	}
 	
 	//파일정보 가져오기
 	var ResultList = new Array();
 	var sumCount= 0;
 	var ResultPerList = new Array();
+	
 	<c:forEach var="result" items="${surveyResult}">
 		var result = {};
 		result.question_content = "${result.question_content}";
@@ -260,14 +263,13 @@
 		}
 		
 		for (var result2 of ResultList){
-			console.log((result2.question_count / sumCount) * 100);
+			
 			result2.result_per = 100-((result2.question_count / sumCount) * 100);
 			if(isNaN(result2.result_per))result2.result_per=100;
 			ResultPerList.push(result2);
 		}
 	}
 	
-	console.log(ResultPerList);
 	
 	
 	if(ResultPerList.length > 0){
@@ -286,6 +288,33 @@
 		}
 	}
 	
+	//파일정보 가져오기
+	var fileList = new Array();
+	var public_file = {};
+	var rep_file = {};
 	
+	<c:forEach var="file" items="${fileList}">
+		var file = {};
+		file.suggestion_idx = "${file.suggestion_idx}";
+		file.org_file_name = "${file.org_file_name}";
+		file.save_file_name = "${file.save_file_name}";
+		file.file_size = "${file.file_size}";
+		file.create_user = "${file.create_user}";
+		file.del_chk = "${file.del_chk}";
+		file.attach_type = "${file.attach_type}";
+		fileList.push(file);
+	</c:forEach>
+	
+	if (fileList.length > 0) {
+		for (var file of fileList) {
+			if (file.attach_type.indexOf("rep") > -1) {
+				rep_file = file;
+			} else if (file.attach_type.indexOf("public") > -1) {
+				$("#publicFileDelBtn").show();
+				$("#publicFileName").val(file.org_file_name);
+				public_file = file;
+			}
+		}
+	}
 	
 </script>
