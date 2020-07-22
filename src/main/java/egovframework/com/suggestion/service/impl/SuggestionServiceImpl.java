@@ -29,8 +29,8 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	}
 
 	@Override
-	public void insertFile(Map<String, Object> map) throws Exception {
-		suggestionMapper.insertFile(map);
+	public void insertFile(FileVo fileVo) throws Exception {
+		suggestionMapper.insertFile(fileVo);
 	}
 
 	@Override
@@ -44,13 +44,23 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	}
 
 	@Override
-	public List<Map<String, String>> selectSuggestionAttach(FileVo fileVo) throws Exception {
-		return suggestionMapper.selectSuggestionAttach(fileVo);
+	public List<Map<String, String>> selectSuggestionFile(FileVo fileVo) throws Exception {
+		return suggestionMapper.selectSuggestionFile(fileVo);
 	}
 
 	@Override
 	public void deleteFile(FileVo fileVo) throws Exception {
 		suggestionMapper.deleteFile(fileVo);
+	}
+
+	@Override
+	public void updateSuggestion(SuggestionVo vo) throws Exception {
+		suggestionMapper.updateSuggestion(vo);
+	}
+
+	@Override
+	public void deleteSuggestion(SuggestionVo vo) throws Exception {
+		suggestionMapper.deleteSuggestion(vo);
 	}
 
 }

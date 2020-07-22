@@ -58,4 +58,11 @@ public class FileVo {
 	public void setAttach_type(String attach_type) {
 		this.attach_type = attach_type;
 	}
+	
+	@Override
+	public String toString() {
+		return "FileVo [idx=" + idx + ", org_file_name=" + org_file_name + ", save_file_name=" + save_file_name
+				+ ", file_size=" + file_size + ", create_user=" + create_user + ", del_chk=" + del_chk
+				+ ", create_date=" + create_date + ", attach_type=" + attach_type + "]";
+	}
 }

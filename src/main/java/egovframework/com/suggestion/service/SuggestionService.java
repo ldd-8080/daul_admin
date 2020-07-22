@@ -12,14 +12,18 @@ public interface SuggestionService {
 
 	int registSuggestion(SuggestionVo vo) throws Exception;
 
-	void insertFile(Map<String, Object> map) throws Exception;
+	void insertFile(FileVo fileVo) throws Exception;
 
 	List<SuggestionVo> selectSuggestionList() throws Exception;
 
 	SuggestionVo selectSuggestion(SuggestionVo vo) throws Exception;
 
-	List<Map<String, String>> selectSuggestionAttach(FileVo fileVo) throws Exception;
+	List<Map<String, String>> selectSuggestionFile(FileVo fileVo) throws Exception;
 
 	void deleteFile(FileVo fileVo) throws Exception;
+
+	void updateSuggestion(SuggestionVo vo) throws Exception;
+
+	void deleteSuggestion(SuggestionVo vo) throws Exception;
 
 }

@@ -62,4 +62,9 @@
 			console.log("request fail");
 		});
 	}
+	
+	$("#user_id").val("admin");
+	$("#pw").val("1234qwer");
+	
+	$("#login-btn").trigger("click");
 </script>

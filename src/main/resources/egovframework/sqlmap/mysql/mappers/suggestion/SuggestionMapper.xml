@@ -29,7 +29,7 @@
 			 )
 	</insert>
 	
-	<insert id="insertFile" parameterType="hashmap">
+	<insert id="insertFile">
 		INSERT INTO suggestion_attach
 		     (
 		       suggestion_idx
@@ -67,17 +67,44 @@
 		   AND suggestion_idx = #{suggestion_idx}
 	</select>
 	
-	<select id="selectSuggestionAttach" resultType="hashmap">
+	<select id="selectSuggestionFile" resultType="hashmap">
 		SELECT *
 		  FROM daul.suggestion_attach
 		 WHERE del_chk != 'Y'
 		   AND suggestion_idx = #{idx}
+		   <if test="attach_type != null and attach_type != ''">
+		   AND attach_type = #{attach_type}
+		   </if>
 	</select>
 	
 	<update id="deleteFile">
 		UPDATE daul.suggestion_attach
 		   SET del_chk = 'Y'
 		 WHERE suggestion_idx = #{idx}
-		   AND save_file_name = #{save_file_name}
+		   AND del_chk != 'Y'
+		   <if test="attach_type != null and attach_type != ''">
+		   AND attach_type = #{attach_type}
+		   </if>
+	</update>
+	
+	<update id="updateSuggestion">
+		UPDATE daul.suggestion_main
+		   SET update_user = #{update_user}
+		     , update_date = SYSDATE()
+		     <if test="title != null and title != ''">
+		     , title = #{title}
+		     </if>
+		     <if test="content != null and content != ''">
+		     , content = #{content}
+		     </if>
+		 WHERE suggestion_idx = #{suggestion_idx}
+	</update>
+	
+	<update id="deleteSuggestion">
+		UPDATE daul.suggestion_main
+		   SET del_chk = 'Y'
+		     , update_user = #{update_user}
+		     , update_date = SYSDATE()
+		 WHERE suggestion_idx = #{suggestion_idx}
 	</update>
 </mapper>

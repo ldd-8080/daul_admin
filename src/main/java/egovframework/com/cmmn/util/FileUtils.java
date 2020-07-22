@@ -1,6 +1,7 @@
 package egovframework.com.cmmn.util;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,24 +29,24 @@ public class FileUtils {
 	@Value("${file.uploadpath}")
 	private String filePath;
 	
-    public List<Map<String, Object>> parseFileInfo(FileVo vo, MultipartFile[] file) throws Exception {
+    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file) throws Exception {
     	return parseFileInfo(vo, file, null);
     }
     
-    public List<Map<String, Object>> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2) throws Exception {
+    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2) throws Exception {
     	System.out.println("================== filePath :: " + filePath);
     	String IDX = String.valueOf(vo.getIdx());
     	String creaID = (String) vo.getCreate_user();
     	
-    	List<Map<String, Object>> fileList = new ArrayList<Map<String, Object>>();
+    	List<FileVo> fileList = new ArrayList<FileVo>();
     	
-    	File target = new File("/Users/a2/attach");
+    	File target = new File(filePath);
     	if(!target.exists()) target.mkdirs();
     	
     	// 첫번째 파일
     	if (file != null) {
     		for(int i=0; i<file.length; i++) {
-    			Long saveFileSize = file[i].getSize();
+    			int saveFileSize = (int) file[i].getSize();
     			if (saveFileSize == 0) continue;
     			
     			String orgFileName = file[i].getOriginalFilename();
@@ -57,26 +60,24 @@ public class FileUtils {
     			log.debug("content type: "+file[i].getContentType());
     			log.debug("================== file   END ==================");
     			
-    			target = new File("/Users/a2/attach", saveFileName);
+    			target = new File(filePath, saveFileName);
     			file[i].transferTo(target);
     			
-    			Map<String, Object> fileInfo = new HashMap<String, Object>();
-    			
-    			fileInfo.put("idx", IDX);
-    			fileInfo.put("org_file_name", orgFileName);
-    			fileInfo.put("save_file_name", saveFileName);
-    			fileInfo.put("file_size", saveFileSize);
-    			fileInfo.put("create_user", creaID);
-    			fileInfo.put("attach_type", file[i].getName());
-    			fileList.add(fileInfo);
-    			
+    			FileVo fileVo = new FileVo();
+    			fileVo.setIdx(IDX);
+    			fileVo.setOrg_file_name(orgFileName);
+    			fileVo.setSave_file_name(saveFileName);
+    			fileVo.setFile_size(saveFileSize);
+    			fileVo.setCreate_user(creaID);
+    			fileVo.setAttach_type(file[i].getName());
+    			fileList.add(fileVo);
     		}
     	}
     	
     	// 두번째 파일
     	if (file2 != null) {
     		for(int i=0; i<file2.length; i++) {
-    			Long saveFileSize = file2[i].getSize();
+    			int saveFileSize = (int) file2[i].getSize();
     			if (saveFileSize == 0) continue;
     			
     			String orgFileName = file2[i].getOriginalFilename();
@@ -90,22 +91,32 @@ public class FileUtils {
     			log.debug("content type: "+file2[i].getContentType());
     			log.debug("================== file2   END ==================");
     			
-    			target = new File("/Users/a2/attach", saveFileName);
+    			target = new File(filePath, saveFileName);
     			file2[i].transferTo(target);
     			
-    			Map<String, Object> fileInfo = new HashMap<String, Object>();
-    			
-    			fileInfo.put("idx", IDX);
-    			fileInfo.put("org_file_name", orgFileName);
-    			fileInfo.put("save_file_name", saveFileName);
-    			fileInfo.put("file_size", saveFileSize);
-    			fileInfo.put("create_user", creaID);
-    			fileInfo.put("attach_type", file2[i].getName());
-    			fileList.add(fileInfo);
-    			
+    			FileVo fileVo = new FileVo();
+    			fileVo.setIdx(IDX);
+    			fileVo.setOrg_file_name(orgFileName);
+    			fileVo.setSave_file_name(saveFileName);
+    			fileVo.setFile_size(saveFileSize);
+    			fileVo.setCreate_user(creaID);
+    			fileVo.setAttach_type(file2[i].getName());
+    			fileList.add(fileVo);
     		}
     	}
     	
     	return fileList;
     }
+    
+    public void getImgFile(HttpServletResponse response, String filename) throws Exception {
+		try {
+			response.setContentType("application/png");
+			String url = "file://" + filePath;
+			URL fileUrl = new URL(url + filename);
+			log.debug("getRepImgFile : " + fileUrl);
+			IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

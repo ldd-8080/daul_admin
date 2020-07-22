@@ -59,7 +59,7 @@ public class SuggestionController {
 		return "suggestion/suggestionRegist";
 	}
 	
-	@RequestMapping(value="/suggestionRegist.do")
+	@RequestMapping(value="/suggestionRegist.do", method=RequestMethod.POST)
 	public String createSuggestion(SuggestionVo vo, MultipartFile[] publicFile, MultipartFile[] repFile) throws Exception{
 		try {
 			log.debug("SuggestionVo : " + vo);
@@ -75,7 +75,7 @@ public class SuggestionController {
 				fileVo.setCreate_user(vo.getCreate_user());
 				fileVo.setIdx(vo.getSuggestion_idx());
 				
-				List<Map<String, Object>> fileList = fileUtils.parseFileInfo(fileVo, publicFile, repFile);
+				List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, publicFile, repFile);
 
 				log.debug("[열린제안] 열린제안 파일 등록");
 				for(int i = 0; i<fileList.size(); i++) {
@@ -101,7 +101,7 @@ public class SuggestionController {
 			vo = suggestionService.selectSuggestion(vo);
 			
 			fileVo.setIdx(suggestionIdx);
-			fileList = suggestionService.selectSuggestionAttach(fileVo);
+			fileList = suggestionService.selectSuggestionFile(fileVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,31 +112,33 @@ public class SuggestionController {
 		return "suggestion/suggestionDetail";
 	}
 	
-	@RequestMapping(value="/suggestionModify.do")
+	@RequestMapping(value="/suggestionModify.do", method=RequestMethod.POST)
 	public String suggestionModify(SuggestionVo vo, MultipartFile[] publicFile, MultipartFile[] repFile) throws Exception{
-		log.debug("SuggestionVo : " + vo);
-		log.debug("publicFile : " + publicFile);
-		for(int i=0; i<publicFile.length; i++) {
-            log.debug("================== publicFile start ==================");
-            log.debug("파일 이름: "+publicFile[i].getName());
-            log.debug("파일 실제 이름: "+publicFile[i].getOriginalFilename());
-            log.debug("파일 크기: "+publicFile[i].getSize());
-            log.debug("content type: "+publicFile[i].getContentType());
-            log.debug("================== publicFile   END ==================");
-        }
-		log.debug("repFile : " + repFile);
-		for(int i=0; i<repFile.length; i++) {
-            log.debug("================== repFile start ==================");
-            log.debug("파일 이름: "+repFile[i].getName());
-            log.debug("파일 실제 이름: "+repFile[i].getOriginalFilename());
-            log.debug("파일 크기: "+repFile[i].getSize());
-            log.debug("content type: "+repFile[i].getContentType());
-            log.debug("================== repFile   END ==================");
-        }
-		
-		// MultipartFile의 사이즈가 0이면 파일이 없는것 (첨부파일을 수정하지 않았거나 OR 삭제했거나)
-		// 수정들어오면 첨부파일은 무조건 삭제시키고 들고온 파일을 insert
-		
+		try {
+			log.debug("SuggestionVo : " + vo);
+			log.debug("[열린제안] 열린제안 수정");
+			suggestionService.updateSuggestion(vo);
+			
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(vo.getSuggestion_idx());
+			fileVo.setCreate_user(vo.getUpdate_user());
+			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, publicFile, repFile);
+			
+			if (!fileList.isEmpty() && fileList.size() > 0) {
+				for (int i = 0; i < fileList.size(); i++) {
+					fileVo = fileList.get(i); 
+					
+					log.debug("FileVo : " + fileVo);
+					log.debug("[열린제안] 열린제안 파일 삭제");
+					suggestionService.deleteFile(fileVo);
+					
+					log.debug("[열린제안] 열린제안 파일 등록");
+					suggestionService.insertFile(fileVo);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "redirect:/suggestion/suggestionListPage.do";
 	}
@@ -148,8 +150,10 @@ public class SuggestionController {
 			if ("N".equals(param.get("del_chk"))) {
 				FileVo fileVo = new FileVo();
 				fileVo.setIdx(param.get("suggestion_idx"));
-				fileVo.setSave_file_name(param.get("save_file_name"));
+				fileVo.setAttach_type(param.get("attach_type"));
+				//fileVo.setSave_file_name(param.get("save_file_name"));
 				
+				log.debug("[열린제안] 열린제안 파일 삭제");
 				suggestionService.deleteFile(fileVo);
 			}
 		} catch (Exception e) {
@@ -160,13 +164,41 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/getImg.do")
-	public void getImage( HttpServletRequest request, HttpServletResponse response)
-	throws Exception {
-	// TODO Auto-generated method stub
-	response.setContentType("application/png");
-	String url = "file:///Users/a1/attach/";
-	String filename = "59e357f2227e41f6beaf0d907cb6e02a.jpg";
-	URL fileUrl = new URL(url+filename);
-	IOUtils.copy( fileUrl.openStream(), response.getOutputStream());
+	public void getImage(@RequestParam("suggestion_idx") String suggestionIdx, HttpServletResponse response) throws Exception {
+		List<Map<String, String>> fileList = null;
+		
+		try {
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(suggestionIdx);
+			fileVo.setAttach_type("repFile");
+			
+			fileList = suggestionService.selectSuggestionFile(fileVo);
+			
+			String saveFileName = "";
+			
+			if (!fileList.isEmpty() && fileList.size() > 0) {
+				saveFileName = fileList.get(0).get("save_file_name");
+				fileUtils.getImgFile(response, saveFileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/suggestionDelete.do", method=RequestMethod.POST)
+	public String suggestionDelete(SuggestionVo vo) throws Exception {
+		try {
+			log.debug("[열린제안] 열린제안 삭제");
+			suggestionService.deleteSuggestion(vo);
+			
+			log.debug("[열린제안] 열린제안 파일 삭제");
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(vo.getSuggestion_idx());
+			suggestionService.deleteFile(fileVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/suggestion/suggestionListPage.do";
 	}
 }

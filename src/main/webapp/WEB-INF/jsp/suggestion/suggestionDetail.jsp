@@ -20,6 +20,7 @@
 				<div class="panel">
 					<div class="panel-body">
 						<form:form method="post" modelAttribute="suggestionVo" enctype="multipart/form-data">
+							<form:input type="hidden" class="form-control" path="suggestion_idx"/>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">작성자 </label>
@@ -49,7 +50,7 @@
 								<label class="col-md-2 col-form-label">첨부파일</label>
 								<div class="col-md-8">
 									<div class="input-group input-group-file" data-plugin="inputGroupFile">
-										<input type="text" class="form-control" id="publicFileName" value="${fileList[0].org_file_name}" readonly/>
+										<input type="text" class="form-control" id="publicFileName" readonly/>
 										<button type="button" class="input-search-close icon md-close" id="publicFileDelBtn" style="position: absolute; display: none;"></button>
 										<span class="input-group-append">
 											<span class="btn btn-primary btn-file">
@@ -62,11 +63,13 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">대표이미지 </label>
-									<div class="col-md-8">
-		                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
-		                  			</div>
+								<label class="col-md-2 col-form-label">대표이미지 </label>
+								<div class="col-md-8">
+	                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+	                  			</div>
 							</div>
+							
+							<input type="hidden" name="update_user" value="${login.user_id}"/>
 							
 				            <div class="form-group form-material row">
 								<div class="col-md-9 offset-md-9">
@@ -86,7 +89,7 @@
 <script type="text/javascript">
 	$(window).on("load", function() {
 		var _repFileTarget = $("div[class='dropify-preview']");
-		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do'>");
+		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do?suggestion_idx=${suggestionVo.suggestion_idx}'>");
 		_repFileTarget.attr("style", "display:block");
 	});
 	
@@ -113,6 +116,7 @@
 				rep_file = file;
 			} else if (file.attach_type.indexOf("public") > -1) {
 				$("#publicFileDelBtn").show();
+				$("#publicFileName").val(file.org_file_name);
 				public_file = file;
 			}
 		}
@@ -170,6 +174,10 @@
 	
 	$("#suggestionModifyBtn").click(function() {
 		if (!confirm("수정하시겠습니까?")) return false;
+	});
+	
+	$("#suggestionDeleteBtn").click(function() {
+		if (!confirm("삭제하시겠습니까?")) return false;
 	});
 </script>
 	    	
