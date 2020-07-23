@@ -16,5 +16,6 @@ public interface BoardMapper {
 	void insertFile(FileVo vo) throws Exception;
 	String selectBoardIdx() throws Exception;
 	List<Map<String,String>> selectBoardFile(BoardVo vo);
-	BoardVo selectDownloadFile(BoardVo vo) throws Exception;
+	FileVo selectDownloadFile(FileVo vo) throws Exception;
+	String selectNoticeIdx() throws Exception;
 }

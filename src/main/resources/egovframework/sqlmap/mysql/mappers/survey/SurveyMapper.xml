@@ -158,7 +158,7 @@
         	);
 	</delete>
 	
-		<select id="selectSurveyFile" resultType="hashmap">
+	<select id="selectSurveyFile" resultType="hashmap">
 		SELECT *
 		  FROM daul.survey_attach
 		 WHERE del_chk != 'Y'
@@ -167,6 +167,16 @@
 		   AND attach_type = #{attach_type}
 		   </if>
 	</select>
+	
+	<update id="deleteFile">
+		UPDATE daul.survey_attach
+		SET del_chk = 'Y'
+		WHERE survey_idx = #{idx}
+		AND del_chk != 'Y'
+		<if test="attach_type != null and attach_type != ''">
+		AND attach_type = #{attach_type}
+		</if>
+	</update>
 	
 	
 	

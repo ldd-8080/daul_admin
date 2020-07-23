@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
+import egovframework.com.cmmn.util.FileUtil;
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
@@ -38,12 +40,15 @@ public class BoardController {
 	@Value("${file.downloadpath}")
 	private String filePath;
 	
+	@Resource(name="fileUtil")
+	private FileUtil fileUtil;
+	
 	@RequestMapping(value="/boardList.do", method = RequestMethod.GET)
 	public String boardList(ModelMap model) throws Exception{
 		System.out.println("filaPath = "+ filePath);
 		try {
-			List<Map<String, String>> boardList = boardService.selectBoardList();
-			model.addAttribute("resultList",boardList);
+			List<Map<String, String>> noticeList = boardService.selectBoardList();
+			model.addAttribute("noticeList",noticeList);
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
 		}
@@ -51,10 +56,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/boardDetail.do", method=RequestMethod.GET)
-	public String boardDetail(ModelMap model, @RequestParam("board_seq") String board_seq) throws Exception{
+	public String boardDetail(ModelMap model, @RequestParam("notice_idx") String notice_idx) throws Exception{
 		BoardVo vo = new BoardVo();
-		vo.setBoard_seq(board_seq);
-		System.out.println(vo.getBoard_seq());
+		vo.setNotice_idx(notice_idx);
+		System.out.println(vo.getNotice_idx());
 		BoardVo result = boardService.selectBoard(vo);
 		System.out.println(result);
 		
@@ -72,22 +77,37 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value ="/boardInsert.do", method=RequestMethod.POST)
-	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, MultipartFile[] file) 
+	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, MultipartFile[] publicFile) 
     		throws Exception {
-       System.out.println("11111111111111" + vo.getTitle());
-      
+
        UserVo userVo = (UserVo) session.getAttribute("login");
        
+       vo.setNotice_idx(boardService.selectNoticeIdx());
+       
+       
+       
+       FileVo fileVo = new FileVo();
+		
+		fileVo.setCreate_user(vo.getCreate_user());
+		fileVo.setIdx(vo.getNotice_idx());
+		
+		List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile);
+		System.out.println("fileList == " + fileList);
+		
+		for(int i = 0; i<fileList.size(); i++) {
+			fileVo = fileList.get(i);
+			boardService.insertFile(fileVo);
+		}		
        //vo.setReg_user(userVo.getUser_seq());
-       boardService.insertBoard(vo,file);
+       boardService.insertBoard(vo);
        
         //boardService.insertBoard(commandMap);
-        for(int i=0; i<file.length; i++) {
+        for(int i=0; i<publicFile.length; i++) {
             log.debug("================== file start ==================");
-            log.debug("파일 이름: "+file[i].getName());
-            log.debug("파일 실제 이름: "+file[i].getOriginalFilename());
-            log.debug("파일 크기: "+file[i].getSize());
-            log.debug("content type: "+file[i].getContentType());
+            log.debug("파일 이름: "+publicFile[i].getName());
+            log.debug("파일 실제 이름: "+publicFile[i].getOriginalFilename());
+            log.debug("파일 크기: "+publicFile[i].getSize());
+            log.debug("content type: "+publicFile[i].getContentType());
             log.debug("================== file   END ==================");
         }
          
@@ -99,19 +119,17 @@ public class BoardController {
 		}
         
         
-        return "board/boardList";
+        return "redirect:/board/boardList.do";
     }
 	
 	@RequestMapping(value="/downloadFile.do",method = RequestMethod.GET)
 	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response, @RequestParam("idx") String idx) throws Exception{
 		System.out.println(requeset.getParameter("idx") );
-		BoardVo boardVo = new BoardVo();
-		boardVo.setFile_idx(requeset.getParameter("idx"));
-		BoardVo vo = new BoardVo();
-		vo.setFile_idx(idx);
-		vo = boardService.selectDownloadFile(boardVo);
-		String stored_File_Name = vo.getSave_file_name();
-		String original_File_Name = vo.getOrg_file_name();
+		FileVo fileVo = new FileVo();
+		fileVo.setIdx(idx);
+		fileVo = boardService.selectDownloadFile(fileVo);
+		String stored_File_Name = fileVo.getSave_file_name();
+		String original_File_Name = fileVo.getOrg_file_name();
 		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
 		
 		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath+ stored_File_Name));

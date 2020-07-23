@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import egovframework.com.cmmn.util.FileUtils;
+import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.mapper.SurveyMapper;
 import egovframework.com.survey.service.SurveyService;
@@ -22,8 +22,8 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	@Resource(name="surveyMapper")
 	private SurveyMapper surveyMapper;
 	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
+	@Resource(name="fileUtil")
+	private FileUtil fileUtil;
 	
 	@Override
 	public List<Map<String, String>> selectSurveyList() throws Exception {
@@ -125,6 +125,13 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	@Override
 	public void insertFile(FileVo fileVo) throws Exception {
 		surveyMapper.insertFile(fileVo);
+		
+	}
+
+	@Override
+	public void deleteFile(FileVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		surveyMapper.deleteFile(vo);
 		
 	}
 

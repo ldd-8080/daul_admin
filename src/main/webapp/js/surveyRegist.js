@@ -25,7 +25,7 @@ function addQuestion() {
     "</div>";
     
     $("#question-list").append(str);
-    $("button[na='question-delete']").on("click", function(e) {
+    $("button[id='question-delete']").on("click", function(e) {
         e.preventDefault();
         deleteFile($(this));
     });

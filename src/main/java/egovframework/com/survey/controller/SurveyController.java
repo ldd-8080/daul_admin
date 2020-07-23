@@ -87,8 +87,10 @@ public class SurveyController {
 			
 			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, repFile);
 			System.out.println("fileList == " + fileList);
+			
 			for(int i = 0; i<fileList.size(); i++) {
-				surveyService.insertFile(fileList.get(i));
+				fileVo = fileList.get(i);
+				surveyService.insertFile(fileVo);
 			}		
 			
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
@@ -143,6 +145,29 @@ public class SurveyController {
 //			surveyService.registSurvey(vo,repFile);
 //			
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
+			
+			
+			FileVo fileVo = new FileVo();
+			
+			fileVo.setCreate_user(vo.getCreate_user());
+			fileVo.setIdx(vo.getSurvey_idx());
+			
+			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, repFile);
+			
+			if(fileList.size() > 0) {
+
+				System.out.println("fileList == " + fileList);
+				for(int i = 0; i<fileList.size(); i++) {
+					fileVo = fileList.get(i);
+
+					log.debug("FileVo : " + fileVo);
+					log.debug("[설문조사] 대표이미지 파일 삭제");
+					surveyService.deleteFile(fileVo);
+					log.debug("[설문조사] 대표이미지 파일 등록");
+					surveyService.insertFile(fileVo);
+				}		
+			}
+			
 			
 			surveyService.deleteSurveyQuestion(vo);
 		

@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Component("fileUtils")
-public class FileUtils {
+@Component("fileUtil")
+public class FileUtil {
     
     private Log log = LogFactory.getLog(this.getClass());
     

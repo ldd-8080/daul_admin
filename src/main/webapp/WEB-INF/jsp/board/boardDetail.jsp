@@ -15,68 +15,68 @@
 	      <li class="breadcrumb-item active">BoardDetail</li>
 	    </ol>
 	
-	    <div class="page-content">
-	          <form:form method="post" modelAttribute="boardVo">
-	          <div class="form-group form-material row">
-	    			<label class="col-md-3 col-form-label">번호</label>
-	    			<div class="col-md-4">
-	    				<form:input type="text" class="form-control" path="board_seq" value="${boardVo.board_seq}"/>
+		<div class="col-lg-12">
+			<div class="mb-30">
+				<div class="panel">
+					<div class="panel-body">
+					          <form:form method="post" modelAttribute="boardVo">
+						         	<form:input type="text" class="form-control" path="notice_idx"/>
+						         		<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">등록자 </label>
+											<div class="col-md-8">
+												<form:input type="text" readonly="true" class="form-control" path="create_user"/>
+												<form:errors path="create_user"/>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">제목 </label>
+											<div class="col-md-8">
+												<form:input type="text"  class="form-control" path="title"/>
+												<form:errors path="title"/>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">내용 </label>
+											<div class="col-md-8">
+												<form:textarea type="text" class="form-control" path="content" rows="5"/>
+												<form:errors path="content"/>
+											</div>
+										</div>
+								    	<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">첨부파일 </label>
+											<div class="col-md-8">
+												
+									            	<c:forEach var="boardFile" items="${boardFile}" varStatus="status">
+									            		
+									            		<li>
+									            		<input type="hidden" id="IDX" value="${boardFile.idx}">
+									            			<span class="file-img"></span>
+									            			<a href="#this" name="file">${boardFile.org_file_name}</a>
+									            			<span>${boardFile.file_size } kb</span>
+									            		</li>
+									            	</c:forEach>
+									        
+											</div>
+										</div>  
+							    		 <div class="form-group form-material row">
+											<div class="col-md-9 offset-md-9">
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="noticeModifyBtn" formaction="/board/noticeModify.do">수정 </button>
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제 </button>
+												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
+											</div>
+										</div>
+					    	</form:form>
+	    				</div>
 	    			</div>
 	    		</div>
-	    		
-	    		<div class="form-group form-material row">
-	    			<label class="col-md-3 col-form-label">제목</label>
-	    			<div class="col-md-4">
-	    				<form:input type="text" class="form-control" path="title" value="${boardVo.title}"/>
-	    			</div>
-	    		</div>
-	    	
-	    		<div class="form-group form-material row">
-	    			<label class="col-md-3 col-form-label">내용</label>
-	    			<div class="col-md-4">
-	    				<form:input type="text" class="form-control" path="content" value="${boardVo.content}"/>
-	    			</div>
-	    		</div>
-	    		<div class="form-group form-material row">
-	    			<label class="col-md-3 col-form-label">등록자</label>
-	    			<div class="col-md-4">
-	    				<form:input type="text" class="form-control" path="reg_user" value="${boardVo.reg_user}"/>
-	    			</div>
-	    		</div>    
-	    		<div class="form-group form-material row">
-	    			<label class="col-md-3 col-form-label">등록일</label>
-	    			<div class="col-md-4">
-	    				<form:input type="text" class="form-control" path="rdate" value="${boardVo.rdate}"/>
-	    			</div>
-	    		</div>    
-	    		 <tbody>
-		            	<c:forEach var="boardFile" items="${boardFile}" varStatus="status">
-		            		
-		            		<li>
-		            		<input type="hidden" id="IDX" value="${boardFile.IDX}">
-		            			<span class="file-img"></span>
-		            			<a href="#this" name="file">${boardFile.ORG_FILE_NAME}</a>
-		            			<span>${boardFile.FILE_SIZE } kb</span>
-		            		</li>
-		            	</c:forEach>
-		            </tbody>
-	    		<div class="col-sm-12 col-md-4 col-xl-2">
-	    			<ul class="list-unstyled">
-	    				<li class="mb-20">
-	    					<input type="submit" value="수정" formaction="/user/update.do">
-	    		 		</li>	    	
-	    				<li class="mb-20">
-	    					<input type="submit" value="삭제" formaction="/sub/loginPage.do">
-	    		 		</li>	    		
-	    				<li class="mb-20">
-	    					<input type="submit" value="목록" formaction="/main/main.do">
-	    		 		</li>
-	    			</ul>
-	    		</div>		
-	    	</form:form>
+	    	</div>
 	    </div>
-    </div>
 </div>
+
 
 <script type="text/javascript">
    $(document).ready(function(){

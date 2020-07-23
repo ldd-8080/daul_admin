@@ -30,33 +30,29 @@
 		            <thead>
 		              <tr>
 		                <th>번호</th>
+		                <th>유형</th>
 		                <th>제목</th>
 		                <th>등록자</th>
 		                <th>등록일</th>
-		                <th></th>
 		              </tr>
 		            </thead>
 		            <tbody>
-		            	<c:forEach var="result" items="${resultList}" varStatus="status">
+		            	<c:forEach var="result" items="${noticeList}" varStatus="status">
 		            	<tr>
-		            		<td id="seq_${status.index}">${result.board_seq}</td>
+		            		<td id="seq_${status.index}">${result.notice_idx}</td>
+		            		<td>${result.notice_type}</td>
 		            		<td>${result.title}</td>
-		            		<td>${result.reg_user}</td>
-		            		<td>${result.rdate}</td>
-		            			<td><button>답변달기</button></td>
+		            		<td>${result.create_user}</td>
+		            		<td>${result.create_date}</td>
 	            		</tr>
 		            	</c:forEach>
 		            </tbody>
 		          </table>
+		          <div class="col-lg-12 mt-20">
+		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="noticeRegistButton">등록</button>
+		          </div>
 		        </div>
-		        <div class="col-md-6">
-                	<div class="example example-buttons">                     
-                     	<div>
-                     		<button type="button" class="btn btn-squared btn-info" onclick="location.href='/board/boardWrite.do'">글쓰기</button>
-                     	</div>                     
-                	</div>
-            	</div>
-	    	</div>
+		   	</div>
 	    </div>
 	</div>
 <!-- End Page -->
@@ -65,10 +61,15 @@
 	$("#boardTable tr td").click(function(event) {
 		if ($(this).get(0).cellIndex === 0) {
 		} else {
-			var board_seq = $(this).parent().children().eq(0).text();
+			var notice_idx = $(this).parent().children().eq(0).text();
 			
-			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?board_seq=" + board_seq;
+			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + notice_idx;
 		}
 	});
+	
+	$("#noticeRegistButton").click(function() {
+		location.href = "${pageContext.request.contextPath}/board/boardWrite.do";
+	});
+	
 
 </script>

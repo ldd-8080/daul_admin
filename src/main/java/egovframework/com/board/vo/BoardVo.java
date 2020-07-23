@@ -1,55 +1,21 @@
 package egovframework.com.board.vo;
 
 public class BoardVo {
-	private String board_seq;
+	private String notice_idx;
 	private String title;
 	private String content;
-	private String reg_user;
-	private String rdate;
+	private String notice_type;
+	private int view_count;
+	private String create_user;
+	private String create_date;
 	private String update_user;
-	private String udate;
-	private String del_flag;
-	private String boardfile;
-	private String org_file_name;
-	private String save_file_name;
-	private String board_idx;
-	private String file_idx;
-	
-	public String getSave_file_name() {
-		return save_file_name;
+	private String update_date;
+	private String del_chk;
+	public String getNotice_idx() {
+		return notice_idx;
 	}
-	public void setSave_file_name(String save_file_name) {
-		this.save_file_name = save_file_name;
-	}
-	public String getFile_idx() {
-		return file_idx;
-	}
-	public void setFile_idx(String file_idx) {
-		this.file_idx = file_idx;
-	}
-	public String getBoard_idx() {
-		return board_idx;
-	}
-	public void setBoard_idx(String board_idx) {
-		this.board_idx = board_idx;
-	}
-	public String getOrg_file_name() {
-		return org_file_name;
-	}
-	public void setOrg_file_name(String org_file_name) {
-		this.org_file_name = org_file_name;
-	}
-	public String getBoardfile() {
-		return boardfile;
-	}
-	public void setBoardfile(String boardfile) {
-		this.boardfile = boardfile;
-	}
-	public String getBoard_seq() {
-		return board_seq;
-	}
-	public void setBoard_seq(String board_seq) {
-		this.board_seq = board_seq;
+	public void setNotice_idx(String notice_idx) {
+		this.notice_idx = notice_idx;
 	}
 	public String getTitle() {
 		return title;
@@ -63,17 +29,29 @@ public class BoardVo {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getReg_user() {
-		return reg_user;
+	public String getNotice_type() {
+		return notice_type;
 	}
-	public void setReg_user(String reg_user) {
-		this.reg_user = reg_user;
+	public void setNotice_type(String notice_type) {
+		this.notice_type = notice_type;
 	}
-	public String getRdate() {
-		return rdate;
+	public int getView_count() {
+		return view_count;
 	}
-	public void setRdate(String rdate) {
-		this.rdate = rdate;
+	public void setView_count(int view_count) {
+		this.view_count = view_count;
+	}
+	public String getCreate_user() {
+		return create_user;
+	}
+	public void setCreate_user(String create_user) {
+		this.create_user = create_user;
+	}
+	public String getCreate_date() {
+		return create_date;
+	}
+	public void setCreate_date(String create_date) {
+		this.create_date = create_date;
 	}
 	public String getUpdate_user() {
 		return update_user;
@@ -81,17 +59,27 @@ public class BoardVo {
 	public void setUpdate_user(String update_user) {
 		this.update_user = update_user;
 	}
-	public String getUdate() {
-		return udate;
+	public String getUpdate_date() {
+		return update_date;
 	}
-	public void setUdate(String udate) {
-		this.udate = udate;
+	public void setUpdate_date(String update_date) {
+		this.update_date = update_date;
 	}
-	public String getDel_flag() {
-		return del_flag;
+	public String getDel_chk() {
+		return del_chk;
 	}
-	public void setDel_flag(String del_flag) {
-		this.del_flag = del_flag;
+	public void setDel_chk(String del_chk) {
+		this.del_chk = del_chk;
 	}
+	@Override
+	public String toString() {
+		return "BoardVo [notice_idx=" + notice_idx + ", title=" + title + ", content=" + content + ", notice_type="
+				+ notice_type + ", view_count=" + view_count + ", create_user=" + create_user + ", create_date="
+				+ create_date + ", update_user=" + update_user + ", update_date=" + update_date + ", del_chk=" + del_chk
+				+ "]";
+	}
+	
+	
+	
 	
 }

@@ -5,54 +5,50 @@
 	
 	<select id="selectBoardList" resultType="Map">	
 		SELECT 
-			board_seq, 
+			notice_idx, 
 			title, 
 			content, 
-			reg_user, 
-			DATE_FORMAT(rdate, '%Y-%m-%d') as rdate
-		FROM daul.board
-		ORDER BY board_Seq desc
+			notice_type,
+			view_count,
+			create_user, 
+			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
+			del_chk
+		FROM daul.daul_notice
+		ORDER BY notice_idx desc
 	</select>
 		
 	<select id="selectBoardFile" resultType="Map">
 		SELECT
-		 	IDX,
-			ORG_FILE_NAME,
-			ROUND(FILE_SIZE/1024,1) AS FILE_SIZE
-		FROM tb_file
-		WHERE BOARD_IDX = (SELECT 
-								board_idx 
-						   FROM board 
-						   WHERE board_seq = #{board_seq})
-		AND
-		DEL_CHK = 'N'
+		 	notice_idx,
+			org_file_name,
+			ROUND(file_size/1024,1) AS file_size
+		FROM daul.daul_notice_attach
+		WHERE notice_idx  = #{notice_idx}
+		  AND del_chk = 'N'
 	</select>
 		
-	<select id="selectBoardIdx" resultType="String">
-		SELECT CONCAT('B-',LPAD(count(*)+1,'7','0')) as 'board_idx'
+	<select id="selectNoticeIdx" resultType="String">
+		SELECT CONCAT('NT-',LPAD(count(*)+1,'7','0')) as 'board_idx'
 		FROM board
 	</select>
 	
 	<select id="selectBoard" resultType="egovframework.com.board.vo.BoardVo">
 		SELECT 
-			a.board_seq, 
-			a.title, 
-			a.content,
-			DATE_FORMAT(a.rdate, '%Y-%m-%d') as rdate,
-			c.nickname as reg_user
-		FROM daul.board a
-   		LEFT JOIN out_user c
-		ON a.reg_user = c.user_seq 
-		WHERE a.board_seq  = #{board_seq}
+			notice_idx,
+			title,
+			content,
+			create_user
+		FROM daul.daul_notice  
+		WHERE notice_idx  = #{notice_idx}
 	</select>
 	
 	<insert id="insertBoard">
-		INSERT INTO board (board_idx,title, content,reg_user,rdate,update_user,udate)
+		INSERT INTO daul_notice (notice_idx,title, content,notice_type ,create_user,create_date, del_chk)
 		values
-		(#{board_idx},#{title},#{content},#{reg_user},now(),#{reg_user},now()) 
+		(#{notice_idx},#{title},#{content},'main' ,#{create_user},now(),'N') 
 	</insert>
 	
-	<insert id = "insertFile" >
+	<insert id = "insertFile2" >
 		INSERT INTO tb_file
         (
             BOARD_IDX,
@@ -75,14 +71,37 @@
         )
 	</insert>
 	
-	<select id="selectDownloadFile" resultType="egovframework.com.board.vo.BoardVo">
+	<select id="selectDownloadFile" resultType="egovframework.com.cmmn.util.FileVo">
 		SELECT 
 			ORG_FILE_NAME,
 			SAVE_FILE_NAME
-		FROM tb_file
-		WHERE idx  = #{file_idx}
+		FROM daul.daul_notice_attach
+		WHERE notice_idx  = #{idx}
 	</select>
 	
-	
+	<insert id = "insertFile">
+		INSERT INTO daul_notice_attach
+        (
+            notice_idx,
+            org_file_name,
+            save_file_name,
+            file_size,
+            create_user,
+            del_chk,
+            create_date,
+            attach_type
+        )
+        VALUES
+        (
+            #{ idx},
+            #{ org_file_name},
+            #{ save_file_name},
+            #{ file_size},
+            #{ create_user},
+            'N',
+            SYSDATE(),
+            #{ attach_type}           
+        )
+	</insert>
 	
 </mapper>
