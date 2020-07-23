@@ -19,66 +19,118 @@
 			<div class="mb-30">
 				<div class="panel">
 					<div class="panel-body">
-						<form:form method="post" modelAttribute="suggestionVo" enctype="multipart/form-data">
-							<form:input type="hidden" class="form-control" path="suggestion_idx"/>
-							<div class="form-group row">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">작성자 </label>
-								<div class="col-md-8">
-									<form:input type="text" readonly="true" class="form-control" path="create_user"/>
-									<form:errors path="create_user"/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">제목 </label>
-								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title"/>
-									<form:errors path="title"/>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">제안내용 </label>
-								<div class="col-md-8">
-									<form:textarea type="text" class="form-control" path="content" rows="5"/>
-									<form:errors path="content"/>
-								</div>
-							</div>
-							<div class="form-gorup row mb-20">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">첨부파일</label>
-								<div class="col-md-8">
-									<div class="input-group input-group-file" data-plugin="inputGroupFile">
-										<input type="text" class="form-control" id="publicFileName" readonly/>
-										<button type="button" class="input-search-close icon md-close" id="publicFileDelBtn" style="position: absolute; display: none;"></button>
-										<span class="input-group-append">
-											<span class="btn btn-primary btn-file">
-												<i class="icon md-upload" aria-hidden="true"></i>
-												<input type="file" id="publicFile" name="publicFile"/>
-											</span>
-										</span>
- 									</div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">대표이미지 </label>
-								<div class="col-md-8">
-	                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
-	                  			</div>
-							</div>
+						<div class="nav-tabs-horizontal" data-plugin="tabs">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item" role="presentation">
+									<a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">
+										 제  안
+									</a>
+								</li>
+								<li class="nav-item" role="presentation">
+									<a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">
+										 댓  글
+									</a>
+								</li>
+							</ul>
 							
-							<input type="hidden" name="update_user" value="${login.user_id}"/>
-							
-				            <div class="form-group form-material row">
-								<div class="col-md-9 offset-md-9">
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionModifyBtn" formaction="/suggestion/suggestionModify.do">수정 </button>
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionDeleteBtn" formaction="/suggestion/suggestionDelete.do">삭제 </button>
-									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+							<div class="tab-content pt-20">
+								<div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+									<form:form method="post" modelAttribute="suggestionVo" enctype="multipart/form-data">
+										<form:input type="hidden" class="form-control" path="suggestion_idx"/>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">작성자 </label>
+											<div class="col-md-8">
+												<form:input type="text" readonly="true" class="form-control" path="create_user"/>
+												<form:errors path="create_user"/>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">제목 </label>
+											<div class="col-md-8">
+												<form:input type="text" class="form-control" path="title"/>
+												<form:errors path="title"/>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">제안내용 </label>
+											<div class="col-md-8">
+												<form:textarea type="text" class="form-control" path="content" rows="5"/>
+												<form:errors path="content"/>
+											</div>
+										</div>
+										<div class="form-gorup row mb-20">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">첨부파일</label>
+											<div class="col-md-8">
+												<div class="input-group input-group-file" data-plugin="inputGroupFile">
+													<input type="text" class="form-control" id="publicFileName" readonly/>
+													<button type="button" class="input-search-close icon md-close" id="publicFileDelBtn" style="position: absolute; display: none;"></button>
+													<span class="input-group-append">
+														<span class="btn btn-primary btn-file">
+															<i class="icon md-upload" aria-hidden="true"></i>
+															<input type="file" id="publicFile" name="publicFile"/>
+														</span>
+													</span>
+			 									</div>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">대표이미지 </label>
+											<div class="col-md-8">
+				                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+				                  			</div>
+										</div>
+										
+										<input type="hidden" name="update_user" value="${login.user_id}"/>
+										
+							            <div class="form-group form-material row">
+											<div class="col-md-9 offset-md-9">
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionModifyBtn" formaction="/suggestion/suggestionModify.do">수정 </button>
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionDeleteBtn" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+											</div>
+										</div>
+									</form:form>
+								</div>
+								<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+									<%-- <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
+							            <thead>
+							              <tr>
+							                <th>번호</th>
+							                <th>내용</th>
+							                <th>작성자</th>
+							                <th>작성자 유형</th>
+							                <th>공감</th>
+							                <th>등록일</th>
+							                <th></th>
+							              </tr>
+							            </thead>
+							            <tbody>
+							            	<c:forEach var="suggestion" items="${suggestionList}" varStatus="status">
+							            	<tr>
+							            		<td id="seq_${status.index}">${suggestion.suggestion_idx}</td>
+							            		<td>번호</td>
+							            		<td>내용</td>
+							            		<td>작성자</td>
+							            		<td>작성자 유형</td>
+							            		<td>공감</td>
+							            		<td>등록일</td>
+							            		<td>답글등록버튼</td>
+						            		</tr>
+							            	</c:forEach>
+							            </tbody>
+							        </table>
+							        <div class="col-lg-12 mt-20">
+							          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="suggestionOpinionRegistBtn">등록</button>
+							        </div> --%>
+							        <%@ include file="./suggestionOpinion.jsp" %>
 								</div>
 							</div>
-						</form:form>
+						</div>
 					</div>
 				</div>
 			</div>

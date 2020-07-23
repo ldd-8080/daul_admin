@@ -1,14 +1,11 @@
 package egovframework.com.suggestion.controller;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import egovframework.com.cmmn.util.FileUtils;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.suggestion.service.SuggestionService;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
 
 @Controller
@@ -95,6 +93,7 @@ public class SuggestionController {
 		SuggestionVo vo = new SuggestionVo();
 		FileVo fileVo = new FileVo();
 		List<Map<String, String>> fileList = null;
+		List<SuggestionOpinionVo> suggestionOpinionList = null;
 		
 		try {
 			vo.setSuggestion_idx(suggestionIdx);
@@ -102,12 +101,15 @@ public class SuggestionController {
 			
 			fileVo.setIdx(suggestionIdx);
 			fileList = suggestionService.selectSuggestionFile(fileVo);
+			
+			suggestionOpinionList = suggestionService.selectSuggestionOpinionList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		model.addAttribute("suggestionVo", vo);
 		model.addAttribute("fileList", fileList);
+		model.addAttribute("suggestionOpinionList", suggestionOpinionList);
 		
 		return "suggestion/suggestionDetail";
 	}
@@ -200,5 +202,41 @@ public class SuggestionController {
 		}
 		
 		return "redirect:/suggestion/suggestionListPage.do";
+	}
+	
+	@RequestMapping(value="/suggestionOpinionRegist.do", method=RequestMethod.POST)
+	public ResponseEntity<?> suggestionOpinionRegist(SuggestionOpinionVo vo) throws Exception {
+		try {
+			log.debug("SuggestionOpinionVo : " + vo);
+			String opinionIdx = vo.getOpinion_idx();
+			if (!"".equals(opinionIdx) && opinionIdx != null) {
+				// opinionIdx가 있는 경우 -> 댓글의 댓글~~~들을 등
+				// select suggestion_ref, suggestion_indent, suggestion_step
+				// update step = step + 1 where ref = topRef and step > topStep
+				// insert
+				// 최상위 댓글 ref, indent, step 정보
+				SuggestionOpinionVo topOpnVo = suggestionService.selectParentSuggestionOpinion(vo);
+				suggestionService.updateChildSuggestionOpinion(topOpnVo);
+				
+				opinionIdx = suggestionService.selectSuggestionOpinionIdx();
+				vo.setOpinion_idx(opinionIdx);
+				vo.setSuggestion_ref(topOpnVo.getSuggestion_ref());
+				vo.setSuggestion_indent(topOpnVo.getSuggestion_indent() + 1);
+				vo.setSuggestion_step(topOpnVo.getSuggestion_step() + 1);
+				
+				suggestionService.insertSuggestionOpinion(vo);
+			} else {
+				// opinionIdx가 없는 경우 -> 제안의 댓글을 등록
+				opinionIdx = suggestionService.selectSuggestionOpinionIdx();
+				vo.setOpinion_idx(opinionIdx);
+				vo.setSuggestion_ref(opinionIdx);
+				
+				suggestionService.insertSuggestionOpinion(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

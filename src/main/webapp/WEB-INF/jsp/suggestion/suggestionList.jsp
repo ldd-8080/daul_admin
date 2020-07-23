@@ -49,7 +49,7 @@
 		            	</c:forEach>
 		            </tbody>
 		          </table>
-		           <div class="col-lg-12 mt-20">
+		          <div class="col-lg-12 mt-20">
 		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="suggestionRegistBtn">등록</button>
 		          </div>
 		        </div>

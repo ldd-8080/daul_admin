@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.suggestion.mapper.SuggestionMapper;
 import egovframework.com.suggestion.service.SuggestionService;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -61,6 +62,31 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	@Override
 	public void deleteSuggestion(SuggestionVo vo) throws Exception {
 		suggestionMapper.deleteSuggestion(vo);
+	}
+
+	@Override
+	public String selectSuggestionOpinionIdx() throws Exception {
+		return suggestionMapper.selectSuggestionOpinionIdx();
+	}
+
+	@Override
+	public void insertSuggestionOpinion(SuggestionOpinionVo vo) throws Exception {
+		suggestionMapper.insertSuggestionOpinion(vo);
+	}
+
+	@Override
+	public List<SuggestionOpinionVo> selectSuggestionOpinionList() throws Exception {
+		return suggestionMapper.selectSuggestionOpinionList();
+	}
+
+	@Override
+	public SuggestionOpinionVo selectParentSuggestionOpinion(SuggestionOpinionVo vo) throws Exception {
+		return suggestionMapper.selectParentSuggestionOpinion(vo);
+	}
+
+	@Override
+	public void updateChildSuggestionOpinion(SuggestionOpinionVo topOpnVo) throws Exception {
+		suggestionMapper.updateChildSuggestionOpinion(topOpnVo);
 	}
 
 }

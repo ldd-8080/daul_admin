@@ -107,4 +107,63 @@
 		     , update_date = SYSDATE()
 		 WHERE suggestion_idx = #{suggestion_idx}
 	</update>
+	
+	<select id="selectSuggestionOpinionIdx" resultType="String">
+		SELECT CONCAT('SG-OP-',LPAD(count(*)+1,'6','0')) as 'opinion_idx'
+		FROM daul.suggestion_opinion 
+	</select>
+	
+	<insert id="insertSuggestionOpinion">
+		INSERT INTO daul.suggestion_opinion
+		     (
+		       opinion_idx
+             , suggestion_idx
+             , opinion_content
+             , like_count
+             , create_user
+             , create_date
+             , del_chk
+             , suggestion_ref
+             , suggestion_indent
+             , suggestion_step
+		     )
+		VALUES
+		     (
+		       #{opinion_idx}
+             , #{suggestion_idx}
+             , #{opinion_content}
+             , #{like_count}
+             , #{create_user}
+             , SYSDATE()
+             , 'N'
+             , #{suggestion_ref}
+             , #{suggestion_indent}
+             , #{suggestion_step}
+		     )
+	</insert>
+	
+	<select id="selectSuggestionOpinionList" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
+		SELECT * 
+		  FROM daul.suggestion_opinion
+		 WHERE del_chk != 'Y' 
+		 ORDER BY suggestion_ref
+		        , suggestion_step
+	</select>
+	
+	<select id="selectParentSuggestionOpinion" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
+		SELECT suggestion_ref
+		     , suggestion_indent
+		     , suggestion_step
+		  FROM daul.suggestion_opinion
+		 WHERE opinion_idx = #{opinion_idx}
+	</select>
+	
+	<update id="updateChildSuggestionOpinion">
+		UPDATE daul.suggestion_opinion
+		   SET suggestion_step = suggestion_step + 1
+		 WHERE suggestion_ref = #{suggestion_ref}
+		   <![CDATA[
+		   AND suggestion_step > #{suggestion_step}
+		   ]]>
+	</update>
 </mapper>
