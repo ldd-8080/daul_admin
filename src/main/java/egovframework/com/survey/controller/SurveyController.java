@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import egovframework.com.cmmn.util.FileUtils;
+import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.service.SurveyService;
 import egovframework.com.survey.vo.SurveyVo;
@@ -39,8 +39,8 @@ public class SurveyController {
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
 	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
+	@Resource(name="fileUtil")
+	private FileUtil fileUtil;
 	
 	@RequestMapping(value="/surveyList", method = RequestMethod.GET)
 	public String surveyList(ModelMap model) throws Exception{
@@ -85,7 +85,7 @@ public class SurveyController {
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getSurvey_idx());
 			
-			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
 			System.out.println("fileList == " + fileList);
 			
 			for(int i = 0; i<fileList.size(); i++) {
@@ -152,7 +152,7 @@ public class SurveyController {
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getSurvey_idx());
 			
-			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
 			
 			if(fileList.size() > 0) {
 
@@ -249,7 +249,7 @@ public class SurveyController {
 			
 			if (!fileList.isEmpty() && fileList.size() > 0) {
 				saveFileName = fileList.get(0).get("save_file_name");
-				fileUtils.getImgFile(response, saveFileName);
+				fileUtil.getImgFile(response, saveFileName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
