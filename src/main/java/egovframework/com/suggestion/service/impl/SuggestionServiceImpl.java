@@ -89,4 +89,14 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 		suggestionMapper.updateChildSuggestionOpinion(topOpnVo);
 	}
 
+	@Override
+	public void updateSuggestionOpinion(SuggestionOpinionVo vo) throws Exception {
+		suggestionMapper.updateSuggestionOpinion(vo);
+	}
+
+	@Override
+	public void deleteSuggestionOpinion(SuggestionOpinionVo vo) throws Exception {
+		suggestionMapper.deleteSuggestionOpinion(vo);
+	}
+
 }

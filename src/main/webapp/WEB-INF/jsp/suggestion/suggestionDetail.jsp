@@ -97,36 +97,6 @@
 									</form:form>
 								</div>
 								<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-									<%-- <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-							            <thead>
-							              <tr>
-							                <th>번호</th>
-							                <th>내용</th>
-							                <th>작성자</th>
-							                <th>작성자 유형</th>
-							                <th>공감</th>
-							                <th>등록일</th>
-							                <th></th>
-							              </tr>
-							            </thead>
-							            <tbody>
-							            	<c:forEach var="suggestion" items="${suggestionList}" varStatus="status">
-							            	<tr>
-							            		<td id="seq_${status.index}">${suggestion.suggestion_idx}</td>
-							            		<td>번호</td>
-							            		<td>내용</td>
-							            		<td>작성자</td>
-							            		<td>작성자 유형</td>
-							            		<td>공감</td>
-							            		<td>등록일</td>
-							            		<td>답글등록버튼</td>
-						            		</tr>
-							            	</c:forEach>
-							            </tbody>
-							        </table>
-							        <div class="col-lg-12 mt-20">
-							          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="suggestionOpinionRegistBtn">등록</button>
-							        </div> --%>
 							        <%@ include file="./suggestionOpinion.jsp" %>
 								</div>
 							</div>
@@ -145,7 +115,7 @@
 		_repFileTarget.attr("style", "display:block");
 	});
 	
-	//파일정보 가져오기
+	// 열린제안 파일 정보 init
 	var fileList = new Array();
 	var public_file = {};
 	var rep_file = {};
@@ -173,6 +143,28 @@
 			}
 		}
 	}
+	
+	// 열린제안 댓글 정보 init
+	var sgstOpnList = new Array();
+	
+	<c:forEach var="suggestionOpinion" items="${suggestionOpinionList}">
+		var sgstOpn = {};
+		sgstOpn.opinion_idx			= "${suggestionOpinion.opinion_idx}";
+		sgstOpn.suggestion_idx		= "${suggestionOpinion.suggestion_idx}";
+		sgstOpn.parent_opinion_idx 	= "${suggestionOpinion.parent_opinion_idx}"; 
+		sgstOpn.opinion_content 	= "${suggestionOpinion.opinion_content}";
+		sgstOpn.like_count 			= "${suggestionOpinion.like_count}";
+		sgstOpn.create_user 		= "${suggestionOpinion.create_user}";
+		sgstOpn.create_date			= "${suggestionOpinion.create_date}";
+		sgstOpn.update_user 		= "${suggestionOpinion.update_user}";
+		sgstOpn.update_date 		= "${suggestionOpinion.update_date}";
+		sgstOpn.del_chk 			= "${suggestionOpinion.del_chk}";
+		sgstOpn.suggestion_ref 		= "${suggestionOpinion.suggestion_ref}";
+		sgstOpn.suggestion_indent	= "${suggestionOpinion.suggestion_indent}";
+		sgstOpn.suggestion_step		= "${suggestionOpinion.suggestion_step}";
+		sgstOpn.auth_type			= "${suggestionOpinion.auth_type}";
+		sgstOpnList.push(sgstOpn);
+	</c:forEach>
 
 	$("#suggestionListBtn").click(function() {
 		location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
@@ -231,5 +223,102 @@
 	$("#suggestionDeleteBtn").click(function() {
 		if (!confirm("삭제하시겠습니까?")) return false;
 	});
+	
+	$("#sgstOpnRegBtn").click(function() {
+		$("#opinion_idx").val("");
+	});
+
+	$("#suggestionOpinionRegistBtn").click(function() {
+		var request = $.ajax({
+			url: "/suggestion/suggestionOpinionRegist.do",
+			method: "post",
+			data: $("#sgstOpnRegForm").serialize()
+		});
+		
+		request.done(function(data) {
+			location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
+		});
+		
+		request.fail(function(error) {
+			console.log("request fail", error)
+		});
+	});
+	
+	$("#boardTable tr td").click(function(event) {
+		if ($(this).get(0).cellIndex === 0) {
+		} else {
+			$("#sgstOpnDetailBtn").trigger("click");
+			var idx = $(this).parent().children().eq(0).text();
+			
+			for (var sgstOpn of sgstOpnList) {
+				if (sgstOpn.opinion_idx === idx) {
+					$("#detailCreateUser").val(sgstOpn.create_user);
+					$("#detailAuthType").val(sgstOpn.auth_type);
+					$("#detailOpinionContent").val(sgstOpn.opinion_content);
+					$("#detailOpinionIdx").val(sgstOpn.opinion_idx);
+				}
+			}
+		}
+	});
+	
+	$('#exampleStaticData').jsGrid({
+	    //height: "500px",
+	    width: "100%",
+
+	    //autoload:true,
+	    sorting: true,
+	    paging: true,
+
+	    data: sgstOpnList,
+
+	    fields: [
+	    	{name: "opinion_idx",title:"번호", type: "text", width: 150, align: "center"}, 
+	    	{name: "opinion_content",title:"내용", type: "text", width: 150}, 
+	    	{name: "create_user",title:"작성자", type: "text", width: 150}, 
+	    	{name: "auth_type",title:"작성자 유형", type: "text", width: 150}, 
+	    	{name: "like_count",title:"공감", type: "text", width: 150}, 
+	    	{name: "create_date",title:"등록일", type: "text", width: 150, align: "center"}, 
+	    	{title:"", width: 80, align: "center", itemTemplate:'<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>'} 
+    	]
+	});
+	
+	$("button[name='opnToOpnModal']").click(function() {
+		//var opinion_idx = $(this).parent().parent().find("td[id^='seq_']").text();
+		var opinion_idx = $(this).parent().parent().children().eq(0).text();
+		$("#opinion_idx").val(opinion_idx);
+	});
+	/* 
+ 	var countries = [
+		{Name: "", Id: 0}, 
+		{Name: "United States", Id: 1}, 
+	    {Name: "Canada", Id: 2}, 
+	    {Name: "United Kingdom", Id: 3}, 
+	    {Name: "France", Id: 4}, 
+	    {Name: "Brazil", Id: 5}, 
+	    {Name: "China", Id: 6}, 
+	    {Name: "Russia",Id: 7}
+    ];
+	
+	$('#exampleStaticData').jsGrid({
+	    //height: "500px",
+	    width: "100%",
+
+	    sorting: true,
+	    paging: true,
+
+	    data: [
+	    	{"Name": "Otto Clay", "Age": 61, "Country": 6, "Address": "Ap #897-1459 Quam Avenue", "Married": false}, 
+	    	{"Name": "Connor Johnston", "Age": 73, "Country": 7, "Address": "Ap #370-4647 Dis Av.", "Married": false}
+    	],
+
+	    fields: [
+	    	{name: "Name",title:"이름", type: "text", width: 150}, 
+	    	{name: "Age", type: "number", width: 50}, 
+	    	{name: "Address", type: "text", width: 200}, 
+	    	{name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name"}, 
+	    	{name: "Married", type: "checkbox", title: "Is Married"}
+    	]
+	});
+	 */
 </script>
 	    	

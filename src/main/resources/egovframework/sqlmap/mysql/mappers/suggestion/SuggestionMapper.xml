@@ -143,11 +143,13 @@
 	</insert>
 	
 	<select id="selectSuggestionOpinionList" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
-		SELECT * 
-		  FROM daul.suggestion_opinion
-		 WHERE del_chk != 'Y' 
-		 ORDER BY suggestion_ref
-		        , suggestion_step
+		SELECT so.*
+		     , u.auth_type 
+		  FROM daul.suggestion_opinion so
+		  LEFT JOIN daul.user u ON so.create_user = u.user_id 
+		 <!-- WHERE so.del_chk != 'Y' --> 
+		 ORDER BY so.suggestion_ref
+		        , so.suggestion_step
 	</select>
 	
 	<select id="selectParentSuggestionOpinion" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
@@ -165,5 +167,21 @@
 		   <![CDATA[
 		   AND suggestion_step > #{suggestion_step}
 		   ]]>
+	</update>
+	
+	<update id="updateSuggestionOpinion">
+		UPDATE daul.suggestion_opinion
+		   SET update_user = #{update_user}
+		     , update_date = SYSDATE()
+		     <if test="opinion_content != null and opinion_content != ''">
+		     , opinion_content = #{opinion_content}
+		     </if>
+		 WHERE opinion_idx = #{opinion_idx}
+	</update>
+	
+	<update id="deleteSuggestionOpinion">
+		UPDATE daul.suggestion_opinion
+		   SET del_chk = 'Y'
+		 WHERE opinion_idx = #{opinion_idx}
 	</update>
 </mapper>

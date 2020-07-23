@@ -46,6 +46,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/select2/select2.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select/bootstrap-select.css">  
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/progress-bars.css">      
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jsgrid/jsgrid.min.css">      
 <!-- Fonts -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/font-awesome/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/material-design/material-design.min.css">
@@ -64,7 +65,7 @@
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/jsgrid/jsgrid.min.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> --%> 
  
 <script type="text/javascript">

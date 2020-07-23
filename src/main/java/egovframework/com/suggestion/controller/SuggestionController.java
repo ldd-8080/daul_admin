@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import egovframework.com.cmmn.util.FileUtils;
+import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.suggestion.service.SuggestionService;
 import egovframework.com.suggestion.vo.SuggestionOpinionVo;
@@ -32,8 +32,8 @@ public class SuggestionController {
 	@Resource(name="suggestionService")
 	private SuggestionService suggestionService;
 	
-	@Resource(name="fileUtils")
-	private FileUtils fileUtils;
+	@Resource(name="fileUtil")
+	private FileUtil fileUtil;
 
 	@RequestMapping(value="/suggestionListPage.do")
 	public String suggestionListPage(ModelMap model) throws Exception{
@@ -73,7 +73,7 @@ public class SuggestionController {
 				fileVo.setCreate_user(vo.getCreate_user());
 				fileVo.setIdx(vo.getSuggestion_idx());
 				
-				List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, publicFile, repFile);
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
 
 				log.debug("[열린제안] 열린제안 파일 등록");
 				for(int i = 0; i<fileList.size(); i++) {
@@ -124,7 +124,7 @@ public class SuggestionController {
 			FileVo fileVo = new FileVo();
 			fileVo.setIdx(vo.getSuggestion_idx());
 			fileVo.setCreate_user(vo.getUpdate_user());
-			List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, publicFile, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
 			
 			if (!fileList.isEmpty() && fileList.size() > 0) {
 				for (int i = 0; i < fileList.size(); i++) {
@@ -180,7 +180,7 @@ public class SuggestionController {
 			
 			if (!fileList.isEmpty() && fileList.size() > 0) {
 				saveFileName = fileList.get(0).get("save_file_name");
-				fileUtils.getImgFile(response, saveFileName);
+				fileUtil.getImgFile(response, saveFileName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -238,5 +238,30 @@ public class SuggestionController {
 		}
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/suggestionOpinionModify.do", method=RequestMethod.POST)
+	public String suggestionOpinionModify(SuggestionOpinionVo vo) throws Exception {
+		try {
+			log.debug("[열린제안] 열린제안 댓글 수정");
+			log.debug("SuggestionOpinionVo : " + vo);
+			suggestionService.updateSuggestionOpinion(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/suggestion/suggestionListPage.do";
+	}
+	
+	@RequestMapping(value="/suggestionOpinionDelete.do", method=RequestMethod.POST)
+	public String suggestionOpinionDelete(SuggestionOpinionVo vo) throws Exception {
+		try {
+			log.debug("[열린제안] 열린제안 댓글 삭제");
+			suggestionService.deleteSuggestionOpinion(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/suggestion/suggestionListPage.do";
 	}
 }

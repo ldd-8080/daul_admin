@@ -94,5 +94,3 @@
 <script src="${pageContext.request.contextPath}/js/uikit/progress-bars.js"></script>
 <script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>       
 <%-- <script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script> --%>
-        
-        

@@ -39,4 +39,8 @@ public interface SuggestionMapper {
 
 	void updateChildSuggestionOpinion(SuggestionOpinionVo topOpnVo) throws Exception;
 
+	void updateSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
+
+	void deleteSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
+
 }

@@ -1,6 +1,8 @@
 package egovframework.com.suggestion.vo;
 
-public class SuggestionOpinionVo {
+import egovframework.com.user.vo.UserVo;
+
+public class SuggestionOpinionVo extends UserVo{
 	private String opinion_idx;
 	private String suggestion_idx;
 	private String parent_opinion_idx;
