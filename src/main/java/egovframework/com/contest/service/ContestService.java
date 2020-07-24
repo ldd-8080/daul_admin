@@ -1,5 +1,9 @@
 package egovframework.com.contest.service;
 
-public interface ContestService {
+import java.util.List;
 
+import egovframework.com.contest.vo.ContestVo;
+
+public interface ContestService {
+	List<ContestVo> selectContestList() throws Exception;
 }
