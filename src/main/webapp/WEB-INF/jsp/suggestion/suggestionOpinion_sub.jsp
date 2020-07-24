@@ -3,9 +3,39 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-
-<div id="sgstOpnListTable"></div>
-
+<table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
+	<thead>
+	  <tr>
+	    <th>번호</th>
+	    <th>내용</th>
+	    <th>작성자</th>
+	    <th>작성자 유형</th>
+	    <th>공감</th>
+	    <th>등록일</th>
+	    <th></th>
+	  </tr>
+	</thead>
+    <tbody>
+    	<c:forEach var="suggestionOpinion" items="${suggestionOpinionList}" varStatus="status">
+    	<tr>
+    		<td id="seq_${status.index}">${suggestionOpinion.opinion_idx}</td>
+    		<c:if test="${suggestionOpinion.del_chk eq 'Y'}">
+    		<td>삭제된 댓글입니다.</td>
+    		</c:if>
+    		<c:if test="${suggestionOpinion.del_chk ne 'Y'}">
+    		<td>${suggestionOpinion.opinion_content}</td>
+    		</c:if>
+    		<td>${suggestionOpinion.create_user}</td>
+    		<td>작성자 유형</td>
+    		<td>${suggestionOpinion.like_count}</td>
+    		<td>${suggestionOpinion.create_date}</td>
+    		<td>
+    			<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>
+    		</td>
+   		</tr>
+    	</c:forEach>
+    </tbody>
+</table>
 <div class="col-lg-12 mt-20">
   	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" id="sgstOpnRegBtn">등록</button>
   	<button style="display: none;" type="button" data-toggle="modal" data-target="#sgstOpnDetailModal" id="sgstOpnDetailBtn">상세</button>
@@ -37,7 +67,7 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" id="suggestionOpinionRegistBtn" >등록 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="suggestionOpinionRegistBtn" >등록 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
         	</div>
         </form>
@@ -78,8 +108,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="sgstSubmitBtn" data-title="댓글" formaction="/suggestion/suggestionOpinionModify.do">수정 </button>
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="sgstSubmitBtn" data-title="댓글" formaction="/suggestion/suggestionOpinionDelete.do">삭제 </button>
+        		<button type="submit" class="btn btn-primary waves-effect waves-classics" id="sgstOpnModifyBtn" formaction="/suggestion/suggestionOpinionModify.do">수정 </button>
+        		<button type="submit" class="btn btn-primary waves-effect waves-classics" id="sgstOpnDeleteBtn" formaction="/suggestion/suggestionOpinionDelete.do">삭제 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
         	</div>
         </form>
@@ -93,6 +123,9 @@
   </div>
 </div>
 <!-- 열린제안 상세 모달 끝 -->
+
+<!-- jsGrid static data test -->
+<div id="exampleStaticData"></div>
 
 <script type="text/javascript">
 	

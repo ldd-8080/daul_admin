@@ -89,8 +89,8 @@
 										
 							            <div class="form-group form-material row">
 											<div class="col-md-9 offset-md-9">
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionModifyBtn" formaction="/suggestion/suggestionModify.do">수정 </button>
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionDeleteBtn" formaction="/suggestion/suggestionDelete.do">삭제 </button>
 												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
 											</div>
 										</div>
@@ -216,13 +216,19 @@
 		publicFileChange();
 	});
 	
+	$("#suggestionModifyBtn").click(function() {
+		if (!confirm("수정하시겠습니까?")) return false;
+	});
+	
+	$("#suggestionDeleteBtn").click(function() {
+		if (!confirm("삭제하시겠습니까?")) return false;
+	});
+	
 	$("#sgstOpnRegBtn").click(function() {
 		$("#opinion_idx").val("");
 	});
 
 	$("#suggestionOpinionRegistBtn").click(function() {
-		if (!submitConfirm($(this))) return false;
-		
 		var request = $.ajax({
 			url: "/suggestion/suggestionOpinionRegist.do",
 			method: "post",
@@ -238,17 +244,31 @@
 		});
 	});
 	
-	$('#sgstOpnListTable').jsGrid({
+	$("#boardTable tr td").click(function(event) {
+		if ($(this).get(0).cellIndex === 0) {
+		} else {
+			$("#sgstOpnDetailBtn").trigger("click");
+			var idx = $(this).parent().children().eq(0).text();
+			
+			for (var sgstOpn of sgstOpnList) {
+				if (sgstOpn.opinion_idx === idx) {
+					$("#detailCreateUser").val(sgstOpn.create_user);
+					$("#detailAuthType").val(sgstOpn.auth_type);
+					$("#detailOpinionContent").val(sgstOpn.opinion_content);
+					$("#detailOpinionIdx").val(sgstOpn.opinion_idx);
+				}
+			}
+		}
+	});
+	
+	$('#exampleStaticData').jsGrid({
 	    //height: "500px",
 	    width: "100%",
 
 	    //autoload:true,
 	    sorting: true,
 	    paging: true,
-	    //pageIndex: 1, default: 1
-	    pageSize: 9, // default: 20
-		//pageButtonCount: 5, default: 15
-	    
+
 	    data: sgstOpnList,
 
 	    fields: [
@@ -278,48 +298,51 @@
 	    	{name: "auth_type", title: "작성자 유형", type: "text", width: 70}, 
 	    	{name: "like_count", title: "공감", type: "text", width: 30}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
-	    	{title: "", width: 50, align: "center", 
-	    		itemTemplate: function(_, item) {
-	    			if (item.del_chk !== 'Y') {
-		    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>';
-	    			}
-	    		}
-    		}
+	    	{title: "", width: 50, align: "center", itemTemplate:'<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>'}
     	],
     	
     	rowClick: function(args) {
-    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
-	    		$("#sgstOpnDetailBtn").trigger("click");
-				
-				$("#detailCreateUser").val(args.item.create_user);
-				$("#detailAuthType").val(args.item.auth_type);
-				$("#detailOpinionContent").val(args.item.opinion_content);
-				$("#detailOpinionIdx").val(args.item.opinion_idx);
-    		}
+    		console.log(args);
     	}
 	});
 	
 	$("button[name='opnToOpnModal']").click(function() {
 		//var opinion_idx = $(this).parent().parent().find("td[id^='seq_']").text();
 		var opinion_idx = $(this).parent().parent().children().eq(0).text();
-		
 		$("#opinion_idx").val(opinion_idx);
 	});
+	/* 
+ 	var countries = [
+		{Name: "", Id: 0}, 
+		{Name: "United States", Id: 1}, 
+	    {Name: "Canada", Id: 2}, 
+	    {Name: "United Kingdom", Id: 3}, 
+	    {Name: "France", Id: 4}, 
+	    {Name: "Brazil", Id: 5}, 
+	    {Name: "China", Id: 6}, 
+	    {Name: "Russia",Id: 7}
+    ];
 	
-	$("button[name='sgstSubmitBtn']").click(function() {
-		if (!submitConfirm($(this))) return false;
+	$('#exampleStaticData').jsGrid({
+	    //height: "500px",
+	    width: "100%",
+
+	    sorting: true,
+	    paging: true,
+
+	    data: [
+	    	{"Name": "Otto Clay", "Age": 61, "Country": 6, "Address": "Ap #897-1459 Quam Avenue", "Married": false}, 
+	    	{"Name": "Connor Johnston", "Age": 73, "Country": 7, "Address": "Ap #370-4647 Dis Av.", "Married": false}
+    	],
+
+	    fields: [
+	    	{name: "Name",title:"이름", type: "text", width: 150}, 
+	    	{name: "Age", type: "number", width: 50}, 
+	    	{name: "Address", type: "text", width: 200}, 
+	    	{name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name"}, 
+	    	{name: "Married", type: "checkbox", title: "Is Married"}
+    	]
 	});
-	
-	function submitConfirm($type) {
-		var type = $type.text();
-		var title = $type.data("title");
-		var msg = "";
-		
-		if (title !== undefined) msg += title + "을(를) ";
-		msg += type + "하시겠습니까?";
-		
-		if (!confirm(msg)) return false;
-		else return true;
-	}
+	 */
 </script>
 	    	

@@ -209,13 +209,13 @@ public class SuggestionController {
 		try {
 			log.debug("SuggestionOpinionVo : " + vo);
 			String opinionIdx = vo.getOpinion_idx();
+			
 			if (!"".equals(opinionIdx) && opinionIdx != null) {
-				// opinionIdx가 있는 경우 -> 댓글의 댓글~~~들을 등
-				// select suggestion_ref, suggestion_indent, suggestion_step
-				// update step = step + 1 where ref = topRef and step > topStep
-				// insert
-				// 최상위 댓글 ref, indent, step 정보
+				// opinionIdx가 있는 경우 -> 댓글의 댓글~~~들을 등록
+				// 등록하고자 하는 댓글의 최상위 댓글 ref, indent, step 정보
 				SuggestionOpinionVo topOpnVo = suggestionService.selectParentSuggestionOpinion(vo);
+				log.debug("[열린제안] 열린제안 상위댓글 indent 수정");
+				// 등록하고자 하는 댓글과 최상위 댓글 사이에 있는 댓글들의 indent를 수정하여 depth 설정
 				suggestionService.updateChildSuggestionOpinion(topOpnVo);
 				
 				opinionIdx = suggestionService.selectSuggestionOpinionIdx();
@@ -224,6 +224,7 @@ public class SuggestionController {
 				vo.setSuggestion_indent(topOpnVo.getSuggestion_indent() + 1);
 				vo.setSuggestion_step(topOpnVo.getSuggestion_step() + 1);
 				
+				log.debug("[열린제안] 열린제안 대댓글 등록");
 				suggestionService.insertSuggestionOpinion(vo);
 			} else {
 				// opinionIdx가 없는 경우 -> 제안의 댓글을 등록
@@ -231,6 +232,7 @@ public class SuggestionController {
 				vo.setOpinion_idx(opinionIdx);
 				vo.setSuggestion_ref(opinionIdx);
 				
+				log.debug("[열린제안] 열린제안 댓글 등록");
 				suggestionService.insertSuggestionOpinion(vo);
 			}
 		} catch (Exception e) {
