@@ -123,10 +123,10 @@ public class BoardController {
     }
 	
 	@RequestMapping(value="/downloadFile.do",method = RequestMethod.GET)
-	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response, @RequestParam("idx") String idx) throws Exception{
-		System.out.println(requeset.getParameter("idx") );
+	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response, @RequestParam("save_file_name") String save_file_name) throws Exception{
+		System.out.println("2222 =  " + requeset.getParameter("save_file_name") );
 		FileVo fileVo = new FileVo();
-		fileVo.setIdx(idx);
+		fileVo.setIdx(save_file_name);
 		fileVo = boardService.selectDownloadFile(fileVo);
 		String stored_File_Name = fileVo.getSave_file_name();
 		String original_File_Name = fileVo.getOrg_file_name();

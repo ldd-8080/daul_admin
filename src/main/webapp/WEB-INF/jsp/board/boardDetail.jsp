@@ -20,7 +20,7 @@
 				<div class="panel">
 					<div class="panel-body">
 					          <form:form method="post" modelAttribute="boardVo">
-						         	<form:input type="text" class="form-control" path="notice_idx"/>
+						         	<form:input type="hidden" class="form-control" path="notice_idx"/>
 						         		<div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">등록자 </label>
@@ -53,7 +53,7 @@
 									            	<c:forEach var="boardFile" items="${boardFile}" varStatus="status">
 									            		
 									            		<li>
-									            		<input type="hidden" id="IDX" value="${boardFile.idx}">
+									            		<input type="hidden" id="save_file_name" value="${boardFile.save_file_name}">
 									            			<span class="file-img"></span>
 									            			<a href="#this" name="file">${boardFile.org_file_name}</a>
 									            			<span>${boardFile.file_size } kb</span>
@@ -87,8 +87,8 @@
    });
    
   function fn_downloadFile(obj){
-	  var idx = obj.parent().find("#IDX").val();
-	  location.href = "${pageContext.request.contextPath}/board/downloadFile.do?idx=" + idx;
+	  var save_file_name = obj.parent().find("#save_file_name").val();
+	  location.href = "${pageContext.request.contextPath}/board/downloadFile.do?save_file_name=" + save_file_name;
   }
 </script>
 
