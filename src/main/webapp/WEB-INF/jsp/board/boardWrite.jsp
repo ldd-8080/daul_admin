@@ -68,16 +68,15 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label"></label>
 								<div class="col-md-8">
-								<div id="fileName-list">
-								
+									<div id="fileName-list">
+									
+									</div>
 								</div>
-							</div>
-								
 							</div>
 				            <div class="form-group form-material row">
 								<div class="col-md-9 offset-md-9">
 									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="boardRegistBtn" formaction="/board/boardInsert.do">등록 </button>
-									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="boardListBtn">목록 </button>
 								</div>
 							</div>
 						</form:form>
@@ -89,7 +88,7 @@
 </div>
 
 <script type="text/javascript">
-	$("#suggestionListBtn").click(function() {
+	$("#boardListBtn").click(function() {
 		location.href = "${pageContext.request.contextPath}/board/boardList.do";
 	});
 	

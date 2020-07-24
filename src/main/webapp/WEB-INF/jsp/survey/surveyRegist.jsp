@@ -50,7 +50,7 @@
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">대표이미지 </label>
 									<div class="col-md-8">
-		                    			<input type="file" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+		                    			<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
 		                  			</div>
 							</div>
 		                  	<div class="form-group row">
@@ -76,42 +76,42 @@
 											</div>
 										</div>
 									</div>
-			                </div>
-			                
-			                <hr/>
-			                
-			                <div class="form-group row">
-								<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label" style="padding-top:25px;">답변유형 </label>
-								<div class="col-md-8">
-								<div class="example">
-				                    <select data-plugin="selectpicker" name = "survey_type">
-				                      <option value="S">단일선택</option>
-				                      <option value="P">복수선택</option>
-				                    </select>
-				                  </div>
+				                </div>
+				                
+				                <hr/>
+				                
+				                <div class="form-group row">
+									<div class="col-md-1"></div>
+										<label class="col-md-2 col-form-label" style="padding-top:25px;">답변유형 </label>
+									<div class="col-md-8">
+									<div class="example">
+					                    <select data-plugin="selectpicker" name = "survey_type">
+					                      <option value="S">단일선택</option>
+					                      <option value="P">복수선택</option>
+					                    </select>
+					                  </div>
+									</div>
 								</div>
-							</div>
-			                
-			                <div class="form-group row">
-								<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">설문 항목	</label>								
-								<div class="col-md-8">
-									<button type="button" class="btn btn-primary" onclick="addQuestion()">+ 항목 생성</button>		
-								</div>								
-							</div>
-							
-							
-							<div id = "question-list">
-							</div>
-							
-							
-				            <div class="form-group form-material row">
-								<div class="col-md-9 offset-md-9">
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" formaction="/survey/registSurvey.do">등록 </button>
-									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
+				                
+				                <div class="form-group row">
+									<div class="col-md-1"></div>
+										<label class="col-md-2 col-form-label">설문 항목	</label>								
+									<div class="col-md-8">
+										<button type="button" class="btn btn-primary" onclick="addQuestion()">+ 항목 생성</button>		
+									</div>								
 								</div>
-							</div>
+								
+								
+								<div id = "question-list">
+								</div>
+								
+								
+					            <div class="form-group form-material row">
+									<div class="col-md-9 offset-md-9">
+										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" formaction="/survey/registSurvey.do">등록 </button>
+										<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
+									</div>
+								</div>
 						</form:form>
 					</div>
 				</div>

@@ -30,10 +30,16 @@ public class FileUtil {
 	private String filePath;
 	
     public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file) throws Exception {
-    	return parseFileInfo(vo, file, null);
+    	return parseFileInfo(vo, file, null, null);
     }
     
     public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2) throws Exception {
+    	return parseFileInfo(vo, file, file2, null);
+    }
+    
+    
+    
+    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2, MultipartFile[] file3) throws Exception {
     	System.out.println("================== filePath :: " + filePath);
     	String IDX = String.valueOf(vo.getIdx());
     	String creaID = (String) vo.getCreate_user();
@@ -104,6 +110,38 @@ public class FileUtil {
     			fileList.add(fileVo);
     		}
     	}
+    	
+    	// 두번째 파일
+    	if (file3 != null) {
+    		for(int i=0; i<file3.length; i++) {
+    			int saveFileSize = (int) file3[i].getSize();
+    			if (saveFileSize == 0) continue;
+    			
+    			String orgFileName = file3[i].getOriginalFilename();
+    			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
+    			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+    			
+    			log.debug("================== file3 start ==================");
+    			log.debug("파일 실제 이름: "+orgFileName);
+    			log.debug("파일 저장 이름: "+saveFileName);
+    			log.debug("파일 크기: "+saveFileSize);
+    			log.debug("content type: "+file3[i].getContentType());
+    			log.debug("================== file3   END ==================");
+    			
+    			target = new File(filePath, saveFileName);
+    			file3[i].transferTo(target);
+    			
+    			FileVo fileVo = new FileVo();
+    			fileVo.setIdx(IDX);
+    			fileVo.setOrg_file_name(orgFileName);
+    			fileVo.setSave_file_name(saveFileName);
+    			fileVo.setFile_size(saveFileSize);
+    			fileVo.setCreate_user(creaID);
+    			fileVo.setAttach_type(file3[i].getName());
+    			fileList.add(fileVo);
+    		}
+    	}
+    	
     	
     	return fileList;
     }
