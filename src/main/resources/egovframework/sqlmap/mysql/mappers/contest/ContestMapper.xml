@@ -3,11 +3,103 @@
 <mapper
 	namespace="egovframework.com.contest.mapper.ContestMapper">
 	
-	<select id="selectSuggestionList" resultType="egovframework.com.contest.vo.ContestVo">
-		SELECT *
+	<select id="selectContestList" resultType="egovframework.com.contest.vo.ContestVo">
+		SELECT 
+			   admin_contest_idx,
+			   create_user,
+			   title,
+			   content,
+			   DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date,
+			   DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date,
+			   DATE_FORMAT(submit_s_date, '%Y-%m-%d') as submit_s_date,
+			   DATE_FORMAT(submit_e_date, '%Y-%m-%d') as submit_e_date,
+			   create_date
 		  FROM daul.contest_admin
 		 WHERE del_chk != 'Y'
 	</select>
 
-
+	<select id="selectAdminContestIdx" resultType="String">
+		SELECT CONCAT('AC-',LPAD(count(*)+1,'6','0')) as 'admin_contest_idx'
+		FROM daul.contest_admin
+	</select>
+	<insert id="registContest">
+		INSERT INTO daul.contest_admin
+			(
+				admin_contest_idx,
+				title,
+				content,
+				contest_s_date,
+				contest_e_date,
+				submit_s_date,
+				submit_e_date,
+				create_user,
+				create_date,
+				del_chk
+			)
+			VALUES
+			(
+				#{admin_contest_idx},
+				#{title},
+				#{content},
+			    DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date,
+			    DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date,
+			    DATE_FORMAT(submit_s_date, '%Y-%m-%d') as submit_s_date,
+			    DATE_FORMAT(submit_e_date, '%Y-%m-%d') as submit_e_date,
+				#{create_user},
+				SYSDATE(),
+				'N'
+			)
+	</insert>
+	
+	<insert id="insertFile">
+		INSERT INTO contest_admin_attach
+			(
+			   admin_contest_idx
+		     , org_file_name
+		     , save_file_name
+		     , file_size
+		     , create_user
+		     , del_chk
+		     , create_date
+		     , attach_type
+			)
+		VALUES
+			(
+			   #{idx}
+		     , #{org_file_name}
+		     , #{save_file_name}
+		     , #{file_size}
+		     , #{create_user}
+		     , 'N'
+		     , SYSDATE()
+		     , #{attach_type}
+			)
+	</insert>
+	<select id = "selectContest" resultType="egovframework.com.contest.vo.ContestVo">
+		SELECT
+			admin_contest_idx,
+			title,
+			content,
+			contest_s_date,
+			contest_e_date,
+			submit_s_date,
+			submit_e_date,
+			create_user,
+			create_date
+		FROM daul.contest_admin
+		WHERE admin_contest_idx = #{admin_contest_idx}
+			
+	</select>
+	
+	<select id = "selectContestFile" resultType = "Map">
+		SELECT 
+			admin_contest_idx,
+			org_file_name,
+			save_file_name,
+			attach_type,
+			ROUND(file_size/1024,1) AS file_size
+		FROM daul.contest_admin_attach
+		WHERE admin_contest_idx = #{admin_contest_idx}
+		  AND del_chk = 'N'
+	</select>
 </mapper>

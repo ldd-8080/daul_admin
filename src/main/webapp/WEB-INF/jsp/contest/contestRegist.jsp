@@ -108,7 +108,7 @@
 										<span class="input-group-append">
 											<span class="btn btn-primary btn-file">
 												<i class="icon md-upload" aria-hidden="true"></i>
-												<input multiple="multiple" type="file" id="noticeFile" name="publicFile"/>
+												<input multiple="multiple" type="file" id="noticeFile" name="noticeFile"/>
 											</span>
 										</span>
  									</div>

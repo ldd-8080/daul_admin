@@ -35,13 +35,13 @@
 						 <tbody>
 						 	<c:forEach var="contest" items="${contestList}" varStatus="status">
 		            			<tr>
-		            				<td id="seq_${status.index}">${contest.contest_idx}</td>
-		            				<td>${suggestion.create_user}</td>
-		            				<td>${suggestion.title}</td>
+		            				<td id="seq_${status.index}">${contest.admin_contest_idx}</td>
+		            				<td>${contest.create_user}</td>
+		            				<td>${contest.title}</td>
 		            				<td>0</td>
-		            				<td>${suggestion.contest_s_date}-${suggestion.contest_e_date}</td>
-		            				<td>${suggestion.submit_s_date}-${suggestion.submit_e_date}</td>
-		            				<td>${suggestion.create_date}</td>
+		            				<td>${contest.contest_s_date}-${contest.contest_e_date}</td>
+		            				<td>${contest.submit_s_date}-${contest.submit_e_date}</td>
+		            				<td>${contest.create_date}</td>
 		            			</tr>
 		            		</c:forEach>
 						 </tbody>						 	        	
@@ -55,6 +55,17 @@
     </div>
 </div>
 <script type="text/javascript">
+
+$("#boardTable tr td").click(function(event) {
+	if ($(this).get(0).cellIndex === 0) {
+	} else {
+		var admin_contest_idx = $(this).parent().children().eq(0).text();
+		
+		location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + admin_contest_idx;
+	}
+});
+
+
 	$("#conotestRegistBtn").click(function() {
 		location.href = "${pageContext.request.contextPath}/contest/contestRegistPage.do";
 	});

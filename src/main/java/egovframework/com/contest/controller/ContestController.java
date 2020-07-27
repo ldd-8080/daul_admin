@@ -1,6 +1,7 @@
 package egovframework.com.contest.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -11,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.service.ContestService;
 import egovframework.com.contest.vo.ContestVo;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -40,6 +43,8 @@ public class ContestController {
 		}catch(Exception e) {
 			
 		}
+		
+		model.addAttribute("contestList",contestList);
 		return "contest/contestList";
 	}
 	
@@ -51,22 +56,60 @@ public class ContestController {
 	}
 	
 	@RequestMapping(value="/contestRegist.do", method=RequestMethod.POST)
-	public String contestRegist(HttpSession session, ContestVo vo,MultipartFile[] noticeFile, MultipartFile[] repFile
+	public String contestRegist(HttpSession session, ContestVo vo,MultipartFile[] repFile, MultipartFile[] noticeFile
 			, MultipartFile[] propFile) throws Exception{
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
 	    vo.setCreate_user(userVo.getUser_id());		    
-	    vo.setSurvey_idx(contestService.selectSurveyIdx());
+	    vo.setAdmin_contest_idx(contestService.selectAdminContestIdx());
 	    
 		System.out.println(vo);
-
-		FileVo fileVo = new FileVo();
 		
-		fileVo.setCreate_user(vo.getCreate_user());
-		fileVo.setIdx(vo.getcontest_idx());
+		log.debug("[나눔공모] 나눔공모 등록");
+		int result = contestService.registContest(vo);
 		
-		List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
-
+		
+		if(result > 0) {
+			FileVo fileVo = new FileVo();
+			
+			fileVo.setCreate_user(vo.getCreate_user());
+			fileVo.setIdx(vo.getAdmin_contest_idx());
+			
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile, propFile, noticeFile);
+			
+			log.debug("[나눔공모] 나눔공모 파일 등록");
+			for(int i = 0; i<fileList.size(); i++) {
+				contestService.insertFile(fileList.get(i));
+			}
+			
+		}
 		return "redirect:/contest/contestList.do";
 	}
+	
+	@RequestMapping(value="contestDetail.do")
+	public String contestDetail(@RequestParam("admin_contest_idx") String admin_contest_idx, ModelMap model ) throws Exception{
+		
+		ContestVo vo = new ContestVo();
+		FileVo fileVo = new FileVo();
+		List<Map<String, String>> fileList = null;
+		List<SuggestionOpinionVo> suggestionOpinionList = null;
+		
+		try {
+			vo.setAdmin_contest_idx(admin_contest_idx);
+			vo = contestService.selectContest(vo);
+			
+			fileList = contestService.selectContestFile(vo);
+			
+			
+		}catch(Exception e) {
+			
+		}
+		
+		model.addAttribute("contestVo", vo);
+		model.addAttribute("contestFile", fileList);
+		
+		
+		return "contest/contestDetail";
+	}
+	
 }
