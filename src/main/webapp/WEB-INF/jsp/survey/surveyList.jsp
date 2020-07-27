@@ -12,18 +12,17 @@
 <div class="page">
 	<div class="page-content container-fluid">
 	    <!-- Page -->
-	    <h1 class="page-title">설문조사</h1>
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">Survey</a></li>
-	      <li class="breadcrumb-item active">SurveyList</li>
+	      <li class="breadcrumb-item"><a href="javascript:void(0)">서비스</a></li>
+	      <li class="breadcrumb-item active">설문조사</li>
 	    </ol>
 	
 	    <div class="page-content">
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">Survey</h3>
+		          <h3 class="panel-title">설문조사 목록</h3>
 		        </header>
 		        <div class="panel-body">
 		          <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
@@ -53,9 +52,11 @@
 		          </div>
 		        </div>
 			</div>
+		</div>
 	</div>
-<!-- End Page -->
 </div>
+<!-- End Page -->
+
 <script type="text/javascript">
 	$("#boardTable tr td").click(function(event) {
 		if ($(this).get(0).cellIndex === 0) {

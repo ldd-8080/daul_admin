@@ -102,7 +102,7 @@ public class SuggestionController {
 			fileVo.setIdx(suggestionIdx);
 			fileList = suggestionService.selectSuggestionFile(fileVo);
 			
-			suggestionOpinionList = suggestionService.selectSuggestionOpinionList();
+			suggestionOpinionList = suggestionService.selectSuggestionOpinionList(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

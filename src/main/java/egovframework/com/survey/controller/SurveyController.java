@@ -1,6 +1,5 @@
 package egovframework.com.survey.controller;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.service.SurveyService;
+import egovframework.com.survey.vo.SurveyOpinionVo;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.com.user.vo.UserVo;
 
@@ -200,12 +201,12 @@ public class SurveyController {
 	@RequestMapping(value="/surveyDetail.do", method=RequestMethod.GET)
 	public String surveyDetail(ModelMap model, @RequestParam("survey_idx") String survey_idx) throws Exception{
 		SurveyVo surveyVo = new SurveyVo();
-		FileVo fileVo = new FileVo();
 
-		List<Map<String, String>> fileList = null;
 		List<Map<String,String>> surveyQuestionList = new ArrayList<Map<String, String>>();
 		List<Map<String,String>> surveyResult = new ArrayList<Map<String, String>>();
 		List<Map<String,String>> surveyParticipation = new ArrayList<Map<String, String>>();
+		List<SurveyOpinionVo> surveyOpinionList = null;
+		
 		try {
 			surveyVo.setSurvey_idx(survey_idx);
 			surveyVo = surveyService.selectSurveyDetail(surveyVo);
@@ -218,10 +219,7 @@ public class SurveyController {
 			
 			surveyParticipation = surveyService.selectParticipation(surveyVo);
 			
-			fileVo.setIdx(survey_idx);
-			fileList = surveyService.selectSurveyFile(fileVo);
-			
-			System.out.println("fileList = = = = "+fileList);
+			surveyOpinionList = surveyService.selectSurveyOpinionList(surveyVo);
 		}catch(Exception e) {
 			
 		}
@@ -229,6 +227,7 @@ public class SurveyController {
 		model.addAttribute("surveyResult", surveyResult);
 		model.addAttribute("surveyVo",surveyVo);
 		model.addAttribute("surveyQuestionList",surveyQuestionList);
+		model.addAttribute("surveyOpinionList",surveyOpinionList);
 		
 		return "survey/surveyDetail";
 	}
@@ -255,5 +254,41 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping(value="/surveyOpinionRegist.do", method=RequestMethod.POST)
+	public ResponseEntity<?> surveyOpinionRegist(SurveyOpinionVo vo) throws Exception {
+		try {
+			log.debug("SurveyOpinionVo : " + vo);
+			String opinionIdx = vo.getOpinion_idx();
 			
+			if (!"".equals(opinionIdx) && opinionIdx != null) {
+				// opinionIdx가 있는 경우 -> 댓글의 댓글~~~들을 등록
+				// 등록하고자 하는 댓글의 최상위 댓글 ref, indent, step 정보
+				SurveyOpinionVo topOpnVo = surveyService.selectParentSurveyOpinion(vo);
+				log.debug("[설문조사] 설문조사 상위댓글 indent 수정");
+				// 등록하고자 하는 댓글과 최상위 댓글 사이에 있는 댓글들의 indent를 수정하여 depth 설정
+				surveyService.updateChildSurveyOpinion(topOpnVo);
+				
+				opinionIdx = surveyService.selectSurveyOpinionIdx();
+				vo.setOpinion_idx(opinionIdx);
+				vo.setSurvey_ref(topOpnVo.getSurvey_ref());
+				vo.setSurvey_indent(topOpnVo.getSurvey_indent() + 1);
+				vo.setSurvey_step(topOpnVo.getSurvey_step() + 1);
+				
+				log.debug("[설문조사] 설문조사 대댓글 등록");
+				surveyService.insertSurveyOpinion(vo);
+			} else {
+				// opinionIdx가 없는 경우 -> 제안의 댓글을 등록
+				opinionIdx = surveyService.selectSurveyOpinionIdx();
+				vo.setOpinion_idx(opinionIdx);
+				vo.setSurvey_ref(opinionIdx);
+				
+				log.debug("[설문조사] 설문조사 댓글 등록");
+				surveyService.insertSurveyOpinion(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 }

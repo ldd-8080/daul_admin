@@ -148,6 +148,7 @@
 		  FROM daul.suggestion_opinion so
 		  LEFT JOIN daul.user u ON so.create_user = u.user_id 
 		 <!-- WHERE so.del_chk != 'Y' --> 
+		 WHERE so.suggestion_idx = #{suggestion_idx}
 		 ORDER BY so.suggestion_ref
 		        , so.suggestion_step
 	</select>

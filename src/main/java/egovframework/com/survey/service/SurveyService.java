@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.survey.vo.SurveyOpinionVo;
 import egovframework.com.survey.vo.SurveyVo;
 
 public interface SurveyService {
@@ -23,4 +24,9 @@ public interface SurveyService {
 	public List<Map<String,String>> selectSurveyFile(FileVo vo) throws Exception;
 	public void insertFile(FileVo fileVo) throws Exception ;	
 	public void deleteFile(FileVo vo) throws Exception;
+	public List<SurveyOpinionVo> selectSurveyOpinionList(SurveyVo surveyVo) throws Exception;
+	public SurveyOpinionVo selectParentSurveyOpinion(SurveyOpinionVo vo) throws Exception;
+	public void updateChildSurveyOpinion(SurveyOpinionVo topOpnVo) throws Exception;
+	public String selectSurveyOpinionIdx() throws Exception;
+	public void insertSurveyOpinion(SurveyOpinionVo vo) throws Exception;
 }

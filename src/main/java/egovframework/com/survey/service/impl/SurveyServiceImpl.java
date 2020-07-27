@@ -13,6 +13,7 @@ import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.mapper.SurveyMapper;
 import egovframework.com.survey.service.SurveyService;
+import egovframework.com.survey.vo.SurveyOpinionVo;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -133,6 +134,31 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		// TODO Auto-generated method stub
 		surveyMapper.deleteFile(vo);
 		
+	}
+
+	@Override
+	public List<SurveyOpinionVo> selectSurveyOpinionList(SurveyVo surveyVo) throws Exception {
+		return surveyMapper.selectSurveyOpinionList(surveyVo);
+	}
+
+	@Override
+	public SurveyOpinionVo selectParentSurveyOpinion(SurveyOpinionVo vo) throws Exception {
+		return surveyMapper.selectParentSurveyOpinion(vo);
+	}
+
+	@Override
+	public void updateChildSurveyOpinion(SurveyOpinionVo topOpnVo) throws Exception {
+		surveyMapper.updateChildSurveyOpinion(topOpnVo);
+	}
+
+	@Override
+	public String selectSurveyOpinionIdx() throws Exception {
+		return surveyMapper.selectSurveyOpinionIdx();
+	}
+
+	@Override
+	public void insertSurveyOpinion(SurveyOpinionVo vo) throws Exception {
+		surveyMapper.insertSurveyOpinion(vo);
 	}
 
 

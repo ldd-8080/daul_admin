@@ -196,10 +196,7 @@
                		</div>
                     <!--번째탭 -->
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                      Benivole horrent tantalo fuisset adamare fugiendam tractatos indicaverunt animis
-                      chaere, brevi minuendas, ubi angoribus iisque deorsum audita
-                      haec dedocendi utilitas. Panaetium erimus platonem varias
-                      imperitos animum, iudiciorumque operis multa disputando.
+                      <%@ include file="./surveyOpinion.jsp" %>
              	    </div>
                 	      
                 	      
@@ -276,33 +273,131 @@
 		}
 	}
 	
-	//파일정보 가져오기
-	var fileList = new Array();
-	var public_file = {};
-	var rep_file = {};
+	// 설문 댓글 정보 init
+	var surveyOpnList = new Array();
 	
-	<c:forEach var="file" items="${fileList}">
-		var file = {};
-		file.suggestion_idx = "${file.suggestion_idx}";
-		file.org_file_name = "${file.org_file_name}";
-		file.save_file_name = "${file.save_file_name}";
-		file.file_size = "${file.file_size}";
-		file.create_user = "${file.create_user}";
-		file.del_chk = "${file.del_chk}";
-		file.attach_type = "${file.attach_type}";
-		fileList.push(file);
+	<c:forEach var="surveyOpinion" items="${surveyOpinionList}">
+		var surveyOpn = {};
+		surveyOpn.opinion_idx			= "${surveyOpinion.opinion_idx}";
+		surveyOpn.survey_idx			= "${surveyOpinion.survey_idx}";
+		surveyOpn.parent_opinion_idx 	= "${surveyOpinion.parent_opinion_idx}"; 
+		surveyOpn.opinion_content 		= "${surveyOpinion.opinion_content}";
+		surveyOpn.like_count 			= "${surveyOpinion.like_count}";
+		surveyOpn.create_user 			= "${surveyOpinion.create_user}";
+		surveyOpn.create_date			= "${surveyOpinion.create_date}";
+		surveyOpn.update_user 			= "${surveyOpinion.update_user}";
+		surveyOpn.update_date 			= "${surveyOpinion.update_date}";
+		surveyOpn.del_chk 				= "${surveyOpinion.del_chk}";
+		surveyOpn.survey_ref 			= "${surveyOpinion.survey_ref}";
+		surveyOpn.survey_indent			= "${surveyOpinion.survey_indent}";
+		surveyOpn.survey_step			= "${surveyOpinion.survey_step}";
+		surveyOpn.auth_type				= "${surveyOpinion.auth_type}";
+		surveyOpnList.push(surveyOpn);
 	</c:forEach>
 	
-	if (fileList.length > 0) {
-		for (var file of fileList) {
-			if (file.attach_type.indexOf("rep") > -1) {
-				rep_file = file;
-			} else if (file.attach_type.indexOf("public") > -1) {
-				$("#publicFileDelBtn").show();
-				$("#publicFileName").val(file.org_file_name);
-				public_file = file;
-			}
-		}
+	$('#surveyOpnListTable').jsGrid({
+	    //height: "500px",
+	    width: "100%",
+
+	    //autoload:true,
+	    sorting: true,
+	    paging: true,
+	    //pageIndex: 1, default: 1
+	    pageSize: 9, // default: 20
+		//pageButtonCount: 5, default: 15
+	    
+	    data: surveyOpnList,
+
+	    fields: [
+	    	{name: "opinion_idx",title: "번호", type: "text", width: 80, align: "center"}, 
+	    	{title: "내용", type: "text", width: 250, 
+	    		itemTemplate: function(_, item) {
+					var result = "";
+	    			
+	    			if (item.del_chk === 'Y') {
+	    				result = "삭제된 댓글입니다.";
+	    			} else {
+	    				if (item.survey_indent !== "0") {
+	    					for (var i = 0; i < item.survey_indent; i++) {
+	    						result += '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
+	    					}
+	    					
+	    					result += item.opinion_content;
+	    				} else {
+		    				result = item.opinion_content;
+	    				}
+	    			}
+	    				
+	    			return result;
+	    		}
+    		}, 
+	    	{name: "create_user", title: "작성자", type: "text", width: 70}, 
+	    	{name: "auth_type", title: "작성자 유형", type: "text", width: 70}, 
+	    	/* {name: "like_count", title: "공감", type: "text", width: 30}, */ 
+	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
+	    	{title: "", width: 50, align: "center", 
+	    		itemTemplate: function(_, item) {
+	    			if (item.del_chk !== 'Y') {
+		    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#surveyOpnRegModal" name="opnToOpnModal">댓글 등록 </button>';
+	    			}
+	    		}
+    		}
+    	],
+    	
+    	rowClick: function(args) {
+    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
+	    		$("#surveyOpnDetailBtn").trigger("click");
+				
+				$("#detailCreateUser").val(args.item.create_user);
+				$("#detailAuthType").val(args.item.auth_type);
+				$("#detailOpinionContent").val(args.item.opinion_content);
+				$("#detailOpinionIdx").val(args.item.opinion_idx);
+    		}
+    	}
+	});
+	
+	$("#surveyOpinionRegistBtn").click(function() {
+		$("#opinion_idx").val("");
+	});
+	
+	function submitConfirm($type) {
+		var type = $type.text();
+		var title = $type.data("title");
+		var msg = "";
+		
+		if (title !== undefined) msg += title + "을(를) ";
+		msg += type + "하시겠습니까?";
+		
+		if (!confirm(msg)) return false;
+		else return true;
 	}
 	
+	$("#surveyOpinionRegistBtn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
+		var request = $.ajax({
+			url: "/survey/surveyOpinionRegist.do",
+			method: "post",
+			data: $("#surveyOpnRegForm").serialize()
+		});
+		
+		request.done(function(data) {
+			location.href = "${pageContext.request.contextPath}/survey/surveyList.do";
+		});
+		
+		request.fail(function(error) {
+			console.log("request fail", error)
+		});
+	});
+	
+	$("button[name='opnToOpnModal']").click(function() {
+		//var opinion_idx = $(this).parent().parent().find("td[id^='seq_']").text();
+		var opinion_idx = $(this).parent().parent().children().eq(0).text();
+		
+		$("#opinion_idx").val(opinion_idx);
+	});
+	
+	$("button[name='sgstSubmitBtn']").click(function() {
+		if (!submitConfirm($(this))) return false;
+	});
 </script>

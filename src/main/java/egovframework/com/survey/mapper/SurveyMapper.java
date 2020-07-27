@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.survey.vo.SurveyOpinionVo;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -24,4 +25,9 @@ public interface SurveyMapper {
 
 	public void insertFile(FileVo fileVo) throws Exception;
 	public void deleteFile(FileVo fileVo) throws Exception;
+	public List<SurveyOpinionVo> selectSurveyOpinionList(SurveyVo surveyVo) throws Exception;
+	public SurveyOpinionVo selectParentSurveyOpinion(SurveyOpinionVo vo) throws Exception;
+	public void updateChildSurveyOpinion(SurveyOpinionVo topOpnVo) throws Exception;
+	public String selectSurveyOpinionIdx() throws Exception;
+	public void insertSurveyOpinion(SurveyOpinionVo vo) throws Exception;
 }

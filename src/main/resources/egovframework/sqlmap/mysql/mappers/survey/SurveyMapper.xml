@@ -178,6 +178,63 @@
 		</if>
 	</update>
 	
+	<select id="selectSurveyOpinionList" resultType="egovframework.com.survey.vo.SurveyOpinionVo">
+		SELECT so.*
+		     , u.auth_type 
+		  FROM daul.survey_opinion so
+		  LEFT JOIN daul.user u ON so.create_user = u.user_id 
+		 <!-- WHERE so.del_chk != 'Y' --> 
+		 WHERE so.survey_idx = #{survey_idx}
+		 ORDER BY so.survey_ref
+		        , so.survey_step
+	</select>
 	
+	<select id="selectParentSurveyOpinion" resultType="egovframework.com.survey.vo.SurveyOpinionVo">
+		SELECT survey_ref
+		     , survey_indent
+		     , survey_step
+		  FROM daul.survey_opinion
+		 WHERE opinion_idx = #{opinion_idx}
+	</select>
 	
+	<update id="updateChildSurveyOpinion">
+		UPDATE daul.survey_opinion
+		   SET survey_step = survey_step + 1
+		 WHERE survey_ref = #{survey_ref}
+		   <![CDATA[
+		   AND survey_step > #{survey_step}
+		   ]]>
+	</update>
+	
+	<select id="selectSurveyOpinionIdx" resultType="String">
+		SELECT CONCAT('SV-OP-',LPAD(count(*)+1,'6','0')) as 'opinion_idx'
+		FROM daul.survey_opinion 
+	</select>
+	
+	<insert id="insertSurveyOpinion">
+		INSERT INTO daul.survey_opinion
+		     (
+		       opinion_idx
+             , survey_idx
+             , opinion_content
+             , create_user
+             , create_date
+             , del_chk
+             , survey_ref
+             , survey_indent
+             , survey_step
+		     )
+		VALUES
+		     (
+		       #{opinion_idx}
+             , #{survey_idx}
+             , #{opinion_content}
+             , #{create_user}
+             , SYSDATE()
+             , 'N'
+             , #{survey_ref}
+             , #{survey_indent}
+             , #{survey_step}
+		     )
+	</insert>
 </mapper>

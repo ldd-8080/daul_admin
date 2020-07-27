@@ -31,7 +31,7 @@ public interface SuggestionService {
 
 	void insertSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
 
-	List<SuggestionOpinionVo> selectSuggestionOpinionList() throws Exception;
+	List<SuggestionOpinionVo> selectSuggestionOpinionList(SuggestionVo vo) throws Exception;
 
 	SuggestionOpinionVo selectParentSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
 
