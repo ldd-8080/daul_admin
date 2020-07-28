@@ -291,4 +291,29 @@ public class SurveyController {
 		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/surveyOpinionModify.do", method=RequestMethod.POST)
+	public String surveyOpinionModify(SurveyOpinionVo vo) throws Exception {
+		try {
+			log.debug("[설문조사] 설문조사 댓글 수정");
+			log.debug("SurveyOpinionVo : " + vo);
+			surveyService.updateSurveyOpinion(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/survey/surveyList.do";
+	}
+	
+	@RequestMapping(value="/surveyOpinionDelete.do", method=RequestMethod.POST)
+	public String surveyOpinionDelete(SurveyOpinionVo vo) throws Exception {
+		try {
+			log.debug("[설문조사] 설문조사 댓글 삭제");
+			surveyService.deleteSurveyOpinion(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/survey/surveyList.do";
+	}
 }

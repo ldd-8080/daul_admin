@@ -356,7 +356,7 @@
     	}
 	});
 	
-	$("#surveyOpinionRegistBtn").click(function() {
+	$("#surveyOpnRegBtn").click(function() {
 		$("#opinion_idx").val("");
 	});
 	
@@ -393,11 +393,11 @@
 	$("button[name='opnToOpnModal']").click(function() {
 		//var opinion_idx = $(this).parent().parent().find("td[id^='seq_']").text();
 		var opinion_idx = $(this).parent().parent().children().eq(0).text();
-		
+		console.log("opnToOpnModal click", opinion_idx);
 		$("#opinion_idx").val(opinion_idx);
 	});
 	
-	$("button[name='sgstSubmitBtn']").click(function() {
+	$("button[name='surveySubmitBtn']").click(function() {
 		if (!submitConfirm($(this))) return false;
 	});
 </script>

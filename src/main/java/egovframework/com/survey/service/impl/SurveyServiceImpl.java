@@ -161,6 +161,16 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 		surveyMapper.insertSurveyOpinion(vo);
 	}
 
+	@Override
+	public void updateSurveyOpinion(SurveyOpinionVo vo) throws Exception {
+		surveyMapper.updateSurveyOpinion(vo);
+	}
+
+	@Override
+	public void deleteSurveyOpinion(SurveyOpinionVo vo) throws Exception {
+		surveyMapper.deleteSurveyOpinion(vo);
+	}
+
 
 	
 	

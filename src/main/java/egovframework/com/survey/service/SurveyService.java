@@ -29,4 +29,6 @@ public interface SurveyService {
 	public void updateChildSurveyOpinion(SurveyOpinionVo topOpnVo) throws Exception;
 	public String selectSurveyOpinionIdx() throws Exception;
 	public void insertSurveyOpinion(SurveyOpinionVo vo) throws Exception;
+	public void updateSurveyOpinion(SurveyOpinionVo vo) throws Exception;
+	public void deleteSurveyOpinion(SurveyOpinionVo vo) throws Exception;
 }

@@ -237,4 +237,20 @@
              , #{survey_step}
 		     )
 	</insert>
+	
+	<update id="updateSurveyOpinion">
+		UPDATE daul.survey_opinion
+		   SET update_user = #{update_user}
+		     , update_date = SYSDATE()
+		     <if test="opinion_content != null and opinion_content != ''">
+		     , opinion_content = #{opinion_content}
+		     </if>
+		 WHERE opinion_idx = #{opinion_idx}
+	</update>
+	
+	<update id="deleteSurveyOpinion">
+		UPDATE daul.survey_opinion
+		   SET del_chk = 'Y'
+		 WHERE opinion_idx = #{opinion_idx}
+	</update>
 </mapper>
