@@ -102,4 +102,29 @@
 		WHERE admin_contest_idx = #{admin_contest_idx}
 		  AND del_chk = 'N'
 	</select>
+	
+	<update id="deleteFile">
+		UPDATE daul.contest_admin_attach
+		   SET del_chk = 'Y'
+		 WHERE save_file_name = #{save_file_name}
+		   AND del_chk != 'Y'
+	</update>
+	
+	<update id="updateContest">
+		UPDATE daul.contest_admin
+		   SET update_user = #{update_user}
+		     , update_date = SYSDATE()
+		     <if test="title != null and title != ''">
+		     , title = #{title}
+		     </if>
+		     <if test="content != null and content != ''">
+		     , content = #{content}
+		     </if>
+		     , contest_s_date = #{contest_s_date}
+		     , contest_e_date = #{contest_e_date}
+		     , submit_s_date = #{submit_s_date}
+		     , submit_e_date = #{submit_e_date}
+		 WHERE admin_contest_idx = #{admin_contest_idx}
+	</update>
+	
 </mapper>

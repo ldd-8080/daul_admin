@@ -179,10 +179,12 @@ function noticeFileChange() {
 		for( var i = 0; i <$("#noticeFile")[0].files.length; i++ ){
 			console.log($("#noticeFile")[0].files[i].name);
 			
-			var str = '<div class="form-gorup row mb-20" style="margin-bottom: 10px!important;">' + 
-			'<div class="col-md-1"></div>'+
-			'<h5 style="margin: 0;">'+$("#noticeFile")[0].files[i].name+'</h5>' +
-			'</div>';
+			var str = '<li>'+
+			'<input type="hidden" name="save_file_name" value="'+ +$("#noticeFile")[0].files[i].name+ '">'+
+			'<span class="file-img"></span>'+
+			'<a href="#this" name="file">'+$("#noticeFile")[0].files[i].name+'</a>' +
+			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#noticeFile")[0].files[i].size/1024).toFixed(2)+' kb</span>'+
+			'</li>';
 			$("#noticeFileName-list").append(str);
 		}
 		//$("#attachDelBtn").show();
@@ -217,10 +219,12 @@ function propFileChange() {
 		for( var i = 0; i <$("#propFile")[0].files.length; i++ ){
 			console.log($("#propFile")[0].files[i].name);
 			
-			var str = '<div class="form-gorup row mb-20" style="margin-bottom: 10px!important;">' + 
-			'<div class="col-md-1"></div>'+
-			'<h5 style="margin: 0;">'+$("#propFile")[0].files[i].name+'</h5>' +
-			'</div>';
+			var str =  '<li>'+
+			'<input type="hidden" name="save_file_name" value="'+ +$("#propFile")[0].files[i].name+ '">'+
+			'<span class="file-img"></span>'+
+			'<a href="#this" name="file">'+$("#propFile")[0].files[i].name+'</a>' +
+			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#propFile")[0].files[i].size/1024).toFixed()+' kb</span>'+
+			'</li>';
 			$("#propFileName-list").append(str);
 		}
 		//$("#attachDelBtn").show();

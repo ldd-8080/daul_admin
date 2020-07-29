@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -112,4 +115,35 @@ public class ContestController {
 		return "contest/contestDetail";
 	}
 	
+	@RequestMapping(value="deleteAttachFile")
+	public ResponseEntity<?> deleteAttachFile(ContestVo vo,HttpServletRequest request) throws Exception{
+		String s_file_name = request.getParameter("file_name");
+		
+		FileVo fileVo = new FileVo();
+		try {
+		fileVo.setSave_file_name(s_file_name);
+		
+		contestService.deleteFile(fileVo);
+		}catch(Exception e) {
+			return new ResponseEntity<>("error", HttpStatus.OK);
+		}
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="contestModify")
+	public String contestModify(HttpSession session, ContestVo vo,MultipartFile[] repFile, MultipartFile[] noticeFile
+			, MultipartFile[] propFile ) throws Exception{
+		
+		System.out.println(vo);			
+		log.debug("[나눔공모] 나눔공모 수정");
+		
+		UserVo userVo = (UserVo) session.getAttribute("login");
+	    vo.setUpdate_user(userVo.getUser_id());		    
+	    
+		contestService.updateContest(vo);
+		
+		
+		return "redirect:/contest/contestList.do";
+	}
 }
