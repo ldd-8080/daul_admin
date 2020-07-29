@@ -72,4 +72,9 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 		return contestMapper.selectContestOpinionList(vo);
 	}
 
+	@Override
+	public FileVo selectDownloadFile(FileVo vo) throws Exception {
+		return contestMapper.selectDownloadFile(vo);
+	}
+
 }

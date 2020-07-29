@@ -138,4 +138,14 @@
 		  AND del_chk = 'N'
 	
 	</select>
+	
+		<select id="selectDownloadFile" resultType="egovframework.com.cmmn.util.FileVo">
+		SELECT 
+			ORG_FILE_NAME,
+			SAVE_FILE_NAME
+		FROM daul.contest_admin_attach
+		WHERE save_file_name  = #{idx}
+	</select>
+	
+	
 </mapper>

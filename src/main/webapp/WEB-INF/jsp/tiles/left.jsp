@@ -53,7 +53,7 @@
 	               </a>
 	             </li> 
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/contest/contestList.do">                    
+	               <a class="animsition-link" href="/contest/contestListPage.do">                    
 	               	 <span class="site-menu-title">나눔공모</span>
 	               </a>
 	             </li>
