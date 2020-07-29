@@ -146,6 +146,27 @@ public class ContestController {
 		return new ResponseEntity<>(contestOpinionList, HttpStatus.OK);
 	}
 
+	
+	
+	
+	@RequestMapping(value = "/getContestOpinionFileList.do", method = RequestMethod.GET)
+	public ResponseEntity<?> getContestOpinionFileList(@RequestParam("user_contest_idx") String user_contest_idx,
+			ModelMap model) throws Exception {
+
+		System.out.println("user_contest_idx = " + user_contest_idx);
+		List<FileVo> contestOpinionFileList = null;
+		ContestOpinionVo vo = new ContestOpinionVo();
+		vo.setUser_contest_idx(user_contest_idx);
+
+		try {
+			contestOpinionFileList = contestService.selectContestOpinionFileList(vo);
+		} catch (Exception e) {
+			log.debug("[열린제안] 열린제안 목록 조회 실패");
+		}
+
+		return new ResponseEntity<>(contestOpinionFileList, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "deleteAttachFile")
 	public ResponseEntity<?> deleteAttachFile(ContestVo vo, HttpServletRequest request) throws Exception {
 		String s_file_name = request.getParameter("file_name");

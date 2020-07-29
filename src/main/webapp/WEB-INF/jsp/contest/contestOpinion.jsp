@@ -42,7 +42,13 @@
 						<input type="hidden" name="user_contest_idx" id="detailOpinionIdx"
 							value="" />
 					</div>
-
+				<div class="form-gorup row mb-20">
+					<div class="col-md-1"></div>
+					<label class="col-md-2 col-form-label"></label>
+					<div class="col-md-8">
+						<div id="opinionFile-list"></div>
+					</div>
+				</div>
 					<span class="text-left" id="chk-error"></span>
 					<div style="text-align: center">
 						<button type="submit"
@@ -54,7 +60,7 @@
 							data-dismiss="modal" aria-label="Close">취소</button>
 					</div>
 				</form>
-
+			
 			</div>
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-default btn-pure" data-dismiss="modal">Close</button>
@@ -91,18 +97,20 @@ function setContestOpinionListTable(ContestList) {
     	],
     	
     	rowClick: function(args) {
-    		var idx = args.item.admin_contest_idx;
+    		var idx = args.item.user_contest_idx;
     		$("#contestOpnDetailBtn").trigger("click");
 			
 			$("#detailCreateUser").val(args.item.create_user);
 			$("#detailTitle").val(args.item.title);
 			$("#detailOpinionContent").val(args.item.content);
 			$("#detailOpinionIdx").val(args.item.user_contest_idx);
+			
+			getContestOpinionFileList(idx)
+			
     	}
 	});
 	
-}
-
+} 
 
 function getcontestOpinionList() {
 	var idx = $("#admin_contest_idx").val();
@@ -125,5 +133,41 @@ function getcontestOpinionList() {
 $(function() {
 	getcontestOpinionList();
 });
+
+
+function getContestOpinionFileList(idx) {
+	var request = $.ajax({
+		url: "/contest/getContestOpinionFileList.do?user_contest_idx="+idx,
+		method: "get"
+	});
+	
+	request.done(function(data) {
+		setContestOpinionFileListTable(data);
+		
+	});
+	
+	request.fail(function(error) {
+		console.log(error);
+	});
+}
+
+$(function() {
+	getContestOpinionFileList();
+});
+
+
+function setContestOpinionFileListTable(fileList) {
+	console.log(fileList);
+	for(var i = 0; i < fileList.length; i++){
+		console.log(fileList[i].org_file_name)
+		var str =  '<li>'+
+    	'<input type="hidden" name="save_file_name" value="' + fileList[i].save_file_name + '">'+
+		'<span class="file-img"></span>'+
+		'<a href="#this" name="file">' +fileList[i].org_file_name+'</a>'+
+		'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+fileList[i].file_size+'kb</span>'+
+		'</li>';
+		$("#opinionFile-list").append(str);
+	}
+}
 
 </script>
