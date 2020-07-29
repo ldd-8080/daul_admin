@@ -53,4 +53,16 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 		return list;
 	}
 
+	@Override
+	public void deleteFile(FileVo vo) throws Exception {
+		contestMapper.deleteFile(vo);
+		
+	}
+
+	@Override
+	public int updateContest(ContestVo vo) throws Exception {
+		// TODO Auto-generated method stub
+		return contestMapper.updateContest(vo);
+	}
+
 }
