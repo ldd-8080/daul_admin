@@ -36,7 +36,12 @@ public class SuggestionController {
 	private FileUtil fileUtil;
 
 	@RequestMapping(value="/suggestionListPage.do")
-	public String suggestionListPage(ModelMap model) throws Exception{
+	public String suggestionListPage() {
+		return "suggestion/suggestionList";
+	}
+	
+	@RequestMapping(value="/getSuggestionList.do")
+	public ResponseEntity<?> getSuggestionList() throws Exception {
 		List<SuggestionVo> suggestionList = null;
 		
 		try {
@@ -47,10 +52,8 @@ public class SuggestionController {
 			e.printStackTrace();
 		}
 		
-		model.addAttribute("suggestionList", suggestionList);
 		log.debug("[열린제안] 열린제안 목록 조회 완료");
-		
-		return "suggestion/suggestionList";
+		return new ResponseEntity<>(suggestionList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/suggestionRegistPage.do")

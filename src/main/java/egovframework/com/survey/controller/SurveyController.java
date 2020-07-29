@@ -44,18 +44,24 @@ public class SurveyController {
 	private FileUtil fileUtil;
 	
 	@RequestMapping(value="/surveyList", method = RequestMethod.GET)
-	public String surveyList(ModelMap model) throws Exception{
+	public String surveyList(){
+		return "survey/surveyList";
+	}
+	
+	@RequestMapping(value="/getSurveyList.do")
+	public ResponseEntity<?> getSurveyList() throws Exception {
+		List<Map<String, String>> surveyList = null;
+		
 		try {
 			log.debug("[설문조사] 설문조사 목록 조회");
-			List<Map<String, String>> surveyList = surveyService.selectSurveyList();
-			model.addAttribute("surveyList",surveyList);
-		}catch(Exception e) {
+			surveyList = surveyService.selectSurveyList();
+		} catch (Exception e) {
 			log.debug("[설문조사] 설문조사 목록 조회 실패");
 			e.printStackTrace();
 		}
 		
 		log.debug("[설문조사] 설문조사 목록 완료");
-		return "survey/surveyList";
+		return new ResponseEntity<>(surveyList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/surveyRegistPage")
