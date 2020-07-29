@@ -3,9 +3,7 @@ package egovframework.com.cmmn.util;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -49,99 +47,32 @@ public class FileUtil {
     	File target = new File(filePath);
     	if(!target.exists()) target.mkdirs();
     	
+    	List<MultipartFile> totalFile = new ArrayList<MultipartFile>();
+    	
     	// 첫번째 파일
     	if (file != null) {
-    		for(int i=0; i<file.length; i++) {
-    			int saveFileSize = (int) file[i].getSize();
-    			if (saveFileSize == 0) continue;
-    			
-    			String orgFileName = file[i].getOriginalFilename();
-    			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
-    			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-    			
-    			log.debug("================== file start ==================");
-    			log.debug("파일 실제 이름: "+orgFileName);
-    			log.debug("파일 저장 이름: "+saveFileName);
-    			log.debug("파일 크기: "+saveFileSize);
-    			log.debug("content type: "+file[i].getContentType());
-    			log.debug("================== file   END ==================");
-    			
-    			target = new File(filePath, saveFileName);
-    			file[i].transferTo(target);
-    			
-    			FileVo fileVo = new FileVo();
-    			fileVo.setIdx(IDX);
-    			fileVo.setOrg_file_name(orgFileName);
-    			fileVo.setSave_file_name(saveFileName);
-    			fileVo.setFile_size(saveFileSize);
-    			fileVo.setCreate_user(creaID);
-    			fileVo.setAttach_type(file[i].getName());
-    			fileList.add(fileVo);
+    		for (MultipartFile f : file) {
+    			totalFile.add(f);
     		}
     	}
     	
     	// 두번째 파일
     	if (file2 != null) {
-    		for(int i=0; i<file2.length; i++) {
-    			int saveFileSize = (int) file2[i].getSize();
-    			if (saveFileSize == 0) continue;
-    			
-    			String orgFileName = file2[i].getOriginalFilename();
-    			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
-    			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-    			
-    			log.debug("================== file2 start ==================");
-    			log.debug("파일 실제 이름: "+orgFileName);
-    			log.debug("파일 저장 이름: "+saveFileName);
-    			log.debug("파일 크기: "+saveFileSize);
-    			log.debug("content type: "+file2[i].getContentType());
-    			log.debug("================== file2   END ==================");
-    			
-    			target = new File(filePath, saveFileName);
-    			file2[i].transferTo(target);
-    			
-    			FileVo fileVo = new FileVo();
-    			fileVo.setIdx(IDX);
-    			fileVo.setOrg_file_name(orgFileName);
-    			fileVo.setSave_file_name(saveFileName);
-    			fileVo.setFile_size(saveFileSize);
-    			fileVo.setCreate_user(creaID);
-    			fileVo.setAttach_type(file2[i].getName());
-    			fileList.add(fileVo);
+    		for (MultipartFile f : file2) {
+    			totalFile.add(f);
     		}
     	}
     	
     	// 두번째 파일
     	if (file3 != null) {
-    		for(int i=0; i<file3.length; i++) {
-    			int saveFileSize = (int) file3[i].getSize();
-    			if (saveFileSize == 0) continue;
-    			
-    			String orgFileName = file3[i].getOriginalFilename();
-    			String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
-    			String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
-    			
-    			log.debug("================== file3 start ==================");
-    			log.debug("파일 실제 이름: "+orgFileName);
-    			log.debug("파일 저장 이름: "+saveFileName);
-    			log.debug("파일 크기: "+saveFileSize);
-    			log.debug("content type: "+file3[i].getContentType());
-    			log.debug("================== file3   END ==================");
-    			
-    			target = new File(filePath, saveFileName);
-    			file3[i].transferTo(target);
-    			
-    			FileVo fileVo = new FileVo();
-    			fileVo.setIdx(IDX);
-    			fileVo.setOrg_file_name(orgFileName);
-    			fileVo.setSave_file_name(saveFileName);
-    			fileVo.setFile_size(saveFileSize);
-    			fileVo.setCreate_user(creaID);
-    			fileVo.setAttach_type(file3[i].getName());
-    			fileList.add(fileVo);
+    		for (MultipartFile f : file3) {
+    			totalFile.add(f);
     		}
     	}
     	
+    	if (totalFile != null && totalFile.size() > 0) {
+    		setFileInfo(totalFile, target, IDX, creaID, fileList);
+    	}
     	
     	return fileList;
     }
@@ -157,4 +88,34 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 	}
+
+    private void setFileInfo(List<MultipartFile> totalFile, File target, String IDX, String creaID, List<FileVo> fileList) throws Exception {
+    	for (MultipartFile file : totalFile) {
+    		int saveFileSize = (int) file.getSize();
+    		if (saveFileSize == 0) continue;
+    		
+    		String orgFileName = file.getOriginalFilename();
+    		String orgFileExtension = orgFileName.substring(orgFileName.lastIndexOf("."));
+    		String saveFileName = UUID.randomUUID().toString().replaceAll("-", "") + orgFileExtension;
+    		
+    		log.debug("================== file start ==================");
+    		log.debug("파일 실제 이름: "+orgFileName);
+    		log.debug("파일 저장 이름: "+saveFileName);
+    		log.debug("파일 크기: "+saveFileSize);
+    		log.debug("content type: "+file.getContentType());
+    		log.debug("================== file   END ==================");
+    		
+    		target = new File(filePath, saveFileName);
+    		file.transferTo(target);
+    		
+    		FileVo fileVo = new FileVo();
+    		fileVo.setIdx(IDX);
+    		fileVo.setOrg_file_name(orgFileName);
+    		fileVo.setSave_file_name(saveFileName);
+    		fileVo.setFile_size(saveFileSize);
+    		fileVo.setCreate_user(creaID);
+    		fileVo.setAttach_type(file.getName());
+    		fileList.add(fileVo);
+    	}
+    }
 }
