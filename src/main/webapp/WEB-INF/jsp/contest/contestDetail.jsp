@@ -19,157 +19,179 @@
 		<div class="mb-30">
 			<div class="panel">
 				<div class="panel-body">
-			          <form:form method="post" modelAttribute="contestVo">
-				         	<form:input type="hidden" class="form-control" id = "admin_contest_idx" path="admin_contest_idx"/>
-				         		<div class="form-group row">
-									<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">등록자 </label>
-									<div class="col-md-8">
-										<form:input type="text" readonly="true" class="form-control" path="create_user"/>
-										<form:errors path="create_user"/>
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">제목 </label>
-									<div class="col-md-8">
-										<form:input type="text"  class="form-control" path="title"/>
-										<form:errors path="title"/>
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">설명 </label>
-									<div class="col-md-8">
-										<form:textarea type="text" class="form-control" path="content" rows="5"/>
-										<form:errors path="content"/>
-									</div>
-								</div>
-								<div class="form-group row">
-									<div class="col-md-1"></div>
-										<label class="col-md-2 col-form-label">대표이미지 </label>
-										<div class="col-md-8">
-			                    			<input type="file" accept="image/*" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
-			                  		</div>	
-							 	</div>
-									
-								<div class="form-group row">
-						<div class="col-md-1"></div>
-						<label class="col-md-2 col-form-label">공모기간 </label>		
-							<div class="col-md-6 col-xl-4">
-								<div class="input-daterange" data-plugin="datepicker">
-									<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">
-												<i class="icon md-calendar" aria-hidden="true"></i>
-												</span>
-											</div>
-										<form:input type="text" class="form-control" path="contest_s_date" />
-										<form:errors style="color:red;" path="contest_s_date"/>
-									</div>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span calss="input-group-text"> &nbsp;_&nbsp;</span>
-										</div>
-										<form:input type="text" class="form-control" path="contest_e_date" />
-									</div>
-								</div>
-							</div>
-		                </div>
-			                
-			            <div class="form-group row">
-							<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">설문기간 </label>		
-									<div class="col-md-6 col-xl-4">
-										<div class="input-daterange" data-plugin="datepicker">
-											<div class="input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">
-														<i class="icon md-calendar" aria-hidden="true"></i>
-														</span>
-													</div>
-												<form:input type="text" class="form-control" path="submit_s_date" />
-												<form:errors style="color:red;" path="submit_s_date"/>
-											</div>
-											<div class="input-group">
-												<div class="input-group-prepend">
-													<span calss="input-group-text"> &nbsp;_&nbsp;</span>
-												</div>
-											<form:input type="text" class="form-control" path="submit_e_date" />
-										</div>
-									</div>
-								</div>
-			                </div>	
-									
-									
-										
-							<div class="form-gorup row mb-20">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">공고문</label>
-									<div class="col-md-7">
-										<div class="input-group input-group-file" data-plugin="inputGroupFile">
-											<input type="text" class="form-control" id="noticeFileTitle" readonly/>
-											<span class="input-group-append">
-												<span class="btn btn-primary btn-file">
-													<i class="icon md-upload" aria-hidden="true"></i>
-													<input multiple="multiple" type="file" id="noticeFile" name="noticeFile"/>
-												</span>
-											</span>
-	 									</div>
-									</div>
-									<div class="col-md-1" style="padding-left: 0px;">
-										<button type='button' class='btn btn-primary' id='noticeFileDelBtn' >삭제</button>
-									</div>
-								</div>	
-								<div class="form-gorup row mb-20">
-									<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label"></label>
-									<div class="col-md-8">
-										<div id="noticeFile-list">
-										
-										</div>
-									</div>
-								</div>
-								
-								
-								
-							<div class="form-gorup row mb-20">
-								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">제안서</label>
-									<div class="col-md-7">
-										<div class="input-group input-group-file" data-plugin="inputGroupFile">
-											<input type="text" class="form-control" id="propFileTitle" readonly/>
-											<span class="input-group-append">
-												<span class="btn btn-primary btn-file">
-													<i class="icon md-upload" aria-hidden="true"></i>
-													<input type="file" id="propFile" name="propFile"/>
-												</span>
-											</span>
-	 									</div>
-									</div>
-									<div class="col-md-1" style="padding-left: 0px;">
-										<button type='button' class='btn btn-primary' id='propFileDelBtn' >삭제</button>
-									</div>
-								</div>	
-								<div class="form-gorup row mb-20">
-									<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label"></label>
-									<div class="col-md-8">
-										<div id="propFile-list">
-										
-										</div>
-									</div>
-								</div>
+				<div class="nav-tabs-horizontal" data-plugin="tabs">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item" role="presentation">
+									<a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">
+										 공  모
+									</a>
+								</li>
+								<li class="nav-item" role="presentation">
+									<a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">
+										 제  안
+									</a>
+								</li>
+							</ul>
 							
-								
-								 <div class="form-group form-material row">
-									<div class="col-md-9 offset-md-9">
-										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" formaction="/contest/contestModify.do">수정 </button>
-										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제 </button>
-										<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
-									</div>
-								</div>
-				    	</form:form>
+							<div class="tab-content pt-20">
+								<div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+				
+						          <form:form method="post" modelAttribute="contestVo" enctype="multipart/form-data">
+							         	<form:input type="hidden" class="form-control" id = "admin_contest_idx" path="admin_contest_idx"/>
+							         		<div class="form-group row">
+												<div class="col-md-1"></div>
+												<label class="col-md-2 col-form-label">등록자 </label>
+												<div class="col-md-8">
+													<form:input type="text" readonly="true" class="form-control" path="create_user"/>
+													<form:errors path="create_user"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-1"></div>
+												<label class="col-md-2 col-form-label">제목 </label>
+												<div class="col-md-8">
+													<form:input type="text"  class="form-control" path="title"/>
+													<form:errors path="title"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-1"></div>
+												<label class="col-md-2 col-form-label">설명 </label>
+												<div class="col-md-8">
+													<form:textarea type="text" class="form-control" path="content" rows="5"/>
+													<form:errors path="content"/>
+												</div>
+											</div>
+											<div class="form-group row">
+												<div class="col-md-1"></div>
+													<label class="col-md-2 col-form-label">대표이미지 </label>
+													<div class="col-md-8">
+						                    			<input type="file" accept="image/*" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+						                  		</div>	
+										 	</div>
+												
+											<div class="form-group row">
+									<div class="col-md-1"></div>
+									<label class="col-md-2 col-form-label">공모기간 </label>		
+										<div class="col-md-6 col-xl-4">
+											<div class="input-daterange" data-plugin="datepicker">
+												<div class="input-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+															<i class="icon md-calendar" aria-hidden="true"></i>
+															</span>
+														</div>
+													<form:input type="text" class="form-control" path="contest_s_date" />
+													<form:errors style="color:red;" path="contest_s_date"/>
+												</div>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span calss="input-group-text"> &nbsp;_&nbsp;</span>
+													</div>
+													<form:input type="text" class="form-control" path="contest_e_date" />
+												</div>
+											</div>
+										</div>
+					                </div>
+						                
+						            <div class="form-group row">
+										<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">설문기간 </label>		
+												<div class="col-md-6 col-xl-4">
+													<div class="input-daterange" data-plugin="datepicker">
+														<div class="input-group">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																	<i class="icon md-calendar" aria-hidden="true"></i>
+																	</span>
+																</div>
+															<form:input type="text" class="form-control" path="submit_s_date" />
+															<form:errors style="color:red;" path="submit_s_date"/>
+														</div>
+														<div class="input-group">
+															<div class="input-group-prepend">
+																<span calss="input-group-text"> &nbsp;_&nbsp;</span>
+															</div>
+														<form:input type="text" class="form-control" path="submit_e_date" />
+													</div>
+												</div>
+											</div>
+						                </div>	
+												
+												
+													
+										<div class="form-gorup row mb-20">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">공고문</label>
+												<div class="col-md-7">
+													<div class="input-group input-group-file" data-plugin="inputGroupFile">
+														<input type="text" class="form-control" id="noticeFileTitle" readonly/>
+														<span class="input-group-append">
+															<span class="btn btn-primary btn-file">
+																<i class="icon md-upload" aria-hidden="true"></i>
+																<input multiple="multiple" type="file" id="noticeFile" name="noticeFile"/>
+															</span>
+														</span>
+				 									</div>
+												</div>
+												<div class="col-md-1" style="padding-left: 0px;">
+													<button type='button' class='btn btn-primary' id='noticeFileDelBtn' >삭제</button>
+												</div>
+											</div>	
+											<div class="form-gorup row mb-20">
+												<div class="col-md-1"></div>
+												<label class="col-md-2 col-form-label"></label>
+												<div class="col-md-8">
+													<div id="noticeFile-list">
+													
+													</div>
+												</div>
+											</div>
+											
+											
+											
+										<div class="form-gorup row mb-20">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label">제안서</label>
+												<div class="col-md-7">
+													<div class="input-group input-group-file" data-plugin="inputGroupFile">
+														<input type="text" class="form-control" id="propFileTitle" readonly/>
+														<span class="input-group-append">
+															<span class="btn btn-primary btn-file">
+																<i class="icon md-upload" aria-hidden="true"></i>
+																<input type="file" id="propFile" name="propFile"/>
+															</span>
+														</span>
+				 									</div>
+												</div>
+												<div class="col-md-1" style="padding-left: 0px;">
+													<button type='button' class='btn btn-primary' id='propFileDelBtn' >삭제</button>
+												</div>
+											</div>	
+											<div class="form-gorup row mb-20">
+												<div class="col-md-1"></div>
+												<label class="col-md-2 col-form-label"></label>
+												<div class="col-md-8">
+													<div id="propFile-list">
+													
+													</div>
+												</div>
+											</div>
+										
+											
+											 <div class="form-group form-material row">
+												<div class="col-md-9">
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" formaction="/contest/contestModify.do">수정 </button>
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제 </button>
+													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
+												</div>
+											</div>
+							    	</form:form>
+							    	</div>
+				    		<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+							    
+							</div>
+				    	</div>
     				</div>
     			</div>
     		</div>
@@ -218,7 +240,7 @@
   			var str = '<li>'+
   			'<input type="hidden" name="save_file_name" value="'+ +$("#noticeFile")[0].files[i].name+ '">'+
   			'<span class="file-img"></span>'+
-  			'<a href="#this" name="file"> (new) '+$("#noticeFile")[0].files[i].name+'(new)</a>' +
+  			'<a href="#this" name="file"> (new) '+$("#noticeFile")[0].files[i].name+'</a>' +
   			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#noticeFile")[0].files[i].size/1024).toFixed(2)+' kb</span>'+
   			'</li>';
   			$("#noticeFile-list").append(str);
@@ -285,7 +307,7 @@
             	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
     			'<span class="file-img"></span>'+
     			'<a href="#this" name="file">' +file.org_file_name+'</a>'+
-    			'<span>${file.file_size} kb</span>'+
+    			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+file.file_size+'kb</span>'+
     			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="FileDelBtn" ></button>'+
     			'</li>';
 				$("#noticeFile-list").append(str);
@@ -294,7 +316,7 @@
 	            	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
 	    			'<span class="file-img"></span>'+
 	    			'<a href="#this" name="file">' +file.org_file_name+'</a>'+
-	    			'<span>${file.file_size} kb</span>'+
+	    			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+file.file_size+'kb</span>'+
 	    			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="FileDelBtn" ></button>'+
 	    			'</li>';
 					$("#propFile-list").append(str);

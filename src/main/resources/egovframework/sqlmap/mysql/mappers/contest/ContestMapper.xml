@@ -41,10 +41,10 @@
 				#{admin_contest_idx},
 				#{title},
 				#{content},
-			    DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date,
-			    DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date,
-			    DATE_FORMAT(submit_s_date, '%Y-%m-%d') as submit_s_date,
-			    DATE_FORMAT(submit_e_date, '%Y-%m-%d') as submit_e_date,
+			    #{contest_s_date},
+			    #{contest_e_date},
+			    #{submit_s_date},
+			    #{submit_e_date},
 				#{create_user},
 				SYSDATE(),
 				'N'
@@ -127,4 +127,15 @@
 		 WHERE admin_contest_idx = #{admin_contest_idx}
 	</update>
 	
+	<select id="selectContestOpinionList" resultType="egovframework.com.contest.vo.ContestOpinionVo">
+		SELECT user_contest_idx,
+			   title,
+		       content,
+		       create_user,
+		       DATE_FORMAT(create_date, '%Y-%m-%d') as create_date
+		FROM daul.contest_user
+		WHERE admin_contest_idx = #{admin_contest_idx}
+		  AND del_chk = 'N'
+	
+	</select>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.vo.ContestVo;
+import egovframework.com.contest.vo.ContestOpinionVo;
 
 public interface ContestService {
 	List<ContestVo> selectContestList() throws Exception;
@@ -15,4 +16,5 @@ public interface ContestService {
 	List<Map<String,String>> selectContestFile(ContestVo vo) throws Exception;
 	void deleteFile(FileVo vo) throws Exception;
 	int updateContest(ContestVo vo) throws Exception;
+	List<ContestOpinionVo> selectContestOpinionList(ContestVo vo) throws Exception;
 }

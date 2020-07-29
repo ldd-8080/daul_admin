@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.contest.vo.ContestOpinionVo;
 import egovframework.com.contest.vo.ContestVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -17,4 +18,5 @@ public interface ContestMapper {
 	List<Map<String,String>> selectContestFile(ContestVo vo) throws Exception;
 	void deleteFile(FileVo vo) throws Exception;
 	int updateContest(ContestVo vo) throws Exception;
+	List<ContestOpinionVo> selectContestOpinionList(ContestVo vo) throws Exception;
 }

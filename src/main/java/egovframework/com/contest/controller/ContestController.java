@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.service.ContestService;
+import egovframework.com.contest.vo.ContestOpinionVo;
 import egovframework.com.contest.vo.ContestVo;
-import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -95,11 +95,15 @@ public class ContestController {
 		ContestVo vo = new ContestVo();
 		FileVo fileVo = new FileVo();
 		List<Map<String, String>> fileList = null;
-		List<SuggestionOpinionVo> suggestionOpinionList = null;
+		List<ContestOpinionVo> contestOpinionList = null;
+		
+
 		
 		try {
 			vo.setAdmin_contest_idx(admin_contest_idx);
 			vo = contestService.selectContest(vo);
+			
+			contestOpinionList = contestService.selectContestOpinionList(vo);			
 			
 			fileList = contestService.selectContestFile(vo);
 			
@@ -108,8 +112,10 @@ public class ContestController {
 			
 		}
 		
+		System.out.println(" ##################  " + contestOpinionList);
 		model.addAttribute("contestVo", vo);
 		model.addAttribute("contestFile", fileList);
+		model.addAttribute("contestOpinionList",contestOpinionList);
 		
 		
 		return "contest/contestDetail";
@@ -141,7 +147,25 @@ public class ContestController {
 		UserVo userVo = (UserVo) session.getAttribute("login");
 	    vo.setUpdate_user(userVo.getUser_id());		    
 	    
-		contestService.updateContest(vo);
+		int result = contestService.updateContest(vo);
+		if(result > 0) {
+			FileVo fileVo = new FileVo();
+			
+			fileVo.setCreate_user(userVo.getUser_id());
+			fileVo.setIdx(vo.getAdmin_contest_idx());
+			
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile, propFile, noticeFile);
+			
+			log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
+			
+			for(int i = 0; i<fileList.size(); i++) {
+				System.out.println("노노노 오오오 ");
+				contestService.insertFile(fileList.get(i));
+			}
+			
+		
+		}
+		
 		
 		
 		return "redirect:/contest/contestList.do";

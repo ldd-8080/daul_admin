@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.mapper.ContestMapper;
 import egovframework.com.contest.service.ContestService;
+import egovframework.com.contest.vo.ContestOpinionVo;
 import egovframework.com.contest.vo.ContestVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -63,6 +64,12 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 	public int updateContest(ContestVo vo) throws Exception {
 		// TODO Auto-generated method stub
 		return contestMapper.updateContest(vo);
+	}
+
+	@Override
+	public List<ContestOpinionVo> selectContestOpinionList(ContestVo vo) throws Exception {
+		
+		return contestMapper.selectContestOpinionList(vo);
 	}
 
 }
