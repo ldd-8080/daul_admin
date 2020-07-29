@@ -40,12 +40,15 @@ public class SuggestionController {
 		List<SuggestionVo> suggestionList = null;
 		
 		try {
+			log.debug("[열린제안] 열린제안 목록 조회");
 			suggestionList = suggestionService.selectSuggestionList();
 		} catch (Exception e) {
+			log.debug("[열린제안] 열린제안 목록 조회 실패");
 			e.printStackTrace();
 		}
 		
 		model.addAttribute("suggestionList", suggestionList);
+		log.debug("[열린제안] 열린제안 목록 조회 완료");
 		
 		return "suggestion/suggestionList";
 	}
@@ -110,6 +113,7 @@ public class SuggestionController {
 		model.addAttribute("suggestionVo", vo);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("suggestionOpinionList", suggestionOpinionList);
+		model.addAttribute("suggestionOpinionSize", suggestionOpinionList.size());
 		
 		return "suggestion/suggestionDetail";
 	}

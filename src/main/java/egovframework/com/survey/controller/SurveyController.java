@@ -46,11 +46,15 @@ public class SurveyController {
 	@RequestMapping(value="/surveyList", method = RequestMethod.GET)
 	public String surveyList(ModelMap model) throws Exception{
 		try {
+			log.debug("[설문조사] 설문조사 목록 조회");
 			List<Map<String, String>> surveyList = surveyService.selectSurveyList();
 			model.addAttribute("surveyList",surveyList);
 		}catch(Exception e) {
-			
+			log.debug("[설문조사] 설문조사 목록 조회 실패");
+			e.printStackTrace();
 		}
+		
+		log.debug("[설문조사] 설문조사 목록 완료");
 		return "survey/surveyList";
 	}
 	
@@ -228,6 +232,7 @@ public class SurveyController {
 		model.addAttribute("surveyVo",surveyVo);
 		model.addAttribute("surveyQuestionList",surveyQuestionList);
 		model.addAttribute("surveyOpinionList",surveyOpinionList);
+		model.addAttribute("surveyOpinionListSize",surveyOpinionList.size());
 		
 		return "survey/surveyDetail";
 	}

@@ -13,6 +13,9 @@ public class SuggestionVo {
 	private String 	update_date;
 	private String 	del_chk;
 	
+	private int pro_cnt;
+	private int public_cnt;
+	
 	public String getSuggestion_idx() {
 		return suggestion_idx;
 	}
@@ -73,12 +76,24 @@ public class SuggestionVo {
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
 	}
+	public int getPro_cnt() {
+		return pro_cnt;
+	}
+	public void setPro_cnt(int pro_cnt) {
+		this.pro_cnt = pro_cnt;
+	}
+	public int getPublic_cnt() {
+		return public_cnt;
+	}
+	public void setPublic_cnt(int public_cnt) {
+		this.public_cnt = public_cnt;
+	}
 	
 	@Override
 	public String toString() {
 		return "SuggestionVo [suggestion_idx=" + suggestion_idx + ", title=" + title + ", content=" + content
 				+ ", view_count=" + view_count + ", like_count=" + like_count + ", create_user=" + create_user
 				+ ", create_date=" + create_date + ", update_user=" + update_user + ", update_date=" + update_date
-				+ ", del_chk=" + del_chk + "]";
+				+ ", del_chk=" + del_chk + ", pro_cnt=" + pro_cnt + ", public_cnt=" + public_cnt + "]";
 	}
 }

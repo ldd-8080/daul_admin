@@ -18,37 +18,10 @@
 		          <div class="panel-actions"></div>
 		          <h3 class="panel-title">열린제안 목록</h3>
 		        </header>
+		        <br/>
 		        <div class="panel-body">
-		          <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-		            <thead>
-		              <tr>
-		                <th>번호</th>
-		                <th>작성자</th>
-		                <th>제목</th>
-		                <th>내용</th>
-		                <th>공감</th>
-		                <th>전문가 댓글</th>
-		                <th>일반 댓글</th>
-		                <th>등록일</th>
-		                <th>상태</th>
-		              </tr>
-		            </thead>
-		            <tbody>
-		            	<c:forEach var="suggestion" items="${suggestionList}" varStatus="status">
-		            	<tr>
-		            		<td id="seq_${status.index}">${suggestion.suggestion_idx}</td>
-		            		<td>${suggestion.create_user}</td>
-		            		<td>${suggestion.title}</td>
-		            		<td>${suggestion.content}</td>
-		            		<td>${suggestion.like_count}</td>
-		            		<td>전댓</td>
-		            		<td>일댓</td>
-		            		<td>${suggestion.create_date}</td>
-		            		<td>상태</td>
-	            		</tr>
-		            	</c:forEach>
-		            </tbody>
-		          </table>
+		          <div id="sgstListTable"></div>
+		          
 		          <div class="col-lg-12 mt-20">
 		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="suggestionRegistBtn">등록</button>
 		          </div>
@@ -59,13 +32,51 @@
 	</div>
 </div>
 <script type="text/javascript">
-	$("#boardTable tr td").click(function(event) {
-		if ($(this).get(0).cellIndex === 0) {
-		} else {
-			var idx = $(this).parent().children().eq(0).text();
-			
-			location.href = "${pageContext.request.contextPath}/suggestion/suggestionDetailPage.do?suggestion_idx=" + idx;
-		}
+	var sgstList = new Array();
+	
+	<c:forEach var="sgst" items="${suggestionList}">
+		var sgst = {};
+		sgst.suggestion_idx		= "${sgst.suggestion_idx}";
+		sgst.create_user		= "${sgst.create_user}";
+		sgst.title				= "${sgst.title}";
+		sgst.content			= "${sgst.content}";
+		sgst.like_count			= "${sgst.like_count}";
+		sgst.pro_cnt			= "${sgst.pro_cnt}";
+		sgst.public_cnt			= "${sgst.public_cnt}";
+		sgst.create_date		= "${sgst.create_date}";
+		sgstList.push(sgst);
+	</c:forEach>
+	
+	$('#sgstListTable').jsGrid({
+	    //height: "500px",
+	    width: "100%",
+
+	    //autoload:true,
+	    sorting: true,
+	    paging: true,
+	    //pageIndex: 1, default: 1
+	    pageSize: 10, // default: 20
+		//pageButtonCount: 5, default: 15
+	    
+	    data: sgstList,
+
+	    fields: [
+	    	{name: "suggestion_idx",title: "번호", type: "text", width: 70, align: "center"},
+	    	{name: "create_user", title: "작성자", type: "text", width: 60},
+	    	{name: "title", title: "제목", type: "text", width: 150}, 
+	    	{name: "content", title: "내용", type: "text", width: 200}, 
+	    	{name: "like_count", title: "공감", type: "text", width: 30, align: "center"}, 
+	    	{name: "pro_cnt", title: "전문가 댓글", type: "text", width: 50, align: "center"}, 
+	    	{name: "public_cnt", title: "일반 댓글", type: "text", width: 50, align: "center"}, 
+	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
+	    	{title: "상태", type: "text", width: 40}
+    	],
+    	
+    	rowClick: function(args) {
+    		var idx = args.item.suggestion_idx;
+    		
+    		location.href = "${pageContext.request.contextPath}/suggestion/suggestionDetailPage.do?suggestion_idx=" + idx;
+    	}
 	});
 
 	$("#suggestionRegistBtn").click(function() {

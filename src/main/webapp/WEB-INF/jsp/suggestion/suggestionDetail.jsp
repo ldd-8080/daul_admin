@@ -28,7 +28,7 @@
 								</li>
 								<li class="nav-item" role="presentation">
 									<a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">
-										 댓  글
+										 댓  글 (${suggestionOpinionSize})
 									</a>
 								</li>
 							</ul>
@@ -258,7 +258,7 @@
 	    sorting: true,
 	    paging: true,
 	    //pageIndex: 1, default: 1
-	    pageSize: 9, // default: 20
+	    pageSize: 10, // default: 20
 		//pageButtonCount: 5, default: 15
 	    
 	    data: sgstOpnList,

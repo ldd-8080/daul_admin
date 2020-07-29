@@ -15,6 +15,7 @@
 			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date	
 		FROM daul.survey_main
 		WHERE del_chk = 'N'
+		ORDER BY survey_idx DESC
 	</select>
 	
 	<select id="selectSurveyIdx" resultType="String">

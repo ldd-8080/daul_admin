@@ -2,12 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
     
-<script type="text/javascript">
-/* $(document).ready(function() {
-	$("#userTable").DataTable();
-}); */
-</script>
-    
 <!-- Page -->
 <div class="page">
 	<div class="page-content container-fluid">
@@ -24,29 +18,10 @@
 		          <div class="panel-actions"></div>
 		          <h3 class="panel-title">설문조사 목록</h3>
 		        </header>
+		        <br/>
 		        <div class="panel-body">
-		          <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-		            <thead>
-		              <tr>
-		                <th>번호</th>
-		                <th>작성자</th>
-		                <th>제목</th>
-		                <th>설문기간</th>
-		                <th>등록일</th>
-		              </tr>
-		            </thead>
-		            <tbody>
-		            	<c:forEach var="result" items="${surveyList}" varStatus="status">
-		            	<tr>
-		            		<td id="seq_${status.index}">${result.survey_idx}</td>
-		            		<td>${result.title}</td>
-		            		<td>${result.content}</td>
-		            		<td>${result.s_date}&nbsp;-&nbsp;${result.e_date}</td>
-		            		<td>${result.create_date}</td>
-	            		</tr>
-		            	</c:forEach>
-		            </tbody>
-		          </table>
+		          <div id="surveyListTable"></div>
+		          
 		           <div class="col-lg-12 mt-20">
 		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="surveyRegistButton">등록</button>
 		          </div>
@@ -58,15 +33,51 @@
 <!-- End Page -->
 
 <script type="text/javascript">
-	$("#boardTable tr td").click(function(event) {
-		if ($(this).get(0).cellIndex === 0) {
-		} else {
-			var survey_idx = $(this).parent().children().eq(0).text();
-			
-			location.href = "${pageContext.request.contextPath}/survey/surveyDetail.do?survey_idx=" + survey_idx;
-		}
-	});
+	var surveyList = new Array();
+	
+	<c:forEach var="survey" items="${surveyList}">
+		var survey = {};
+		survey.survey_idx		= "${survey.survey_idx}";
+		survey.create_user		= "${survey.create_user}";
+ 		survey.title			= "${survey.title}";
+		/* survey.content			= "${survey.content}".replace(/\r\n/g, ""); */
+		survey.s_date			= "${survey.s_date}";
+		survey.e_date			= "${survey.e_date}";
+		survey.create_date		= "${survey.create_date}";
+		surveyList.push(survey);
+	</c:forEach>
+	
+	$('#surveyListTable').jsGrid({
+	    //height: "500px",
+	    width: "100%",
 
+	    //autoload:true,
+	    sorting: true,
+	    paging: true,
+	    //pageIndex: 1, default: 1
+	    pageSize: 10, // default: 20
+		//pageButtonCount: 5, default: 15
+	    
+	    data: surveyList,
+
+	    fields: [
+	    	{name: "survey_idx",title: "번호", type: "text", width: 70, align: "center"},
+	    	{name: "create_user", title: "작성자", type: "text", width: 60},
+	    	{name: "title", title: "제목", type: "text", width: 150}, 
+	    	{title: "설문기간", type: "text", width: 100, align: "center",
+	    		itemTemplate: function(_, item) {
+	    			return item.s_date + " ~ " + item.e_date;
+	    		}
+    		},
+	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
+    	],
+    	
+    	rowClick: function(args) {
+    		var idx = args.item.survey_idx;
+    		
+    		location.href = "${pageContext.request.contextPath}/survey/surveyDetail.do?survey_idx=" + idx;
+    	}
+	});
 
 	$("#surveyRegistButton").click(function() {
 		location.href = "${pageContext.request.contextPath}/survey/surveyRegistPage.do";
