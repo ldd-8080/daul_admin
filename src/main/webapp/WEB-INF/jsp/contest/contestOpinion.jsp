@@ -6,7 +6,6 @@
 
 <div id="contestListTable"></div>
 
-
 <div class="col-lg-12 mt-20">
 
 	<button style="display: none;" type="button" data-toggle="modal"
@@ -158,6 +157,7 @@ $(function() {
 
 function setContestOpinionFileListTable(fileList) {
 	console.log(fileList);
+	$("#opinionFile-list").children().remove();
 	for(var i = 0; i < fileList.length; i++){
 		console.log(fileList[i].org_file_name)
 		var str =  '<li>'+

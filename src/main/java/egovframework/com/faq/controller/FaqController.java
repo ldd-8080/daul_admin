@@ -1,7 +1,6 @@
 package egovframework.com.faq.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import egovframework.com.cmmn.SecurityUtil;
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.faq.service.FaqService;
 import egovframework.com.faq.vo.FaqVo;
@@ -33,17 +31,22 @@ public class FaqController {
 	@Resource(name = "faqService")
 	private FaqService faqService;
 	
-	@RequestMapping(value="/faqList.do", method = RequestMethod.GET)
-	public String faqList(ModelMap model) throws Exception{
-		
+	@RequestMapping(value = "/faqListPage.do")
+	public String suggestionListPage() {
+		return "faq/faqList";
+	}
+	
+	@RequestMapping(value="/getFaqList.do", method = RequestMethod.GET)
+	public  ResponseEntity<?> faqList(ModelMap model) throws Exception{
+		List<FaqVo> faqList = faqService.selectFaqList();
 		try{
-			List<Map<String, String>> faqList = faqService.selectFaqList();
+			
 			model.addAttribute("faqList",faqList);
 		}catch(Exception e){
 			log.debug("FaqController > /faqList.do > Exception");
 		}
 		
-		return "faq/faqList";
+		return new ResponseEntity<>(faqList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/faqWrite.do", method = RequestMethod.GET)

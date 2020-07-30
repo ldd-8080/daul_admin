@@ -15,6 +15,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,6 +29,7 @@ import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
@@ -41,17 +44,22 @@ public class BoardController {
 	
 	@Resource(name="fileUtil")
 	private FileUtil fileUtil;
-	
-	@RequestMapping(value="/boardList.do", method = RequestMethod.GET)
-	public String boardList(ModelMap model) throws Exception{
-		System.out.println("filaPath = "+ filePath);
+
+	@RequestMapping(value = "/boardListPage.do")
+	public String boardListPage() {
+		return "board/boardList";
+	}
+		
+	@RequestMapping(value="/getBoardList.do")
+	public ResponseEntity<?> boardList(ModelMap model) throws Exception{
+		List<Map<String, String>> noticeList =null;
 		try {
-			List<Map<String, String>> noticeList = boardService.selectBoardList();
-			model.addAttribute("noticeList",noticeList);
+			 noticeList = boardService.selectBoardList();
+			
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
 		}
-		return "board/boardList";
+		return new ResponseEntity<>(noticeList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/boardDetail.do", method=RequestMethod.GET)

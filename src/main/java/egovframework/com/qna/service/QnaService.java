@@ -6,7 +6,7 @@ import java.util.Map;
 import egovframework.com.qna.vo.QnaVo;
 
 public interface QnaService {
-	public List<Map<String,String>> selectQnaList() throws Exception;
+	public List<QnaVo> selectQnaList() throws Exception;
 	void insertQnaReply(QnaVo vo) throws Exception; 
 	void updateQnaReply(QnaVo vo) throws Exception;
 	void deleteQnaReply(QnaVo vo) throws Exception;

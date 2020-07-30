@@ -3,7 +3,7 @@
 <mapper 
 	namespace="egovframework.com.qna.mapper.QnaMapper">
 
-	<select id="selectQnaList" resultType = "Map">
+	<select id="selectQnaList" resultType="egovframework.com.qna.vo.QnaVo">
 	SELECT
 			qna_idx,
 			question,

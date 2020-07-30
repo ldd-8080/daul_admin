@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
+import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.qna.service.QnaService;
 import egovframework.com.qna.vo.QnaVo;
 import egovframework.com.user.vo.UserVo;
@@ -31,18 +32,23 @@ public class QnaController {
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
 	
-	@RequestMapping(value="/qnaList.do", method = RequestMethod.GET)
-	public String faqList(ModelMap model) throws Exception{
-		
+	@RequestMapping(value="/getQnaList.do", method = RequestMethod.GET)
+	public ResponseEntity<?> qnaList(ModelMap model) throws Exception{
+		List<QnaVo> qnaList = null;
 		try {
-			List<Map<String,String>> qnaList = qnaService.selectQnaList();
-			model.addAttribute("qnaList", qnaList);
+			qnaList = qnaService.selectQnaList();
 		}catch(Exception e) {
 			log.debug("QnaController > /qnaList.do > Exception");
 		}		
 		
-		return "qna/qnaList";		
+		return new ResponseEntity<>(qnaList, HttpStatus.OK);	
 	}
+	
+	@RequestMapping(value = "/qnaListPage.do")
+	public String suggestionListPage() {
+		return "qna/qnaList";
+	}
+	
 	
 	@RequestMapping(value="/insertQnaReply",method = RequestMethod.POST)
 	public ResponseEntity insertQnaReply(HttpSession session, @ModelAttribute QnaVo vo,HttpServletRequest request, HttpServletResponse response) throws Exception{

@@ -8,7 +8,6 @@
 <div class="page">
 	<div class="page-content container-fluid">
 	    <!-- Page -->
-	    <h1 class="page-title">FAQ</h1>
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
 	      <li class="breadcrumb-item"><a href="javascript:void(0)">FAQ</a></li>
@@ -19,36 +18,15 @@
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">FAQ</h3>
+		          <h3 class="panel-title"></h3>
 		        </header>
 		        <div class="panel-body">
-		          <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-		            <thead>
-		              <tr>
-		                <th>번호</th>
-		                <th style="visibility:hidden;position:absolute;"></th>
-		                <th>질문</th>
-		                <th>답변</th>
-		                <th>등록자</th>
-		              </tr>
-		            </thead>
-		            <tbody>
-		            	<c:forEach var="result" items="${faqList}" varStatus="status">
-		            	<tr>
-		            		<td id="seq_${status.index}">${status.index + 1}</td>
-		            		<td style="visibility:hidden;position:absolute;">${result.faq_idx}</td>
-		            		<td>${result.question}</td>
-		            		<td>${result.answer}</td>
-		            		<td>${result.create_user}</td>
-	            		</tr>
-		            	</c:forEach>
-		            </tbody>
-		          </table>
+		          <div id="faqListTable"></div>
 		        </div>
-		        <div class="col-md-6">
-                	<div class="example example-buttons">                     
+		        <div class="col-md-12">
+                	<div class="example example-buttons">                  
                      	<div>
-               	      		<button type="button" class="btn btn-squared btn-info" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
+               	      		<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
                	      		<button type="button"  style="display:none;" class="btn btn-squared btn-info" id = "faqUpdate" data-toggle="modal" data-target="#faqUpdatePositionCenter" href="#" >수정</button>
                     	</div>                     
                 	</div>
@@ -138,6 +116,11 @@
 <!--FAQ수정 모달 끝 -->
 
 
+<div class="col-lg-12 mt-20">
+
+	<button style="display: none;" type="button" data-toggle="modal"
+		data-target="#faqUpdatePositionCenter" id="faqDetailBtn">상세</button>
+</div>
 
 <script type="text/javascript">
 
@@ -172,7 +155,7 @@ function insertFaq() {
 		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqList.do";
+			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);
@@ -198,7 +181,7 @@ function updateFaq() {
 		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqList.do";
+			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);
@@ -212,6 +195,10 @@ function updateFaq() {
 
 
 function deleteFaq() {
+	
+	if (!confirm("해당 게시글이 삭제됩니다. 삭제하시겠습니까?")) return;
+	
+	
 	var request = $.ajax({
 		url: "/faq/deleteFaq.do",
 		method: "post",
@@ -224,7 +211,7 @@ function deleteFaq() {
 		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqList.do";
+			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);
@@ -235,23 +222,68 @@ function deleteFaq() {
 		console.log("request fail");
 	});
 }
+	function setFaqListTable(faqList) {
+		$('#faqListTable').jsGrid({
+		    //height: "500px",
+		    width: "100%",
+
+		    //autoload:true,
+		    sorting: true,
+		    paging: true,
+		    //pageIndex: 1, default: 1
+		    pageSize: 10, // default: 20
+			//pageButtonCount: 5, default: 15
+		    
+		    data: faqList,
+
+		    fields: [
+		    	{name: "faq_idx",title: "번호", type: "text", width: 70, align: "center"},
+		    	{name: "create_user", title: "작성자", type: "text", width: 60},
+		    	{name: "question", title: "제목", type: "text", width: 150}, 
+		    	{name: "answer", title: "내용", type: "text", width: 200}, 
+		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
+	    	],
+	    	
+	    	rowClick: function(args) {
+	    		var idx = args.item.faq_idx;
+	    		
+	    	
+	    		$("#faqDetailBtn").trigger("click");
+				
+				$("#question_update").val(args.item.question);
+				$("#answer_update").val(args.item.answer);
+				$("#faq_idx_update").val(idx);
+				
+				
+	    		//location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
+	    	}
+		});
+	}
 
 
-
-	$("#boardTable tr td").click(function(event) {
-		if ($(this).get(0).cellIndex === 0) {
-		} else {
-			var faq_idx = $(this).parent().children().eq(1).text();
-			var question = $(this).parent().children().eq(2).text();
-			var answer = $(this).parent().children().eq(3).text();
-			console.log(faq_idx +","+ question + ","+answer);
+		
+		function getFaqList() {
+			var request = $.ajax({
+				url: "/faq/getFaqList.do",
+				method: "get"
+			});
 			
-			document.getElementById("question_update").value = question;
-			document.getElementById("answer_update").value = answer;
-			document.getElementById("faq_idx_update").value = faq_idx;
+			request.done(function(data) {
+				console.log(data);
+				
+				setFaqListTable(data);
+			});
 			
-			$("#faqUpdate").click();
+			request.fail(function(error) {
+				console.log(error);
+			});
 		}
-	});
-
+		
+		$(function() {
+			getFaqList();
+		});
+		
+		
+		
+	
 </script>

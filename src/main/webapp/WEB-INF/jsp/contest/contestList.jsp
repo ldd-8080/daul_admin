@@ -17,7 +17,7 @@
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">열린제안 목록</h3>
+		          <h3 class="panel-title"></h3>
 		        </header>
 		        <div class="panel-body">
 		        	<div id="contestListTable"></div>
@@ -62,7 +62,7 @@ function setContestListTable(ContestList) {
 	});
 }
 
-	$("#conotestRegistBtn").click(function() {
+	$("#contestRegistBtn").click(function() {
 		location.href = "${pageContext.request.contextPath}/contest/contestRegistPage.do";
 	});
 	

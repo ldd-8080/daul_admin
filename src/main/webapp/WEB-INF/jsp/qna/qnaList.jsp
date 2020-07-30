@@ -18,60 +18,17 @@
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">Q&A</h3>
+		          <h3 class="panel-title"></h3>
 		        </header>
 		        <div class="panel-body">
-		          <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-		            <thead>
-		              <tr>
-		                <th>번호</th>
-		                <th style="visibility:hidden;position:absolute;"></th>
-		                <th>제목</th>
-		                <th style="visibility:hidden;position:absolute;">내용</th>
-		                <th>작성자</th>
-		                <th>작성자유형</th>
-		                <th>등록일</th>
-		                <th>조회수</th>
-		                <th></th>
-		                 <th style="visibility:hidden;position:absolute;"></th>
-		              </tr>
-		            </thead>
-		            <tbody>
-		            	<c:forEach var="result" items="${qnaList}" varStatus="status">
-		            	
-		            	<tr>
-		            		<td id="seq_${status.index}">${status.index + 1} </td>
-		            		<td style="visibility:hidden;position:absolute;">${result.qna_idx}</td>
-		            		<td><c:if test="${!empty result.parent_qna_idx}"><i class="site-menu-icon md-long-arrow-right" aria-hidden="true"></i></c:if>${result.question}</td>
-		            		<td style="visibility:hidden;position:absolute;">${result.content}</td>
-		            		<td>${result.create_user}</td>
-		            		<td>${result.auth_type}</td>
-		            		<td>${result.create_date}</td>
-		            		<td>${result.view_count}</td>
-		            		<td>
-		            		<c:choose>
-		            			<c:when test="${result.create_user ne login.user_id }">
-		            				<button type="button" data-toggle="modal" data-target="#qnaDetailPositionCenter" href="#">상세</button>
-		            			</c:when>
-		            			<c:when test="${result.create_user eq login.user_id }">
-		            				<button type="button" data-toggle="modal" data-target="#qnaUpdatePositionCenter" href="#">상세</button>
-		            			</c:when>
-		            		</c:choose>
-		            		<c:if test="${empty result.parent_qna_idx}">
-		            			<button type="button" data-toggle="modal" data-target="#qnaPositionCenter" href="#">답변</button>
-		            		</c:if>
-		            		</td>
-		            		<td style="visibility:hidden;position:absolute;">${result.parent_qna_idx}</td>
-	            		</tr>
-	            		
-		            	</c:forEach>
-		            </tbody>
-		          </table>
+		        
+		        	 <div id="qnaListTable"></div>
+		       
 		        </div>
-		        <div class="col-md-6">
+		        <div class="col-md-12">
                 	<div class="example example-buttons">                     
                      	<div>
-               	      		<button type="button" class="btn btn-squared btn-info" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
+               	      		<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
                	      		<button type="button"  style="display:none;" class="btn btn-squared btn-info" id = "faqUpdate" data-toggle="modal" data-target="#faqUpdatePositionCenter" href="#" >수정</button>
                     	</div>                     
                 	</div>
@@ -79,6 +36,8 @@
 	    	</div>
 	    </div>
 	</div>
+	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaDetailPositionCenter" id="qnaDetailPositionBtn" href="#">상세</button>
+	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaUpdatePositionCenter" id="qnaUpdatePositionBtn" href="#">상세</button>
 <!-- End Page -->
 </div>
 
@@ -234,41 +193,6 @@ $(function() {
 	
 });
 
-	$("#boardTable tr td").click(function(event) {
-		if ($(this).get(0).cellIndex === 8) {
-			
-			var qna_idx = $(this).parent().children().eq(1).text();
-			var question = $(this).parent().children().eq(2).text();
-			var content = $(this).parent().children().eq(3).text();			
-			var create_user =  $(this).parent().children().eq(4).text();
-			var parent_qna_idx = $(this).parent().children().eq(9).text();
-			document.getElementById("question_content").value = content;
-			document.getElementById("qna_idx_reply").value = qna_idx;
-			document.getElementById("ref_reply").value = qna_idx;
-			document.getElementById("detail_qustion").value = question;
-			document.getElementById("detail_content").value = content;
-			document.getElementById("detail_create_user").value = create_user;
-			document.getElementById("update_qustion").value = question;
-			document.getElementById("update_content").value = content;
-			document.getElementById("update_create_user").value = create_user;
-			document.getElementById("qna_idx_update").value = qna_idx;
-			document.getElementById("qna_idx_detail").value = qna_idx;
-			document.getElementById("parent_qna_idx_update").value = parent_qna_idx;
-			document.getElementById("parent_qna_idx_detail").value = parent_qna_idx;
-			
-		} else {
-			/* var faq_idx = $(this).parent().children().eq(1).text();
-			var question = $(this).parent().children().eq(2).text();
-			var answer = $(this).parent().children().eq(3).text();
-			console.log(faq_idx +","+ question + ","+answer);
-			
-			document.getElementById("question_update").value = question;
-			document.getElementById("answer_update").value = answer;
-			document.getElementById("faq_idx_update").value = faq_idx;
-			
-			$("#faqUpdate").click(); */
-		}
-	});
 	
 	function insertQnaReply(){
 		var request = $.ajax({
@@ -283,7 +207,7 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaList.do";
+				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -308,7 +232,7 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaList.do";
+				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -333,7 +257,7 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaList.do";
+				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -346,6 +270,104 @@ $(function() {
 	}
 	
 	
+	
+
+	function setQnaListTable(qnaList) {
+		$('#qnaListTable').jsGrid({
+		    //height: "500px",
+		    width: "100%",
+
+		    //autoload:true,
+		    sorting: true,
+		    paging: true,
+		    //pageIndex: 1, default: 1
+		    pageSize: 10, // default: 20
+			//pageButtonCount: 5, default: 15
+		    
+		    data: qnaList,
+
+		    
+		    fields: [
+		    	{name: "qna_idx",title: "번호", type: "text", width: 70, align: "center"},
+		    	{title: "제목", type: "text", width: 200,
+		    		itemTemplate: function(_, item) {
+		    			
+		    			var result = "";
+		    			if(item.parent_qna_idx != null){
+		    				result +=  '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
+		    			}
+		    			result += item.question;
+			    		return result; 
+			    		}	
+		    	},
+		    	{name: "create_user", title: "작성자", type: "text", width: 60},
+		    	{name: "auth_type", title: "작성자유형", type: "text", width: 70, align: "center"}, 
+		    	{name: "create_date", title: "등록일", type: "text", width: 70, align: "center"}, 
+		    	{name: "view_count", title: "조회수", type: "text", width: 70, align: "center"},
+		    	{title: "", width: 100, align: "center",
+		    		itemTemplate: function(_, item) {
+		    			var result="";
+		    		
+		    			if(item.parent_qna_idx == null){
+		    				result += '&nbsp;<button type="button" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaPositionCenter" href="#">답변</button>';		    				
+		    			}
+		    			return result;
+		    		}	
+		    	}
+	    	],
+	    	rowClick: function(args) {
+	    		
+
+    			var session_id = "${login.user_id}";
+	    	
+	    		document.getElementById("question_content").value = args.item.content;
+				document.getElementById("qna_idx_reply").value = args.item.qna_idx;
+				document.getElementById("ref_reply").value = args.item.qna_idx;
+				document.getElementById("detail_qustion").value = args.item.question;
+				document.getElementById("detail_content").value = args.item.content;
+				document.getElementById("detail_create_user").value = args.item.create_user;
+				document.getElementById("update_qustion").value = args.item.question;
+				document.getElementById("update_content").value = args.item.content;
+				document.getElementById("update_create_user").value = args.item.create_user;
+				document.getElementById("qna_idx_update").value = args.item.qna_idx;
+				document.getElementById("qna_idx_detail").value = args.item.qna_idx;
+				document.getElementById("parent_qna_idx_update").value = args.item.parent_qna_idx;
+				document.getElementById("parent_qna_idx_detail").value = args.item.parent_qna_idx;
+				
+				if(args.item.create_user != session_id){
+	    			$("#qnaDetailPositionBtn").trigger("click");
+	    		}else{
+	    			$("#qnaUpdatePositionBtn").trigger("click");
+	    		}
+				
+			}
+		});
+	}
+	
+
+		function getQnaList() {
+			var request = $.ajax({
+				url: "/qna/getQnaList.do",
+				method: "get"
+			});
+			
+			request.done(function(data) {
+				console.log(data);
+				
+				setQnaListTable(data);
+			});
+			
+			request.fail(function(error) {
+				console.log(error);
+			});
+		}
+		
+		$(function() {
+			getQnaList();
+		});
+		
+		
+		
 </script>
 	
 

@@ -68,17 +68,17 @@
 	           </a>
 	           <ul class="site-menu-sub">
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/board/boardList.do">                   
+	               <a class="animsition-link" href="/board/boardListPage.do">                   
 	                 <span class="site-menu-title">공지사항</span>
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/faq/faqList.do">                    
+	               <a class="animsition-link" href="/faq/faqListPage.do">                    
 	                 <span class="site-menu-title">FAQ</span>
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
-	               <a class="animsition-link" href="/qna/qnaList.do">                    
+	               <a class="animsition-link" href="/qna/qnaListPage.do">                    
 	                 <span class="site-menu-title">Q&A</span>
 	               </a>
 	             </li>
