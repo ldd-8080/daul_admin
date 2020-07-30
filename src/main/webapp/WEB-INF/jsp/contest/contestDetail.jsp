@@ -134,7 +134,7 @@
 											<div class="col-md-7">
 												<div class="input-group input-group-file"
 													data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="noticeFileTitle" readonly /> 
+													<input type="text" class="form-control" id="noticeFileTitle" value="파일 0개" readonly /> 
 													<span class="input-group-append"> 
 														<span class="btn btn-primary btn-file"> 
 															<i class="icon md-upload" aria-hidden="true"></i> 
@@ -241,85 +241,50 @@
 
   	var noticeFileList = new Array();
 
-  	function compareExsitFile(newFile, existFile) {
-  		for (var i = 0; i < newFile.length; i++) {
-  			var exist = false;
-  			
-  			for (var j = 0; j < existFile.length; j++) {
-  				if (existFile[j].hasOwnProperty("attach_type")) {
-  					
-  				} else {
-  					
-  				}
-  			}
-  		}
-  	}
-  	
   	function noticeFileChange() {
-  		console.log(fileList);
-  		$("#noticeFileTitle").val("");
-  		$("#noticeFileName-list").children().remove();
-    
   		var fileValue = $("#noticeFile")[0].files;
 
-	  	// noticeFileList의 사이즈가 0이 아닐 경우
-	  	// 새로 등록된 fileValue의 name과 noticeFileList의 name이 동일하지 않는 파일만
-	  	// noticeFileList에 새로 추가
+	  	// 새로 추가한 파일fileValue이 존재하면
+	  	// 기존에 등록했던 파일들fileList과 비교를 하고
+	  	// 새로 추가했던 파일들noticeFileList과 비교를 해서 noticeFileList에 push
 	  	if (fileValue.length > 0) {
-	  		if (noticeFileList.length > 0) {
-	  			for (var i = 0; i < fileValue.length; i++) {
-	  				var exist = false;
-	  				
-	  				for (var j = 0; j < noticeFileList.length; j++) {
-	  					if (fileValue[i].name === noticeFileList[j].name) {
-	  						exist = true;
-	  						break;
-	  					}
-	  				}
-	  				
-	  				if (!exist) {
-	  					noticeFileList.push(fileValue[i]);
-	  				}
-	  			}
-	  		} else {
-	  			// 기존에 저장된 파일들fileList의 이름과 추가한 파일fileValue의 이름을 비교
-	  			// 중복되지 않은 파일들만 noticeFileList에 저장
-	  			for (var i = 0; i < fileValue.length; i++) {
-	  				var exist = false;
-	  				
-	  				for (var j = 0; j < fileList.length; j++) {
-	  					if (fileList[j].attach_type === "noticeFile") {
-	  						if (fileValue[i].name === fileList[j].org_file_name) {
-	  							console.log("file is already exist", fileValue[i].name);
-	  							exist = true;
-	  							break;
-	  						}
-	  					}
-	  				}
-	  				
-	  				if (!exist) {
-	  					console.log("notice file add", fileValue[i].name);
-	  					noticeFileList.push(fileValue[i]);
-	  				}
-	  			}
-	  			//noticeFileList = Array.from(fileValue);
-	  		}
-	  	}
-  	
-	  	if (noticeFileList.length > 0) {
-	  		$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
-	  		
-	  		for (var file of noticeFileList) {
-	  			var str = '<li>'+
-			  			'<input type="hidden" name="save_file_name" value="' + file.name + '">' +
+	  		for (var i = 0; i < fileValue.length; i++) {
+  				var exist = false;
+  				
+  				for (var j = 0; j < fileList.length; j++) {
+  					if (fileList[j].attach_type === "noticeFile") {
+  						if (fileValue[i].name === fileList[j].org_file_name) {
+  							console.log("this file is already registed", fileValue[i].name);
+  							exist = true;
+  							break;
+  						}
+  					}
+  				}
+  				
+  				for (var k = 0; k < noticeFileList.length; k++) {
+  					if (fileValue[i].name === noticeFileList[k].name) {
+  						console.log("this file is already exist", fileValue[i].name);
+  						exist = true;
+  						break;
+  					}
+  				}
+  				
+  				if (!exist) {
+  					noticeFileList.push(fileValue[i]);
+	
+  					$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
+  					
+  					var str = '<li>'+
+			  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
 			  			'<span class="file-img"></span>' +
-			  			'<a href="#this" name="file"> (new) ' + file.name + '</a>' +
-			  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (file.size/1024).toFixed(2) + ' kb</span>' +
+			  			'<a href="#this" name="file"> (new) ' + fileValue[i].name + '</a>' +
+			  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
 			  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
 			  			'</li>';
-			  			
-	  			$("#noticeFile-list").append(str);
-	  		}
+		  			
+  					$("#noticeFile-list").append(str);
+  				}
+  			}
 	  	}
   	}
   	
@@ -331,6 +296,8 @@
   				noticeFileList.splice(i, 1);
   				
   				$(_this).parent().remove();
+  				
+  				$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
   			}
   		}
   	}
