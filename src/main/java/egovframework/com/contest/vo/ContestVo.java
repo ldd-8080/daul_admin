@@ -1,6 +1,8 @@
 package egovframework.com.contest.vo;
 
-public class ContestVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class ContestVo extends SearchVo{
 	private String admin_contest_idx;
 	private String contest_topic;
 	private String title;

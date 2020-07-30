@@ -1,6 +1,8 @@
 package egovframework.com.qna.vo;
 
-public class QnaVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class QnaVo extends SearchVo {
 	private String qna_idx;
 	private String question;
 	private String content;

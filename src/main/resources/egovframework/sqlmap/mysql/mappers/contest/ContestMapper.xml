@@ -16,6 +16,25 @@
 			   create_date
 		  FROM daul.contest_admin
 		 WHERE del_chk != 'Y'
+		 <if test="search_type == 'title'">
+		 	AND title like concat('%',#{search},'%')
+		 </if>
+ 		 <if test="search_type == 'content'">
+		 	AND content like concat('%',#{search},'%')
+		 </if>
+ 		 <if test="search_type == 'create_user'">
+		 	AND create_user like concat('%',#{search},'%')
+		 </if>
+	 	 <if test="search_s_date != null and search_s_date != ''">
+	 	 	<![CDATA[
+	     	AND create_date  > #{search_s_date}
+	     	]]>
+	     </if>
+	      <if test="search_e_date != null and search_e_date != ''">
+	 	 	<![CDATA[
+	     	AND create_date  < #{search_e_date}
+	     	]]>
+	     </if>
 	</select>
 
 	<select id="selectAdminContestIdx" resultType="String">

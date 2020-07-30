@@ -10,7 +10,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("contestMapper")
 public interface ContestMapper {
-	List<ContestVo> selectContestList() throws Exception;
+	List<ContestVo> selectContestList(ContestVo vo) throws Exception;
 	String selectAdminContestIdx() throws Exception;
 	int registContest(ContestVo vo) throws Exception;
 	void insertFile(FileVo vo) throws Exception;

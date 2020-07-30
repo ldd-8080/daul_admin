@@ -43,24 +43,28 @@ public class ContestController {
 	@Value("${file.downloadpath}")
 	private String filePath;
 
+
 	@RequestMapping(value = "/contestListPage.do")
 	public String suggestionListPage() {
+		
 		return "contest/contestList";
 	}
 
 	@RequestMapping(value = "/getContestList.do")
-	public ResponseEntity<?> contestList(ModelMap model) throws Exception {
+	public ResponseEntity<?> contestList(ModelMap model, ContestVo vo) throws Exception {
 
+		System.out.println(vo.getSearch() +','+ vo.getSearch_e_date() +','+ vo.getSearch_s_date()  +','+ vo.getSearch_type());
 		List<ContestVo> contestList = null;
 
 		try {
-			contestList = contestService.selectContestList();
+			contestList = contestService.selectContestList(vo);
 		} catch (Exception e) {
 			log.debug("[열린제안] 열린제안 목록 조회 실패");
 		}
 
 		return new ResponseEntity<>(contestList, HttpStatus.OK);
 	}
+
 
 	@RequestMapping(value = "/contestRegistPage.do")
 	public String contestRegistPage(ModelMap model) {

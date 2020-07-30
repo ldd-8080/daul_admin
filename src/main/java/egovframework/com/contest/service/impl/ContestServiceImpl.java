@@ -22,8 +22,8 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 	private ContestMapper contestMapper;
 
 	@Override
-	public List<ContestVo> selectContestList() throws Exception {
-		return contestMapper.selectContestList();
+	public List<ContestVo> selectContestList(ContestVo vo) throws Exception {
+		return contestMapper.selectContestList(vo);
 	}
 
 	@Override

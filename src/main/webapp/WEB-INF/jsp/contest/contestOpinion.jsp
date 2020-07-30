@@ -92,7 +92,9 @@ function setContestOpinionListTable(ContestList) {
 	    	{name: "create_user", title: "작성자", type: "text", width: 60},
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
 	    	{name: "content", title: "내용", type: "text", width: 200}, 
-	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
+	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
+	    	{title: "제안서",  width: 100, align: "center"}
+	    	
     	],
     	
     	rowClick: function(args) {
