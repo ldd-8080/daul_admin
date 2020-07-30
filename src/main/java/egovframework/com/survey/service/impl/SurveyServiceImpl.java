@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
@@ -36,25 +35,12 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	}
 	
 	@Override
-	public void registSurvey(SurveyVo vo, MultipartFile[] file ) throws Exception {
-		
-		
+	public void registSurvey(SurveyVo vo) throws Exception {
 		surveyMapper.registSurvey(vo);
-		
-//		FileVo fileVo = new FileVo();
-//		
-//		fileVo.setCreate_user(vo.getCreate_user());
-//		fileVo.setIdx(vo.getSurvey_idx());
-//		
-//		List<FileVo> fileList = fileUtils.parseFileInfo(fileVo, file);
-//		System.out.println("fileList == " + fileList);
-//		for(int i = 0; i<fileList.size(); i++) {
-//			surveyMapper.insertFile(fileList.get(i));
-//		}		
 	}
 
 	@Override
-	public void updateSurvey(SurveyVo vo, MultipartFile[] file) throws Exception {
+	public void updateSurvey(SurveyVo vo) throws Exception {
 		// TODO Auto-generated method stub
 		surveyMapper.updateSurvey(vo);
 	}

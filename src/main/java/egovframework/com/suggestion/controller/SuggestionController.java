@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
@@ -64,7 +64,7 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/suggestionRegist.do", method=RequestMethod.POST)
-	public String createSuggestion(SuggestionVo vo, MultipartFile[] publicFile, MultipartFile[] repFile) throws Exception{
+	public String createSuggestion(SuggestionVo vo, HttpServletRequest request) throws Exception{
 		try {
 			log.debug("SuggestionVo : " + vo);
 			String suggestionIdx = suggestionService.selectSuggestionIdx();
@@ -79,7 +79,8 @@ public class SuggestionController {
 				fileVo.setCreate_user(vo.getCreate_user());
 				fileVo.setIdx(vo.getSuggestion_idx());
 				
-				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
+				//List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 
 				log.debug("[열린제안] 열린제안 파일 등록");
 				for(int i = 0; i<fileList.size(); i++) {
@@ -122,7 +123,7 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/suggestionModify.do", method=RequestMethod.POST)
-	public String suggestionModify(SuggestionVo vo, MultipartFile[] publicFile, MultipartFile[] repFile) throws Exception{
+	public String suggestionModify(SuggestionVo vo, HttpServletRequest request) throws Exception{
 		try {
 			log.debug("SuggestionVo : " + vo);
 			log.debug("[열린제안] 열린제안 수정");
@@ -131,7 +132,7 @@ public class SuggestionController {
 			FileVo fileVo = new FileVo();
 			fileVo.setIdx(vo.getSuggestion_idx());
 			fileVo.setCreate_user(vo.getUpdate_user());
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 			
 			if (!fileList.isEmpty() && fileList.size() > 0) {
 				for (int i = 0; i < fileList.size(); i++) {

@@ -3,10 +3,12 @@ package egovframework.com.cmmn.util;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -14,7 +16,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtil")
 public class FileUtil {
@@ -27,55 +31,38 @@ public class FileUtil {
 	@Value("${file.uploadpath}")
 	private String filePath;
 	
-    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file) throws Exception {
-    	return parseFileInfo(vo, file, null, null);
-    }
-    
-    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2) throws Exception {
-    	return parseFileInfo(vo, file, file2, null);
-    }
-    
-    
-    
-    public List<FileVo> parseFileInfo(FileVo vo, MultipartFile[] file, MultipartFile[] file2, MultipartFile[] file3) throws Exception {
-    	System.out.println("================== filePath :: " + filePath);
+    public List<FileVo> parseFileInfo(FileVo vo, HttpServletRequest request) throws Exception {
+    	List<FileVo> fileList = new ArrayList<FileVo>();
+    	List<MultipartFile> totalFile = new ArrayList<MultipartFile>();
+    	
     	String IDX = String.valueOf(vo.getIdx());
     	String creaID = (String) vo.getCreate_user();
-    	
-    	List<FileVo> fileList = new ArrayList<FileVo>();
     	
     	File target = new File(filePath);
     	if(!target.exists()) target.mkdirs();
     	
-    	List<MultipartFile> totalFile = new ArrayList<MultipartFile>();
-    	
-    	// 첫번째 파일
-    	if (file != null) {
-    		for (MultipartFile f : file) {
-    			totalFile.add(f);
-    		}
-    	}
-    	
-    	// 두번째 파일
-    	if (file2 != null) {
-    		for (MultipartFile f : file2) {
-    			totalFile.add(f);
-    		}
-    	}
-    	
-    	// 두번째 파일
-    	if (file3 != null) {
-    		for (MultipartFile f : file3) {
-    			totalFile.add(f);
-    		}
-    	}
-    	
-    	if (totalFile != null && totalFile.size() > 0) {
+		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+		MultiValueMap<String, MultipartFile> file = multi.getMultiFileMap();
+		
+		Iterator<String> keys = file.keySet().iterator();
+		
+		while (keys.hasNext()) {
+			String key = keys.next();
+			
+			List<MultipartFile> f = file.get(key);
+
+			for (MultipartFile ff : f) {
+				//System.out.println(String.format("키 : %s ------ 파일이름 : %s", key, ff.getOriginalFilename()));
+				totalFile.add(ff);
+			}
+		}
+		
+		if (totalFile != null && totalFile.size() > 0) {
     		setFileInfo(totalFile, target, IDX, creaID, fileList);
     	}
-    	
-    	return fileList;
-    }
+		
+		return fileList;
+	}
     
     public void getImgFile(HttpServletResponse response, String filename) throws Exception {
 		try {

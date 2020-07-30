@@ -25,14 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
-import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
-	protected Log log = LogFactory.getLog(cmmnInterceptor.class);
+	protected Log log = LogFactory.getLog(BoardController.class);
 	
 	@Resource(name = "boardService")
 	private BoardService boardService;
@@ -77,7 +76,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value ="/boardInsert.do", method=RequestMethod.POST)
-	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, MultipartFile[] publicFile) 
+	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, HttpServletRequest request) 
     		throws Exception {
 
        UserVo userVo = (UserVo) session.getAttribute("login");
@@ -91,7 +90,7 @@ public class BoardController {
 		fileVo.setCreate_user(vo.getCreate_user());
 		fileVo.setIdx(vo.getNotice_idx());
 		
-		List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, publicFile);
+		List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 		System.out.println("fileList == " + fileList);
 		
 		for(int i = 0; i<fileList.size(); i++) {
@@ -102,14 +101,6 @@ public class BoardController {
        boardService.insertBoard(vo);
        
         //boardService.insertBoard(commandMap);
-        for(int i=0; i<publicFile.length; i++) {
-            log.debug("================== file start ==================");
-            log.debug("파일 이름: "+publicFile[i].getName());
-            log.debug("파일 실제 이름: "+publicFile[i].getOriginalFilename());
-            log.debug("파일 크기: "+publicFile[i].getSize());
-            log.debug("content type: "+publicFile[i].getContentType());
-            log.debug("================== file   END ==================");
-        }
          
         try {
 			List<Map<String, String>> boardList = boardService.selectBoardList();

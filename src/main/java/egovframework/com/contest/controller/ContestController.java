@@ -21,7 +21,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
@@ -71,8 +70,7 @@ public class ContestController {
 	}
 
 	@RequestMapping(value = "/contestRegist.do", method = RequestMethod.POST)
-	public String contestRegist(HttpSession session, ContestVo vo, MultipartFile[] repFile, MultipartFile[] noticeFile,
-			MultipartFile[] propFile) throws Exception {
+	public String contestRegist(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
 
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		vo.setCreate_user(userVo.getUser_id());
@@ -89,7 +87,7 @@ public class ContestController {
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getAdmin_contest_idx());
 
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile, propFile, noticeFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 
 			log.debug("[나눔공모] 나눔공모 파일 등록");
 			for (int i = 0; i < fileList.size(); i++) {
@@ -183,8 +181,7 @@ public class ContestController {
 	}
 
 	@RequestMapping(value = "contestModify")
-	public String contestModify(HttpSession session, ContestVo vo, MultipartFile[] repFile, MultipartFile[] noticeFile,
-			MultipartFile[] propFile) throws Exception {
+	public String contestModify(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
 
 		System.out.println(vo);
 		log.debug("[나눔공모] 나눔공모 수정");
@@ -199,7 +196,7 @@ public class ContestController {
 			fileVo.setCreate_user(userVo.getUser_id());
 			fileVo.setIdx(vo.getAdmin_contest_idx());
 
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile, propFile, noticeFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 
 			log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
 

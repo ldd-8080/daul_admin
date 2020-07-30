@@ -71,7 +71,7 @@ public class SurveyController {
 	}
 	@Transactional
 	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
-	public String registSurvey(HttpSession session, @ModelAttribute  SurveyVo vo, MultipartFile[] repFile, BindingResult bindingResult) throws Exception{
+	public String registSurvey(HttpSession session, @ModelAttribute  SurveyVo vo, BindingResult bindingResult, HttpServletRequest request) throws Exception{
 
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
@@ -89,14 +89,15 @@ public class SurveyController {
 			
 			vo.setSurvey_idx(surveyService.selectSurveyIdx());
 			
-			surveyService.registSurvey(vo,repFile);
+			surveyService.registSurvey(vo);
 			
 			FileVo fileVo = new FileVo();
 			
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getSurvey_idx());
 			
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
+			//List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 			System.out.println("fileList == " + fileList);
 			
 			for(int i = 0; i<fileList.size(); i++) {
@@ -133,7 +134,7 @@ public class SurveyController {
 	@Transactional
 	@RequestMapping(value="/updateSurvey.do", method=RequestMethod.POST)
 	public String updateSurvey(HttpSession session, @ModelAttribute @Valid SurveyVo vo,ModelMap model ,HttpServletRequest request, 
-							   HttpServletResponse response, MultipartFile[] repFile, BindingResult bindingResult) throws Exception{
+							   HttpServletResponse response, BindingResult bindingResult) throws Exception{
 
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
@@ -151,19 +152,16 @@ public class SurveyController {
 			String question_content_arr = vo.getQuestion_content();
 			String[] questionArr = question_content_arr.split(",");
 	
-			surveyService.updateSurvey(vo,repFile);
-//			
-//			surveyService.registSurvey(vo,repFile);
-//			
-			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
+			surveyService.updateSurvey(vo);
 			
+			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
 			
 			FileVo fileVo = new FileVo();
 			
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getSurvey_idx());
 			
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 			
 			if(fileList.size() > 0) {
 
