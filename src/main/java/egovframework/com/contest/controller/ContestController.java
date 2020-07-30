@@ -209,6 +209,39 @@ public class ContestController {
 
 		return "redirect:/contest/contestList.do";
 	}
+	@RequestMapping(value = "contestModify2")
+	public ResponseEntity<?> contestModify2(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
+		try {
+			log.debug("ContestVo : " + vo);
+			
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setUpdate_user(userVo.getUser_id());
+			
+			log.debug("[나눔공모] 나눔공모 수정");
+			int result = contestService.updateContest(vo);
+			
+			if (result > 0) {
+				FileVo fileVo = new FileVo();
+				
+				fileVo.setCreate_user(userVo.getUser_id());
+				fileVo.setIdx(vo.getAdmin_contest_idx());
+				
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+				
+				log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
+				
+				for (int i = 0; i < fileList.size(); i++) {
+					contestService.insertFile(fileList.get(i));
+				}
+			}
+		} catch (Exception e) {
+			log.debug("[나눔공모] 나눔공모 수정 실패");
+			e.printStackTrace();
+		}
+		
+		log.debug("[나눔공모] 나눔공모 수정 완료");
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/downloadFile.do", method = RequestMethod.GET)
 	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response,
