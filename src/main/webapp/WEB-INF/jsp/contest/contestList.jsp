@@ -126,7 +126,7 @@
 								type : "text",
 								width : 100,
 								align : "center"
-							} ],
+							}],
 
 							rowClick : function(args) {
 								var idx = args.item.admin_contest_idx;

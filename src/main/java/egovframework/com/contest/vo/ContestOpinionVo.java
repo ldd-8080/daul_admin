@@ -10,6 +10,15 @@ public class ContestOpinionVo {
 	private String update_date;
 	private String update_user;
 	private String del_chk;
+	private String attach_cnt;
+	
+	
+	public String getAttach_cnt() {
+		return attach_cnt;
+	}
+	public void setAttach_cnt(String attach_cnt) {
+		this.attach_cnt = attach_cnt;
+	}
 	public String getUser_contest_idx() {
 		return user_contest_idx;
 	}

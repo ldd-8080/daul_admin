@@ -93,20 +93,30 @@ function setContestOpinionListTable(ContestList) {
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
 	    	{name: "content", title: "내용", type: "text", width: 200}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
-	    	{title: "제안서",  width: 100, align: "center"}
-	    	
+	    	{title: "제안서", width: 100,
+	    		itemTemplate: function(_, item) {
+	    			
+	    			var result = "";
+	    			if(parseInt(item.attach_cnt) > 0){
+	    				result +=  '첨부파일있음';
+	    			}
+		    		return result; 
+		    		}	
+	    	}	    	
     	],
     	
     	rowClick: function(args) {
-    		var idx = args.item.user_contest_idx;
-    		$("#contestOpnDetailBtn").trigger("click");
-			
-			$("#detailCreateUser").val(args.item.create_user);
-			$("#detailTitle").val(args.item.title);
-			$("#detailOpinionContent").val(args.item.content);
-			$("#detailOpinionIdx").val(args.item.user_contest_idx);
-			
-			getContestOpinionFileList(idx)
+    		if (args.event.target.cellIndex != 5) {
+	    		var idx = args.item.user_contest_idx;
+	    		$("#contestOpnDetailBtn").trigger("click");
+				
+				$("#detailCreateUser").val(args.item.create_user);
+				$("#detailTitle").val(args.item.title);
+				$("#detailOpinionContent").val(args.item.content);
+				$("#detailOpinionIdx").val(args.item.user_contest_idx);
+				
+				getContestOpinionFileList(idx);
+    		}
 			
     	}
 	});

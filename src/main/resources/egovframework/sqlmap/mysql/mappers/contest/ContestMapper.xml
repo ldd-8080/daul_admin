@@ -151,8 +151,13 @@
 			   title,
 		       content,
 		       create_user,
-		       DATE_FORMAT(create_date, '%Y-%m-%d') as create_date
-		FROM daul.contest_user
+		       DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
+		       (
+		       		SELECT count(*)
+					FROM contest_user_attach b 
+                    WHERE b.user_contest_idx = a.user_contest_idx
+               ) AS attach_cnt
+		FROM daul.contest_user a
 		WHERE admin_contest_idx = #{admin_contest_idx}
 		  AND del_chk = 'N'
 	
