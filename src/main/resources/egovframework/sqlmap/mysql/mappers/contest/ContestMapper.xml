@@ -171,6 +171,14 @@
 		WHERE save_file_name  = #{idx}
 	</select>
 	
+			<select id="selectDownloadFile2" resultType="egovframework.com.cmmn.util.FileVo">
+		SELECT 
+			ORG_FILE_NAME,
+			SAVE_FILE_NAME
+		FROM daul.contest_user_attach
+		WHERE save_file_name  = #{idx}
+	</select>
+	
 		<select id = "selectContestOpinionFileList" resultType="egovframework.com.cmmn.util.FileVo">
 		SELECT 
 			user_contest_idx as idx,

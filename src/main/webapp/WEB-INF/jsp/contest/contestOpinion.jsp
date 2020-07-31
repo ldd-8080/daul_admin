@@ -10,7 +10,6 @@
 
 	<button style="display: none;" type="button" data-toggle="modal"
 		data-target="#contestOpnDetailModal" id="contestOpnDetailBtn">상세</button>
-	<button type="button" id="clearIntervalBtn">clear</button>
 </div>
 	
 
@@ -192,7 +191,6 @@ function setContestOpinionFileListTable(fileList) {
 	}
 }
 
-var intervalFunc;
 
 function test(args){
 	
@@ -202,11 +200,24 @@ function test(args){
 	});
 	
 	request.done(function(data) {
-		console.log("done");
 		
-		intervalFunc = setInterval(function() {
-			console.log(data);
-		}, 1000)
+		(function() {
+		    var i = 0;
+		    (function run() {
+		        console.log(data[i]);
+		        fn_downloadOpinionFile(data[i].save_file_name);
+		        console.log(i + ',' + data.length);
+		        if(i < (data.length-1)){
+		        setTimeout(run, 500); // <--- 딜레이 타임
+		        i ++;
+		    }else{
+		    	return false;
+		    }
+		    }());
+		}());
+	
+	
+		console.log("done");
 	});
 	
 	request.fail(function(error) {
@@ -237,7 +248,5 @@ function fn_downloadOpinionFile(save_file_name){
 		}
 	} */
 	
- 	$("#clearIntervalBtn").click(function() {
- 		clearInterval(intervalFunc);
- 	})
+ 
 </script>
