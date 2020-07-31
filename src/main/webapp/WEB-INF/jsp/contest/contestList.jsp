@@ -19,7 +19,7 @@
 					<form id="search-form">
 						<div class="form-group row">
 							<!-- 검색어 -->
-							<label class="col-md-1 form-control-label">검색어 </label>
+							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
 							<div class="col-md-5">
 								<div class="input-group">
 									<div class="input-group-prepend w-p25">
@@ -40,7 +40,7 @@
 								</div>
 							</div>
 							<!-- 등록일 -->
-							<label class="col-md-1 col-form-label">등록일 </label>
+							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
 							<div class="col-md-5">
 								<div class="input-daterange" data-plugin="datepicker">
 									<div class="input-group">
@@ -84,72 +84,41 @@
 </div>
 <script type="text/javascript">
 	function setContestListTable(ContestList) {
-		$('#contestListTable')
-				.jsGrid(
-						{
-							//height: "500px",
-							width : "100%",
+		$('#contestListTable').jsGrid({
+			
+			//height: "500px",
+			width : "100%",
 
-							//autoload:true,
-							sorting : true,
-							paging : true,
-							//pageIndex: 1, default: 1
-							pageSize : 10, // default: 20
-							//pageButtonCount: 5, default: 15
+			//autoload:true,
+			sorting : true,
+			paging : true,
+			//pageIndex: 1, default: 1
+			pageSize : 10, // default: 20
+			//pageButtonCount: 5, default: 15
 
-							data : ContestList,
+			data : ContestList,
 
-							fields : [ {
-								name : "admin_contest_idx",
-								title : "번호",
-								type : "text",
-								width : 70,
-								align : "center"
-							}, {
-								name : "create_user",
-								title : "작성자",
-								type : "text",
-								width : 60
-							}, {
-								name : "title",
-								title : "제목",
-								type : "text",
-								width : 150
-							}, {
-								name : "content",
-								title : "내용",
-								type : "text",
-								width : 200
-							}, {
-								name : "create_date",
-								title : "등록일",
-								type : "text",
-								width : 100,
-								align : "center"
-							}],
+			fields : [ 
+				{name : "admin_contest_idx", title : "번호", type : "text", width : 70, align : "center"}, 
+				{name : "create_user", title : "작성자", type : "text", width : 60}, 
+				{name : "title", title : "제목", type : "text", width : 150}, 
+				{name : "content", title : "내용", type : "text", width : 200}, 
+				{name : "create_date", title : "등록일", type : "text", width : 100, align : "center"}
+			],
 
-							rowClick : function(args) {
-								var idx = args.item.admin_contest_idx;
+			rowClick : function(args) {
+				var idx = args.item.admin_contest_idx;
 
-								location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx="
-										+ idx;
-							}
-						});
+				location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
+			}
+		});
 	}
 
-	$("#contestRegistBtn").click(
-					function() {
-						location.href = "${pageContext.request.contextPath}/contest/contestRegistPage.do";
-					});
+	$("#contestRegistBtn").click(function() {
+		location.href = "${pageContext.request.contextPath}/contest/contestRegistPage.do";
+	});
 
 	function getcontestList() {
-		
-		var search_s_date = $("input[name='search_s_date']").val();
-		var search_e_date = $("input[name='search_e_date']").val();
-		var search_type = $("select[name='search_type']").val();
-		var search = $("input[name='search']").val();
-		
-		console.log('search param = '+search_s_date +',' + search_e_date+','  + search_type+','  + search);
 		var request = $.ajax({
 			url : "/contest/getContestList.do",
 			method : "get",
@@ -169,9 +138,9 @@
 	$(function() {
 		getcontestList();
 	});
-	$("#searchBtn").click(
-			function() {
-				getcontestList();
-			});
+	
+	$("#searchBtn").click(function() {
+		getcontestList();
+	});
 			
 </script>
