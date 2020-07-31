@@ -71,15 +71,10 @@
 <!-- 열린제안 상세 모달 끝 -->
 
 <script type="text/javascript">
-
-$(document).ready(function(){
-	$("a[name='opinionFile']").on("click",function(e){
-		e.preventDefault();
-		fn_downloadFile($(this));
-		console.log("의견첨부파일 다운로드");
-	});
+$(function() {
+	getcontestOpinionList();
+	getContestOpinionFileList();
 });
-	
 
 function setContestOpinionListTable(ContestList) {
 	$('#contestListTable').jsGrid({
@@ -103,14 +98,15 @@ function setContestOpinionListTable(ContestList) {
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
 	    	{title: "제안서", width: 100, align: "center",
 	    		itemTemplate: function(_, item) {
-	    			
 	    			var result = "";
+	    			
 	    			if(parseInt(item.attach_cnt) > 0){
 	    				result +='<div class="icondemo vertical-align-middle">'
 	    				result +='<i class="icon wb-download" aria-hidden="true"></i>';
     			    	result +='</div>'
 	    			}
-		    			return result; 	
+	    			
+	    			return result; 	
 		    	}	
 	    	}	    	
     	],
@@ -152,11 +148,6 @@ function getcontestOpinionList() {
 	});
 }
 
-$(function() {
-	getcontestOpinionList();
-});
-
-
 function getContestOpinionFileList(idx) {
 	var request = $.ajax({
 		url: "/contest/getContestOpinionFileList.do?user_contest_idx="+idx,
@@ -173,41 +164,40 @@ function getContestOpinionFileList(idx) {
 	});
 }
 
-$(function() {
-	getContestOpinionFileList();
-});
-
-
 function setContestOpinionFileListTable(fileList) {
 	$("#opinionFile-list").children().remove();
+	
 	for(var i = 0; i < fileList.length; i++){
-		console.log(fileList[i].org_file_name)
 		var str =  '<li>'+
     	'<input type="hidden" name="save_file_name" value="' + fileList[i].save_file_name + '">'+
 		'<span class="file-img"></span>'+
-		'<a href="#this" name="opinionFile">' +fileList[i].org_file_name+'</a>'+
+		'<a href="#this" name="opinionFile" onclick="opinionFileDownload(this)">' +fileList[i].org_file_name+'</a>'+
 		'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+fileList[i].file_size+'kb</span>'+
 		'</li>';
+		
 		$("#opinionFile-list").append(str);
 	}
 }
 
-
-function allDownload(args){
+function opinionFileDownload(_this) {
+	var save_file_name = $(_this).siblings().first().val();
 	
+	fn_downloadOpinionFile(save_file_name);
+}
+
+function allDownload() {
 	var request = $.ajax({
 		url: "/contest/getSaveFileName.do?user_contest_idx="+args.item.user_contest_idx,
 		method: "get"
 	});
 	
 	request.done(function(data) {
-		
 		(function() {
 		    var i = 0;
+		    
 		    (function run() {
-		        console.log(data[i]);
 		        fn_downloadOpinionFile(data[i].save_file_name);
-		        console.log(i + ',' + data.length);
+		        
 		        if(i < (data.length-1)){
 		        	setTimeout(run, 500); // <--- 딜레이 타임
 		        	i ++;
@@ -226,9 +216,4 @@ function allDownload(args){
 function fn_downloadOpinionFile(save_file_name){
 	location.href = "${pageContext.request.contextPath}/contest/downloadFile2.do?save_file_name=" + save_file_name;
 }
-	
-	
-
-	
- 
 </script>
