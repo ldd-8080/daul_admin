@@ -72,6 +72,14 @@
 
 <script type="text/javascript">
 
+$(document).ready(function(){
+	$("a[name='opinionFile']").on("click",function(e){
+		e.preventDefault();
+		fn_downloadFile($(this));
+		console.log("의견첨부파일 다운로드");
+	});
+	});
+	
 
 function setContestOpinionListTable(ContestList) {
 	$('#contestListTable').jsGrid({
@@ -113,7 +121,7 @@ function setContestOpinionListTable(ContestList) {
     	rowClick: function(args) {
     		if(args.event.target.tagName == "I"){
     			test(args);
-    		}else if (args.event.target.cellIndex != 5 ) {
+    		}else if (args.event.target.cellIndex == 5 ) {
     			
     		}else{
 	    		var idx = args.item.user_contest_idx;
@@ -184,7 +192,7 @@ function setContestOpinionFileListTable(fileList) {
 		var str =  '<li>'+
     	'<input type="hidden" name="save_file_name" value="' + fileList[i].save_file_name + '">'+
 		'<span class="file-img"></span>'+
-		'<a href="#this" name="file">' +fileList[i].org_file_name+'</a>'+
+		'<a href="#this" name="opinionFile">' +fileList[i].org_file_name+'</a>'+
 		'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+fileList[i].file_size+'kb</span>'+
 		'</li>';
 		$("#opinionFile-list").append(str);

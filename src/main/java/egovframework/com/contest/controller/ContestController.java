@@ -309,39 +309,4 @@ public class ContestController {
 	}
 
 	
-//	@RequestMapping(value = "/downloadFile2.do", method = RequestMethod.GET)
-//	public void downloadFile2(HttpServletRequest requeset, HttpServletResponse response,
-//			@RequestParam("user_contest_idx") String user_contest_idx) throws Exception {
-//		System.out.println("2222 =  " + user_contest_idx);
-//		ContestOpinionVo vo = new ContestOpinionVo();
-//		vo.setUser_contest_idx(user_contest_idx);
-//		List<FileVo> opinionFileList = null;
-//		opinionFileList = contestService.selectContestOpinionFileList(vo);
-//		System.out.println(opinionFileList);
-//		for(int i = 0; i < opinionFileList.size(); i++ ) {
-//		System.out.println(" = " +opinionFileList.get(0).getSave_file_name());
-//		String stored_File_Name = opinionFileList.get(0).getSave_file_name();
-//		String original_File_Name = opinionFileList.get(0).getOrg_file_name();
-//		
-//		downloadFile3(stored_File_Name,original_File_Name,response);
-//		}
-//
-//	}
-//	public void downloadFile3(String store, String org, HttpServletResponse response) throws IOException {
-//		String stored_File_Name = store;
-//		String original_File_Name = org;
-//		
-//		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
-//		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
-//
-//				response.setContentType("application/octet-stream");
-//				response.setContentLength(fileByte.length);
-//				response.setHeader("Content-Disposition",
-//						"attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
-//				response.setHeader("Content-Transfer-Encoding", "binary");
-//				response.getOutputStream().write(fileByte);
-//				response.getOutputStream().flush();
-//				response.getOutputStream().close();
-//	}
-	
 }
