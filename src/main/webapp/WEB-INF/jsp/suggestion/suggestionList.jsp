@@ -14,6 +14,58 @@
 	    </ol>
 	
 	    <div class="page-content">
+	    	<!-- 검색조건 -->
+			<div class="panel">
+				<div class="panel-body">
+					<form id="search-form">
+						<div class="form-group row">
+							<!-- 등록일 -->
+							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
+							<div class="col-md-5">
+								<div class="input-daterange" data-plugin="datepicker">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> 
+												<i class="icon md-calendar" aria-hidden="true"></i>
+											</span>
+										</div>
+										<input type="text" class="form-control" name="search_s_date" />
+									</div>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">-</span>
+										</div>
+										<input type="text" class="form-control" name="search_e_date" />
+									</div>
+								</div>
+							</div>
+							<!-- 검색어 -->
+							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
+							<div class="col-md-5">
+								<div class="input-group">
+									<div class="input-group-prepend w-p25">
+										<select data-plugin="selectpicker" name="search_type">
+											<option value="" selected>선택하세요</option>
+											<option value="title">제목</option>
+											<option value="content">내용</option>
+											<option value="create_user">작성자</option>
+										</select>
+									</div>
+									<!-- <input type="text" class="form-control"> -->
+									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
+									<span class="input-group-append">
+										<button type="button" class="btn btn-primary" id="searchBtn">
+											<i class="icon md-search" aria-hidden="true"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+	    
+	    	<!-- 목록 테이블 -->
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
@@ -74,7 +126,8 @@
 	function getSuggestionList() {
 		var request = $.ajax({
 			url: "/suggestion/getSuggestionList.do",
-			method: "get"
+			method: "get",
+			data: $("#search-form").serialize()
 		});
 		
 		request.done(function(data) {
@@ -91,4 +144,14 @@
 	$(function() {
 		getSuggestionList();
 	});
+	
+	$("#searchBtn").click(function() {
+		getSuggestionList();
+	});
+	
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getSuggestionList();
+		}
+	}
 </script>

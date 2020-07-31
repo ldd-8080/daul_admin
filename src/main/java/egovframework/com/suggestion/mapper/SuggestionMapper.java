@@ -17,7 +17,7 @@ public interface SuggestionMapper {
 
 	void insertFile(FileVo fileVo) throws Exception;
 
-	List<SuggestionVo> selectSuggestionList() throws Exception;
+	List<SuggestionVo> selectSuggestionList(SuggestionVo vo) throws Exception;
 
 	SuggestionVo selectSuggestion(SuggestionVo vo) throws Exception;
 

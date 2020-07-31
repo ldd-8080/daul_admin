@@ -12,33 +12,12 @@
 			<li class="breadcrumb-item active">나눔공모</li>
 		</ol>
 
-
 		<div class="page-content">
+			<!-- 검색조건 -->
 			<div class="panel">
 				<div class="panel-body">
 					<form id="search-form">
 						<div class="form-group row">
-							<!-- 검색어 -->
-							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
-							<div class="col-md-5">
-								<div class="input-group">
-									<div class="input-group-prepend w-p25">
-										<select data-plugin="selectpicker" name="search_type">
-											<option value="" selected>선택하세요</option>
-											<option value="title">제목</option>
-											<option value="content">내용</option>
-											<option value="create_user">작성자</option>
-										</select>
-									</div>
-									<!-- <input type="text" class="form-control"> -->
-									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요."> 
-									<span class="input-group-append">
-										<button type="button" class="btn btn-primary" id="searchBtn">
-											<i class="icon md-search" aria-hidden="true"></i>
-										</button>
-									</span>
-								</div>
-							</div>
 							<!-- 등록일 -->
 							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
 							<div class="col-md-5">
@@ -59,10 +38,33 @@
 									</div>
 								</div>
 							</div>
+							<!-- 검색어 -->
+							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
+							<div class="col-md-5">
+								<div class="input-group">
+									<div class="input-group-prepend w-p25">
+										<select data-plugin="selectpicker" name="search_type">
+											<option value="" selected>선택하세요</option>
+											<option value="title">제목</option>
+											<option value="content">내용</option>
+											<option value="create_user">작성자</option>
+										</select>
+									</div>
+									<!-- <input type="text" class="form-control"> -->
+									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
+									<span class="input-group-append">
+										<button type="button" class="btn btn-primary" id="searchBtn">
+											<i class="icon md-search" aria-hidden="true"></i>
+										</button>
+									</span>
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>
 			</div>
+			
+			<!-- 목록 테이블 -->
 			<div class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions"></div>
@@ -142,5 +144,10 @@
 	$("#searchBtn").click(function() {
 		getcontestList();
 	});
-			
+
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getcontestList();
+		}
+	}
 </script>

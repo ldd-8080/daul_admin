@@ -80,6 +80,25 @@
 				  LEFT JOIN daul.suggestion_opinion so ON sm.suggestion_idx = so.suggestion_idx 
 				  LEFT JOIN daul.user u ON so.create_user = u.user_id
 				 WHERE sm.del_chk != 'Y'
+				   <if test="search_type == 'title'">
+				   AND title like concat('%', #{search}, '%')
+				   </if>
+				   <if test="search_type == 'content'">
+				   AND content like concat('%', #{search}, '%')
+				   </if>
+				   <if test="search_type == 'create_user'">
+				   AND create_user like concat('%', #{search}, '%')
+				   </if>
+				   <if test="search_s_date != null and search_s_date != ''">
+				   <![CDATA[
+				   AND sm.create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+				   ]]>
+				   </if>
+				   <if test="search_e_date != null and search_e_date != ''">
+				   <![CDATA[
+				   AND sm.create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+				   ]]>
+				   </if>
 				 ORDER BY sm.suggestion_idx
 		  	   ) sgst
 		 GROUP BY sgst.suggestion_idx

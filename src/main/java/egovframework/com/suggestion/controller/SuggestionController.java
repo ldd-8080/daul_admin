@@ -41,12 +41,12 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/getSuggestionList.do")
-	public ResponseEntity<?> getSuggestionList() throws Exception {
+	public ResponseEntity<?> getSuggestionList(SuggestionVo vo) throws Exception {
 		List<SuggestionVo> suggestionList = null;
 		
 		try {
 			log.debug("[열린제안] 열린제안 목록 조회");
-			suggestionList = suggestionService.selectSuggestionList();
+			suggestionList = suggestionService.selectSuggestionList(vo);
 		} catch (Exception e) {
 			log.debug("[열린제안] 열린제안 목록 조회 실패");
 			e.printStackTrace();

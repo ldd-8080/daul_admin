@@ -35,8 +35,8 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	}
 
 	@Override
-	public List<SuggestionVo> selectSuggestionList() throws Exception {
-		return suggestionMapper.selectSuggestionList();
+	public List<SuggestionVo> selectSuggestionList(SuggestionVo vo) throws Exception {
+		return suggestionMapper.selectSuggestionList(vo);
 	}
 
 	@Override

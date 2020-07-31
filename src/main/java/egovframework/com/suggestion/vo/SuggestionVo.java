@@ -1,6 +1,8 @@
 package egovframework.com.suggestion.vo;
 
-public class SuggestionVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class SuggestionVo extends SearchVo{
 
 	private String 	suggestion_idx;
 	private String 	title;
