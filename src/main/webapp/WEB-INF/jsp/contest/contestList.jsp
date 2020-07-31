@@ -52,12 +52,12 @@
 									</div>
 									<!-- <input type="text" class="form-control"> -->
 									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
-									<span class="input-group-append">
-										<button type="button" class="btn btn-primary" id="searchBtn">
-											<i class="icon md-search" aria-hidden="true"></i>
-										</button>
-									</span>
 								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-12">
+								<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색 </button>
 							</div>
 						</div>
 					</form>

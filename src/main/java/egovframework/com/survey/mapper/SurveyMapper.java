@@ -10,7 +10,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("surveyMapper")
 public interface SurveyMapper {
-	public List<Map<String,String>> selectSurveyList() throws Exception;
+	public List<Map<String,String>> selectSurveyList(SurveyVo vo) throws Exception;
 	public String selectSurveyIdx() throws Exception;
 	public void registSurvey(SurveyVo vo) throws Exception;
 	public void registQuestion(Map<String,Object> map) throws Exception;

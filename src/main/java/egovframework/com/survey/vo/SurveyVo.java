@@ -1,9 +1,9 @@
 package egovframework.com.survey.vo;
 
-import java.util.List;
+import egovframework.com.cmmn.util.SearchVo;
 
 
-public class SurveyVo {
+public class SurveyVo extends SearchVo{
 	
 	private String survey_idx;
 	private String question_idx;

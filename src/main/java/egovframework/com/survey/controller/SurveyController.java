@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
@@ -49,12 +48,12 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value="/getSurveyList.do")
-	public ResponseEntity<?> getSurveyList() throws Exception {
+	public ResponseEntity<?> getSurveyList(SurveyVo vo) throws Exception {
 		List<Map<String, String>> surveyList = null;
 		
 		try {
 			log.debug("[설문조사] 설문조사 목록 조회");
-			surveyList = surveyService.selectSurveyList();
+			surveyList = surveyService.selectSurveyList(vo);
 		} catch (Exception e) {
 			log.debug("[설문조사] 설문조사 목록 조회 실패");
 			e.printStackTrace();

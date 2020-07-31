@@ -26,11 +26,11 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	private FileUtil fileUtil;
 	
 	@Override
-	public List<Map<String, String>> selectSurveyList() throws Exception {
+	public List<Map<String, String>> selectSurveyList(SurveyVo vo) throws Exception {
 		
 		List<Map<String,String>> list = new ArrayList();
 		
-		list = surveyMapper.selectSurveyList();
+		list = surveyMapper.selectSurveyList(vo);
 		return list;
 	}
 	

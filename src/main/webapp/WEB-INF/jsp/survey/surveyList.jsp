@@ -13,6 +13,58 @@
 	    </ol>
 	
 	    <div class="page-content">
+	    	<!-- 검색조건 -->
+			<div class="panel">
+				<div class="panel-body">
+					<form id="search-form">
+						<div class="form-group row">
+							<!-- 등록일 -->
+							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
+							<div class="col-md-5">
+								<div class="input-daterange" data-plugin="datepicker">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> 
+												<i class="icon md-calendar" aria-hidden="true"></i>
+											</span>
+										</div>
+										<input type="text" class="form-control" name="search_s_date" />
+									</div>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">-</span>
+										</div>
+										<input type="text" class="form-control" name="search_e_date" />
+									</div>
+								</div>
+							</div>
+							<!-- 검색어 -->
+							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
+							<div class="col-md-5">
+								<div class="input-group">
+									<div class="input-group-prepend w-p25">
+										<select data-plugin="selectpicker" name="search_type">
+											<option value="" selected>선택하세요</option>
+											<option value="title">제목</option>
+											<option value="content">내용</option>
+											<option value="create_user">작성자</option>
+										</select>
+									</div>
+									<!-- <input type="text" class="form-control"> -->
+									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-12">
+								<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색 </button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+	    	
+	    	<!-- 목록 테이블 -->
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
@@ -20,29 +72,6 @@
 		        </header>
 		        <br/>
 		        <div class="panel-body">
-		          <%-- <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-		            <thead>
-		              <tr>
-		                <th>번호</th>
-		                <th>작성자</th>
-		                <th>제목</th>
-		                <th>설문기간</th>
-		                <th>등록일</th>
-		              </tr>
-		            </thead>
-		            <tbody>
-		            	<c:forEach var="result" items="${surveyList}" varStatus="status">
-		            	<tr>
-		            		<td id="seq_${status.index}">${result.survey_idx}</td>
-		            		<td>${result.title}</td>
-		            		<td>${result.content}</td>
-		            		<td>${result.s_date}&nbsp;-&nbsp;${result.e_date}</td>
-		            		<td>${result.create_date}</td>
-	            		</tr>
-		            	</c:forEach>
-		            </tbody>
-		          </table> --%>
-		          
 		          <div id="surveyListTable"></div>
 		          
 		           <div class="col-lg-12 mt-20">
@@ -96,7 +125,8 @@
 	function getSurveyList() {
 		var request = $.ajax({
 			url: "/survey/getSurveyList.do",
-			method: "get"
+			method: "get",
+			data: $("#search-form").serialize()
 		});
 		
 		request.done(function(data) {
@@ -112,5 +142,15 @@
 	$(function() {
 		getSurveyList();
 	});
+	
+	$("#searchBtn").click(function() {
+		getSurveyList();
+	});
+	
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getSurveyList();
+		}
+	}
 	
 </script>
