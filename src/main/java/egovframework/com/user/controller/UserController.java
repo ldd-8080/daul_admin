@@ -31,23 +31,29 @@ public class UserController {
 	@Resource(name = "userService")
 	private UserService userService;
 	
-	@RequestMapping(value="/userListPage.do")
-	public String userListPage(ModelMap model, @RequestParam("auth_type") String auth_type) throws Exception{
-		List<Map<String, String>> userList = null;
+	@RequestMapping(value = "/userListPage.do")
+	public String suggestionListPage( @RequestParam("auth_type") String auth_type) {
+		
+		if(auth_type.equals("admin")) {
+			return "user/adminUserList";
+		}else {
+			return "user/publicUserList";
+		}
+	
+	}
+
+	@RequestMapping(value="/getUserList.do")
+	public ResponseEntity<?> userListPage(ModelMap model, @RequestParam("auth_type") String auth_type) throws Exception{
+		List<UserVo> userList = null;
 		
 		try {
 			userList = userService.selectUserList(auth_type);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	
 		
-		model.addAttribute("userList", userList);
-		
-		if ("admin".equals(auth_type)) {
-			return "user/adminUserList";
-		} else {
-			return "user/publicUserList";
-		}
+		return new ResponseEntity<>(userList, HttpStatus.OK);
 		
 	}
 	

@@ -18,5 +18,5 @@ public interface UserMapper {
 
 	void updateUserPw(UserVo vo) throws Exception;
 
-	List<Map<String, String>> selectUserList(String auth_type) throws Exception;
+	List<UserVo> selectUserList(String auth_type) throws Exception;
 }

@@ -45,7 +45,7 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	}
 
 	@Override
-	public List<Map<String, String>> selectUserList(String auth_type) throws Exception {
+	public List<UserVo> selectUserList(String auth_type) throws Exception {
 		return userMapper.selectUserList(auth_type);
 	}
 
