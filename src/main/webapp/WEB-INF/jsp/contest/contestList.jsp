@@ -16,50 +16,50 @@
 		<div class="page-content">
 			<div class="panel">
 				<div class="panel-body">
-				<form id = "search-form">
-					<div class="form-group row">
-						<label class="col-md-1 col-form-label">등록일 </label>		
-							<div class="col-md-6 col-xl-4">
-								<div class="input-daterange" data-plugin="datepicker">
-									<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">
-												<i class="icon md-calendar" aria-hidden="true"></i>
-												</span>
-											</div>
-										<input type="text" class="form-control" name="search_s_date" />
-									</div>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span calss="input-group-text"> &nbsp;_&nbsp;</span>
-										</div>
-										<input type="text" class="form-control" name="search_e_date" />
-									</div>
-								</div>
-							</div>
-						</div>
+					<form id="search-form">
 						<div class="form-group row">
-						
-						<div class="col-md-4">
-							<select data-plugin="selectpicker" name = "search_type">
-								<option value="" selected >선택하세요</option>
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-								<option value="create_user">작성자</option>
-							</select>
-						</div>
-							<div class="col-md-6">
-							<div class="form-group">
+							<!-- 검색어 -->
+							<label class="col-md-1 form-control-label">검색어 </label>
+							<div class="col-md-5">
 								<div class="input-group">
-									<input type="text" class="form-control" name="search" placeholder="Search..."> <span class="input-group-append">
+									<div class="input-group-prepend w-p25">
+										<select data-plugin="selectpicker" name="search_type">
+											<option value="" selected>선택하세요</option>
+											<option value="title">제목</option>
+											<option value="content">내용</option>
+											<option value="create_user">작성자</option>
+										</select>
+									</div>
+									<!-- <input type="text" class="form-control"> -->
+									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요."> 
+									<span class="input-group-append">
 										<button type="button" class="btn btn-primary" id="searchBtn">
 											<i class="icon md-search" aria-hidden="true"></i>
 										</button>
 									</span>
 								</div>
 							</div>
+							<!-- 등록일 -->
+							<label class="col-md-1 col-form-label">등록일 </label>
+							<div class="col-md-5">
+								<div class="input-daterange" data-plugin="datepicker">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> 
+												<i class="icon md-calendar" aria-hidden="true"></i>
+											</span>
+										</div>
+										<input type="text" class="form-control" name="search_s_date" />
+									</div>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">-</span>
+										</div>
+										<input type="text" class="form-control" name="search_e_date" />
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
 					</form>
 				</div>
 			</div>
