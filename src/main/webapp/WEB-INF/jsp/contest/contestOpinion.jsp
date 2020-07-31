@@ -185,7 +185,7 @@ function opinionFileDownload(_this) {
 	fn_downloadOpinionFile(save_file_name);
 }
 
-function allDownload() {
+function allDownload(args) {
 	var request = $.ajax({
 		url: "/contest/getSaveFileName.do?user_contest_idx="+args.item.user_contest_idx,
 		method: "get"
