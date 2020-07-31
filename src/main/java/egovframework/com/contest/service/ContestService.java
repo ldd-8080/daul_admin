@@ -19,4 +19,6 @@ public interface ContestService {
 	List<ContestOpinionVo> selectContestOpinionList(ContestVo vo) throws Exception;
 	FileVo selectDownloadFile(FileVo vo) throws Exception;
 	List<FileVo> selectContestOpinionFileList(ContestOpinionVo vo) throws Exception;
+	FileVo selectDownloadFile2(FileVo vo) throws Exception;
+	
 }

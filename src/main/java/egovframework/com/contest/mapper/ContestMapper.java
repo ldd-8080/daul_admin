@@ -19,6 +19,7 @@ public interface ContestMapper {
 	void deleteFile(FileVo vo) throws Exception;
 	int updateContest(ContestVo vo) throws Exception;
 	List<ContestOpinionVo> selectContestOpinionList(ContestVo vo) throws Exception;
-	FileVo selectDownloadFile(FileVo vo) throws Exception;
+	FileVo selectDownloadFile2(FileVo vo) throws Exception;
 	List<FileVo> selectContestOpinionFileList(ContestOpinionVo vo) throws Exception;
+	FileVo selectDownloadFile(FileVo vo) throws Exception;
 }

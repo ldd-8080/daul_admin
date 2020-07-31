@@ -345,22 +345,22 @@ $(function() {
 	}
 	
 
-		function getQnaList() {
-			var request = $.ajax({
-				url: "/qna/getQnaList.do",
-				method: "get"
-			});
+	function getQnaList() {
+		var request = $.ajax({
+			url: "/qna/getQnaList.do",
+			method: "get"
+		});
+		
+		request.done(function(data) {
+			console.log(data);
 			
-			request.done(function(data) {
-				console.log(data);
-				
-				setQnaListTable(data);
-			});
-			
-			request.fail(function(error) {
-				console.log(error);
-			});
-		}
+			setQnaListTable(data);
+		});
+		
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
 		
 		$(function() {
 			getQnaList();

@@ -53,6 +53,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/brand-icons/brand-icons.min.css">
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
 
+<!-- Icons -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/font/web-icons/web-icons.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/icon.css">
+        
 <!--[if lt IE 9]>
 <script src="../../global/vendor/html5shiv/html5shiv.min.js"></script>
 <![endif]-->

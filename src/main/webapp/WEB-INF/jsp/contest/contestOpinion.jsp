@@ -10,8 +10,9 @@
 
 	<button style="display: none;" type="button" data-toggle="modal"
 		data-target="#contestOpnDetailModal" id="contestOpnDetailBtn">상세</button>
+	<button type="button" id="clearIntervalBtn">clear</button>
 </div>
-
+	
 
 <!-- 열린제안 상세 모달 -->
 <div class="modal fade" id="contestOpnDetailModal" aria-hidden="true"
@@ -93,12 +94,17 @@ function setContestOpinionListTable(ContestList) {
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
 	    	{name: "content", title: "내용", type: "text", width: 200}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
-	    	{title: "제안서", width: 100,
+	    	{title: "제안서", width: 100, align: "center",
 	    		itemTemplate: function(_, item) {
 	    			
 	    			var result = "";
 	    			if(parseInt(item.attach_cnt) > 0){
-	    				result +=  '첨부파일있음';
+	    				
+	    				
+	    				result +='<div class="icondemo vertical-align-middle">'
+	    				result +='<i class="icon wb-download" aria-hidden="true"></i>';
+    			    	result +='</div>'
+	    				
 	    			}
 		    		return result; 
 		    		}	
@@ -106,7 +112,11 @@ function setContestOpinionListTable(ContestList) {
     	],
     	
     	rowClick: function(args) {
-    		if (args.event.target.cellIndex != 5) {
+    		if(args.event.target.tagName == "I"){
+    			test(args);
+    		}else if (args.event.target.cellIndex != 5 ) {
+    			
+    		}else{
 	    		var idx = args.item.user_contest_idx;
 	    		$("#contestOpnDetailBtn").trigger("click");
 				
@@ -182,4 +192,52 @@ function setContestOpinionFileListTable(fileList) {
 	}
 }
 
+var intervalFunc;
+
+function test(args){
+	
+	var request = $.ajax({
+		url: "/contest/getSaveFileName.do?user_contest_idx="+args.item.user_contest_idx,
+		method: "get"
+	});
+	
+	request.done(function(data) {
+		console.log("done");
+		
+		intervalFunc = setInterval(function() {
+			console.log(data);
+		}, 1000)
+	});
+	
+	request.fail(function(error) {
+		console.log(error);
+	});
+	
+	
+}
+
+function fn_downloadOpinionFile(save_file_name){
+	console.log("ffff" + save_file_name);
+	location.href = "${pageContext.request.contextPath}/contest/downloadFile2.do?save_file_name=" + save_file_name;
+	}
+	
+	
+/* 
+	function contestOpinionFileDown(save_file_name){
+		console.log(save_file_name);
+		location.href = "${pageContext.request.contextPath}/contest/downloadFile2.do?save_file_name=" + save_file_name;
+  	}
+	
+	function ContestOpinionFilDownload(fileList) {
+		for(var i = 0; i < fileList.length; i++){
+		var save_file = fileList[i].save_file_name;
+			setTimeout(function() {
+				contestOpinionFileDown(save_file);
+				}, 1000);			
+		}
+	} */
+	
+ 	$("#clearIntervalBtn").click(function() {
+ 		clearInterval(intervalFunc);
+ 	})
 </script>

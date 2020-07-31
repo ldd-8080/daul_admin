@@ -141,7 +141,7 @@
 															<input multiple="multiple" type="file" id="noticeFile" name="noticeFile" />
 															<input multiple="multiple" type="file" id="noticeFile2" name="noticeFile2" style="display:none;"/>
 														</span>
-													</span>
+													</span> 
 												</div>
 											</div>
 											<div class="col-md-1" style="padding-left: 0px;">
