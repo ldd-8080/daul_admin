@@ -228,7 +228,7 @@
   	function fn_downloadFile(obj){
 		var save_file_name = obj.parent().find("input[name='save_file_name']").val();
 		console.log(save_file_name);
-		location.href = "${pageContext.request.contextPath}/contest/downloadFile.do?save_file_name=" + save_file_name;
+		location.href = "${pageContext.request.contextPath}/contest/downloadFile.do?type=admin&save_file_name=" + save_file_name;
   	}
   
   	$("#noticeFile").change(function() {

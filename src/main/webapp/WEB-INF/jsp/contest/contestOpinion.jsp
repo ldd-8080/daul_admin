@@ -214,6 +214,6 @@ function allDownload(args) {
 }
 
 function fn_downloadOpinionFile(save_file_name){
-	location.href = "${pageContext.request.contextPath}/contest/downloadFile2.do?save_file_name=" + save_file_name;
+	location.href = "${pageContext.request.contextPath}/contest/downloadFile.do?type=user&save_file_name=" + save_file_name;
 }
 </script>

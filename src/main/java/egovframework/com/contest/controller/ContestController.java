@@ -53,16 +53,16 @@ public class ContestController {
 
 	@RequestMapping(value = "/getContestList.do")
 	public ResponseEntity<?> contestList(ModelMap model, ContestVo vo) throws Exception {
-
-		System.out.println(vo.getSearch() +','+ vo.getSearch_e_date() +','+ vo.getSearch_s_date()  +','+ vo.getSearch_type());
 		List<ContestVo> contestList = null;
 
 		try {
+			log.debug("[열린제안] 열린제안 목록 조회");
 			contestList = contestService.selectContestList(vo);
 		} catch (Exception e) {
 			log.debug("[열린제안] 열린제안 목록 조회 실패");
 		}
 
+		log.debug("[열린제안] 열린제안 목록 조회 완료");
 		return new ResponseEntity<>(contestList, HttpStatus.OK);
 	}
 
@@ -249,51 +249,29 @@ public class ContestController {
 	}
 
 	@RequestMapping(value = "/downloadFile.do", method = RequestMethod.GET)
-	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response,
-			@RequestParam("save_file_name") String save_file_name) throws Exception {
-		System.out.println("2222 =  " + requeset.getParameter("save_file_name"));
+	public void downloadFile(HttpServletResponse response, @RequestParam("save_file_name") String save_file_name, @RequestParam("type") String type) throws Exception {
 		FileVo fileVo = new FileVo();
 		fileVo.setIdx(save_file_name);
-		fileVo = contestService.selectDownloadFile(fileVo);
-		String stored_File_Name = fileVo.getSave_file_name();
-		String original_File_Name = fileVo.getOrg_file_name();
-		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
-
-		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
-
-		response.setContentType("application/octet-stream");
-		response.setContentLength(fileByte.length);
-		response.setHeader("Content-Disposition",
-				"attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
-		response.setHeader("Content-Transfer-Encoding", "binary");
-		response.getOutputStream().write(fileByte);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
-
-	}
-	
-	@RequestMapping(value = "/downloadFile2.do", method = RequestMethod.GET)
-	public void downloadFile2(HttpServletRequest requeset, HttpServletResponse response,
-			@RequestParam("save_file_name") String save_file_name) throws Exception {
-		System.out.println("33333 =  " + requeset.getParameter("save_file_name"));
-		FileVo fileVo = new FileVo();
-		fileVo.setIdx(save_file_name);
-		fileVo = contestService.selectDownloadFile2(fileVo);
-		String stored_File_Name = fileVo.getSave_file_name();
-		String original_File_Name = fileVo.getOrg_file_name();
-		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
-
-		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
-
-		response.setContentType("application/octet-stream");
-		response.setContentLength(fileByte.length);
-		response.setHeader("Content-Disposition",
-				"attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
-		response.setHeader("Content-Transfer-Encoding", "binary");
-		response.getOutputStream().write(fileByte);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
 		
+		if ("admin".equals(type)) {
+			fileVo = contestService.selectDownloadFile(fileVo);
+		} else {
+			fileVo = contestService.selectDownloadFile2(fileVo);
+		}
+		
+		String stored_File_Name = fileVo.getSave_file_name();
+		String original_File_Name = fileVo.getOrg_file_name();
+		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
+
+		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
+
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
 	}
 	
 	@RequestMapping(value = "getSaveFileName.do")
