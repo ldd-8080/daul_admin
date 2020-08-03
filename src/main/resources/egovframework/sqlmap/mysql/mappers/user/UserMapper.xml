@@ -97,15 +97,15 @@
 		 WHERE user_id = #{user_id}
 	</delete>
 	
-	<select id="selectUserList" parameterType="String" resultType="Map">
+	<select id="selectUserList" resultType="egovframework.com.user.vo.UserVo">
 		SELECT user_id
 		     , name
 		     , pw
 		     , email
 		     , phone
 		     , channel
-		     , reg_date
-		     , last_login_date
+		     , DATE_FORMAT(reg_date, '%Y-%m-%d') as reg_date
+		     , DATE_FORMAT(last_login_date, '%Y-%m-%d') as last_login_date
 		     , email_chk
 		     , talk_chk
 		     , sms_chk
@@ -113,8 +113,8 @@
 		  FROM daul.user
 		 WHERE 1=1
 		   <choose>
-		   <when test="value != null and 'admin'.equals(value)">
-		   AND auth_type = #{value}
+		   <when test="auth_type != null and 'admin'.equals(auth_type)">
+		   AND auth_type = #{auth_type}
 		   </when>
 		   <otherwise>
 		   AND auth_type != 'admin'

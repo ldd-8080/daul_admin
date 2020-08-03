@@ -88,7 +88,7 @@
 										<input type="hidden" name="update_user" value="${login.user_id}"/>
 										
 							            <div class="form-group form-material row">
-											<div class="col-md-9 offset-md-9">
+											<div class="col-md-9">
 												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
 												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
 												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>

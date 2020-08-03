@@ -10,8 +10,8 @@
 	    <h1 class="page-title">Q&A</h1>
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">Q&A</a></li>
-	      <li class="breadcrumb-item active">Q&A 목록</li>
+	      <li class="breadcrumb-item"><a href="javascript:void(0)">게시판</a></li>
+	      <li class="breadcrumb-item active">Q&A</li>
 	    </ol>
 	
 	    <div class="page-content">
@@ -25,14 +25,7 @@
 		        	 <div id="qnaListTable"></div>
 		       
 		        </div>
-		        <div class="col-md-12">
-                	<div class="example example-buttons">                     
-                     	<div>
-               	      		<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
-               	      		<button type="button"  style="display:none;" class="btn btn-squared btn-info" id = "faqUpdate" data-toggle="modal" data-target="#faqUpdatePositionCenter" href="#" >수정</button>
-                    	</div>                     
-                	</div>
-            	</div>
+		   
 	    	</div>
 	    </div>
 	</div>
@@ -316,30 +309,37 @@ $(function() {
 		    	}
 	    	],
 	    	rowClick: function(args) {
+	    		console.log(args.event.target.tagName == "BUTTON");
 	    		
-
-    			var session_id = "${login.user_id}";
-	    	
-	    		document.getElementById("question_content").value = args.item.content;
-				document.getElementById("qna_idx_reply").value = args.item.qna_idx;
-				document.getElementById("ref_reply").value = args.item.qna_idx;
-				document.getElementById("detail_qustion").value = args.item.question;
-				document.getElementById("detail_content").value = args.item.content;
-				document.getElementById("detail_create_user").value = args.item.create_user;
-				document.getElementById("update_qustion").value = args.item.question;
-				document.getElementById("update_content").value = args.item.content;
-				document.getElementById("update_create_user").value = args.item.create_user;
-				document.getElementById("qna_idx_update").value = args.item.qna_idx;
-				document.getElementById("qna_idx_detail").value = args.item.qna_idx;
-				document.getElementById("parent_qna_idx_update").value = args.item.parent_qna_idx;
-				document.getElementById("parent_qna_idx_detail").value = args.item.parent_qna_idx;
-				
-				if(args.item.create_user != session_id){
-	    			$("#qnaDetailPositionBtn").trigger("click");
+	    		
+	    		if(args.event.target.tagName == "BUTTON"){
+						    			
+	    		}else if(args.event.target.cellIndex == 6){
+	    			
 	    		}else{
-	    			$("#qnaUpdatePositionBtn").trigger("click");
+
+	    			var session_id = "${login.user_id}";
+		    	
+		    		document.getElementById("question_content").value = args.item.content;
+					document.getElementById("qna_idx_reply").value = args.item.qna_idx;
+					document.getElementById("ref_reply").value = args.item.qna_idx;
+					document.getElementById("detail_qustion").value = args.item.question;
+					document.getElementById("detail_content").value = args.item.content;
+					document.getElementById("detail_create_user").value = args.item.create_user;
+					document.getElementById("update_qustion").value = args.item.question;
+					document.getElementById("update_content").value = args.item.content;
+					document.getElementById("update_create_user").value = args.item.create_user;
+					document.getElementById("qna_idx_update").value = args.item.qna_idx;
+					document.getElementById("qna_idx_detail").value = args.item.qna_idx;
+					document.getElementById("parent_qna_idx_update").value = args.item.parent_qna_idx;
+					document.getElementById("parent_qna_idx_detail").value = args.item.parent_qna_idx;
+					
+					if(args.item.create_user != session_id){
+		    			$("#qnaDetailPositionBtn").trigger("click");
+		    		}else{
+		    			$("#qnaUpdatePositionBtn").trigger("click");
+		    		}
 	    		}
-				
 			}
 		});
 	}

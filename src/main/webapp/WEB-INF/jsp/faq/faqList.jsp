@@ -10,8 +10,8 @@
 	    <!-- Page -->
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">FAQ</a></li>
-	      <li class="breadcrumb-item active">FAQ 목록</li>
+	      <li class="breadcrumb-item"><a href="javascript:void(0)">게시판</a></li>
+	      <li class="breadcrumb-item active">FAQ</li>
 	    </ol>
 	
 	    <div class="page-content">

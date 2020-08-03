@@ -169,30 +169,9 @@
                       	<h4>◦ 참여자</h4><span>&nbsp;&nbsp;총${ surveyParticipation.size() }명</span>
                       	</div>  
 						<br/>
-	                   <table class="table table-hover dataTable table-striped w-full" id="boardTable" data-plugin="dataTable">
-			            <thead>
-			              <tr>
-			                <th>아이디</th>
-			                <th>이름</th>
-			                <th>이메일</th>
-			                <th>전화번호</th>
-			                <th>참여일</th>
-			                <th>선택</th>
-			              </tr>
-			            </thead>
-			            <tbody>
-			            	<c:forEach var="result" items="${surveyParticipation}" varStatus="status">
-			            	<tr>
-			            		<td id="seq_${status.index}">${result.participation_user}</td>
-			            		<td>${result.name}</td>
-			            		<td>${result.email}</td>
-			            		<td>${result.phone}</td>
-			            		<td>${result.create_date}</td>
-			            		<td>${result.choose}</td>
-		            		</tr>
-			            	</c:forEach>
-			            </tbody>
-			          </table>
+						
+						   <div id="surveyParticipationListTable"></div>
+					
                		</div>
                     <!--번째탭 -->
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
@@ -400,4 +379,63 @@
 	$("button[name='surveySubmitBtn']").click(function() {
 		if (!submitConfirm($(this))) return false;
 	});
+	
+	
+	
+	
+	//설문조사 참여자 리스트
+	function setSurveyParticipationListTable(ParticipationList) {
+		$('#surveyParticipationListTable').jsGrid({
+			
+			//height: "500px",
+			width : "100%",
+
+			//autoload:true,
+			sorting : true,
+			paging : true,
+			//pageIndex: 1, default: 1
+			pageSize : 10, // default: 20
+			//pageButtonCount: 5, default: 15
+
+			data : ParticipationList,
+
+			fields : [ 
+				{name : "participation_user", title : "아이디", type : "text", width : 50, align : "center"}, 
+				{name : "name", title : "이름", type : "text", width : 70}, 
+				{name : "email", title : "이메일", type : "text", width : 100}, 
+				{name : "phone", title : "전화번호", type : "text", width : 100, align : "center"}, 
+				{name : "create_date", title : "참여일", type : "text", width : 100, align : "center"}, 
+				{name : "choose", title :"선택", type : "text", width : 100, align : "center"}
+			],
+
+			rowClick : function(args) {
+			}
+		});
+	}
+
+
+	function getUserList() {
+		var survey_idx = $("#survey_idx").val();
+		var request = $.ajax({
+			url : "/survey/getParticipationList.do?survey_idx="+survey_idx,
+			method : "get"
+		});
+
+		request.done(function(data) {
+			console.log(data);
+			setSurveyParticipationListTable(data);
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
+
+	$(function() {
+		getUserList();
+	});
+	
+	
+	
+	
 </script>

@@ -53,7 +53,7 @@
     							</div>
     							<div class="input-group">
     								<div class="input-group-append">
-    									<span class="input-group-text">SMS</span>
+    									<span class="input-group-text">&nbsp;SMS&nbsp;</span>
     								</div>
     								<div class="form-control">
     									<div class="float-left mr-20" id="sms_chk-div">

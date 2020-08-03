@@ -113,7 +113,22 @@
 				{name : "user_idx", title : "번호", type : "text", width : 50, align : "center"}, 
 				{name : "user_id", title : "아이디", type : "text", width : 70}, 
 				{name : "channel", title : "계정", type : "text", width : 100}, 
-				{name : "auth_type", title : "유형", type : "text", width : 70}, 
+				{title : "유형",  width : 70	, align: "center",	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		
+		    			if(item.auth_type === "admin"){
+		    				result = '관리자';		    				
+		    			}else if(item.auth_type === "pro"){
+		    				result = '전문가';
+		    			}else if(item.auth_type === "public"){
+		    				result = "일반";
+		    			}else{
+		    				result = "유형없음";
+		    			}
+		    			return result;
+		    		}
+				}, 
 				{name : "name", title : "이름", type : "text", width : 100, align : "center"}, 
 				{name : "email", title : "이메일", type : "text", width : 100, align : "center"}, 
 				{name : "phone", title : "전화번호", type : "text", width : 100, align : "center"}, 
@@ -122,9 +137,10 @@
 			],
 
 			rowClick : function(args) {
-				var idx = args.item.user_idx;
+				console.log(args);
+				var idx = args.item.user_id;
 
-				location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
+				location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?id=" + idx;
 			}
 		});
 	}
@@ -132,7 +148,7 @@
 
 	function getUserList() {
 		var request = $.ajax({
-			url : "/user/getUserList.do?auth_type='public'",
+			url : "/user/getUserList.do?auth_type=public",
 			method : "get",
 			data: $("#search-form").serialize()
 		});

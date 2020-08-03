@@ -59,9 +59,9 @@ function setBoardListTable(BoardList) {
     	],
     	
     	rowClick: function(args) {
-    		var idx = args.item.admin_contest_idx;
+    		var idx = args.item.notice_idx;
     		
-    		location.href = "${pageContext.request.contextPath}/board/boardDetail.do?board_idx=" + idx;
+    		location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + idx;
     	}
 	});
 }

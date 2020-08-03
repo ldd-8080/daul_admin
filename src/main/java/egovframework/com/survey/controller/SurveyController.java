@@ -230,7 +230,6 @@ public class SurveyController {
 		}catch(Exception e) {
 			
 		}
-		model.addAttribute("surveyParticipation", surveyParticipation);
 		model.addAttribute("surveyResult", surveyResult);
 		model.addAttribute("surveyVo",surveyVo);
 		model.addAttribute("surveyQuestionList",surveyQuestionList);
@@ -240,7 +239,16 @@ public class SurveyController {
 		return "survey/surveyDetail";
 	}
 	
-	
+	@RequestMapping(value="/getParticipationList.do")
+	public ResponseEntity<?> getParticipationList( @RequestParam("survey_idx") String survey_idx) throws Exception{
+		
+		List<Map<String,String>> surveyParticipation = new ArrayList<Map<String, String>>();
+		SurveyVo surveyVo = new SurveyVo();
+		surveyVo.setSurvey_idx(survey_idx);
+		surveyParticipation = surveyService.selectParticipation(surveyVo);
+		
+		return new ResponseEntity<>(surveyParticipation, HttpStatus.OK);
+	}
 	@RequestMapping(value="/getImg.do")
 	public void getImage(@RequestParam("survey_idx") String surveyIdx, HttpServletResponse response) throws Exception {
 		List<Map<String, String>> fileList = null;
