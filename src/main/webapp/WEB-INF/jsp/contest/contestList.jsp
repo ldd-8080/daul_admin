@@ -68,16 +68,16 @@
 			<div class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions"></div>
-					<h3 class="panel-title"></h3>
+					<h3 class="panel-title">나눔공모 목록</h3>
 				</header>
-				
+				<br/>
 				<div class="panel-body">
 
 					<div id="contestListTable"></div>
 
 					<div class="col-lg-12 mt-20">
 						<button class="btn btn-primary btn-outline float-right waves-effect waves-classic"
-							id="conotestRegistBtn">등록</button>
+							id="contestRegistBtn">등록</button>
 					</div>
 				</div>
 			</div>
