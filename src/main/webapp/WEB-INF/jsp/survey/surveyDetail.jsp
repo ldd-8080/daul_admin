@@ -132,8 +132,13 @@
 										    	</c:forEach>
 											</div>
 											
-								            <div class="form-group form-material row">
-												<div class="col-md-9">
+								    	<header class="panel-heading">
+								        	<div class="panel-actions"></div>
+								        </header>
+								    
+								        <br/>
+											<div class="col-md-12 text-center">
+												<div class="example example-buttons">  
 													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" formaction="/survey/updateSurvey.do">수정 </button>
 													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 												</div>

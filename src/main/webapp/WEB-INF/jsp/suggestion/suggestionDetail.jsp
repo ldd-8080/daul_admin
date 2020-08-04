@@ -87,13 +87,19 @@
 										
 										<input type="hidden" name="update_user" value="${login.user_id}"/>
 										
-							            <div class="form-group form-material row">
-											<div class="col-md-9">
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
-												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+										<header class="panel-heading">
+								        	<div class="panel-actions"></div>
+								        </header>
+								    
+								        <br/>
+											<div class="col-md-12 text-center">
+												<div class="example example-buttons">  	
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+												</div>
 											</div>
-										</div>
+								
 									</form:form>
 								</div>
 								<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">

@@ -68,13 +68,15 @@
 		    							</div>
 	    							</div>
 	    							<form:input type="hidden" path="auth_type"/>
-	    							<div class="form-group form-material row">
-	    								<div class="col-md-9 offset-md-9">
+	    							
+	    							<div class="col-md-12 text-center">
+										<div class="example example-buttons">  	
 		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" formaction="/user/update.do">저장 </button>
 		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" formaction="/user/delete.do">삭제 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 	    								</div>
 	    							</div>
+	    							
 	    						</form:form>
 	    					</div>
 	    				</div>
