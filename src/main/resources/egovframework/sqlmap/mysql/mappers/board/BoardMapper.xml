@@ -39,14 +39,16 @@
 	</select>
 		
 	<select id="selectBoardFile" resultType="Map">
-		SELECT
-		 	notice_idx,
-			org_file_name,
-			save_file_name,
-			ROUND(file_size/1024,1) AS file_size
-		FROM daul.daul_notice_attach
-		WHERE notice_idx  = #{notice_idx}
-		  AND del_chk = 'N'
+		SELECT notice_idx
+			 , org_file_name
+			 , save_file_name
+			 , ROUND(file_size/1024,1) AS file_size
+			 , create_user
+			 , del_chk
+			 , attach_type
+		  FROM daul.daul_notice_attach
+		 WHERE notice_idx  = #{notice_idx}
+		   AND del_chk = 'N'
 	</select>
 		
 	<select id="selectNoticeIdx" resultType="String">
@@ -137,4 +139,10 @@
         )
 	</insert>
 	
+	<update id="deleteFile">
+		UPDATE daul.daul_notice_attach
+		   SET del_chk = 'Y'
+		 WHERE save_file_name = #{save_file_name}
+		   AND del_chk != 'Y'
+	</update>
 </mapper>

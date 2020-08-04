@@ -23,13 +23,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
-import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
@@ -120,17 +118,49 @@ public class BoardController {
 	
 	@RequestMapping(value = "noticeModify",method = RequestMethod.POST)
 	public ResponseEntity<?> noticeModify(HttpSession session, BoardVo vo, HttpServletRequest request) throws Exception {
-	
-	try {
+		try {
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setUpdate_user(userVo.getUser_id());
 			
 			log.debug("[공지사항] 공지사항 수정");
 			int result = boardService.updateNotice(vo);
+			
+			if (result > 0) {
+				FileVo fileVo = new FileVo();
+				
+				fileVo.setCreate_user(userVo.getUser_id());
+				fileVo.setIdx(vo.getNotice_idx());
+				
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+				
+				log.debug("[공지사항] 공지사항 파일 등록" + fileList.size());
+				
+				for (int i = 0; i < fileList.size(); i++) {
+					boardService.insertFile(fileList.get(i));
+				}
+			}
 		}catch(Exception e){
 			log.debug("[공지사항] 공지사항 수정 실패");
 		}
+		
 		log.debug("[공지사항] 공지사항 수정 성공");
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/noticeAttachFileDelete.do", method=RequestMethod.POST)
+	public ResponseEntity<?> noticeAttachFileDelete(HttpServletRequest request) throws Exception {
+		String s_file_name = request.getParameter("file_name");
+		
+		FileVo fileVo = new FileVo();
+		
+		try {
+			fileVo.setSave_file_name(s_file_name);
+			
+			boardService.deleteFile(fileVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	

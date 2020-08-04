@@ -187,7 +187,6 @@ public class ContestController {
 
 	@RequestMapping(value = "contestModify")
 	public String contestModify(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
-
 		System.out.println(vo);
 		log.debug("[나눔공모] 나눔공모 수정");
 

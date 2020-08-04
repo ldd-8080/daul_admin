@@ -22,8 +22,6 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	
 	@Override
 	public List<BoardVo> selectBoardList(BoardVo vo) throws Exception{
-		;
-		
 		return boardMapper.selectBoardList(vo);
 		
 	}
@@ -72,6 +70,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	@Override
 	public int updateNotice(BoardVo vo) throws Exception {
 		return boardMapper.updateNotice(vo);
+	}
+
+	@Override
+	public void deleteFile(FileVo fileVo) throws Exception {
+		boardMapper.deleteFile(fileVo);
 	}
 	
 	

@@ -19,4 +19,5 @@ public interface BoardMapper {
 	FileVo selectDownloadFile(FileVo vo) throws Exception;
 	String selectNoticeIdx() throws Exception;
 	int updateNotice(BoardVo vo) throws Exception;
+	void deleteFile(FileVo fileVo) throws Exception;
 }

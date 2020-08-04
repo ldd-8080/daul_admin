@@ -37,8 +37,7 @@
 
 									<form:form method="post" modelAttribute="contestVo"
 										enctype="multipart/form-data" id="contestForm">
-										<form:input type="hidden" class="form-control"
-											id="admin_contest_idx" path="admin_contest_idx" />
+										<form:input type="hidden" class="form-control" path="admin_contest_idx" />
 										<div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">등록자 </label>
@@ -132,28 +131,26 @@
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">공고문</label>
 											<div class="col-md-7">
-												<div class="input-group input-group-file"
-													data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="noticeFileTitle" value="파일 0개" readonly /> 
+												<div class="input-group input-group-file" data-plugin="inputGroupFile">
+													<input type="text" class="form-control" id="contestFileTitle" value="파일 0개" readonly /> 
 													<span class="input-group-append"> 
 														<span class="btn btn-primary btn-file"> 
 															<i class="icon md-upload" aria-hidden="true"></i> 
-															<input multiple="multiple" type="file" id="noticeFile" name="noticeFile" />
-															<input multiple="multiple" type="file" id="noticeFile2" name="noticeFile2" style="display:none;"/>
+															<input multiple="multiple" type="file" id="contestFile" name="contestFile" />
 														</span>
 													</span> 
 												</div>
 											</div>
 											<div class="col-md-1" style="padding-left: 0px;">
 												<button type='button' class='btn btn-primary'
-													id='noticeFileDelBtn'>삭제</button>
+													id='contestFileDelBtn'>삭제</button>
 											</div>
 										</div>
 										<div class="form-gorup row mb-20">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label"></label>
 											<div class="col-md-8">
-												<div id="noticeFile-list"></div>
+												<div id="contestFile-list"></div>
 											</div>
 										</div>
 
@@ -197,7 +194,7 @@
 												</button>
 												<button type="button"
 													class="btn btn-default btn-outline waves-effect waves-classic"
-													id="noticeListBtn">목록</button>
+													id="contestListBtn">목록</button>
 											</div>
 										</div>
 									</form:form>
@@ -216,8 +213,6 @@
 
 
 <script type="text/javascript">
-
-	
    	$(document).ready(function(){
 		$("a[name='file']").on("click",function(e){
 			e.preventDefault();
@@ -231,28 +226,28 @@
 		location.href = "${pageContext.request.contextPath}/contest/downloadFile.do?type=admin&save_file_name=" + save_file_name;
   	}
   
-  	$("#noticeFile").change(function() {
-		noticeFileChange();
+  	$("#contestFile").change(function() {
+		contestFileChange();
 	});
 
   	$("#propFile").change(function() {
 		propFileChange();
 	});
 
-  	var noticeFileList = new Array();
+  	var contestFileList = new Array();
 
-  	function noticeFileChange() {
-  		var fileValue = $("#noticeFile")[0].files;
+  	function contestFileChange() {
+  		var fileValue = $("#contestFile")[0].files;
 
 	  	// 새로 추가한 파일fileValue이 존재하면
 	  	// 기존에 등록했던 파일들fileList과 비교를 하고
-	  	// 새로 추가했던 파일들noticeFileList과 비교를 해서 noticeFileList에 push
+	  	// 새로 추가했던 파일들contestFileList과 비교를 해서 contestFileList에 push
 	  	if (fileValue.length > 0) {
 	  		for (var i = 0; i < fileValue.length; i++) {
   				var exist = false;
   				
   				for (var j = 0; j < fileList.length; j++) {
-  					if (fileList[j].attach_type === "noticeFile") {
+  					if (fileList[j].attach_type === "contestFile") {
   						if (fileValue[i].name === fileList[j].org_file_name) {
   							console.log("this file is already registed", fileValue[i].name);
   							exist = true;
@@ -261,8 +256,8 @@
   					}
   				}
   				
-  				for (var k = 0; k < noticeFileList.length; k++) {
-  					if (fileValue[i].name === noticeFileList[k].name) {
+  				for (var k = 0; k < contestFileList.length; k++) {
+  					if (fileValue[i].name === contestFileList[k].name) {
   						console.log("this file is already exist", fileValue[i].name);
   						exist = true;
   						break;
@@ -270,9 +265,9 @@
   				}
   				
   				if (!exist) {
-  					noticeFileList.push(fileValue[i]);
+  					contestFileList.push(fileValue[i]);
 	
-  					$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
+  					$("#contestFileTitle").val( '파일 '+ contestFileList.length + '개');
   					
   					var str = '<li>'+
 			  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
@@ -282,7 +277,7 @@
 			  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
 			  			'</li>';
 		  			
-  					$("#noticeFile-list").append(str);
+  					$("#contestFile-list").append(str);
   				}
   			}
 	  	}
@@ -291,13 +286,13 @@
   	function newFileDel(_this) {
   		var fileName = $(_this).siblings().first().val();
   		
-  		for (var i = 0; i < noticeFileList.length; i++) {
-  			if (fileName === noticeFileList[i].name) {
-  				noticeFileList.splice(i, 1);
+  		for (var i = 0; i < contestFileList.length; i++) {
+  			if (fileName === contestFileList[i].name) {
+  				contestFileList.splice(i, 1);
   				
   				$(_this).parent().remove();
   				
-  				$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
+  				$("#contestFileTitle").val( '파일 '+ contestFileList.length + '개');
   			}
   		}
   	}
@@ -321,34 +316,34 @@
 	  		}
 	  		//$("#attachDelBtn").show();
 	  	} else {
-	  		$("#noticeFileTitle").val("");
+	  		$("#contestFileTitle").val("");
 	  		//$("#attachDelBtn").hide();
-	  		$("#noticeFileName-list").children().remove();
+	  		$("#contestFileName-list").children().remove();
 	  	}
 	}
 	
-	$("#noticeFile-list").children().remove();
+	$("#contestFile-list").children().remove();
 	$("#propFile-list").children().remove();
 	var fileList = new Array();
 	var prop_file = {};
 	var rep_file = {};	
-	var notice_file = {};
+	var contest_file = {};
 	
 	<c:forEach var="file" items="${contestFile}">
 		var file = {};
-		file.suggestion_idx = "${file.admin_contest_idx}";
-		file.org_file_name = "${file.org_file_name}";
+		file.contest_idx 	= "${file.admin_contest_idx}";
+		file.org_file_name 	= "${file.org_file_name}";
 		file.save_file_name = "${file.save_file_name}";
-		file.file_size = "${file.file_size}";
-		file.create_user = "${file.create_user}";
-		file.del_chk = "${file.del_chk}";
-		file.attach_type = "${file.attach_type}";
+		file.file_size 		= "${file.file_size}";
+		file.create_user 	= "${file.create_user}";
+		file.del_chk 		= "${file.del_chk}";
+		file.attach_type 	= "${file.attach_type}";
 		fileList.push(file);
 	</c:forEach>
 	
 	if (fileList.length > 0) {
 		for (var file of fileList) {
-			if (file.attach_type.indexOf("notice") > -1) {
+			if (file.attach_type.indexOf("contest") > -1) {
 				var str = '<li>'+
             	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
     			'<span class="file-img"></span>'+
@@ -356,7 +351,7 @@
     			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+file.file_size+'kb</span>'+
     			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="FileDelBtn" ></button>'+
     			'</li>';
-				$("#noticeFile-list").append(str);
+				$("#contestFile-list").append(str);
 			} else if (file.attach_type.indexOf("prop") > -1) {
 				var str =  '<li>'+
 	            	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
@@ -410,13 +405,15 @@
 	});
 
 	$("#contestModifyBtn").click(function() {
-		$("#noticeFile").attr("type", "text");
-		$("#noticeFile").attr("type", "file");
+		if (!confirm("수정 하시겠습니까?")) return false;
+		
+		$("#contestFile").attr("type", "text");
+		$("#contestFile").attr("type", "file");
 		
 		var formData = new FormData($("#contestForm")[0]);
 		
-		for (var i = 0; i < noticeFileList.length; i++) {
-			formData.append("noticeFile", noticeFileList[i]);
+		for (var i = 0; i < contestFileList.length; i++) {
+			formData.append("contestFile", contestFileList[i]);
 		}
 		
 		var request = $.ajax({

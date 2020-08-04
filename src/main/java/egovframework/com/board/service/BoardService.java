@@ -16,4 +16,5 @@ public interface BoardService {
 	public void insertFile(FileVo fileVo) throws Exception ;	
 	public String selectNoticeIdx() throws Exception;
 	int updateNotice(BoardVo vo) throws Exception;
+	public void deleteFile(FileVo fileVo) throws Exception;
 }
