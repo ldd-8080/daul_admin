@@ -11,9 +11,9 @@
 			   content,
 			   DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date,
 			   DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date,
-			   DATE_FORMAT(submit_s_date, '%Y-%m-%d') as submit_s_date,
-			   DATE_FORMAT(submit_e_date, '%Y-%m-%d') as submit_e_date,
-			   create_date
+			   DATE_FORMAT(submit_s_date, '%Y-%m-%d')  as submit_s_date,
+			   DATE_FORMAT(submit_e_date, '%Y-%m-%d')  as submit_e_date,
+			   DATE_FORMAT(create_date, '%Y-%m-%d')    as create_date
 		  FROM daul.contest_admin
 		 WHERE del_chk != 'Y'
 		 <if test="search_type == 'title'">
@@ -95,19 +95,17 @@
 			)
 	</insert>
 	<select id = "selectContest" resultType="egovframework.com.contest.vo.ContestVo">
-		SELECT
-			admin_contest_idx,
-			title,
-			content,
-			contest_s_date,
-			contest_e_date,
-			submit_s_date,
-			submit_e_date,
-			create_user,
-			create_date
-		FROM daul.contest_admin
-		WHERE admin_contest_idx = #{admin_contest_idx}
-			
+		SELECT admin_contest_idx
+		     , title
+		     , content
+		     , DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date
+		     , DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date
+		     , DATE_FORMAT(submit_s_date, '%Y-%m-%d')  as submit_s_date
+		     , DATE_FORMAT(submit_e_date, '%Y-%m-%d')  as submit_e_date
+		     , DATE_FORMAT(create_date, '%Y-%m-%d')    as create_date
+			 , create_user
+		  FROM daul.contest_admin
+		 WHERE admin_contest_idx = #{admin_contest_idx}
 	</select>
 	
 	<select id = "selectContestFile" resultType = "Map">

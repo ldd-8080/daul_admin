@@ -31,36 +31,36 @@
 	    				<div class="panel">
 	    					<div class="panel-body">
 	    						<form:form method="post" modelAttribute="userVo">
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="user_id"/>
+		    								<form:input type="text" class="form-control" path="user_id" disabled="true"/>
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이름 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
 		    								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#pwChangeModal" id="pwChangeModalBtn">변경</button>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="phone"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이메일 </label>
 		    							<div class="col-md-6">

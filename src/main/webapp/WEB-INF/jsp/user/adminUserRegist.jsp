@@ -31,22 +31,22 @@
 	    				<div class="panel">
 	    					<div class="panel-body">
 	    						<form:form method="post" modelAttribute="userVo">
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">아이디 </label>
+		    							<label class="col-md-2">아이디 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="user_id"/>
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이름 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
@@ -54,7 +54,7 @@
 		    								<form:errors path="pw"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
 		    							<div class="col-md-6">
@@ -62,14 +62,14 @@
 		    								<span class="text-left" id="pwChk-error"></span>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="phone"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이메일 </label>
 		    							<div class="col-md-6">

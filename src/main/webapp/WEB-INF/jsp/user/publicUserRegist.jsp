@@ -71,7 +71,7 @@
 	    				<div class="panel">
 	    					<div class="panel-body">
 	    						<form:form method="post" modelAttribute="userVo">
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 </label>
 		    							<div class="col-md-6">
@@ -79,28 +79,35 @@
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">계정 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="channel" value="일반"/>
+		    								<form:select data-plugin="selectpicker" class="w-p100" path="channel">
+			    								<option value="일반">일반</option>
+			    								<option value="카카오">카카오</option>
+			    							</form:select>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">유형 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="auth_type" value="public"/>
+		    								<form:select data-plugin="selectpicker" class="w-p100" path="auth_type">
+			    								<option value="public">일반</option>
+			    								<option value="pro">전문가</option>
+			    								<option value="admin">관리자</option>
+			    							</form:select>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이름 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
@@ -108,7 +115,7 @@
 		    								<form:errors path="pw"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
 		    							<div class="col-md-6">
@@ -116,14 +123,14 @@
 		    								<span class="text-left" id="pwChk-error"></span>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="phone"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이메일 </label>
 		    							<div class="col-md-6">

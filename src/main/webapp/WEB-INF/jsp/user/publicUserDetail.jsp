@@ -104,66 +104,59 @@
 	    				<div class="panel">
 	    					<div class="panel-body">
 	    						<form:form method="post" modelAttribute="userVo">
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="user_id"/>
+		    								<form:input type="text" class="form-control" path="user_id" disabled="true"/>
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">계정 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="channel"/>
+		    								<%-- <form:input type="text" class="form-control" path="channel"/> --%>
+			    							<form:select data-plugin="selectpicker" class="w-p100" path="channel" disabled="true">
+			    								<option value="일반">일반</option>
+			    								<option value="카카오">카카오</option>
+			    							</form:select>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">유형 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="auth_type"/>
+		    								<%-- <form:input type="text" class="form-control" path="auth_type"/> --%>
+		    								<form:select data-plugin="selectpicker" class="w-p100" path="auth_type">
+			    								<option value="public">일반</option>
+			    								<option value="pro">전문가</option>
+			    								<option value="admin">관리자</option>
+			    							</form:select>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이름 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">비밀번호 </label>
 		    							<div class="col-md-6">
 		    								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#pwChangeModal" id="pwChangeModalBtn">변경</button>
 		    							</div>
 	    							</div>
-	    							<%-- <div class="form-group form-material row">
-	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">비밀번호 </label>
-		    							<div class="col-md-6">
-		    								<form:input type="password" class="form-control" placeholder="영문자, 숫자 혼합 8~15자리" path="new_pw"/>
-		    								<form:errors path="new_pw"/>
-		    							</div>
-	    							</div>
-	    							<div class="form-group form-material row">
-	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
-		    							<div class="col-md-6">
-		    								<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
-		    								<span class="text-left" id="pw-chk-error"></span>
-		    							</div>
-	    							</div> --%>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 </label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="phone"/>
 		    							</div>
 	    							</div>
-	    							<div class="form-group form-material row">
+	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">이메일 </label>
 		    							<div class="col-md-6">
@@ -176,7 +169,7 @@
 	    							<form:input type="hidden" path="reg_date"/>
 	    							<form:input type="hidden" path="last_login_date"/>
 	    							<div class="form-group form-material row">
-	    								<div class="col-md-9 offset-md-9">
+	    								<div class="col-md-9">
 		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" formaction="/user/update.do">저장 </button>
 		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" formaction="/user/delete.do">삭제 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
@@ -275,34 +268,38 @@
 			if (!$(this).is(":checked")) {
 				$(this).click();
 			}
+			
+			$(this).parent().next().text("On");
 		} else {
 			if ($(this).is(":checked")) {
 				$(this).click();
 			}
+			
+			$(this).parent().next().text("Off");
 		}
 	});
 	
 	// 수신여부 click
-	$(".float-left.mr-20").click(function(event) {
+	$("div[id*='_chk-div']").click(function(event) {
 		// 수신여부 click하고난 후 :checked 상태에 따라 hidden으로 숨겨놓은 input태그의 value 설정
 		// :checked = false -> value = 'N' , :checked = true -> value = 'Y'
-		var currentId = event.currentTarget.id;
-		var valueId = currentId.split("-")[0];
+		var currentTarget = event.currentTarget;
+		var valueTarget = currentTarget.id.split("-")[0];
+		var labelTarget = $(currentTarget).next();
+		var checkboxTarget = $(currentTarget).children("input");
 		
-		if ($(event.currentTarget).children().eq(0).is(":checked")) {
-			$("#" + valueId).val("Y");
+		if (checkboxTarget.is(":checked")) {
+			$("#" + valueTarget).val("Y");
+			
+			$(labelTarget).text("On");
 		} else {
-			$("#" + valueId).val("N");
+			$("#" + valueTarget).val("N");
+			
+			$(labelTarget).text("Off");
 		}
 	});
 	
 	$("#userSave").click(function() {
-		/* passwordCheck();
-		
-		if (pwFlag) {
-			alert("비밀번호를 확인해주세요.");
-			return;
-		} */
 		if (!confirm("수정하시겠습니까?")) return false;
 	});
 	
