@@ -16,7 +16,7 @@
 	    <div class="page-content">
 	    
 	    <div class="panel">
-				<div class="panel-body">
+				<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
 					<form id="search-form">
 						<div class="form-group row">
 							<!-- 등록일 -->
@@ -69,8 +69,8 @@
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">관리자 목록</h3>
 		        </header>
+		        	<br/>
 		        <div class="panel-body">
 		        
 		          <div id="userListTable"></div>

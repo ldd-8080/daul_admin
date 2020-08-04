@@ -16,8 +16,8 @@
 	    <div class="page-content">
 	    	<!-- 검색조건 -->
 			<div class="panel">
-				<div class="panel-body">
-					<form id="search-form">
+				<div class="panel-body"style="padding-top: 20px; padding-bottom: 1px;">
+					<form id="search-form" >
 						<div class="form-group row">
 							<!-- 등록일 -->
 							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
@@ -69,7 +69,6 @@
 	    	<div class="panel">
 		        <header class="panel-heading">
 		          <div class="panel-actions"></div>
-		          <h3 class="panel-title">열린제안 목록</h3>
 		        </header>
 		        <br/>
 		        <div class="panel-body">

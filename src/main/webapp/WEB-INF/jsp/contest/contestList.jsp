@@ -15,7 +15,7 @@
 		<div class="page-content">
 			<!-- 검색조건 -->
 			<div class="panel">
-				<div class="panel-body">
+				<div class="panel-body"style="padding-top: 20px; padding-bottom: 1px;">
 					<form id="search-form">
 						<div class="form-group row">
 							<!-- 등록일 -->
@@ -39,7 +39,7 @@
 								</div>
 							</div>
 							<!-- 검색어 -->
-							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
+							<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
 							<div class="col-md-5">
 								<div class="input-group">
 									<div class="input-group-prepend w-p25">
@@ -68,7 +68,6 @@
 			<div class="panel">
 				<header class="panel-heading">
 					<div class="panel-actions"></div>
-					<h3 class="panel-title">나눔공모 목록</h3>
 				</header>
 				<br/>
 				<div class="panel-body">
