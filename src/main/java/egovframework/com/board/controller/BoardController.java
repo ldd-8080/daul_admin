@@ -51,10 +51,10 @@ public class BoardController {
 	}
 		
 	@RequestMapping(value="/getBoardList.do")
-	public ResponseEntity<?> boardList(ModelMap model) throws Exception{
-		List<Map<String, String>> noticeList =null;
+	public ResponseEntity<?> boardList(ModelMap model, BoardVo vo) throws Exception{
+		List<BoardVo> noticeList =null;
 		try {
-			 noticeList = boardService.selectBoardList();
+			 noticeList = boardService.selectBoardList(vo);
 			
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
@@ -90,9 +90,7 @@ public class BoardController {
        UserVo userVo = (UserVo) session.getAttribute("login");
        
        vo.setNotice_idx(boardService.selectNoticeIdx());
-       
-       
-       
+         
        FileVo fileVo = new FileVo();
 		
 		fileVo.setCreate_user(vo.getCreate_user());
@@ -105,21 +103,36 @@ public class BoardController {
 			fileVo = fileList.get(i);
 			boardService.insertFile(fileVo);
 		}		
-       //vo.setReg_user(userVo.getUser_seq());
-       boardService.insertBoard(vo);
+        //vo.setReg_user(userVo.getUser_seq());
+        boardService.insertBoard(vo);
        
         //boardService.insertBoard(commandMap);
          
         try {
-			List<Map<String, String>> boardList = boardService.selectBoardList();
+			List<BoardVo> boardList = boardService.selectBoardList(vo);
 			model.addAttribute("resultList",boardList);
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
 		}
         
-        
-        return "redirect:/board/boardList.do";
+        return "redirect:/board/boardListPage.do";
     }
+	
+	@RequestMapping(value = "noticeModify",method = RequestMethod.POST)
+	public ResponseEntity<?> noticeModify(HttpSession session, BoardVo vo, HttpServletRequest request) throws Exception {
+	
+	try {
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setUpdate_user(userVo.getUser_id());
+			
+			log.debug("[공지사항] 공지사항 수정");
+			int result = boardService.updateNotice(vo);
+		}catch(Exception e){
+			log.debug("[공지사항] 공지사항 수정 실패");
+		}
+		log.debug("[공지사항] 공지사항 수정 성공");
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 	
 	@RequestMapping(value="/downloadFile.do",method = RequestMethod.GET)
 	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response, @RequestParam("save_file_name") String save_file_name) throws Exception{
@@ -140,8 +153,6 @@ public class BoardController {
         response.getOutputStream().write(fileByte);	          
         response.getOutputStream().flush();
         response.getOutputStream().close();
-	        
-		
-	}
+	 }
 	
 }

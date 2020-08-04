@@ -127,7 +127,7 @@
 		});
 
 		request.done(function(data) {
-			console.log(data);
+		
 			setContestListTable(data);
 		});
 

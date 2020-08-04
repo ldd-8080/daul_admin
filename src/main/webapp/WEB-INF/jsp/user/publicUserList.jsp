@@ -40,7 +40,7 @@
 								</div>
 							</div>
 							<!-- 검색어 -->
-							<label class="col-md-1 form-control-label"><strong>검색어 </strong></label>
+							<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
 							<div class="col-md-5">
 								<div class="input-group">
 									<div class="input-group-prepend w-p25">

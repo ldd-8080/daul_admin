@@ -19,7 +19,7 @@
 			<div class="mb-30">
 				<div class="panel">
 					<div class="panel-body">
-					          <form:form method="post" modelAttribute="boardVo">
+					          <form:form method="post" modelAttribute="boardVo" id="noticeForm">
 						         	<form:input type="hidden" class="form-control" path="notice_idx"/>
 						         		<div class="form-group row">
 											<div class="col-md-1"></div>
@@ -64,7 +64,7 @@
 										</div>  
 							    		 <div class="form-group form-material row">
 											<div class="col-md-9">
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="noticeModifyBtn" formaction="/board/noticeModify.do">수정 </button>
+												<button type="button" class="btn btn-primary waves-effect waves-classic" id="noticeModifyBtn" >수정 </button>
 												<button type="submit" class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제 </button>
 												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
 											</div>
@@ -90,6 +90,25 @@
 	  var save_file_name = obj.parent().find("#save_file_name").val();
 	  location.href = "${pageContext.request.contextPath}/board/downloadFile.do?save_file_name=" + save_file_name;
   }
+  
+	$("#noticeModifyBtn").click(function() {
+	
+	console.log("noticeModifyBtn");
+		var formData = new FormData($("#noticeForm")[0]);
+		var request = $.ajax({
+            method: 'POST',
+            url : "/board/noticeModify.do",
+            processData: false,
+            contentType: false,
+            data: formData
+        });
+        request.done(function(data){
+        	
+        	 location.href = "${pageContext.request.contextPath}/board/boardListPage.do";
+        });
+	});
+	
+	
 </script>
 
 

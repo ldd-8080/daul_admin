@@ -8,7 +8,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("faqMapper")
 public interface FaqMapper {
-	List<FaqVo> selectFaqList();
+	List<FaqVo> selectFaqList(FaqVo vo);
 	void insertFaq(FaqVo vo) throws Exception;
 	String selectFaqIdx() throws Exception;
 	void updateFaq(FaqVo vo) throws Exception;

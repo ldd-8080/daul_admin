@@ -33,10 +33,10 @@ public class QnaController {
 	private QnaService qnaService;
 	
 	@RequestMapping(value="/getQnaList.do", method = RequestMethod.GET)
-	public ResponseEntity<?> qnaList(ModelMap model) throws Exception{
+	public ResponseEntity<?> qnaList(ModelMap model, QnaVo vo) throws Exception{
 		List<QnaVo> qnaList = null;
 		try {
-			qnaList = qnaService.selectQnaList();
+			qnaList = qnaService.selectQnaList(vo);
 		}catch(Exception e) {
 			log.debug("QnaController > /qnaList.do > Exception");
 		}		

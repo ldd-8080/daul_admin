@@ -104,7 +104,7 @@ function setBoardListTable(BoardList) {
 	    data: BoardList,
 
 	    fields: [
-	    	{name: "notice_idx",title: "번호", type: "text", width: 70, align: "center"},
+	    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
 	    	{name: "create_user", title: "작성자", type: "text", width: 60},
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
 	    	{name: "content", title: "내용", type: "text", width: 200}, 
@@ -126,12 +126,11 @@ function setBoardListTable(BoardList) {
 	function getBoardList() {
 		var request = $.ajax({
 			url: "/board/getBoardList.do",
-			method: "get"
+			method: "get",
+			data: $("#search-form").serialize()
 		});
 		
 		request.done(function(data) {
-			console.log(data);
-			
 			setBoardListTable(data);
 		});
 		
@@ -143,4 +142,16 @@ function setBoardListTable(BoardList) {
 	$(function() {
 		getBoardList();
 	});
+	
+	$("#searchBtn").click(function() {
+		getBoardList();
+	});
+
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getBoardList();
+		}
+	}
+	
+	
 </script>

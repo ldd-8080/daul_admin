@@ -10,7 +10,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("boardMapper")
 public interface BoardMapper {
 	
-	List<Map<String,String>> selectBoardList();
+	List<BoardVo> selectBoardList(BoardVo vo);
 	BoardVo selectBoard(BoardVo vo) throws Exception;
 	void insertBoard(BoardVo vo) throws Exception;
 	void insertFile(FileVo vo) throws Exception;
@@ -18,4 +18,5 @@ public interface BoardMapper {
 	List<Map<String,String>> selectBoardFile(BoardVo vo);
 	FileVo selectDownloadFile(FileVo vo) throws Exception;
 	String selectNoticeIdx() throws Exception;
+	int updateNotice(BoardVo vo) throws Exception;
 }

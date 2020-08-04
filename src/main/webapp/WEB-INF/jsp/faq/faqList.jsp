@@ -309,31 +309,37 @@ function deleteFaq() {
 	    	}
 		});
 	}
-
-
-		
-		function getFaqList() {
-			var request = $.ajax({
-				url: "/faq/getFaqList.do",
-				method: "get"
-			});
-			
-			request.done(function(data) {
-				console.log(data);
-				
-				setFaqListTable(data);
-			});
-			
-			request.fail(function(error) {
-				console.log(error);
-			});
-		}
-		
-		$(function() {
-			getFaqList();
+	
+	function getFaqList() {
+		var request = $.ajax({
+			url: "/faq/getFaqList.do",
+			method: "get",
+			data: $("#search-form").serialize()
 		});
 		
+		request.done(function(data) {
+			
+			setFaqListTable(data);
+		});
 		
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
 		
+	$(function() {
+		getFaqList();
+	});	
+	
+	$("#searchBtn").click(function() {
+		getFaqList();
+	});
+
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getFaqList();
+		}
+	}
+					
 	
 </script>

@@ -1,6 +1,8 @@
 package egovframework.com.board.vo;
 
-public class BoardVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class BoardVo extends SearchVo{
 	private String notice_idx;
 	private String title;
 	private String content;
@@ -11,6 +13,15 @@ public class BoardVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	private int num;
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public String getNotice_idx() {
 		return notice_idx;
 	}

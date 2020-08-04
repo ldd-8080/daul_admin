@@ -10,9 +10,9 @@
 	    <!-- <h1 class="page-title">사용자 목록</h1> -->
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
-	      <li class="breadcrumb-item">서비스</li>
-	      <li class="breadcrumb-item">열린제안</li>
-	      <li class="breadcrumb-item active">제안등록</li>
+	      <li class="breadcrumb-item">게시판</li>
+	      <li class="breadcrumb-item">공지사항</li>
+	      <li class="breadcrumb-item active">공지사항 작성</li>
 	    </ol>
 
 		<div class="col-lg-12">
@@ -38,7 +38,7 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">제안내용 </label>
+								<label class="col-md-2 col-form-label">공지내용 </label>
 								<div class="col-md-8">
 									<form:textarea type="text" class="form-control" path="content" rows ="5"/>
 									<form:errors path="content"/>

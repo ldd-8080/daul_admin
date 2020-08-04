@@ -8,11 +8,12 @@ import egovframework.com.cmmn.util.FileVo;
 
 public interface BoardService {
 	
-	public List<Map<String,String>> selectBoardList() throws Exception;
+	public List<BoardVo> selectBoardList(BoardVo vo) throws Exception;
 	public BoardVo selectBoard(BoardVo vo) throws Exception;
 	void insertBoard(BoardVo vo)throws Exception;
 	public List<Map<String,String>> selectBoardFile(BoardVo vo) throws Exception;
 	public FileVo selectDownloadFile(FileVo vo) throws Exception;
 	public void insertFile(FileVo fileVo) throws Exception ;	
 	public String selectNoticeIdx() throws Exception;
+	int updateNotice(BoardVo vo) throws Exception;
 }

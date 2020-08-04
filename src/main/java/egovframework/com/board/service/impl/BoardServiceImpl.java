@@ -21,12 +21,10 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	private BoardMapper boardMapper;
 	
 	@Override
-	public List<Map<String,String>> selectBoardList() throws Exception{
-		List<Map<String,String>> list = new ArrayList<Map<String, String>>();
+	public List<BoardVo> selectBoardList(BoardVo vo) throws Exception{
+		;
 		
-		list = boardMapper.selectBoardList();
-		
-		return list;
+		return boardMapper.selectBoardList(vo);
 		
 	}
 	
@@ -69,6 +67,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public String selectNoticeIdx() throws Exception {
 		// TODO Auto-generated method stub
 		return boardMapper.selectNoticeIdx();
+	}
+
+	@Override
+	public int updateNotice(BoardVo vo) throws Exception {
+		return boardMapper.updateNotice(vo);
 	}
 	
 	

@@ -20,9 +20,9 @@ public class QnaServiceImpl extends EgovAbstractServiceImpl implements QnaServic
 	private QnaMapper qnaMapper;
 	
 	@Override
-	public List<QnaVo> selectQnaList() throws Exception {
+	public List<QnaVo> selectQnaList(QnaVo vo) throws Exception {
 		
-		return qnaMapper.selectQnaList();
+		return qnaMapper.selectQnaList(vo);
 	}
 
 	@Override

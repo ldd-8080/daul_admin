@@ -37,8 +37,8 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value="/getFaqList.do", method = RequestMethod.GET)
-	public  ResponseEntity<?> faqList(ModelMap model) throws Exception{
-		List<FaqVo> faqList = faqService.selectFaqList();
+	public  ResponseEntity<?> faqList(ModelMap model, FaqVo vo) throws Exception{
+		List<FaqVo> faqList = faqService.selectFaqList(vo);
 		try{
 			
 			model.addAttribute("faqList",faqList);

@@ -3,8 +3,9 @@
 <mapper
 	namespace="egovframework.com.board.mapper.BoardMapper">
 	
-	<select id="selectBoardList" resultType="Map">	
+	<select id="selectBoardList" resultType="egovframework.com.board.vo.BoardVo">	
 		SELECT 
+			@rownum:=@rownum+1 as num ,
 			notice_idx, 
 			title, 
 			content, 
@@ -13,7 +14,27 @@
 			create_user, 
 			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
 			del_chk
-		FROM daul.daul_notice
+		FROM daul.daul_notice a, (SELECT @rownum:=0) TMP
+		WHERE del_chk = 'N'
+		<if test="search_type == 'title'">
+			AND title like concat('%',#{search},'%')
+		</if>
+ 		<if test="search_type == 'content'">
+			AND content like concat('%',#{search},'%')
+		</if>
+ 		<if test="search_type == 'create_user'">
+			AND create_user like concat('%',#{search},'%')
+		</if>
+	 	<if test="search_s_date != null and search_s_date != ''">
+	 		<![CDATA[
+	    	AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+	    	]]>
+	    </if>
+	    <if test="search_e_date != null and search_e_date != ''">
+	 		<![CDATA[
+	    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+	    	]]>
+	    </if>
 		ORDER BY notice_idx desc
 	</select>
 		
@@ -29,8 +50,9 @@
 	</select>
 		
 	<select id="selectNoticeIdx" resultType="String">
-		SELECT CONCAT('NT-',LPAD(count(*)+1,'7','0')) as 'board_idx'
-		FROM board
+	SELECT CONCAT('NT-',DATE_FORMAT(sysdate(),'%Y%m%d'),'-',LPAD(count(*)+1,'3','0')) as 'notice_idx' 
+	FROM  daul_notice
+	WHERE DATE_FORMAT(create_date,'%Y%m%d') = DATE_FORMAT(SYSDATE() ,'%Y%m%d')
 	</select>
 	
 	<select id="selectBoard" resultType="egovframework.com.board.vo.BoardVo">
@@ -48,6 +70,16 @@
 		values
 		(#{notice_idx},#{title},#{content},'main' ,#{create_user},now(),'N') 
 	</insert>
+	
+	<update id = "updateNotice">
+		UPDATE daul.daul_notice
+		   SET update_user = #{update_user},
+		       update_date = SYSDATE(),
+		       title = #{title},
+		       content = #{content}
+		 WHERE notice_idx = #{notice_idx} 
+	
+	</update>
 	
 	<insert id = "insertFile2" >
 		INSERT INTO tb_file

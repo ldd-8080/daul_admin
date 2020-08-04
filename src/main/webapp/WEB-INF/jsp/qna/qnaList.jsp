@@ -397,12 +397,12 @@ $(function() {
 	function getQnaList() {
 		var request = $.ajax({
 			url: "/qna/getQnaList.do",
-			method: "get"
+			method: "get",
+			data: $("#search-form").serialize()
 		});
 		
 		request.done(function(data) {
-			console.log(data);
-			
+	
 			setQnaListTable(data);
 		});
 		
@@ -411,11 +411,19 @@ $(function() {
 		});
 	}
 		
-		$(function() {
+	$(function() {
+		getQnaList();
+	});
+		
+	$("#searchBtn").click(function() {
+		getQnaList();
+	});
+
+	function enterKey() {
+		if (window.event.keyCode === 13) {
 			getQnaList();
-		});
-		
-		
+		}
+	}
 		
 </script>
 	

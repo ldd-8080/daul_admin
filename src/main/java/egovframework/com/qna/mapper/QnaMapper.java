@@ -8,7 +8,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 @Mapper("qnaMapper")
 public interface QnaMapper {
-	List<QnaVo> selectQnaList();
+	List<QnaVo> selectQnaList(QnaVo vo);
 	String selectQnaReplyIdx(QnaVo vo) throws Exception;
 	void insertQnaReply(QnaVo vo) throws Exception;
 	void updateQnaReply(QnaVo vo) throws Exception;

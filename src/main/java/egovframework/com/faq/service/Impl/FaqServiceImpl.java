@@ -20,12 +20,9 @@ public class FaqServiceImpl extends EgovAbstractServiceImpl implements FaqServic
 	private FaqMapper faqMapper;
 	
 	@Override
-	public List<FaqVo> selectFaqList() throws Exception {
-		List<FaqVo> list = new ArrayList();
+	public List<FaqVo> selectFaqList(FaqVo vo) throws Exception {
 		
-		list = faqMapper.selectFaqList();
-				
-		return list;
+		return faqMapper.selectFaqList(vo);
 	}
 
 	@Override

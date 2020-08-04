@@ -1,6 +1,8 @@
 package egovframework.com.faq.vo;
 
-public class FaqVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class FaqVo extends SearchVo {
 	private String faq_idx;
 	private String question;
 	private String answer;
