@@ -69,7 +69,10 @@
 	    							</div>
 	    							<form:input type="hidden" path="auth_type"/>
 	    							
-	    							<div class="col-md-12 text-center">
+	    							<br/>
+	    							<br/>
+	    							
+	    							<div class="col-md-11 text-right">
 										<div class="example example-buttons">  	
 		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" formaction="/user/update.do">저장 </button>
 		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" formaction="/user/delete.do">삭제 </button>

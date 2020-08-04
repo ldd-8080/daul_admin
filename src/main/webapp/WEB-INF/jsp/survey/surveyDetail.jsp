@@ -132,12 +132,10 @@
 										    	</c:forEach>
 											</div>
 											
-								    	<header class="panel-heading">
-								        	<div class="panel-actions"></div>
-								        </header>
-								    
 								        <br/>
-											<div class="col-md-12 text-center">
+								        <br/>
+								        
+											<div class="col-md-11 text-right">
 												<div class="example example-buttons">  
 													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" formaction="/survey/updateSurvey.do">수정 </button>
 													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
@@ -149,8 +147,6 @@
 							</div>
 						</div>
                       </div>
-                      
-                   
                       
                       <!--두번째탭 -->
                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">

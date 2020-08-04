@@ -125,8 +125,6 @@
 											</div>
 										</div>
 
-
-
 										<div class="form-gorup row mb-20">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">공고문</label>
@@ -182,13 +180,11 @@
 											</div>
 										</div>
 
-										<header class="panel-heading">
-								        	<div class="panel-actions"></div>
-								        </header>
-								    
 								        <br/>
-											<div class="col-md-12 text-center">
-												<div class="example example-buttons"> 
+								        <br/>
+								        
+										<div class="col-md-11 text-right">
+											<div class="example example-buttons"> 
 												<button type="button"
 													class="btn btn-primary waves-effect waves-classic"
 													id="contestModifyBtn"
