@@ -70,15 +70,19 @@
 		          <div class="panel-actions"></div>
 		        </header>
 		        <br/>
-		        <div class="panel-body">
+		        <div class="panel-body"  style="padding-top: 20px; padding-bottom: 1px;">
 		        	<div id="userListTable"></div>
-		         	<div class="col-lg-12 mt-20">
-		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="publicUserCreate">등록</button>
-		          </div>
 		        </div>
-	    	</div>
+		         	<div class="col-md-12">
+			         	<div class="example example-buttons">  
+				         	<div>    
+				          		<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="publicUserCreate">등록</button>
+			          		</div>
+		          		</div>
+		       		 </div>
+	    		</div>
+			</div>
 		</div>
-	</div>
 <!-- End Page -->
 </div>
 <script type="text/javascript">
@@ -111,7 +115,7 @@
 				{title : "유형",  width : 70	, align: "center",	    		
 					itemTemplate: function(_, item) {
 		    			var result="";
-			    		
+			    		console.log("length = " + item.auth_type.length);
 		    			if(item.auth_type === "admin"){
 		    				result = '관리자';		    				
 		    			}else if(item.auth_type === "pro"){

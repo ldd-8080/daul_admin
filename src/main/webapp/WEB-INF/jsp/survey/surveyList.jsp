@@ -66,21 +66,25 @@
 	    	
 	    	<!-- 목록 테이블 -->
 	    	<div class="panel">
-		        <header class="panel-heading">
-		          <div class="panel-actions"></div>
-		        </header>
-		        <br/>
-		        <div class="panel-body">
-		          <div id="surveyListTable"></div>
-		          
-		           <div class="col-lg-12 mt-20">
-		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="surveyRegistButton">등록</button>
-		          </div>
-		        </div>
+	        	<header class="panel-heading">
+	        		<div class="panel-actions"></div>
+	        	</header>
+	        	<br/>
+	       		<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
+	        		<div id="surveyListTable"></div>
+	        	</div>
+	        		<div class="col-md-12">
+	        			<div class="example example-buttons">  
+	        				<div>
+	        					<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="surveyRegistButton">등록</button>
+	        				</div>
+	        			</div>
+	        		</div>
+	        	</div>
 			</div>
 		</div>
 	</div>
-</div>
+
 <!-- End Page -->
 <script type="text/javascript">
 	function setSurveyListTable(surveyList) {

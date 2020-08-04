@@ -71,17 +71,20 @@
 				</div>
 			</div>
 			
-			
 	    	<div class="panel">
 		        <header class="panel-heading">
-		          <div class="panel-actions"></div>
+		        	<div class="panel-actions"></div>
 		        </header>
 		        <br/>
-		        <div class="panel-body">
-		          <div id="boardListTable"></div>
-		          <div class="col-lg-12 mt-20">
-		          	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="noticeRegistButton">등록</button>
-		          </div>
+		        <div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
+		        	<div id="boardListTable"></div>
+		        </div>
+		        	<div class="col-lg-12">
+		        	<div class="example example-buttons">  
+		          		<div>
+		          			<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="noticeRegistButton">등록</button>
+		          		</div>
+		          	</div>
 		        </div>
 		   	</div>
 	    </div>
@@ -107,7 +110,20 @@ function setBoardListTable(BoardList) {
 	    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
 	    	{name: "create_user", title: "작성자", type: "text", width: 60},
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
-	    	{name: "content", title: "내용", type: "text", width: 200}, 
+	    	{title: "내용", width: 200,	    		
+				itemTemplate: function(_, item) {
+	    			var result="";
+		    		console.log("length = " + item.content.length);
+	    			if(item.content.length > 35){
+	    				result = item.content.substring(0,35)+'...';		    				
+	    			}else{
+	    				result = item.content;
+	    			}
+	    			return result;
+	    		}
+	    		
+	    	
+	    	}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
     	],
     	

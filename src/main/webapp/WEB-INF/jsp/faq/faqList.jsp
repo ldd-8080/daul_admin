@@ -70,7 +70,7 @@
 		          <div class="panel-actions"></div>
 		        </header>
 		        <br/>
-		        <div class="panel-body">
+		        <div class="panel-body"  style="padding-top: 20px; padding-bottom: 1px;">
 		          <div id="faqListTable"></div>
 		        </div>
 		        <div class="col-md-12">
@@ -289,8 +289,8 @@ function deleteFaq() {
 		    fields: [
 		    	{name: "faq_idx",title: "번호", type: "text", width: 70, align: "center"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 60},
-		    	{name: "question", title: "제목", type: "text", width: 150}, 
-		    	{name: "answer", title: "내용", type: "text", width: 200}, 
+		    	{name: "question", title: "질의", type: "text", width: 150}, 
+		    	{name: "answer", title: "응답", type: "text", width: 200}, 
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
 	    	],
 	    	
