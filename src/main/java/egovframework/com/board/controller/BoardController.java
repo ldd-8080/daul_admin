@@ -75,11 +75,14 @@ public class BoardController {
 		return "board/boardDetail";
 	}
 	
+	
+	
 	@RequestMapping(value = "/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(ModelMap model) throws Exception {
 		model.addAttribute("boardVo", new BoardVo());
 		return "board/boardWrite";
 	}
+	
 	
 	@RequestMapping(value ="/boardInsert.do", method=RequestMethod.POST)
 	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, HttpServletRequest request) 
@@ -145,6 +148,15 @@ public class BoardController {
 		
 		log.debug("[공지사항] 공지사항 수정 성공");
 		return new ResponseEntity<>(vo.getNotice_idx(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/noticeDelete.do", method=RequestMethod.POST)
+	public String noticeDelete(BoardVo vo) throws Exception{
+		System.out.println(vo);
+		
+		boardService.deleteNotice(vo);
+		
+		return "redirect:/board/boardListPage.do";
 	}
 	
 	@RequestMapping(value="/noticeAttachFileDelete.do", method=RequestMethod.POST)

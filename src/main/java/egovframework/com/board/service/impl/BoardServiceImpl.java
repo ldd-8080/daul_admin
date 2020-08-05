@@ -76,6 +76,12 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public void deleteFile(FileVo fileVo) throws Exception {
 		boardMapper.deleteFile(fileVo);
 	}
+
+	@Override
+	public void deleteNotice(BoardVo vo) throws Exception {
+		boardMapper.deleteNotice(vo);
+		
+	}
 	
 	
 }

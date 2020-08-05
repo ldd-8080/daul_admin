@@ -145,4 +145,14 @@
 		 WHERE save_file_name = #{save_file_name}
 		   AND del_chk != 'Y'
 	</update>
+	
+		
+	<update id="deleteNotice">
+		UPDATE daul.daul_notice
+		   SET del_chk = 'Y'
+		 WHERE notice_idx = #{notice_idx}
+		   AND del_chk != 'Y'
+	</update>
+	
+	
 </mapper>
