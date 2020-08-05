@@ -244,11 +244,17 @@
 		
 		request.done(function(data) {
 			if (data === "success") {
-				var $target = $("input[type='hidden']");
+				var $target = $("input[type='hidden'][name='save_file_name']");
 		
 				for (var i = 0; i < $target.length; i++) {
 					if (save_file_name === $target.eq(i).val()) {
 						$target.eq(i).parent().remove();
+					}
+				}
+				
+				for (var j = 0; j < fileList.length; j++) {
+					if (fileList[j].save_file_name === save_file_name) {
+						fileList.splice(j, 1);
 					}
 				}
 			} else {

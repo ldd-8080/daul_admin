@@ -139,10 +139,6 @@
 													</span> 
 												</div>
 											</div>
-											<div class="col-md-1" style="padding-left: 0px;">
-												<button type='button' class='btn btn-primary'
-													id='contestFileDelBtn'>삭제</button>
-											</div>
 										</div>
 										<div class="form-gorup row mb-20">
 											<div class="col-md-1"></div>
@@ -387,11 +383,17 @@
 			
 			if (data === "success") {
 			
-				var $target = $("input[type='hidden']");
+				var $target = $("input[type='hidden'][name='save_file_name']");
 		
 				for (var i = 0; i < $target.length; i++) {
 					if (save_file_name === $target.eq(i).val()) {
 						$target.eq(i).parent().remove();
+					}
+				}
+				
+				for (var j = 0; j < fileList.length; j++) {
+					if (fileList[j].attach_type === "contestFile" && fileList[j].save_file_name === save_file_name) {
+						fileList.splice(j, 1);
 					}
 				}
 			} else {
