@@ -6,7 +6,6 @@
 
 <div id="sgstOpnListTable"></div>
 
-<div id="sgstOpnListTable2"></div>
 <div class="col-lg-12 mt-20">
   	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" id="sgstOpnRegBtn">등록</button>
   	<button style="display: none;" type="button" data-toggle="modal" data-target="#sgstOpnDetailModal" id="sgstOpnDetailBtn">상세</button>
@@ -79,8 +78,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="sgstSubmitBtn" data-title="댓글" formaction="/suggestion/suggestionOpinionModify.do">수정 </button>
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="sgstSubmitBtn" data-title="댓글" formaction="/suggestion/suggestionOpinionDelete.do">삭제 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('mod', this)" formaction="/suggestion/suggestionOpinionModify.do">수정 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('del', this)" formaction="/suggestion/suggestionOpinionDelete.do">삭제 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
         	</div>
         </form>

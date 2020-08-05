@@ -115,11 +115,12 @@
 </div>
 
 <script type="text/javascript">
+	getSuggestionOpinionList();
+	
 	$(window).on("load", function() {
 		var _repFileTarget = $("div[class='dropify-preview']");
 		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do?suggestion_idx=${suggestionVo.suggestion_idx}'>");
 		_repFileTarget.attr("style", "display:block");
-		getSuggestionOpinionList();
 	});
 	
 	// 열린제안 파일 정보 init
@@ -151,28 +152,6 @@
 		}
 	}
 	
-	// 열린제안 댓글 정보 init
-	var sgstOpnList = new Array();
-	
-	<c:forEach var="suggestionOpinion" items="${suggestionOpinionList}">
-		var sgstOpn = {};
-		sgstOpn.opinion_idx			= "${suggestionOpinion.opinion_idx}";
-		sgstOpn.suggestion_idx		= "${suggestionOpinion.suggestion_idx}";
-		sgstOpn.parent_opinion_idx 	= "${suggestionOpinion.parent_opinion_idx}"; 
-		sgstOpn.opinion_content 	= "${suggestionOpinion.opinion_content}";
-		sgstOpn.like_count 			= "${suggestionOpinion.like_count}";
-		sgstOpn.create_user 		= "${suggestionOpinion.create_user}";
-		sgstOpn.create_date			= "${suggestionOpinion.create_date}";
-		sgstOpn.update_user 		= "${suggestionOpinion.update_user}";
-		sgstOpn.update_date 		= "${suggestionOpinion.update_date}";
-		sgstOpn.del_chk 			= "${suggestionOpinion.del_chk}";
-		sgstOpn.suggestion_ref 		= "${suggestionOpinion.suggestion_ref}";
-		sgstOpn.suggestion_indent	= "${suggestionOpinion.suggestion_indent}";
-		sgstOpn.suggestion_step		= "${suggestionOpinion.suggestion_step}";
-		sgstOpn.auth_type			= "${suggestionOpinion.auth_type}";
-		sgstOpnList.push(sgstOpn);
-	</c:forEach>
-
 	$("#suggestionListBtn").click(function() {
 		location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
 	});
@@ -239,69 +218,6 @@
 		else return true;
 	}
 	
-	
-	
-	$('#sgstOpnListTable').jsGrid({
-	    //height: "500px",
-	    width: "100%",
-
-	    //autoload:true,
-	    sorting: true,
-	    paging: true,
-	    //pageIndex: 1, default: 1
-	    pageSize: 10, // default: 20
-		//pageButtonCount: 5, default: 15
-	    
-	    data: sgstOpnList,
-
-	    fields: [
-	    	{name: "opinion_idx",title: "번호", type: "text", width: 80, align: "center"}, 
-	    	{title: "내용", type: "text", width: 250, 
-	    		itemTemplate: function(_, item) {
-					var result = "";
-	    			
-	    			if (item.del_chk === 'Y') {
-	    				result = "삭제된 댓글입니다.";
-	    			} else {
-	    				if (item.suggestion_indent !== "0") {
-	    					for (var i = 0; i < item.suggestion_indent; i++) {
-	    						result += '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
-	    					}
-	    					
-	    					result += item.opinion_content;
-	    				} else {
-		    				result = item.opinion_content;
-	    				}
-	    			}
-	    				
-	    			return result;
-	    		}
-    		}, 
-	    	{name: "create_user", title: "작성자", type: "text", width: 70}, 
-	    	{name: "auth_type", title: "작성자 유형", type: "text", width: 70}, 
-	    	{name: "like_count", title: "공감", type: "text", width: 30}, 
-	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
-	    	{title: "", width: 50, align: "center", 
-	    		itemTemplate: function(_, item) {
-	    			if (item.del_chk !== 'Y') {
-		    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>';
-	    			}
-	    		}
-    		}
-    	],
-    	
-    	rowClick: function(args) {
-    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
-	    		$("#sgstOpnDetailBtn").trigger("click");
-				
-				$("#detailCreateUser").val(args.item.create_user);
-				$("#detailAuthType").val(args.item.auth_type);
-				$("#detailOpinionContent").val(args.item.opinion_content);
-				$("#detailOpinionIdx").val(args.item.opinion_idx);
-    		}
-    	}
-	}); 
-	
 	$("#suggestionOpinionRegistBtn").click(function() {
 		if (!submitConfirm($(this))) return false;
 		
@@ -312,7 +228,9 @@
 		});
 		
 		request.done(function(data) {
-			location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
+			$("button[class='close']").click();
+			
+			getSuggestionOpinionList();
 		});
 		
 		request.fail(function(error) {
@@ -320,19 +238,10 @@
 		});
 	});
 	
-	$("button[name='opnToOpnModal']").click(function() {
-		//var opinion_idx = $(this).parent().parent().find("td[id^='seq_']").text();
-		var opinion_idx = $(this).parent().parent().children().eq(0).text();
-		
-		$("#opinion_idx").val(opinion_idx);
-	});
-	
 	$("button[name='sgstSubmitBtn']").click(function() {
 		if (!submitConfirm($(this))) return false;
 	});
 	
-
-
 	function getSuggestionOpinionList() {
 		var idx = $("#suggestion_idx").val();
 		var request = $.ajax({
@@ -349,8 +258,8 @@
 		});
 	}
 	
-	function setSuggestionOpinionListTable(SuggestionOpinionList) {
-		$('#sgstOpnListTable2').jsGrid({
+	function setSuggestionOpinionListTable(suggestionOpinionList) {
+		$('#sgstOpnListTable').jsGrid({
 		    //height: "500px",
 		    width: "100%",
 
@@ -361,7 +270,7 @@
 		    pageSize: 10, // default: 20
 			//pageButtonCount: 5, default: 15
 		    
-		    data: SuggestionOpinionList,
+		    data: suggestionOpinionList,
 
 		    fields: [
 		    	{name: "opinion_idx",title: "번호", type: "text", width: 80, align: "center"}, 
@@ -393,7 +302,7 @@
 		    	{title: "", width: 50, align: "center", 
 		    		itemTemplate: function(_, item) {
 		    			if (item.del_chk !== 'Y') {
-			    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>';
+			    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
 		    			}
 		    		}
 	    		}
@@ -409,6 +318,33 @@
 					$("#detailOpinionIdx").val(args.item.opinion_idx);
 	    		}
 	    	}
+		});
+	}
+	
+	function opnToOpnRegistBtn(_this) {
+		var opinion_idx = $(_this).parent().siblings().first().text();
+		
+		$("#opinion_idx").val(opinion_idx);
+	}
+	
+	function sgstOpnUpdate(type, _this) {
+		if (!submitConfirm($(_this))) return false;
+		
+		var URL = "";
+		
+		if (type === 'mod') URL = "/suggestion/suggestionOpinionModify.do";
+		else 				URL = "/suggestion/suggestionOpinionDelete.do";
+		
+		var request = $.ajax({
+			url: URL,
+			method: "post",
+			data: $("#sgstOpnDetailForm").serialize()
+		});
+		
+		request.done(function(data) {
+			$("button[class='close']").click();
+			
+			getSuggestionOpinionList();
 		});
 	}
 </script>
