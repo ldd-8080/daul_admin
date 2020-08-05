@@ -110,7 +110,7 @@
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-btn" >등 &nbsp;&nbsp; 록</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-btn" >취 &nbsp;&nbsp; 소</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn" >취 &nbsp;&nbsp; 소</button>
         	</div>
         </form>
        
@@ -152,7 +152,7 @@
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn2" >삭 &nbsp;&nbsp; 제</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-btn2" >닫 &nbsp;&nbsp; 기</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn2" >닫 &nbsp;&nbsp; 기</button>
         	</div>
         </form>
        
@@ -196,7 +196,7 @@
         	<div style="text-align:center">
         	 	<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-update-btn" >수 &nbsp;&nbsp; 정</button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn3" >삭 &nbsp;&nbsp; 제</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-btn3" >닫 &nbsp;&nbsp; 기</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn3" >닫 &nbsp;&nbsp; 기</button>
         	</div>
         </form>
        
@@ -223,14 +223,15 @@ $(function() {
 	$("#qna-modal-update-btn").click(function() {
 		updateQnaReply();
 	});
-	$("#qna-modal-delete-btn").click(function() {
-		deleteQnaReply();
-	});
+
 	$("#qna-modal-delete-btn2").click(function() {
 		deleteQnaReply();
+		$("#qna-modal-cancel-btn2").trigger("click");
+		
 	});
 	$("#qna-modal-delete-btn3").click(function() {
 		deleteQnaReply();
+		$("#qna-modal-cancel-btn3").trigger("click");
 	});
 	
 });
@@ -249,7 +250,8 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
+				getQnaList();
+				$("#qna-modal-cancel-btn").trigger("click");
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -274,7 +276,8 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
+				getQnaList();
+				$("#qna-modal-cancel-btn3").trigger("click");
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -299,7 +302,7 @@ $(function() {
 			console.log("request done");
 			
 			if (data === "success") {
-				location.href = "${pageContext.request.contextPath}/qna/qnaListPage.do";
+				getQnaList();
 			} else {
 				//alert(data);
 				$("#chk-error").text(data);
@@ -342,7 +345,7 @@ $(function() {
 			    		return result; 
 			    		}	
 		    	},
-		    	{name: "create_user", title: "작성자", type: "text", width: 60},
+		    	{name: "create_user", title: "작성자", type: "text", width: 60, align: "center"},
 		    	{name: "auth_type", title: "작성자유형", type: "text", width: 70, align: "center"}, 
 		    	{name: "create_date", title: "등록일", type: "text", width: 70, align: "center"}, 
 		    	{name: "view_count", title: "조회수", type: "text", width: 70, align: "center"},
@@ -362,7 +365,9 @@ $(function() {
 	    		
 	    		
 	    		if(args.event.target.tagName == "BUTTON"){
-						    			
+	    			document.getElementById("qna_idx_reply").value = args.item.qna_idx;
+					document.getElementById("ref_reply").value = args.item.qna_idx;
+					
 	    		}else if(args.event.target.cellIndex == 6){
 	    			
 	    		}else{
@@ -370,8 +375,6 @@ $(function() {
 	    			var session_id = "${login.user_id}";
 		    	
 		    		document.getElementById("question_content").value = args.item.content;
-					document.getElementById("qna_idx_reply").value = args.item.qna_idx;
-					document.getElementById("ref_reply").value = args.item.qna_idx;
 					document.getElementById("detail_qustion").value = args.item.question;
 					document.getElementById("detail_content").value = args.item.content;
 					document.getElementById("detail_create_user").value = args.item.create_user;

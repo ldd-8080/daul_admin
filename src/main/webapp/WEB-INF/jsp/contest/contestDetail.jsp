@@ -182,13 +182,9 @@
 										<div class="col-md-11 text-right">
 											<div class="example example-buttons"> 
 												<button type="button"
-													class="btn btn-primary waves-effect waves-classic"
-													id="contestModifyBtn"
-													formaction="/contest/contestModify.do">수정</button>
+													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn">수정</button>
 												<button type="submit"
-													class="btn btn-primary waves-effect waves-classic"
-													id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제
-												</button>
+													class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제</button>
 												<button type="button"
 													class="btn btn-default btn-outline waves-effect waves-classic"
 													id="contestListBtn">목록</button>
@@ -428,7 +424,7 @@
             data: formData
         });
         request.done(function(data){
-        	location.href = "${pageContext.request.contextPath}/contest/contestListPage.do";
+        	location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + data;
         });
 	});
 </script>

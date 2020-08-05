@@ -144,7 +144,7 @@ public class BoardController {
 		}
 		
 		log.debug("[공지사항] 공지사항 수정 성공");
-		return new ResponseEntity<>("success", HttpStatus.OK);
+		return new ResponseEntity<>(vo.getNotice_idx(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/noticeAttachFileDelete.do", method=RequestMethod.POST)

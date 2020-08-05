@@ -110,7 +110,7 @@
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-btn" >등 &nbsp;&nbsp; 록</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-btn" >취 &nbsp;&nbsp; 소</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn" >취 &nbsp;&nbsp; 소</button>
         	</div>
         </form>
        
@@ -152,6 +152,7 @@
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-update-btn" >수 &nbsp;&nbsp; 정</button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="faq-modal-delete-btn" >삭 &nbsp;&nbsp; 제</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn2" >취 &nbsp;&nbsp; 소</button>
         	</div>
         </form>
        
@@ -201,11 +202,11 @@ function insertFaq() {
 		data: $("#faq-modal-form").serialize()
 	});
 	request.done(function(data) {
-		console.log(data);
-		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
+			
+			$("#faq-modal-cancle-btn").trigger("click");
+			getFaqList();
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);
@@ -227,11 +228,10 @@ function updateFaq() {
 		data: $("#faq-modal-update-form").serialize()
 	});
 	request.done(function(data) {
-		console.log(data);
-		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
+			getFaqList();
+			$("#faq-modal-cancle-btn2").trigger("click");
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);
@@ -257,11 +257,10 @@ function deleteFaq() {
 		data: $("#faq-modal-update-form").serialize()
 	});
 	request.done(function(data) {
-		console.log(data);
-		console.log("request done");
 		
 		if (data === "success") {
-			location.href = "${pageContext.request.contextPath}/faq/faqListPage.do";
+			getFaqList();
+			$("#faq-modal-cancle-btn2").trigger("click");
 		} else {
 			//alert(data);
 			$("#chk-error").text(data);

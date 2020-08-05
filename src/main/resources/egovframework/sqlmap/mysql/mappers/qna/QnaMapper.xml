@@ -41,7 +41,7 @@
 	</select>
 	
 	<select id = "selectQnaReplyIdx" resultType="String">
-		SELECT CONCAT(#{qna_idx},'-',LPAD(count(*),'2','0')) as 'qna_idx'
+		SELECT CONCAT(#{qna_idx},'-',LPAD(count(*)+1,'2','0')) as 'qna_idx'
 		FROM daul_qna 
 		WHERE ref = #{qna_idx}
 	</select>

@@ -211,7 +211,7 @@ public class ContestController {
 
 		}
 
-		return "redirect:/contest/contestList.do";
+		return "redirect:/contest/contestDetail.do?admin_contest_idx=" + vo.getAdmin_contest_idx();
 	}
 	@RequestMapping(value = "contestModify2")
 	public ResponseEntity<?> contestModify2(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
@@ -244,7 +244,7 @@ public class ContestController {
 		}
 		
 		log.debug("[나눔공모] 나눔공모 수정 완료");
-		return new ResponseEntity<>("success", HttpStatus.OK);
+		return new ResponseEntity<>(vo.getAdmin_contest_idx(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/downloadFile.do", method = RequestMethod.GET)

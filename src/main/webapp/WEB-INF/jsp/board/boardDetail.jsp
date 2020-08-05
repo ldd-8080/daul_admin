@@ -127,7 +127,7 @@
 		});
 		
 		request.done(function(data){
-			location.href = "${pageContext.request.contextPath}/board/boardListPage.do";
+			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + data;
 		});
 	});
 	
