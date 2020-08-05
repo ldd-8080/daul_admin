@@ -144,6 +144,11 @@
 		 WHERE admin_contest_idx = #{admin_contest_idx}
 	</update>
 	
+	<update id="deleteContestOpinion">
+		UPDATE daul.contest_user
+		   SET del_chk = 'Y'
+		 WHERE user_contest_idx = #{user_contest_idx}
+	</update>
 	<select id="selectContestOpinionList" resultType="egovframework.com.contest.vo.ContestOpinionVo">
 		SELECT user_contest_idx,
 			   title,
@@ -161,7 +166,7 @@
 	
 	</select>
 	
-		<select id="selectDownloadFile" resultType="egovframework.com.cmmn.util.FileVo">
+	<select id="selectDownloadFile" resultType="egovframework.com.cmmn.util.FileVo">
 		SELECT 
 			ORG_FILE_NAME,
 			SAVE_FILE_NAME
@@ -169,7 +174,7 @@
 		WHERE save_file_name  = #{idx}
 	</select>
 	
-			<select id="selectDownloadFile2" resultType="egovframework.com.cmmn.util.FileVo">
+		<select id="selectDownloadFile2" resultType="egovframework.com.cmmn.util.FileVo">
 		SELECT 
 			ORG_FILE_NAME,
 			SAVE_FILE_NAME
@@ -177,7 +182,7 @@
 		WHERE save_file_name  = #{idx}
 	</select>
 	
-		<select id = "selectContestOpinionFileList" resultType="egovframework.com.cmmn.util.FileVo">
+	<select id = "selectContestOpinionFileList" resultType="egovframework.com.cmmn.util.FileVo">
 		SELECT 
 			user_contest_idx as idx,
 			org_file_name,

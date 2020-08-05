@@ -100,7 +100,7 @@ public class ContestController {
 			}
 
 		}
-		return "redirect:/contest/contestList.do";
+		return "redirect:/contest/contestListPage.do";
 	}
 
 	@RequestMapping(value = "contestDetail.do")
@@ -149,6 +149,17 @@ public class ContestController {
 		return new ResponseEntity<>(contestOpinionList, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="/contestOpinionDelete.do",method=RequestMethod.GET)
+	public ResponseEntity<?>  contestOpinionDelete(@RequestParam("user_contest_idx") String user_contest_idx) throws Exception{
+		
+		System.out.println("user_contest_idx = " + user_contest_idx);
+		ContestOpinionVo vo = new ContestOpinionVo();
+		vo.setUser_contest_idx(user_contest_idx);
+		contestService.deleteContestOpinion(vo);
+		
+		
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 	
 	
 	

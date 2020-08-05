@@ -145,7 +145,7 @@
 		 WHERE save_file_name = #{save_file_name}
 		   AND del_chk != 'Y'
 	</update>
-	
+	 
 		
 	<update id="deleteNotice">
 		UPDATE daul.daul_notice

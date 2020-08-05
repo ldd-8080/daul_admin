@@ -50,13 +50,13 @@
 				</div>
 					<span class="text-left" id="chk-error"></span>
 					<div style="text-align: center">
-						<button type="submit"
+						<button type="button"
 							class="btn btn-primary waves-effect waves-classics"
-							name="sgstSubmitBtn" data-title="댓글"
-							formaction="/suggestion/suggestionOpinionDelete.do">삭제</button>
+							name="sgstSubmitBtn"
+							onclick="deleteContestOpinion()">삭제</button>
 						<button type="button"
 							class="btn btn-default waves-effect waves-classics"
-							data-dismiss="modal" aria-label="Close">취소</button>
+							data-dismiss="modal" aria-label="Close" id = "cancel-btn">취소</button>
 					</div>
 				</form>
 			
@@ -141,6 +141,24 @@ function getcontestOpinionList() {
 	
 	request.done(function(data) {
 		setContestOpinionListTable(data);
+	});
+	
+	request.fail(function(error) {
+		console.log(error);
+	});
+}
+
+
+function deleteContestOpinion() {
+	var idx = $("#detailOpinionIdx").val();
+	var request = $.ajax({
+		url: "/contest/contestOpinionDelete.do?user_contest_idx="+idx,
+		method: "get"
+	});
+	
+	request.done(function(data) {
+		getcontestOpinionList();
+		$("#cancel-btn").trigger("click");
 	});
 	
 	request.fail(function(error) {

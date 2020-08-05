@@ -88,6 +88,12 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 		return contestMapper.selectContestOpinionFileList(vo);
 	}
 
+	@Override
+	public void deleteContestOpinion(ContestOpinionVo vo) throws Exception {
+		contestMapper.deleteContestOpinion(vo);
+		
+	}
+
 
 
 }
