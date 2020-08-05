@@ -50,31 +50,27 @@
 								<label class="col-md-2 col-form-label">첨부파일</label>
 								<div class="col-md-7">
 									<div class="input-group input-group-file" data-plugin="inputGroupFile">
-										<input type="text" class="form-control" id="attachTitle" readonly/><!-- 
-										<button type="button" class="input-search-close icon md-close" id="attachDelBtn" style="position: absolute; display: none;"></button> -->
+										<input type="text" class="form-control" id="noticeFileTitle" value="파일 0개" readonly/>
 										<span class="input-group-append">
 											<span class="btn btn-primary btn-file">
 												<i class="icon md-upload" aria-hidden="true"></i>
-												<input multiple="multiple" type="file" id="publicFile" name="publicFile"/>
+												<input multiple="multiple" type="file" id="noticeFile" name="noticeFile"/>
 											</span>
 										</span>
  									</div>
-								</div>
-								<div class="col-md-1" style="padding-left: 0px;">
-									<button type='button' class='btn btn-primary' id='attachDelBtn' >삭제</button>
 								</div>
 							</div>
 							<div class="form-gorup row mb-20">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label"></label>
 								<div class="col-md-8">
-									<div id="fileName-list">
+									<div id="noticeFile-list">
 									
 									</div>
 								</div>
 							</div>
 				            <div class="form-group form-material row">
-								<div class="col-md-9 offset-md-9">
+								<div class="col-md-9">
 									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="boardRegistBtn" formaction="/board/boardInsert.do">등록 </button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="boardListBtn">목록 </button>
 								</div>
@@ -92,40 +88,57 @@
 		location.href = "${pageContext.request.contextPath}/board/boardList.do";
 	});
 	
-    
+	var noticeFileList = new Array();
 	
-	function publicFileChange() {
-	    
-		var fileValue = $("#publicFile")[0].files[0];
+	function noticeFileChange() {
+		var fileValue = $("#noticeFile")[0].files;
+		
+		if (fileValue.length > 0) {
+	  		for (var i = 0; i < fileValue.length; i++) {
+  				var exist = false;
+  				
+  				for (var k = 0; k < noticeFileList.length; k++) {
+  					if (fileValue[i].name === noticeFileList[k].name) {
+  						exist = true;
+  						break;
+  					}
+  				}
+  				
+  				if (!exist) {
+  					noticeFileList.push(fileValue[i]);
 	
-		if (fileValue !== undefined) {
-
-			$("#attachTitle").val( '파일 '+$("#publicFile")[0].files.length+'개');
-			
-				
-			for( var i = 0; i <$("#publicFile")[0].files.length; i++ ){
-				console.log($("#publicFile")[0].files[i].name);
-				
-				var str = '<div class="form-gorup row mb-20" style="margin-bottom: 10px!important;">' + 
-				'<div class="col-md-1"></div>'+
-				'<h5 style="margin: 0;">'+$("#publicFile")[0].files[i].name+'</h5>' +
-				'</div>';
-				$("#fileName-list").append(str);
-			}
-			//$("#attachDelBtn").show();
-		} else {
-			$("#attachTitle").val("");
-			//$("#attachDelBtn").hide();
-		}
+  					$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
+  					
+  					var str = '<li>'+
+			  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
+			  			'<span class="file-img"></span>' +
+			  			'<a href="#this" name="file"> (new) ' + fileValue[i].name + '</a>' +
+			  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
+			  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
+			  			'</li>';
+		  			
+  					$("#noticeFile-list").append(str);
+  				}
+  			}
+	  	}
 	}
 	
-	$("#publicFile").change(function() {
-		publicFileChange();
-	});
+	function newFileDel(_this) {
+  		var fileName = $(_this).siblings().first().val();
+  		
+  		for (var i = 0; i < noticeFileList.length; i++) {
+  			if (fileName === noticeFileList[i].name) {
+  				noticeFileList.splice(i, 1);
+  				
+  				$(_this).parent().remove();
+  				
+  				$("#noticeFileTitle").val( '파일 '+ noticeFileList.length + '개');
+  			}
+  		}
+  	}
 	
-	$("#attachDelBtn").click(function() {
-		$("#publicFile").val("");
-		publicFileChange();
+	$("#noticeFile").change(function() {
+		noticeFileChange();
 	});
 	
 	$("#boardRegistBtn").click(function() {
@@ -136,13 +149,8 @@
 		console.log($(_this));
 		var id = $(_this).attr("id").split("_")[1];
 		console.log(id,typeof id);
-		console.log($("#publicFile")[0].files[id].name)
+		console.log($("#noticeFile")[0].files[id].name)
 
 	}
-
-	 $("button[id='attachDelBtn']").on("click", function(e) {
-		 $("#publicFile").val("");
-			$("#fileName-list").children().remove();
-	    });
 </script>
 	    	
