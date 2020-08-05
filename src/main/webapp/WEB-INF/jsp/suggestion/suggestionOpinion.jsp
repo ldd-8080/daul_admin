@@ -78,8 +78,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('mod', this)" formaction="/suggestion/suggestionOpinionModify.do">수정 </button>
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('del', this)" formaction="/suggestion/suggestionOpinionDelete.do">삭제 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('mod', this)">수정 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('del', this)">삭제 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
         	</div>
         </form>

@@ -78,8 +78,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="surveySubmitBtn" data-title="댓글" formaction="/survey/surveyOpinionModify.do">수정 </button>
-        		<button type="submit" class="btn btn-primary waves-effect waves-classics" name="surveySubmitBtn" data-title="댓글" formaction="/survey/surveyOpinionDelete.do">삭제 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="surveyOpnUpdate('mod', this)">수정 </button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="surveyOpnUpdate('del', this)">삭제 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
         	</div>
         </form>

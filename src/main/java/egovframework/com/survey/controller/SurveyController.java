@@ -239,6 +239,25 @@ public class SurveyController {
 		return "survey/surveyDetail";
 	}
 	
+	@RequestMapping(value="/getSurveyOpinionList.do")
+	public ResponseEntity<?> getSurveyOpinionList(@RequestParam("survey_idx") String survey_idx) throws Exception {
+		List<SurveyOpinionVo> surveyOpinionList = null;
+		SurveyVo surveyVo = new SurveyVo();
+		
+		try {
+			surveyVo.setSurvey_idx(survey_idx);
+			
+			log.debug("[설문조사] 댓글 조회");
+			surveyOpinionList = surveyService.selectSurveyOpinionList(surveyVo);
+		} catch (Exception e) {
+			log.debug("[설문조사] 댓글 조회 실패");
+			e.printStackTrace();
+		}
+		
+		log.debug("[설문조사] 댓글 조회 완료");
+		return new ResponseEntity<>(surveyOpinionList, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/getParticipationList.do")
 	public ResponseEntity<?> getParticipationList( @RequestParam("survey_idx") String survey_idx) throws Exception{
 		
@@ -309,7 +328,7 @@ public class SurveyController {
 	}
 	
 	@RequestMapping(value="/surveyOpinionModify.do", method=RequestMethod.POST)
-	public String surveyOpinionModify(SurveyOpinionVo vo) throws Exception {
+	public ResponseEntity<?> surveyOpinionModify(SurveyOpinionVo vo) throws Exception {
 		try {
 			log.debug("[설문조사] 설문조사 댓글 수정");
 			log.debug("SurveyOpinionVo : " + vo);
@@ -318,11 +337,11 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/survey/surveyList.do";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/surveyOpinionDelete.do", method=RequestMethod.POST)
-	public String surveyOpinionDelete(SurveyOpinionVo vo) throws Exception {
+	public ResponseEntity<?> surveyOpinionDelete(SurveyOpinionVo vo) throws Exception {
 		try {
 			log.debug("[설문조사] 설문조사 댓글 삭제");
 			surveyService.deleteSurveyOpinion(vo);
@@ -330,6 +349,6 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/survey/surveyList.do";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

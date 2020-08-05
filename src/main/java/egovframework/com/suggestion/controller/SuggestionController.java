@@ -116,16 +116,16 @@ public class SuggestionController {
 		
 		model.addAttribute("suggestionVo", vo);
 		model.addAttribute("fileList", fileList);
-		model.addAttribute("suggestionOpinionList", suggestionOpinionList);
 		model.addAttribute("suggestionOpinionSize", suggestionOpinionList.size());
 		
 		return "suggestion/suggestionDetail";
 	}
 	
 	@RequestMapping(value="/getSuggestionOpinionList.do")
-	public  ResponseEntity<?> getSuggestionOpinionList(@RequestParam("suggestion_idx") String suggestion_idx, ModelMap model) throws Exception{
+	public  ResponseEntity<?> getSuggestionOpinionList(@RequestParam("suggestion_idx") String suggestion_idx) throws Exception{
 		List<SuggestionOpinionVo> suggestionOpinionList = null;
 		SuggestionVo vo = new SuggestionVo();
+		
 		try {
 			vo.setSuggestion_idx(suggestion_idx);
 			vo = suggestionService.selectSuggestion(vo);
@@ -268,7 +268,7 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/suggestionOpinionModify.do", method=RequestMethod.POST)
-	public String suggestionOpinionModify(SuggestionOpinionVo vo) throws Exception {
+	public ResponseEntity<?> suggestionOpinionModify(SuggestionOpinionVo vo) throws Exception {
 		try {
 			log.debug("[열린제안] 열린제안 댓글 수정");
 			log.debug("SuggestionOpinionVo : " + vo);
@@ -277,11 +277,11 @@ public class SuggestionController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/suggestion/suggestionListPage.do";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/suggestionOpinionDelete.do", method=RequestMethod.POST)
-	public String suggestionOpinionDelete(SuggestionOpinionVo vo) throws Exception {
+	public ResponseEntity<?> suggestionOpinionDelete(SuggestionOpinionVo vo) throws Exception {
 		try {
 			log.debug("[열린제안] 열린제안 댓글 삭제");
 			suggestionService.deleteSuggestionOpinion(vo);
@@ -289,6 +289,6 @@ public class SuggestionController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/suggestion/suggestionListPage.do";
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }
