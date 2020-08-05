@@ -104,24 +104,21 @@
 								<label class="col-md-2 col-form-label">공고문</label>
 								<div class="col-md-7">
 									<div class="input-group input-group-file" data-plugin="inputGroupFile">
-										<input type="text" class="form-control" id="noticeFileTitle" readonly/>
+										<input type="text" class="form-control" id="contestFileTitle" readonly/>
 										<span class="input-group-append">
 											<span class="btn btn-primary btn-file">
 												<i class="icon md-upload" aria-hidden="true"></i>
-												<input multiple="multiple" type="file" id="noticeFile" name="noticeFile"/>
+												<input multiple="multiple" type="file" id="contestFile" name="contestFile"/>
 											</span>
 										</span>
  									</div>
-								</div>
-								<div class="col-md-1" style="padding-left: 0px;">
-									<button type='button' class='btn btn-primary' id='noticeFileDelBtn' >삭제</button>
 								</div>
 							</div>	
 							<div class="form-gorup row mb-20">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label"></label>
 								<div class="col-md-8">
-									<div id="noticeFileName-list">
+									<div id="contestFileName-list">
 									</div>
 								</div>
 							</div>
@@ -166,76 +163,86 @@
 	</div>
 </div>
 <script type="text/javascript">
+var contestFileList = new Array();
 
-
-function noticeFileChange() {
-    
-	var fileValue = $("#noticeFile")[0].files[0];
-
-	if (fileValue !== undefined) {
-
-		$("#noticeFileTitle").val( '파일 '+$("#noticeFile")[0].files.length+'개');
+function contestFileChange() {
+	var fileValue = $("#contestFile")[0].files;
+	console.log(fileValue);
+	if (fileValue.length > 0) {
+  		for (var i = 0; i < fileValue.length; i++) {
+			var exist = false;
 			
-		for( var i = 0; i <$("#noticeFile")[0].files.length; i++ ){
-			console.log($("#noticeFile")[0].files[i].name);
+			for (var k = 0; k < contestFileList.length; k++) {
+				if (fileValue[i].name === contestFileList[k].name) {
+					console.log("this file is already exist", fileValue[i].name);
+					exist = true;
+					break;
+				}
+			}
 			
-			var str = '<li>'+
-			'<input type="hidden" name="save_file_name" value="'+ +$("#noticeFile")[0].files[i].name+ '">'+
-			'<span class="file-img"></span>'+
-			'<a href="#this" name="file">'+$("#noticeFile")[0].files[i].name+'</a>' +
-			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#noticeFile")[0].files[i].size/1024).toFixed(2)+' kb</span>'+
-			'</li>';
-			$("#noticeFileName-list").append(str);
+			if (!exist) {
+				contestFileList.push(fileValue[i]);
+
+				$("#contestFileTitle").val( '파일 '+ contestFileList.length + '개');
+				
+				var str = '<li>'+
+	  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
+	  			'<span class="file-img"></span>' +
+	  			'<a href="#this" name="file"> (new) ' + fileValue[i].name + '</a>' +
+	  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
+	  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
+	  			'</li>';
+	  			
+				$("#contestFileName-list").append(str);
+			}
 		}
-		//$("#attachDelBtn").show();
-	} else {
-		$("#noticeFileTitle").val("");
-		//$("#attachDelBtn").hide();
-		$("#noticeFileName-list").children().remove();
+  	}
+}
+
+function newFileDel(_this) {
+	var fileName = $(_this).siblings().first().val();
+	
+	for (var i = 0; i < contestFileList.length; i++) {
+		if (fileName === contestFileList[i].name) {
+			contestFileList.splice(i, 1);
+			
+			$(_this).parent().remove();
+			
+			$("#contestFileTitle").val( '파일 '+ contestFileList.length + '개');
+		}
 	}
 }
 
-
-
-$("#noticeFile").change(function() {
-	noticeFileChange();
+$("#contestFile").change(function() {
+	contestFileChange();
 });
 
-$("#noticeFileDelBtn").click(function() {
-	$("#noticeFile").val("");
-	noticeFileChange();
+$("#contestFileDelBtn").click(function() {
+	$("#contestFile").val("");
+	contestFileChange();
 });
-
-
 
 function propFileChange() {
-    
 	var fileValue = $("#propFile")[0].files[0];
 
 	if (fileValue !== undefined) {
-
 		$("#propFileTitle").val( '파일 '+$("#propFile")[0].files.length+'개');
 			
 		for( var i = 0; i <$("#propFile")[0].files.length; i++ ){
-			console.log($("#propFile")[0].files[i].name);
-			
 			var str =  '<li>'+
 			'<input type="hidden" name="save_file_name" value="'+ +$("#propFile")[0].files[i].name+ '">'+
 			'<span class="file-img"></span>'+
 			'<a href="#this" name="file">'+$("#propFile")[0].files[i].name+'</a>' +
 			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#propFile")[0].files[i].size/1024).toFixed()+' kb</span>'+
 			'</li>';
+			
 			$("#propFileName-list").append(str);
 		}
-		//$("#attachDelBtn").show();
 	} else {
 		$("#propFileTitle").val("");
-		//$("#attachDelBtn").hide();
 		$("#propFileName-list").children().remove();
 	}
 }
-
-
 
 $("#propFile").change(function() {
 	propFileChange();
@@ -245,10 +252,4 @@ $("#propFileDelBtn").click(function() {
 	$("#propFile").val("");
 	propFileChange();
 });
-
-
-
-
-
-
 </script>
