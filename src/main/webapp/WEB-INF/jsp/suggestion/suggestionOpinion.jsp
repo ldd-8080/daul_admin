@@ -6,6 +6,7 @@
 
 <div id="sgstOpnListTable"></div>
 
+<div id="sgstOpnListTable2"></div>
 <div class="col-lg-12 mt-20">
   	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" id="sgstOpnRegBtn">등록</button>
   	<button style="display: none;" type="button" data-toggle="modal" data-target="#sgstOpnDetailModal" id="sgstOpnDetailBtn">상세</button>

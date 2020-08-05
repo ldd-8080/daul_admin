@@ -122,6 +122,23 @@ public class SuggestionController {
 		return "suggestion/suggestionDetail";
 	}
 	
+	@RequestMapping(value="/getSuggestionOpinionList.do")
+	public  ResponseEntity<?> getSuggestionOpinionList(@RequestParam("suggestion_idx") String suggestion_idx, ModelMap model) throws Exception{
+		List<SuggestionOpinionVo> suggestionOpinionList = null;
+		SuggestionVo vo = new SuggestionVo();
+		try {
+			vo.setSuggestion_idx(suggestion_idx);
+			vo = suggestionService.selectSuggestion(vo);
+			
+			suggestionOpinionList = suggestionService.selectSuggestionOpinionList(vo);
+		}catch(Exception e){
+			
+		}
+		
+		return new ResponseEntity<>(suggestionOpinionList, HttpStatus.OK);
+	}
+	
+	
 	@RequestMapping(value="/suggestionModify.do", method=RequestMethod.POST)
 	public String suggestionModify(SuggestionVo vo, HttpServletRequest request) throws Exception{
 		try {

@@ -87,16 +87,19 @@
 										
 										<input type="hidden" name="update_user" value="${login.user_id}"/>
 										
+										<header class="panel-heading">
+								        	<div class="panel-actions"></div>
+								        </header>
+								    
 								        <br/>
-								        <br/>
-								        
-										<div class="col-md-11 text-right">
-											<div class="example example-buttons">  	
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
-												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+											<div class="col-md-12 text-center">
+												<div class="example example-buttons">  	
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
+													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+												</div>
 											</div>
-										</div>
+								
 									</form:form>
 								</div>
 								<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
@@ -116,6 +119,7 @@
 		var _repFileTarget = $("div[class='dropify-preview']");
 		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do?suggestion_idx=${suggestionVo.suggestion_idx}'>");
 		_repFileTarget.attr("style", "display:block");
+		getSuggestionOpinionList();
 	});
 	
 	// 열린제안 파일 정보 init
@@ -235,23 +239,7 @@
 		else return true;
 	}
 	
-	$("#suggestionOpinionRegistBtn").click(function() {
-		if (!submitConfirm($(this))) return false;
-		
-		var request = $.ajax({
-			url: "/suggestion/suggestionOpinionRegist.do",
-			method: "post",
-			data: $("#sgstOpnRegForm").serialize()
-		});
-		
-		request.done(function(data) {
-			location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
-		});
-		
-		request.fail(function(error) {
-			console.log("request fail", error)
-		});
-	});
+	
 	
 	$('#sgstOpnListTable').jsGrid({
 	    //height: "500px",
@@ -312,6 +300,24 @@
 				$("#detailOpinionIdx").val(args.item.opinion_idx);
     		}
     	}
+	}); 
+	
+	$("#suggestionOpinionRegistBtn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
+		var request = $.ajax({
+			url: "/suggestion/suggestionOpinionRegist.do",
+			method: "post",
+			data: $("#sgstOpnRegForm").serialize()
+		});
+		
+		request.done(function(data) {
+			location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
+		});
+		
+		request.fail(function(error) {
+			console.log("request fail", error)
+		});
 	});
 	
 	$("button[name='opnToOpnModal']").click(function() {
@@ -324,5 +330,86 @@
 	$("button[name='sgstSubmitBtn']").click(function() {
 		if (!submitConfirm($(this))) return false;
 	});
+	
+
+
+	function getSuggestionOpinionList() {
+		var idx = $("#suggestion_idx").val();
+		var request = $.ajax({
+			url: "/suggestion/getSuggestionOpinionList.do?suggestion_idx="+idx,
+			method: "get"
+		});
+		
+		request.done(function(data) {
+			setSuggestionOpinionListTable(data);
+		});
+		
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
+	
+	function setSuggestionOpinionListTable(SuggestionOpinionList) {
+		$('#sgstOpnListTable2').jsGrid({
+		    //height: "500px",
+		    width: "100%",
+
+		    //autoload:true,
+		    sorting: true,
+		    paging: true,
+		    //pageIndex: 1, default: 1
+		    pageSize: 10, // default: 20
+			//pageButtonCount: 5, default: 15
+		    
+		    data: SuggestionOpinionList,
+
+		    fields: [
+		    	{name: "opinion_idx",title: "번호", type: "text", width: 80, align: "center"}, 
+		    	{title: "내용", type: "text", width: 250, 
+		    		itemTemplate: function(_, item) {
+						var result = "";
+		    			
+		    			if (item.del_chk === 'Y') {
+		    				result = "삭제된 댓글입니다.";
+		    			} else {
+		    				if (item.suggestion_indent !== "0") {
+		    					for (var i = 0; i < item.suggestion_indent; i++) {
+		    						result += '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
+		    					}
+		    					
+		    					result += item.opinion_content;
+		    				} else {
+			    				result = item.opinion_content;
+		    				}
+		    			}
+		    				
+		    			return result;
+		    		}
+	    		}, 
+		    	{name: "create_user", title: "작성자", type: "text", width: 70}, 
+		    	{name: "auth_type", title: "작성자 유형", type: "text", width: 70}, 
+		    	{name: "like_count", title: "공감", type: "text", width: 30}, 
+		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
+		    	{title: "", width: 50, align: "center", 
+		    		itemTemplate: function(_, item) {
+		    			if (item.del_chk !== 'Y') {
+			    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal">댓글 등록 </button>';
+		    			}
+		    		}
+	    		}
+	    	],
+	    	
+	    	rowClick: function(args) {
+	    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
+		    		$("#sgstOpnDetailBtn").trigger("click");
+					
+					$("#detailCreateUser").val(args.item.create_user);
+					$("#detailAuthType").val(args.item.auth_type);
+					$("#detailOpinionContent").val(args.item.opinion_content);
+					$("#detailOpinionIdx").val(args.item.opinion_idx);
+	    		}
+	    	}
+		});
+	}
 </script>
 	    	
