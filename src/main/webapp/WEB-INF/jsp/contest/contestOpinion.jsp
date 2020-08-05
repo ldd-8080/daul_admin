@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
-<div id="contestListTable"></div>
+<div id="contestListTable" class="text-break"></div>
 
 <div class="col-lg-12 mt-20">
 

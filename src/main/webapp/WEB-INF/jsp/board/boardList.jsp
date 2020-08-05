@@ -77,7 +77,7 @@
 		        </header>
 		        <br/>
 		        <div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
-		        	<div id="boardListTable"></div>
+		        	<div id="boardListTable" class="text-break"></div>
 		        </div>
 		        	<div class="col-lg-12">
 		        	<div class="example example-buttons">  

@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<div id="sgstOpnListTable"></div>
+<div id="sgstOpnListTable" class="text-break"></div>
 
 <div class="col-lg-12 mt-20">
   	<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" id="sgstOpnRegBtn">등록</button>

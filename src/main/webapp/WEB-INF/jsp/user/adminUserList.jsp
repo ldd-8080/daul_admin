@@ -72,7 +72,7 @@
 		        </header>
 		        	<br/>
 		        <div class="panel-body"  style="padding-top: 20px; padding-bottom: 1px;">
-		        	<div id="userListTable"></div>
+		        	<div id="userListTable" class="text-break"></div>
 		        </div>
 		        <div class="col-md-12">
 			        <div class="example example-buttons">   

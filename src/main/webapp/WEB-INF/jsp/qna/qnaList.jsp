@@ -73,7 +73,7 @@
 		        </header>
 		        <br/>
 		        <div class="panel-body">
-		        	 <div id="qnaListTable"></div>
+		        	 <div id="qnaListTable" class="text-break"></div>
 		        </div>
 	    	</div>
 	    </div>

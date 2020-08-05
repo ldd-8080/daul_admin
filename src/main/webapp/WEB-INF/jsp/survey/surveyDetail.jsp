@@ -171,7 +171,7 @@
                       	</div>  
 						<br/>
 						
-						   <div id="surveyParticipationListTable"></div>
+						   <div id="surveyParticipationListTable" class="text-break"></div>
 					
                		</div>
                     <!--번째탭 -->
