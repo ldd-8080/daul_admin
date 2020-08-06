@@ -1,7 +1,6 @@
 package egovframework.com.user.service;
 
 import java.util.List;
-import java.util.Map;
 
 import egovframework.com.user.vo.UserVo;
 
@@ -18,4 +17,6 @@ public interface UserService {
 	void updateUserPw(UserVo vo) throws Exception;
 
 	List<UserVo> selectUserList(UserVo vo) throws Exception;
+
+	int selectUserIdCheck(String user_id) throws Exception;
 }

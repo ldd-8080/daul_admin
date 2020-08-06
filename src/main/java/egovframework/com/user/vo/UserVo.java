@@ -1,22 +1,12 @@
 package egovframework.com.user.vo;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 public class UserVo {
 
-	@NotEmpty
-	@Size(min=1)
 	private String user_id;
-	@NotEmpty
 	private String name;
-	@NotEmpty
-	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z]).{8,15})", message = "영문자, 숫자가 포함된 8~15자리로 입력해 주세요.")
+//	@Pattern(regexp = "((?=.*\\d)(?=.*[a-z]).{8,15})", message = "영문자, 숫자가 포함된 8~15자리로 입력해 주세요.")
 	private String pw;
 	private String new_pw;
-	@Email
 	private String email;
 	private String phone;
 	private String channel;

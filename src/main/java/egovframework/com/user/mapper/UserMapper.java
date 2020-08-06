@@ -1,7 +1,6 @@
 package egovframework.com.user.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import egovframework.com.user.vo.UserVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -19,4 +18,6 @@ public interface UserMapper {
 	void updateUserPw(UserVo vo) throws Exception;
 
 	List<UserVo> selectUserList(UserVo vo) throws Exception;
+
+	int selectUserIdCheck(String user_id) throws Exception;
 }

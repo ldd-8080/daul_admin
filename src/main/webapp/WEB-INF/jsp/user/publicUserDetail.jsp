@@ -108,7 +108,7 @@
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="user_id" disabled="true"/>
+		    								<form:input type="text" class="form-control" path="user_id" readonly="true"/>
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>

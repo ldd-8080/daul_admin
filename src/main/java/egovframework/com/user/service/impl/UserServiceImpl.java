@@ -1,7 +1,6 @@
 package egovframework.com.user.service.impl;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -47,6 +46,11 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	@Override
 	public List<UserVo> selectUserList(UserVo vo) throws Exception {
 		return userMapper.selectUserList(vo);
+	}
+
+	@Override
+	public int selectUserIdCheck(String user_id) throws Exception {
+		return userMapper.selectUserIdCheck(user_id);
 	}
 
 }

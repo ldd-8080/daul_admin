@@ -1,10 +1,10 @@
 package egovframework.com.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +30,9 @@ public class UserController {
 	
 	@Resource(name = "userService")
 	private UserService userService;
+	
+	@Resource(name = "userValidator")
+	private UserValidator userValidator;
 	
 	@RequestMapping(value = "/userListPage.do")
 	public String suggestionListPage( @RequestParam("auth_type") String auth_type) {
@@ -114,8 +117,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/create.do", method=RequestMethod.POST)
-	public String createUser(@Valid UserVo vo) throws Exception {
+	public String createUser(UserVo vo, BindingResult result) throws Exception {
 		try {
+			userValidator.validate(vo, result);
+			
+			if (result.hasErrors()) {
+				log.debug("[사용자] 사용자 등록 validator ERROR");
+				log.debug(result.getFieldError().getDefaultMessage());
+				
+				if ("admin".equals(vo.getAuth_type())) {
+					return "/user/adminUserRegist";
+				} else {
+					return "/user/publicUserRegist";
+				}
+			}
+			
 			SecurityUtil securityUtil = new SecurityUtil();
 			String encryptPw = securityUtil.encryptSHA256(vo.getPwKey());
 			vo.setPw(encryptPw);
@@ -147,28 +163,22 @@ public class UserController {
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
-	
-//	@RequestMapping(value="/signUpPage.do")
-//	public String userSignUpPage(ModelMap model) {
-//		model.addAttribute("userVo", new UserVo());
-//		
-//		return "user/signUp";
-//	}
-//	
-//	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
-//	public String userSignUp(@Valid UserVo vo, BindingResult result) throws Exception {
-//		System.out.println(vo);
-//		if (result.hasErrors()) {
-//			log.debug("userSignUp Valid Error : " + result.getFieldError().getDefaultMessage());
-//			return "user/signUp";
-//		}
-//		
-//		SecurityUtil securityUtil = new SecurityUtil();
-//		String EncryptPw = securityUtil.encryptSHA256(vo.getPwKey());
-//		vo.setPw(EncryptPw);
-//		
-//		userService.createUser(vo);
-//		
-//		return "redirect:/main/main.do";
-//	}
+
+	@RequestMapping(value="/userIdCheck.do")
+	public ResponseEntity<?> userIdCheck(@RequestParam("user_id") String user_id) throws Exception {
+		Map<String, Object> resMap = new HashMap<>();
+		
+		try {
+			log.debug("[일반사용자] 일반사용자 아이디 중복 확인");
+			int iRes = userService.selectUserIdCheck(user_id);
+			
+			resMap.put("exist", iRes > 0);
+		} catch (Exception e) {
+			log.debug("[일반사용자] 일반사용자 아이디 중복 확인 실패");
+			e.printStackTrace();
+		}
+		
+		log.debug("[일반사용자] 일반사용자 아이디 중복 확인 완료");
+		return new ResponseEntity<>(resMap, HttpStatus.OK);
+	}
 }
