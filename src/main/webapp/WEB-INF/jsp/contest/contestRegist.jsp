@@ -32,8 +32,8 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title"/>
-									<form:errors path="title"/>
+									<form:input type="text" class="form-control" path="title" maxlength="100"/>
+									<form:errors style="color:red;" path="title"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -41,7 +41,7 @@
 								<label class="col-md-2 col-form-label">설명 </label>
 								<div class="col-md-8">
 									<form:textarea type="text" class="form-control" path="content" rows ="5"/>
-									<form:errors path="content"/>
+									<form:errors style="color:red;" path="content"/>
 								</div>
 							</div>
 							<div class="form-group row">

@@ -50,7 +50,7 @@
 											<label class="col-md-2 col-form-label">제목 </label>
 											<div class="col-md-8">
 												<form:input type="text" class="form-control" path="title"/>
-												<form:errors path="title"/>
+												<form:errors style="color:red;" path="title"/>
 											</div>
 										</div>
 										<div class="form-group row">
@@ -58,7 +58,7 @@
 											<label class="col-md-2 col-form-label">제안내용 </label>
 											<div class="col-md-8">
 												<form:textarea type="text" class="form-control" path="content" rows="5"/>
-												<form:errors path="content"/>
+												<form:errors style="color:red;" path="content"/>
 											</div>
 										</div>
 										<div class="form-gorup row mb-20">
@@ -234,7 +234,6 @@
 				
 				getSuggestionOpinionList();
 			}else{
-				console.log(data);
 				$("#chk-error-regist").text(data);
 			}
 		
@@ -319,6 +318,7 @@
 	    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
 	    			
 	    			$("#chk-error-modify").text('');
+	    			$("#chk-error-regist").text('');
 	    			
 		    		$("#sgstOpnDetailBtn").trigger("click");
 					
@@ -335,6 +335,8 @@
 		var opinion_idx = $(_this).parent().siblings().first().text();
 		
 		$("#opinion_idx").val(opinion_idx);
+		$("#opinion_content_textarea").val("");
+		$("#chk-error-regist").text('');
 	}
 	
 	function sgstOpnUpdate(type, _this) {
@@ -357,7 +359,6 @@
 				$("button[class='close']").click();
 				getSuggestionOpinionList();
 			}else{
-				console.log(data);
 				$("#chk-error-modify").text(data);
 			}
 		});

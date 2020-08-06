@@ -25,15 +25,15 @@
 								<label class="col-md-2 col-form-label">작성자 </label>
 								<div class="col-md-8">
 									<form:input type="text" readonly="true" class="form-control" value="${login.user_id}" path="create_user"/>
-									<form:errors path="create_user"/>
+									<form:errors style="color:red;" path="create_user"/>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title"/>
-									<form:errors path="title"/>
+									<form:input type="text" class="form-control" path="title"  maxlength="100"/>
+									<form:errors style="color:red;" path="title"/>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -41,7 +41,7 @@
 								<label class="col-md-2 col-form-label">제안내용 </label>
 								<div class="col-md-8">
 									<form:textarea type="text" class="form-control" path="content" rows ="5"/>
-									<form:errors path="content"/>
+									<form:errors style="color:red;" path="content"/>
 								</div>
 							</div>
 							<div class="form-gorup row mb-20">

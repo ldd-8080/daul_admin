@@ -29,13 +29,13 @@
       			<h4 class="example-title">작성자 유형</h4>
       			<input type="text" class="form-control" name="auth_type" value="${login.auth_type}" readonly/>
     			<h4 class="example-title">내용</h4>
-      			<textarea class="form-control" name="opinion_content" rows="5"></textarea>
-      			<span class="text-left" id="chk-error"></span>
+      			<textarea class="form-control" name="opinion_content" id="opinion_content_textarea" rows="5"></textarea>
+      			<span class="text-left" style="color:red;" id="chk-error-regist"></span>
       			<input type="hidden" name="suggestion_idx" value="${suggestionVo.suggestion_idx}"/>
       			<input type="hidden" name="opinion_idx" id="opinion_idx" value=""/>
       		</div>
         	
-        	<span class="text-left" id="chk-error-regist"></span>
+        	
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" id="suggestionOpinionRegistBtn" >등록 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
@@ -71,12 +71,11 @@
       			<input type="text" class="form-control" name="auth_type" id="detailAuthType" value="" readonly/>
     			<h4 class="example-title">내용</h4>
       			<textarea class="form-control" name="opinion_content" id="detailOpinionContent" rows="5"></textarea>
-      			<span class="text-left" id="chk-error-modify"></span>
+      			<span class="text-left" style="color:red;" id="chk-error-modify"></span>
       			<input type="hidden" name="suggestion_idx" id="detailSuggestionIdx" value="${suggestionVo.suggestion_idx}"/>
       			<input type="hidden" name="opinion_idx" id="detailOpinionIdx" value=""/>
       		</div>
         	
-        	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('mod', this)">수정 </button>
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="sgstOpnUpdate('del', this)">삭제 </button>

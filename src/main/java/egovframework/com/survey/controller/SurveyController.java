@@ -138,7 +138,6 @@ public class SurveyController {
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
 		
-		System.out.println(vo);
 		
 		if(bindingResult.hasErrors()) {
 			return "survey/surveyDetail";
@@ -290,9 +289,17 @@ public class SurveyController {
 		}
 	}
 	
-	@RequestMapping(value="/surveyOpinionRegist.do", method=RequestMethod.POST)
-	public ResponseEntity<?> surveyOpinionRegist(SurveyOpinionVo vo) throws Exception {
+	@RequestMapping(value="/surveyOpinionRegist.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public ResponseEntity<?> surveyOpinionRegist(SurveyOpinionVo vo, BindingResult bindingResult) throws Exception {
 		try {
+			
+			SurveyOpinionValidator surveyOpinionValidator = new SurveyOpinionValidator();
+			surveyOpinionValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
+			}
+			
 			log.debug("SurveyOpinionVo : " + vo);
 			String opinionIdx = vo.getOpinion_idx();
 			
@@ -327,9 +334,18 @@ public class SurveyController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/surveyOpinionModify.do", method=RequestMethod.POST)
-	public ResponseEntity<?> surveyOpinionModify(SurveyOpinionVo vo) throws Exception {
+	@RequestMapping(value="/surveyOpinionModify.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public ResponseEntity<?> surveyOpinionModify(SurveyOpinionVo vo, BindingResult bindingResult) throws Exception {
 		try {
+			
+			SurveyOpinionValidator surveyOpinionValidator = new SurveyOpinionValidator();
+			surveyOpinionValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
+			}
+			
+			
 			log.debug("[설문조사] 설문조사 댓글 수정");
 			log.debug("SurveyOpinionVo : " + vo);
 			surveyService.updateSurveyOpinion(vo);

@@ -53,6 +53,7 @@
 											<div class="col-md-8">
 												<form:input type="text" class="form-control" path="title" />
 												<form:errors path="title" />
+												<span class="text-left" style="color:red;" id="chk-error-title"></span>
 											</div>
 										</div>
 										<div class="form-group row">
@@ -62,6 +63,7 @@
 												<form:textarea type="text" class="form-control"
 													path="content" rows="5" />
 												<form:errors path="content" />
+												<span class="text-left" style="color:red;" id="chk-error-content"></span>
 											</div>
 										</div>
 										<div class="form-group row">
@@ -406,6 +408,8 @@
 	$("#contestModifyBtn").click(function() {
 		if (!confirm("수정 하시겠습니까?")) return false;
 		
+	
+		
 		$("#contestFile").attr("type", "text");
 		$("#contestFile").attr("type", "file");
 		
@@ -424,9 +428,44 @@
             data: formData
         });
         request.done(function(data){
-        	location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + data;
+        	
+        	console.log(typeof(data));
+        	if(typeof(data) == "object"){
+        		valid(data);
+        		return false;
+        	}
+        	
+        	if(typeof(data) == "string"){
+        		location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + data;
+        	}
+        });
+        request.fail(function(data){
+        	console.log(data);
+        	
         });
 	});
+	
+	function valid(data){	
+		$("#chk-error-title").text('');
+		$("#chk-error-content").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="title"){
+					$("#chk-error-title").text(obj[key]);
+					
+				}else if(key=="content"){
+					$("#chk-error-content").text(obj[key]);
+				}
+			
+			}
+		}
+		
+	
+		
+	}
 </script>
 
 

@@ -27,10 +27,10 @@ public class SuggestionValidator implements Validator {
 		if(content == null || content.trim().isEmpty()) {
 			errors.rejectValue("content","content","이 항목은 필수값 입니다.");
 		}		
-		if(title.length() >= 100) {
+		if(title.length() > 100) {
 			errors.rejectValue("title","title","제목은 100자 이내로 작성해주세요.");
 		}
-		if(content.length() >= 5000) {
+		if(content.length() > 5000) {
 			errors.rejectValue("content","content","제안은 5000자 이내로 작성해주세요.");
 		}
 		

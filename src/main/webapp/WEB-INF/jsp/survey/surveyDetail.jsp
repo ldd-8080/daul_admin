@@ -281,9 +281,13 @@
 		});
 		
 		request.done(function(data) {
-			$("button[class='close']").click();
-			
-			getSurveyOpinionList();
+			if (data === "success"){
+				$("button[class='close']").click();
+				
+				getSurveyOpinionList();
+			}else{
+				$("#chk-error-regist").text(data);
+			}
 		});
 		
 		request.fail(function(error) {
@@ -422,6 +426,10 @@
 	    	
 	    	rowClick: function(args) {
 	    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
+	    			
+	    			$("#chk-error-modify").text('');
+	    			
+	    			
 		    		$("#surveyOpnDetailBtn").trigger("click");
 					
 					$("#detailCreateUser").val(args.item.create_user);
@@ -437,6 +445,8 @@
 		var opinion_idx = $(_this).parent().siblings().first().text();
 		
 		$("#opinion_idx").val(opinion_idx);
+		$("#opinion_content_textarea").val("");
+		$("#chk-error-regist").text('');
 	}
 	
 	function surveyOpnUpdate(type, _this) {
@@ -454,9 +464,13 @@
 		});
 		
 		request.done(function(data) {
-			$("button[class='close']").click();
-			
-			getSurveyOpinionList();
+			if (data === "success"){
+				$("button[class='close']").click();
+				
+				getSurveyOpinionList();
+			}else{
+				$("#chk-error-modify").text(data);
+			}
 		});
 	}
 </script>

@@ -1,7 +1,6 @@
 package egovframework.com.contest.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.service.ContestService;
@@ -44,6 +45,8 @@ public class ContestController {
 	@Value("${file.downloadpath}")
 	private String filePath;
 
+	@Resource(name = "cmmnUtil")
+	private CmmnUtil cmmnUtil;
 
 	@RequestMapping(value = "/contestListPage.do")
 	public String suggestionListPage() {
@@ -75,32 +78,43 @@ public class ContestController {
 	}
 
 	@RequestMapping(value = "/contestRegist.do", method = RequestMethod.POST)
-	public String contestRegist(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
-
-		UserVo userVo = (UserVo) session.getAttribute("login");
-		vo.setCreate_user(userVo.getUser_id());
-		vo.setAdmin_contest_idx(contestService.selectAdminContestIdx());
-
-		System.out.println(vo);
-
-		log.debug("[나눔공모] 나눔공모 등록");
-		int result = contestService.registContest(vo);
-
-		if (result > 0) {
-			FileVo fileVo = new FileVo();
-
-			fileVo.setCreate_user(vo.getCreate_user());
-			fileVo.setIdx(vo.getAdmin_contest_idx());
-
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
-
-			log.debug("[나눔공모] 나눔공모 파일 등록");
-			for (int i = 0; i < fileList.size(); i++) {
-				contestService.insertFile(fileList.get(i));
-			}
-
+	public String contestRegist(HttpSession session, ContestVo vo, BindingResult bindingResult, HttpServletRequest request) throws Exception {
+		
+		ContestValidator contestValidator = new ContestValidator();
+		contestValidator.validate(vo, bindingResult);
+		
+		if(bindingResult.hasErrors()) {
+			return "contest/contestRegist";
 		}
-		return "redirect:/contest/contestListPage.do";
+		try {
+		
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setCreate_user(userVo.getUser_id());
+			vo.setAdmin_contest_idx(contestService.selectAdminContestIdx());
+	
+			System.out.println(vo);
+	
+			log.debug("[나눔공모] 나눔공모 등록");
+			int result = contestService.registContest(vo);
+	
+			if (result > 0) {
+				FileVo fileVo = new FileVo();
+	
+				fileVo.setCreate_user(vo.getCreate_user());
+				fileVo.setIdx(vo.getAdmin_contest_idx());
+	
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+	
+				log.debug("[나눔공모] 나눔공모 파일 등록");
+				for (int i = 0; i < fileList.size(); i++) {
+					contestService.insertFile(fileList.get(i));
+				}
+	
+			}
+			return "redirect:/contest/contestListPage.do";
+		}catch(Exception e){
+			return "common/error.jsp";
+		}
 	}
 
 	@RequestMapping(value = "contestDetail.do")
@@ -216,7 +230,6 @@ public class ContestController {
 			log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
 
 			for (int i = 0; i < fileList.size(); i++) {
-				System.out.println("노노노 오오오 ");
 				contestService.insertFile(fileList.get(i));
 			}
 
@@ -225,9 +238,16 @@ public class ContestController {
 		return "redirect:/contest/contestDetail.do?admin_contest_idx=" + vo.getAdmin_contest_idx();
 	}
 	@RequestMapping(value = "contestModify2")
-	public ResponseEntity<?> contestModify2(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> contestModify2(HttpSession session, ContestVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception {
 		try {
 			log.debug("ContestVo : " + vo);
+			
+			ContestValidator contestValidator = new ContestValidator();
+			contestValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
 			
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setUpdate_user(userVo.getUser_id());
@@ -271,8 +291,7 @@ public class ContestController {
 		
 		String stored_File_Name = fileVo.getSave_file_name();
 		String original_File_Name = fileVo.getOrg_file_name();
-		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
-
+		
 		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
 
 		response.setContentType("application/octet-stream");
@@ -295,6 +314,6 @@ public class ContestController {
 		return new ResponseEntity<>(opinionFileList, HttpStatus.OK);
 		
 	}
-
 	
+
 }
