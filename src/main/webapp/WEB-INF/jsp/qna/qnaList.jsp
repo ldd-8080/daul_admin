@@ -11,7 +11,7 @@
 	    <ol class="breadcrumb">
 	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
 	      <li class="breadcrumb-item"><a href="javascript:void(0)">게시판</a></li>
-	      <li class="breadcrumb-item active">Q&A</li>
+	      <li class="breadcrumb-item active">묻고답하기</li>
 	    </ol>
 	
 	    <div class="page-content">

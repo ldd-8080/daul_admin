@@ -114,8 +114,8 @@ function setBoardListTable(BoardList) {
 				itemTemplate: function(_, item) {
 	    			var result="";
 		    		console.log("length = " + item.content.length);
-	    			if(item.content.length > 35){
-	    				result = item.content.substring(0,35)+'...';		    				
+	    			if(item.content.length > 30){
+	    				result = item.content.substring(0,30)+'...';		    				
 	    			}else{
 	    				result = item.content;
 	    			}

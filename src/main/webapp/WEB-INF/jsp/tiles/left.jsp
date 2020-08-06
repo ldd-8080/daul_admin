@@ -74,12 +74,12 @@
 	             </li>
 	             <li class="site-menu-item">
 	               <a class="animsition-link" href="/faq/faqListPage.do">                    
-	                 <span class="site-menu-title">FAQ</span>
+	                 <span class="site-menu-title">자주하는질문</span>
 	               </a>
 	             </li>
 	             <li class="site-menu-item">
 	               <a class="animsition-link" href="/qna/qnaListPage.do">                    
-	                 <span class="site-menu-title">Q&A</span>
+	                 <span class="site-menu-title">묻고답하기</span>
 	               </a>
 	             </li>
 	           </ul>

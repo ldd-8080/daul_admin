@@ -105,7 +105,6 @@
 				{name : "admin_contest_idx", title : "번호", type : "text", width : 70, align : "center"}, 
 				{name : "create_user", title : "작성자", type : "text", width : 60}, 
 				{name : "title", title : "제목", type : "text", width : 150}, 
-				{name : "content", title : "내용", type : "text", width : 200}, 
 				{name : "create_date", title : "등록일", type : "text", width : 100, align : "center"}
 			],
 

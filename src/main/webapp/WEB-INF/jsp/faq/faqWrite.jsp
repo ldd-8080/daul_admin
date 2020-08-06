@@ -9,7 +9,7 @@
 <form:form action='/board/boardInsert.do' method="post"  modelAttribute="faqVo" enctype="multipart/form-data">
 <div class="page">
 	<div class="page-content container-fluid">
-	<h1>boardWirte</h1>
+	<h1></h1>
 	
 	<div class="example-wrap">
     	<h4 class="example-title">질문</h4>
