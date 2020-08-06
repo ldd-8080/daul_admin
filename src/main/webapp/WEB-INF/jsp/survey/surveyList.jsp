@@ -102,15 +102,15 @@
 		    data: surveyList,
 	
 		    fields: [
-		    	{name: "survey_idx",title: "번호", type: "text", width: 70, align: "center"},
-		    	{name: "create_user", title: "작성자", type: "text", width: 60},
+		    	{name: "survey_idx",title: "번호", type: "text", width: 50, align: "center"},
+		    	{name: "create_user", title: "작성자", type: "text", width: 40},
 		    	{name: "title", title: "제목", type: "text", width: 150}, 
-		    	{title: "설문기간", type: "text", width: 100, align: "center",
+		    	{title: "설문기간", type: "text", width: 150, align: "center",
 		    		itemTemplate: function(_, item) {
 		    			return item.s_date + " ~ " + item.e_date;
 		    		}
 	    		},
-		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
+		    	{name: "create_date", title: "등록일", type: "text", width: 70, align: "center"}
 	    	],
 	    	
 	    	rowClick: function(args) {

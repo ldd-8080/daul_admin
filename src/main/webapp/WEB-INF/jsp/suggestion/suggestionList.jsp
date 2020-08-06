@@ -104,8 +104,7 @@
 		    fields: [
 		    	{name: "suggestion_idx",title: "번호", type: "text", width: 70, align: "center"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 60},
-		    	{name: "title", title: "제목", type: "text", width: 150}, 
-		    	{name: "content", title: "내용", type: "text", width: 200}, 
+		    	{name: "title", title: "제목", type: "text", width: 150},
 		    	{name: "like_count", title: "공감", type: "text", width: 30, align: "center"}, 
 		    	{name: "pro_cnt", title: "전문가 댓글", type: "text", width: 50, align: "center"}, 
 		    	{name: "public_cnt", title: "일반 댓글", type: "text", width: 50, align: "center"}, 

@@ -228,9 +228,16 @@
 		});
 		
 		request.done(function(data) {
-			$("button[class='close']").click();
 			
-			getSuggestionOpinionList();
+			if (data === "success"){
+				$("button[class='close']").click();
+				
+				getSuggestionOpinionList();
+			}else{
+				console.log(data);
+				$("#chk-error-regist").text(data);
+			}
+		
 		});
 		
 		request.fail(function(error) {
@@ -310,6 +317,9 @@
 	    	
 	    	rowClick: function(args) {
 	    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
+	    			
+	    			$("#chk-error-modify").text('');
+	    			
 		    		$("#sgstOpnDetailBtn").trigger("click");
 					
 					$("#detailCreateUser").val(args.item.create_user);
@@ -342,9 +352,14 @@
 		});
 		
 		request.done(function(data) {
-			$("button[class='close']").click();
 			
-			getSuggestionOpinionList();
+			if (data === "success"){
+				$("button[class='close']").click();
+				getSuggestionOpinionList();
+			}else{
+				console.log(data);
+				$("#chk-error-modify").text(data);
+			}
 		});
 	}
 </script>

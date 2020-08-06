@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,8 +65,16 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/suggestionRegist.do", method=RequestMethod.POST)
-	public String createSuggestion(SuggestionVo vo, HttpServletRequest request) throws Exception{
+	public String createSuggestion(SuggestionVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception{
 		try {
+			
+			SuggestionValidator suggestionValidator = new SuggestionValidator();
+			suggestionValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return "suggestion/suggestionRegist";
+			}
+			
 			log.debug("SuggestionVo : " + vo);
 			String suggestionIdx = suggestionService.selectSuggestionIdx();
 			vo.setSuggestion_idx(suggestionIdx);
@@ -140,10 +149,20 @@ public class SuggestionController {
 	
 	
 	@RequestMapping(value="/suggestionModify.do", method=RequestMethod.POST)
-	public String suggestionModify(SuggestionVo vo, HttpServletRequest request) throws Exception{
+	public String suggestionModify(SuggestionVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception{
 		try {
+			
+			
 			log.debug("SuggestionVo : " + vo);
 			log.debug("[열린제안] 열린제안 수정");
+			
+			SuggestionValidator suggestionValidator = new SuggestionValidator();
+			suggestionValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return "suggestion/suggestionDetail";
+			}			
+			
 			suggestionService.updateSuggestion(vo);
 			
 			FileVo fileVo = new FileVo();
@@ -229,9 +248,18 @@ public class SuggestionController {
 		return "redirect:/suggestion/suggestionListPage.do";
 	}
 	
-	@RequestMapping(value="/suggestionOpinionRegist.do", method=RequestMethod.POST)
-	public ResponseEntity<?> suggestionOpinionRegist(SuggestionOpinionVo vo) throws Exception {
+	@RequestMapping(value="/suggestionOpinionRegist.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public ResponseEntity<?> suggestionOpinionRegist(SuggestionOpinionVo vo, BindingResult bindingResult) throws Exception {
 		try {
+			
+			SuggestionOpinionValidator suggestionOpinionValidator = new SuggestionOpinionValidator();
+			suggestionOpinionValidator.validate(vo, bindingResult);
+			
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
+			}
+			
 			log.debug("SuggestionOpinionVo : " + vo);
 			String opinionIdx = vo.getOpinion_idx();
 			
@@ -267,9 +295,18 @@ public class SuggestionController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/suggestionOpinionModify.do", method=RequestMethod.POST)
-	public ResponseEntity<?> suggestionOpinionModify(SuggestionOpinionVo vo) throws Exception {
+	@RequestMapping(value="/suggestionOpinionModify.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public ResponseEntity<?> suggestionOpinionModify(SuggestionOpinionVo vo, BindingResult bindingResult) throws Exception {
 		try {
+			
+			SuggestionOpinionValidator suggestionOpinionValidator = new SuggestionOpinionValidator();
+			suggestionOpinionValidator.validate(vo, bindingResult);
+			
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
+			}
+			
 			log.debug("[열린제안] 열린제안 댓글 수정");
 			log.debug("SuggestionOpinionVo : " + vo);
 			suggestionService.updateSuggestionOpinion(vo);
