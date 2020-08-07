@@ -79,6 +79,10 @@
             </map>
         </property>
     </bean>
+    
+  
+	
+
 	<!-- /For Pagination Tag -->
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -106,6 +110,24 @@
            <bean  class="egovframework.com.cmmn.interceptor.LoginInterceptor"/>
        </mvc:interceptor>
     </mvc:interceptors>
+    
+    
+    <beans profile="local1">   
+		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
+			<property name="rootPath" value="/Users/a1/attach"/>
+		</bean>
+	</beans>
+	<beans profile="local2">   
+		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
+			<property name="rootPath" value="/Users/a2/attach"/>
+		</bean>
+	</beans>
+	<beans profile="production">   
+		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
+			<property name="rootPath" value="/home/release"/>
+		</bean>
+	</beans>
+
     
 
 

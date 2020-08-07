@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +30,18 @@ import egovframework.com.board.vo.BoardVo;
 import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.cmmn.util.ProfileCls;
 import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
 	protected Log log = LogFactory.getLog(BoardController.class);
 	
+
+	
+	
+	@Autowired private ProfileCls profileCls;
+
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
@@ -55,6 +62,8 @@ public class BoardController {
 	@RequestMapping(value="/getBoardList.do")
 	public ResponseEntity<?> boardList(ModelMap model, BoardVo vo) throws Exception{
 		List<BoardVo> noticeList =null;
+		log.debug(profileCls.getRootPath()); // C:/home/profile 라는 문자열이 나옵니다.
+		
 		try {
 			 noticeList = boardService.selectBoardList(vo);
 			

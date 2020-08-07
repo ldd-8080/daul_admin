@@ -9,7 +9,7 @@ public class FileVo {
 	private String del_chk;
 	private String create_date;
 	private String attach_type;
-	
+
 	public String getIdx() {
 		return idx;
 	}

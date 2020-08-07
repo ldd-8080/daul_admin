@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
@@ -31,7 +32,11 @@ public class FileUtil {
 	@Value("${file.uploadpath}")
 	private String filePath;
 	
+	@Autowired(required=false)
+	private ProfileCls profileCls;
+	
     public List<FileVo> parseFileInfo(FileVo vo, HttpServletRequest request) throws Exception {
+    	log.debug(profileCls.getRootPath());
     	List<FileVo> fileList = new ArrayList<FileVo>();
     	List<MultipartFile> totalFile = new ArrayList<MultipartFile>();
     	
