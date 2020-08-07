@@ -35,15 +35,16 @@
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 </label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="user_id" disabled="true"/>
+		    								<form:input type="text" class="form-control" path="user_id" readonly="true"/>
 		    								<form:errors path="user_id"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">이름 </label>
+		    							<label class="col-md-2 col-form-label">이름 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
+		    								<form:errors path="name"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -55,16 +56,18 @@
 	    							</div>
 	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">전화번호 </label>
+		    							<label class="col-md-2 col-form-label">전화번호 <span class="required">*</span></label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="phone"/>
+		    								<form:input type="text" class="form-control" path="phone" placeholder="ex) xxx-xxxx-xxxx"/>
+		    								<form:errors path="phone"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">이메일 </label>
+		    							<label class="col-md-2 col-form-label">이메일 <span class="required">*</span></label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="email"/>
+		    								<form:input type="text" class="form-control" path="email" placeholder="ex) example@email.com"/>
+		    								<form:errors path="email"/>
 		    							</div>
 	    							</div>
 	    							<form:input type="hidden" path="auth_type"/>

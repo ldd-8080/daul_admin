@@ -252,11 +252,11 @@
 	
 	$("#userCreate").click(function() {
 		if (!userIdFlag) {
-			alert("중복확인이 되지않은 아이디입니다.");
+			alert("아이디를 확인해주세요.");
 			return false;
 		} 
 			
-		//passwordCheck();
+		passwordCheck();
 		
 		if (!pwFlag) {
 			alert("비밀번호를 확인해주세요.");

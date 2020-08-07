@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +32,9 @@ public class UserController {
 	
 	@Resource(name = "userValidator")
 	private UserValidator userValidator;
+	
+	@Resource(name = "userModifyValidator")
+	private UserModifyValidator userModifyValidator;
 	
 	@RequestMapping(value = "/userListPage.do")
 	public String suggestionListPage( @RequestParam("auth_type") String auth_type) {
@@ -79,14 +81,30 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/update.do", method = RequestMethod.POST)
-	public String userUpdate(@ModelAttribute UserVo vo) throws Exception {
+	public String userUpdate(UserVo vo, BindingResult result) throws Exception {
 		log.debug("UserVo : " + vo);
+		userModifyValidator.validate(vo, result);
+		
 		try {
+			if (result.hasErrors()) {
+				log.debug("[사용자] 사용자 수정 validator ERROR");
+				log.debug(result.getFieldError());
+				
+				if ("admin".equals(vo.getAuth_type())) {
+					return "/user/adminUserDetail";
+				} else {
+					return "/user/publicUserDetail";
+				}
+			}
+			
+			log.debug("[사용자] 사용자 수정");
 			userService.updateUser(vo);
 		} catch (Exception e) {
+			log.debug("[사용자] 사용자 수정 실패");
 			e.printStackTrace();
 		}
 		
+		log.debug("[사용자] 사용자 수정 완료");
 		return "redirect:/user/userListPage.do?auth_type=" + vo.getAuth_type();
 	}
 	
