@@ -4,7 +4,7 @@
 	namespace="egovframework.com.qna.mapper.QnaMapper">
 
 	<select id="selectQnaList" resultType="egovframework.com.qna.vo.QnaVo">
-	SELECT
+	SELECT  @rownum:=@rownum+1 						AS num,
 			qna_idx,
 			question,
 			content,
@@ -16,7 +16,7 @@
 			del_chk,
 			(select auth_type from `user` where user_id = create_user ) as auth_type 
 			
-		FROM daul.daul_qna
+		FROM daul.daul_qna, (SELECT @rownum:=0) TMP
 		WHERE del_chk = 'N'
 		<if test="search_type == 'title'">
 			AND question like concat('%',#{search},'%')

@@ -11,8 +11,17 @@ public class FaqVo extends SearchVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	private int num;
 	
 	
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public String getFaq_idx() {
 		return faq_idx;
 	}

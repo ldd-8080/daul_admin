@@ -302,8 +302,9 @@ function deleteFaq() {
 		    data: faqList,
 
 		    fields: [
-		    	{name: "faq_idx",title: "번호", type: "text", width: 70, align: "center"},
-		    	{name: "create_user", title: "작성자", type: "text", width: 60},
+		    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
+		    	{name: "faq_idx",title: "번호", type: "text", width: 70, align: "center", css: "non-display"},
+		    	{name: "create_user", title: "작성자", type: "text", width: 70},
 		    	{name: "question", title: "질의", type: "text", width: 150}, 
 		    	{name: "answer", title: "응답", type: "text", width: 200}, 
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}

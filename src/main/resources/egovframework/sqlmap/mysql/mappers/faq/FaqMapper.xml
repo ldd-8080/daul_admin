@@ -5,15 +5,16 @@
 	
 	<select id="selectFaqList" resultType="egovframework.com.faq.vo.FaqVo">	
 		SELECT 
+			@rownum:=@rownum+1 			         AS num,
 			faq_idx,
 			question,
 			answer,
 			create_user,
-			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
+			DATE_FORMAT(create_date, '%Y-%m-%d') AS create_date,
 			update_user,
-			DATE_FORMAT(update_date, '%Y-%m-%d') as update_date,
+			DATE_FORMAT(update_date, '%Y-%m-%d') AS update_date,
 			del_chk
-		FROM daul.daul_faq
+		FROM daul.daul_faq, (SELECT @rownum:=0) TMP
 		WHERE del_chk = 'N'
 		<if test="search_type == 'title'">
 			AND question like concat('%',#{search},'%')

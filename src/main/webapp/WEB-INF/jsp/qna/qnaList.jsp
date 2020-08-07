@@ -352,7 +352,8 @@ $(function() {
 
 		    
 		    fields: [
-		    	{name: "qna_idx",title: "번호", type: "text", width: 70, align: "center"},
+		    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
+		    	{name: "qna_idx",title: "번호", type: "text", width: 70, align: "center", css: "non-display"},
 		    	{title: "제목", type: "text", width: 200,
 		    		itemTemplate: function(_, item) {
 		    			
