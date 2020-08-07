@@ -98,7 +98,8 @@
 	</delete>
 	
 	<select id="selectUserList" resultType="egovframework.com.user.vo.UserVo">
-		SELECT user_id
+		SELECT @rownum:=@rownum+1 AS num 
+			 , user_id
 		     , name
 		     , pw
 		     , email
@@ -111,6 +112,7 @@
 		     , sms_chk
 		     , auth_type
 		  FROM daul.user
+		     , (SELECT @rownum:=0) TMP
 		 WHERE 1=1
 		   <choose>
 		   <when test="auth_type != null and 'admin'.equals(auth_type)">

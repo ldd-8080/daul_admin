@@ -36,30 +36,26 @@ public class UserController {
 	
 	@RequestMapping(value = "/userListPage.do")
 	public String suggestionListPage( @RequestParam("auth_type") String auth_type) {
-		
 		if(auth_type.equals("admin")) {
 			return "user/adminUserList";
 		}else {
 			return "user/publicUserList";
 		}
-	
 	}
 
 	@RequestMapping(value="/getUserList.do")
 	public ResponseEntity<?> userListPage(ModelMap model, @RequestParam("auth_type") String auth_type) throws Exception{
 		List<UserVo> userList = null;
-		System.out.println("auth_type = " + auth_type);
 		UserVo vo = new UserVo();
-		vo.setAuth_type(auth_type);
+		
 		try {
+			vo.setAuth_type(auth_type);
 			userList = userService.selectUserList(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
 		
 		return new ResponseEntity<>(userList, HttpStatus.OK);
-		
 	}
 	
 	@RequestMapping(value="userDetailPage.do")

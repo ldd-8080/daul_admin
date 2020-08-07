@@ -18,6 +18,8 @@ public class UserVo {
 	private String auth_type;
 	
 	private String key = "daul";
+	
+	private int num;
 
 	public String getUser_id() {
 		return user_id;
@@ -135,6 +137,14 @@ public class UserVo {
 		return getPw() + getKey();
 	}
 	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [user_id=" + user_id + ", name=" + name + ", pw=" + pw + ", email=" + email + ", phone=" + phone
