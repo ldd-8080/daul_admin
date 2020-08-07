@@ -18,6 +18,8 @@ public class SuggestionVo extends SearchVo{
 	private int pro_cnt;
 	private int public_cnt;
 	
+	private int num;
+	
 	public String getSuggestion_idx() {
 		return suggestion_idx;
 	}
@@ -89,6 +91,12 @@ public class SuggestionVo extends SearchVo{
 	}
 	public void setPublic_cnt(int public_cnt) {
 		this.public_cnt = public_cnt;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	@Override

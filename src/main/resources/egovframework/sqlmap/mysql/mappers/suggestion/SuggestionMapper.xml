@@ -55,54 +55,59 @@
 	</insert>
 	
 	<select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
-		SELECT sgst.suggestion_idx
-		     , SUM(pro_cnt)			AS pro_cnt
-		     , SUM(public_cnt)		AS public_cnt
-		     , sgst.title
-		     , sgst.content
-		     , sgst.like_count
-		     , sgst.create_user
-		     , sgst.create_date
+		SELECT @rownum:=@rownum+1 AS num
+		     , sgst.*
 		  FROM (
-		  		SELECT sm.suggestion_idx
-		  		     , sm.title
-		  		     , sm.content 
-		  		     , sm.like_count 
-		  		     , sm.create_user 
-		  		     , DATE_FORMAT(sm.create_date, '%Y-%m-%d') as create_date 
-		  		     , so.opinion_idx 
-		  		     , so.create_user AS opinion_create_user
-		  		     , u.auth_type 
-		  		     , (CASE WHEN u.auth_type = 'pro' THEN 1 ELSE 0 END) AS pro_cnt
-				     , (CASE WHEN u.auth_type = 'public' THEN 1 ELSE 0 END) AS public_cnt
-				     , (CASE WHEN u.auth_type = 'admin' THEN 1 ELSE 0 END) AS admin_cnt
-				  FROM daul.suggestion_main sm
-				  LEFT JOIN daul.suggestion_opinion so ON sm.suggestion_idx = so.suggestion_idx 
-				  LEFT JOIN daul.user u ON so.create_user = u.user_id
-				 WHERE sm.del_chk != 'Y'
-				   <if test="search_type == 'title'">
-				   AND title like concat('%', #{search}, '%')
-				   </if>
-				   <if test="search_type == 'content'">
-				   AND content like concat('%', #{search}, '%')
-				   </if>
-				   <if test="search_type == 'create_user'">
-				   AND create_user like concat('%', #{search}, '%')
-				   </if>
-				   <if test="search_s_date != null and search_s_date != ''">
-				   <![CDATA[
-				   AND sm.create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
-				   ]]>
-				   </if>
-				   <if test="search_e_date != null and search_e_date != ''">
-				   <![CDATA[
-				   AND sm.create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
-				   ]]>
-				   </if>
-				 ORDER BY sm.suggestion_idx
+				SELECT sgst.suggestion_idx
+				     , SUM(pro_cnt)			AS pro_cnt
+				     , SUM(public_cnt)		AS public_cnt
+				     , sgst.title
+				     , sgst.content
+				     , sgst.like_count
+				     , sgst.create_user
+				     , sgst.create_date
+				  FROM (
+				  		SELECT sm.suggestion_idx
+				  		     , sm.title
+				  		     , sm.content 
+				  		     , sm.like_count 
+				  		     , sm.create_user 
+				  		     , DATE_FORMAT(sm.create_date, '%Y-%m-%d') as create_date 
+				  		     , so.opinion_idx 
+				  		     , so.create_user AS opinion_create_user
+				  		     , u.auth_type 
+				  		     , (CASE WHEN u.auth_type = 'pro' THEN 1 ELSE 0 END) AS pro_cnt
+						     , (CASE WHEN u.auth_type = 'public' THEN 1 ELSE 0 END) AS public_cnt
+						     , (CASE WHEN u.auth_type = 'admin' THEN 1 ELSE 0 END) AS admin_cnt
+						  FROM daul.suggestion_main sm
+						  LEFT JOIN daul.suggestion_opinion so ON sm.suggestion_idx = so.suggestion_idx 
+						  LEFT JOIN daul.user u ON so.create_user = u.user_id
+						 WHERE sm.del_chk != 'Y'
+						   <if test="search_type == 'title'">
+						   AND title like concat('%', #{search}, '%')
+						   </if>
+						   <if test="search_type == 'content'">
+						   AND content like concat('%', #{search}, '%')
+						   </if>
+						   <if test="search_type == 'create_user'">
+						   AND create_user like concat('%', #{search}, '%')
+						   </if>
+						   <if test="search_s_date != null and search_s_date != ''">
+						   <![CDATA[
+						   AND sm.create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+						   ]]>
+						   </if>
+						   <if test="search_e_date != null and search_e_date != ''">
+						   <![CDATA[
+						   AND sm.create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+						   ]]>
+						   </if>
+						 ORDER BY sm.suggestion_idx
+				  	   ) sgst
+				 GROUP BY sgst.suggestion_idx
+				 ORDER BY sgst.suggestion_idx DESC
 		  	   ) sgst
-		 GROUP BY sgst.suggestion_idx
-		 ORDER BY sgst.suggestion_idx DESC
+		  	 , (SELECT @rownum:=0) TMP  
 	</select>
 	
 	<select id="selectSuggestion" resultType="egovframework.com.suggestion.vo.SuggestionVo">
@@ -188,10 +193,12 @@
 	</insert>
 	
 	<select id="selectSuggestionOpinionList" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
-		SELECT so.*
+		SELECT @rownum:=@rownum+1 AS num
+			 , so.*
 		     , u.auth_type 
 		  FROM daul.suggestion_opinion so
 		  LEFT JOIN daul.user u ON so.create_user = u.user_id 
+		  INNER JOIN (SELECT @rownum:=0) TMP
 		 <!-- WHERE so.del_chk != 'Y' --> 
 		 WHERE so.suggestion_idx = #{suggestion_idx}
 		 ORDER BY so.suggestion_ref

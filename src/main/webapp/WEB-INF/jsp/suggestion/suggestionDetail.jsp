@@ -279,7 +279,8 @@
 		    data: suggestionOpinionList,
 
 		    fields: [
-		    	{name: "opinion_idx",title: "번호", type: "text", width: 80, align: "center"}, 
+		    	{name: "num",title: "번호", type: "text", width: 80, align: "center"}, 
+		    	{name: "opinion_idx", title:"인덱스", type: "text", width: 80, css: "non-display"},
 		    	{title: "내용", type: "text", width: 250, 
 		    		itemTemplate: function(_, item) {
 						var result = "";
@@ -315,7 +316,7 @@
 	    	],
 	    	
 	    	rowClick: function(args) {
-	    		if (args.item.del_chk !== 'Y' && args.event.target.name !== 'opnToOpnModal') {
+	    		if (args.item.del_chk !== 'Y' && args.event.target.cellIndex !== 6 && args.event.target.name !== "opnToOpnModal") {
 	    			
 	    			$("#chk-error-modify").text('');
 	    			$("#chk-error-regist").text('');
@@ -332,7 +333,7 @@
 	}
 	
 	function opnToOpnRegistBtn(_this) {
-		var opinion_idx = $(_this).parent().siblings().first().text();
+		var opinion_idx = $(_this).parent().siblings(".non-display").text();
 		
 		$("#opinion_idx").val(opinion_idx);
 		$("#opinion_content_textarea").val("");

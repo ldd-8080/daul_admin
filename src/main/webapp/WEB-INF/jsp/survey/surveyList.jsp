@@ -102,7 +102,7 @@
 		    data: surveyList,
 	
 		    fields: [
-		    	{name: "survey_idx",title: "번호", type: "text", width: 50, align: "center"},
+		    	{name: "num",title: "번호", type: "text", width: 50, align: "center"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 40},
 		    	{name: "title", title: "제목", type: "text", width: 150}, 
 		    	{title: "설문기간", type: "text", width: 150, align: "center",

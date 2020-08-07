@@ -16,6 +16,9 @@ public class ContestVo extends SearchVo{
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	
+	private int num;
+	
 	public String getAdmin_contest_idx() {
 		return admin_contest_idx;
 	}
@@ -94,6 +97,13 @@ public class ContestVo extends SearchVo{
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
 	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	@Override
 	public String toString() {
 		return "ContestVo [admin_contest_idx=" + admin_contest_idx + ", contest_topic=" + contest_topic + ", title="

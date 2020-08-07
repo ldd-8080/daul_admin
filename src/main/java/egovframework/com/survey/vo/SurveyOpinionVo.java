@@ -17,6 +17,8 @@ public class SurveyOpinionVo extends UserVo{
 	private int survey_indent;
 	private int survey_step;
 	
+	private int num;
+	
 	public String getOpinion_idx() {
 		return opinion_idx;
 	}
@@ -94,6 +96,12 @@ public class SurveyOpinionVo extends UserVo{
 	}
 	public void setSurvey_step(int survey_step) {
 		this.survey_step = survey_step;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	@Override

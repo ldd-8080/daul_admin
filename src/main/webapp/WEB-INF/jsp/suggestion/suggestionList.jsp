@@ -102,7 +102,7 @@
 		    data: sgstList,
 	
 		    fields: [
-		    	{name: "suggestion_idx",title: "번호", type: "text", width: 70, align: "center"},
+		    	{name: "num",title: "번호", type: "text", width: 70, align: "center"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 60},
 		    	{name: "title", title: "제목", type: "text", width: 150},
 		    	{name: "like_count", title: "공감", type: "text", width: 30, align: "center"}, 

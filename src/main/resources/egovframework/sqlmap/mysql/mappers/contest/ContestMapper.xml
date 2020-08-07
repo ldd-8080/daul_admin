@@ -4,17 +4,18 @@
 	namespace="egovframework.com.contest.mapper.ContestMapper">
 	
 	<select id="selectContestList" resultType="egovframework.com.contest.vo.ContestVo">
-		SELECT 
+		SELECT @rownum:=@rownum+1 						AS num,
 			   admin_contest_idx,
 			   create_user,
 			   title,
 			   content,
-			   DATE_FORMAT(contest_s_date, '%Y-%m-%d') as contest_s_date,
-			   DATE_FORMAT(contest_e_date, '%Y-%m-%d') as contest_e_date,
-			   DATE_FORMAT(submit_s_date, '%Y-%m-%d')  as submit_s_date,
-			   DATE_FORMAT(submit_e_date, '%Y-%m-%d')  as submit_e_date,
-			   DATE_FORMAT(create_date, '%Y-%m-%d')    as create_date
+			   DATE_FORMAT(contest_s_date, '%Y-%m-%d') 	AS contest_s_date,
+			   DATE_FORMAT(contest_e_date, '%Y-%m-%d') 	AS contest_e_date,
+			   DATE_FORMAT(submit_s_date, '%Y-%m-%d')  	AS submit_s_date,
+			   DATE_FORMAT(submit_e_date, '%Y-%m-%d')  	AS submit_e_date,
+			   DATE_FORMAT(create_date, '%Y-%m-%d')    	AS create_date
 		  FROM daul.contest_admin
+		     , (SELECT @rownum:=0) TMP
 		 WHERE del_chk != 'Y'
 		 <if test="search_type == 'title'">
 		 	AND title like concat('%',#{search},'%')

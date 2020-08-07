@@ -24,7 +24,7 @@ public class SurveyVo extends SearchVo{
 	
 	private String q_seq;
 	
-	
+	private int num;
 	
 	public String getQ_seq() {
 		return q_seq;
@@ -117,6 +117,13 @@ public class SurveyVo extends SearchVo{
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
 	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
 	@Override
 	public String toString() {
 		return "SurveyVo [survey_idx=" + survey_idx + ", title=" + title + ", content=" + content + ", survey_type="

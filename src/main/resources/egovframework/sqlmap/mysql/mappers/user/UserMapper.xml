@@ -98,7 +98,7 @@
 	</delete>
 	
 	<select id="selectUserList" resultType="egovframework.com.user.vo.UserVo">
-		SELECT @rownum:=@rownum+1 AS num 
+		SELECT @rownum:=@rownum+1 AS num
 			 , user_id
 		     , name
 		     , pw

@@ -57,6 +57,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/web-icons/web-icons.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/icon.css">
         
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css">
 <!--[if lt IE 9]>
 <script src="../../global/vendor/html5shiv/html5shiv.min.js"></script>
 <![endif]-->

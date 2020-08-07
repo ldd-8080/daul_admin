@@ -109,7 +109,7 @@
 			data : ContestList,
 
 			fields : [ 
-				{name : "user_idx", title : "번호", type : "text", width : 50, align : "center"}, 
+				{name : "num", title : "번호", type : "text", width : 50, align : "center"}, 
 				{name : "user_id", title : "아이디", type : "text", width : 70}, 
 				{title : "유형", width : 70, align: "center",	    		
 					itemTemplate: function(_, item) {

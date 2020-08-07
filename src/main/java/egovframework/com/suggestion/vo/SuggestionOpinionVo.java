@@ -17,6 +17,8 @@ public class SuggestionOpinionVo extends UserVo{
 	private int suggestion_indent;
 	private int suggestion_step;
 	
+	private int num;
+	
 	public String getOpinion_idx() {
 		return opinion_idx;
 	}
@@ -94,6 +96,12 @@ public class SuggestionOpinionVo extends UserVo{
 	}
 	public void setSuggestion_step(int suggestion_step) {
 		this.suggestion_step = suggestion_step;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
 	}
 	
 	@Override
