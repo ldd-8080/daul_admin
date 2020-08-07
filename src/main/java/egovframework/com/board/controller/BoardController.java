@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
@@ -19,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
@@ -43,6 +44,9 @@ public class BoardController {
 	@Resource(name="fileUtil")
 	private FileUtil fileUtil;
 
+	@Resource(name = "cmmnUtil")
+	private CmmnUtil cmmnUtil;
+	
 	@RequestMapping(value = "/boardListPage.do")
 	public String boardListPage() {
 		return "board/boardList";
@@ -79,52 +83,71 @@ public class BoardController {
 	
 	@RequestMapping(value = "/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(ModelMap model) throws Exception {
+		
+	
 		model.addAttribute("boardVo", new BoardVo());
 		return "board/boardWrite";
 	}
 	
 	
 	@RequestMapping(value ="/boardInsert.do", method=RequestMethod.POST)
-	public String boardInsert(HttpSession session,@ModelAttribute @Valid BoardVo vo,ModelMap model, HttpServletRequest request) 
+	public String boardInsert(HttpSession session,BoardVo vo, BindingResult bindingResult, HttpServletRequest request) 
     		throws Exception {
-
-       UserVo userVo = (UserVo) session.getAttribute("login");
-       
-       vo.setNotice_idx(boardService.selectNoticeIdx());
-         
-       FileVo fileVo = new FileVo();
 		
-		fileVo.setCreate_user(vo.getCreate_user());
-		fileVo.setIdx(vo.getNotice_idx());
+		try {
+			BoardValidator boardValidator = new BoardValidator();
+			boardValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return "board/boardWrite";
+			}
+			System.out.println("boardInsert.do======");
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			   
+			vo.setNotice_idx(boardService.selectNoticeIdx());
+			     
+			FileVo fileVo = new FileVo();
+				
+			fileVo.setCreate_user(vo.getCreate_user());
+			fileVo.setIdx(vo.getNotice_idx());
+				
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+			System.out.println("fileList == " + fileList);
+			
+			for(int i = 0; i<fileList.size(); i++) {
+				fileVo = fileList.get(i);
+				boardService.insertFile(fileVo);
+			}		
+			//vo.setReg_user(userVo.getUser_seq());
+		    boardService.insertBoard(vo);
+		   
+		    //boardService.insertBoard(commandMap);
+		 
 		
-		List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
-		System.out.println("fileList == " + fileList);
-		
-		for(int i = 0; i<fileList.size(); i++) {
-			fileVo = fileList.get(i);
-			boardService.insertFile(fileVo);
-		}		
-        //vo.setReg_user(userVo.getUser_seq());
-        boardService.insertBoard(vo);
-       
-        //boardService.insertBoard(commandMap);
-         
-        try {
 			List<BoardVo> boardList = boardService.selectBoardList(vo);
-			model.addAttribute("resultList",boardList);
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
+			e.printStackTrace();
+			return "common/error.jsp";
 		}
-        
-        return "redirect:/board/boardListPage.do";
+		
+		return "redirect:/board/boardListPage.do";
     }
 	
 	@RequestMapping(value = "noticeModify",method = RequestMethod.POST)
-	public ResponseEntity<?> noticeModify(HttpSession session, BoardVo vo, HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> noticeModify(HttpSession session, BoardVo vo, BindingResult bindingResult, HttpServletRequest request) throws Exception {
 		try {
+			
+			BoardValidator boardValidator = new BoardValidator();
+			boardValidator.validate(vo, bindingResult);
+			
+			
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setUpdate_user(userVo.getUser_id());
 			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
 			log.debug("[공지사항] 공지사항 수정");
 			int result = boardService.updateNotice(vo);
 			

@@ -76,7 +76,7 @@
 		        <div class="col-md-12">
                 	<div class="example example-buttons">                  
                      	<div>
-               	      		<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" data-toggle="modal" data-target="#faqPositionCenter" href="#" >글쓰기</button>
+               	      		<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" data-toggle="modal" data-target="#faqPositionCenter" id = "faqPositionCenterBtn" href="#" >글쓰기</button>
                	      		<button type="button"  style="display:none;" class="btn btn-squared btn-info" id = "faqUpdate" data-toggle="modal" data-target="#faqUpdatePositionCenter" href="#" >수정</button>
                     	</div>                     
                 	</div>
@@ -100,11 +100,13 @@
         <form id="faq-modal-form">
         	<div class="example-wrap">
         		<h4 class="example-title">작성자</h4>
-      			<input type="text" class="form-control" id="inputPlaceholder"  value="${login.user_id}"/>
+      			<input type="text" readonly="true" class="form-control" id="inputPlaceholder"  value="${login.user_id}"/>
     			<h4 class="example-title">질의</h4>
-      			<textarea class="form-control"id="question" name="question" rows="5"></textarea>
+      			<textarea class="form-control" id="question-reg" name="question" rows="5"></textarea>
+      			<span class="text-left" style="color:red;" id="chk-error-question"></span>
       			<h4 class="example-title">응답</h4>
-      			<textarea class="form-control"id="answer"name="answer" rows="5"></textarea>
+      			<textarea class="form-control" id="answer-reg"name="answer" rows="5"></textarea>
+      			<span class="text-left" style="color:red;" id="chk-error-answer"></span>
       		</div>
         	
         	<span class="text-left" id="chk-error"></span>
@@ -177,6 +179,12 @@
 
 $(function() {
 
+	$("#faqPositionCenterBtn").click(function(){
+		$("#chk-error-question").text('');
+		$("#chk-error-answer").text('');
+		$("#question-reg").val('');
+		$("#answer-reg").val('');
+	});
 	
 	$("#faq-modal-btn").click(function() {
 		insertFaq();
@@ -202,6 +210,10 @@ function insertFaq() {
 		data: $("#faq-modal-form").serialize()
 	});
 	request.done(function(data) {
+		if(typeof(data) == "object"){
+    		valid(data);
+    		return false;
+    	}
 		
 		if (data === "success") {
 			
@@ -228,6 +240,10 @@ function updateFaq() {
 		data: $("#faq-modal-update-form").serialize()
 	});
 	request.done(function(data) {
+		if(typeof(data) == "object"){
+    		valid(data);
+    		return false;
+    	}
 		
 		if (data === "success") {
 			getFaqList();
@@ -340,5 +356,25 @@ function deleteFaq() {
 		}
 	}
 					
+	
+	function valid(data){	
+		$("#chk-error-question").text('');
+		$("#chk-error-answer").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="question"){
+					$("#chk-error-question").text(obj[key]);
+					
+				}else if(key=="answer"){
+					$("#chk-error-answer").text(obj[key]);
+				}
+			
+			}
+		}
+	}
+	
 	
 </script>

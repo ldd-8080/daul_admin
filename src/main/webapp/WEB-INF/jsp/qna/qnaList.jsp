@@ -100,9 +100,11 @@
       			<textarea class="form-control"id="question_content" rows="5" readonly></textarea>
       			<h4 class="example-title">답글제목</h4>
       			<input type="text" class="form-control" id="reply_title" name="question" value="답변입니다."/>
+      			<span class="text-left" style="color:red;" id="chk-error-question-reg"></span>
     			<h4 class="example-title">답글내용</h4>
       			<textarea class="form-control"id="reply_content" name="content" rows="5"></textarea>
-
+				<span class="text-left" style="color:red;" id="chk-error-content-reg"></span>
+				
 				<input type="hidden" id="qna_idx_reply" name="qna_idx"/>
 				<input type="hidden" id="ref_reply" name="ref"/>
       		</div>
@@ -142,8 +144,10 @@
       			<input type="text" class="form-control" id="detail_create_user" readonly/>	
         		<h4 class="example-title">질문제목</h4>
       			<textarea class="form-control"id="detail_qustion" rows="5" readonly></textarea>
+ 
       			<h4 class="example-title">질문내용</h4>
       			<textarea class="form-control"id="detail_content" rows="5" readonly></textarea>
+
 
 				<input type="hidden" id="qna_idx_detail" name="qna_idx"/>
 				<input type="hidden" id="parent_qna_idx_detail" name="parent_qna_idx"/>
@@ -184,8 +188,10 @@
       			<input type="text" class="form-control" id="update_create_user" readonly/>	
         		<h4 class="example-title">질문제목</h4>
       			<textarea class="form-control"id="update_qustion" name = "question" rows="5" ></textarea>
+      			<span class="text-left" style="color:red;" id="chk-error-question-mod"></span>
       			<h4 class="example-title">질문내용</h4>
       			<textarea class="form-control"id="update_content" name = "content" rows="5" ></textarea>
+      			<span class="text-left" style="color:red;" id="chk-error-content-mod"></span>
 
 				<input type="hidden" id="qna_idx_update" name="qna_idx"/>
 				
@@ -214,8 +220,19 @@
 <script type="text/javascript">
 
 
+	function relpyBtnClick(){
+		$("#reply_title").val("답변입니다.");
+		$("#reply_content").val('');
+		$("#chk-error-question-reg").text("");
+		$("#chk-error-content-reg").text('');
+	}
 $(function() {
-
+	
+	$("#qnaPositionCenterBtn").click(function(){
+		console.log("12312312321");
+		$("#chk-error-question-reg").text("");
+		$("#chk-error-content-reg").text('');
+	});
 	
 	$("#qna-modal-btn").click(function() {
 		insertQnaReply();
@@ -246,8 +263,10 @@ $(function() {
 			data: $("#qna-modal-reply-form").serialize()
 		});
 		request.done(function(data) {
-			console.log(data);
-			console.log("request done");
+			if(typeof(data) == "object"){
+	    		valid_reg(data);
+	    		return false;
+	    	}
 			
 			if (data === "success") {
 				getQnaList();
@@ -272,8 +291,10 @@ $(function() {
 			data: $("#qna-modal-update-form").serialize()
 		});
 		request.done(function(data) {
-			console.log(data);
-			console.log("request done");
+			if(typeof(data) == "object"){
+	    		valid_mod(data);
+	    		return false;
+	    	}
 			
 			if (data === "success") {
 				getQnaList();
@@ -298,8 +319,6 @@ $(function() {
 			data: $("#qna-modal-update-form").serialize()
 		});
 		request.done(function(data) {
-			console.log(data);
-			console.log("request done");
 			
 			if (data === "success") {
 				getQnaList();
@@ -354,15 +373,14 @@ $(function() {
 		    			var result="";
 		    		
 		    			if(item.parent_qna_idx == null){
-		    				result += '&nbsp;<button type="button" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaPositionCenter" href="#">답변</button>';		    				
+		    				result += '&nbsp;<button type="button" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaPositionCenter" id="qnaPositionCenterBtn" onclick="relpyBtnClick()" href="#">답변</button>';		    				
 		    			}
 		    			return result;
 		    		}	
 		    	}
 	    	],
 	    	rowClick: function(args) {
-	    		console.log(args.event.target.tagName == "BUTTON");
-	    		
+	    	
 	    		
 	    		if(args.event.target.tagName == "BUTTON"){
 	    			document.getElementById("qna_idx_reply").value = args.item.qna_idx;
@@ -371,7 +389,9 @@ $(function() {
 	    		}else if(args.event.target.cellIndex == 6){
 	    			
 	    		}else{
-
+	    			$("#chk-error-question-mod").text('');
+		    		$("#chk-error-content-mod").text('');
+		    		
 	    			var session_id = "${login.user_id}";
 		    	
 		    		document.getElementById("question_content").value = args.item.content;
@@ -428,6 +448,46 @@ $(function() {
 		}
 	}
 		
+	
+	function valid_reg(data){	
+		$("#chk-error-question-reg").text('');
+		$("#chk-error-content-reg").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="question"){
+					$("#chk-error-question-reg").text(obj[key]);
+					
+				}else if(key=="content"){
+					$("#chk-error-content-reg").text(obj[key]);
+				}
+			
+			}
+		}
+	}
+	
+	function valid_mod(data){	
+		
+		console.log("asdfasdf11");
+		$("#chk-error-question-mod").text("");
+		$("#chk-error-content-mod").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="question"){
+					$("#chk-error-question-mod").text(obj[key]);
+					
+				}else if(key=="content"){
+					$("#chk-error-content-mod").text(obj[key]);
+				}
+			
+			}
+		}
+	}
 </script>
 	
 

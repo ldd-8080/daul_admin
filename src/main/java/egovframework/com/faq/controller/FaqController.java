@@ -13,12 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.faq.service.FaqService;
 import egovframework.com.faq.vo.FaqVo;
 import egovframework.com.user.vo.UserVo;
@@ -30,6 +32,9 @@ public class FaqController {
 	
 	@Resource(name = "faqService")
 	private FaqService faqService;
+	
+	@Resource(name = "cmmnUtil")
+	private CmmnUtil cmmnUtil;
 	
 	@RequestMapping(value = "/faqListPage.do")
 	public String suggestionListPage() {
@@ -57,17 +62,24 @@ public class FaqController {
 	
 	@RequestMapping(value="/insertFaq.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity insertFaq(HttpSession session, @ModelAttribute FaqVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity insertFaq(HttpSession session,FaqVo vo , BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
-		       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
-		    	   throw new Exception(); 
-		       }
-			   UserVo userVo = (UserVo) session.getAttribute("login");
-		       String sessionUser = userVo.getUser_id();
-		       vo.setCreate_user(sessionUser);
-		       vo.setUpdate_user(sessionUser);
-		       faqService.insertFaq(vo);
+			FaqValidator faqValidator = new FaqValidator();
+			faqValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
+			
+	       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
+	    	   throw new Exception(); 
+	       }
+		   UserVo userVo = (UserVo) session.getAttribute("login");
+	       String sessionUser = userVo.getUser_id();
+	       vo.setCreate_user(sessionUser);
+	       vo.setUpdate_user(sessionUser);
+	       faqService.insertFaq(vo);
 			
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}catch(Exception e) {
@@ -77,8 +89,15 @@ public class FaqController {
 	
 	@RequestMapping(value="/updateFaq.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity updateFaq(HttpSession session, @ModelAttribute FaqVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity updateFaq(HttpSession session, FaqVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
+			
+			FaqValidator faqValidator = new FaqValidator();
+			faqValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
 			
 		       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
 		    	   throw new Exception(); 

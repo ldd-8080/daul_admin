@@ -86,6 +86,7 @@ public class ContestController {
 		if(bindingResult.hasErrors()) {
 			return "contest/contestRegist";
 		}
+		
 		try {
 		
 			UserVo userVo = (UserVo) session.getAttribute("login");
@@ -210,35 +211,9 @@ public class ContestController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
+	
 	@RequestMapping(value = "contestModify")
-	public String contestModify(HttpSession session, ContestVo vo, HttpServletRequest request) throws Exception {
-		System.out.println(vo);
-		log.debug("[나눔공모] 나눔공모 수정");
-
-		UserVo userVo = (UserVo) session.getAttribute("login");
-		vo.setUpdate_user(userVo.getUser_id());
-
-		int result = contestService.updateContest(vo);
-		if (result > 0) {
-			FileVo fileVo = new FileVo();
-
-			fileVo.setCreate_user(userVo.getUser_id());
-			fileVo.setIdx(vo.getAdmin_contest_idx());
-
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
-
-			log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
-
-			for (int i = 0; i < fileList.size(); i++) {
-				contestService.insertFile(fileList.get(i));
-			}
-
-		}
-
-		return "redirect:/contest/contestDetail.do?admin_contest_idx=" + vo.getAdmin_contest_idx();
-	}
-	@RequestMapping(value = "contestModify2")
-	public ResponseEntity<?> contestModify2(HttpSession session, ContestVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception {
+	public ResponseEntity<?> contestModify(HttpSession session, ContestVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception {
 		try {
 			log.debug("ContestVo : " + vo);
 			

@@ -14,11 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.qna.service.QnaService;
 import egovframework.com.qna.vo.QnaVo;
@@ -31,6 +33,9 @@ public class QnaController {
 	
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
+	
+	@Resource(name = "cmmnUtil")
+	private CmmnUtil cmmnUtil;
 	
 	@RequestMapping(value="/getQnaList.do", method = RequestMethod.GET)
 	public ResponseEntity<?> qnaList(ModelMap model, QnaVo vo) throws Exception{
@@ -51,9 +56,14 @@ public class QnaController {
 	
 	
 	@RequestMapping(value="/insertQnaReply",method = RequestMethod.POST)
-	public ResponseEntity insertQnaReply(HttpSession session, @ModelAttribute QnaVo vo,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity insertQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
-			System.out.println(vo);
+			QnaValidator qnaValidator = new QnaValidator();
+			qnaValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
 			
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    String sessionUser = userVo.getUser_id();
@@ -68,9 +78,15 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/updateQnaReply",method = RequestMethod.POST)
-	public ResponseEntity updateQnaReply(HttpSession session, @ModelAttribute QnaVo vo,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity updateQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult ,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
-			System.out.println(vo);
+			QnaValidator qnaValidator = new QnaValidator();
+			qnaValidator.validate(vo, bindingResult);
+			
+			if(bindingResult.hasErrors()) {
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
+			}
+			
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    String sessionUser = userVo.getUser_id();
 		    vo.setUpdate_user(sessionUser);

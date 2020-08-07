@@ -421,7 +421,7 @@
 		
 		var request = $.ajax({
             method: 'POST',
-            url : "/contest/contestModify2.do",
+            url : "/contest/contestModify.do",
             enctype: "multipart/form-data",
             processData: false,
             contentType: false,
@@ -429,7 +429,7 @@
         });
         request.done(function(data){
         	
-        	console.log(typeof(data));
+        	
         	if(typeof(data) == "object"){
         		valid(data);
         		return false;
@@ -462,9 +462,6 @@
 			
 			}
 		}
-		
-	
-		
 	}
 </script>
 

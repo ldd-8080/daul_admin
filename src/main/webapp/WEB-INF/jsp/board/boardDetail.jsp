@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     
 <!-- Page -->
@@ -35,6 +34,7 @@
 								<div class="col-md-8">
 									<form:input type="text"  class="form-control" path="title"/>
 									<form:errors path="title"/>
+									<span class="text-left" style="color:red;" id="chk-error-title"></span>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -43,6 +43,7 @@
 								<div class="col-md-8">
 									<form:textarea type="text" class="form-control" path="content" rows="5"/>
 									<form:errors path="content"/>
+									<span class="text-left" style="color:red;" id="chk-error-content"></span>
 								</div>
 							</div>
 					    	<div class="form-group row">
@@ -127,7 +128,15 @@
 		});
 		
 		request.done(function(data){
+			
+		   	if(typeof(data) == "object"){
+        		valid(data);
+        		return false;
+        	}
+        	
+		   	if(typeof(data) == "string"){
 			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + data;
+		   	}
 		});
 	});
 	
@@ -266,6 +275,25 @@
 			console.log("request fail");
 		});
 	});
+	
+	function valid(data){	
+		$("#chk-error-title").text('');
+		$("#chk-error-content").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="title"){
+					$("#chk-error-title").text(obj[key]);
+					
+				}else if(key=="content"){
+					$("#chk-error-content").text(obj[key]);
+				}
+			
+			}
+		}
+	}
 </script>
 
 

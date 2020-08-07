@@ -257,6 +257,7 @@
 	
 	$("#surveyOpnRegBtn").click(function() {
 		$("#opinion_idx").val("");
+		$("#opinion_content_textarea").val("");
 	});
 	
 	function submitConfirm($type) {
