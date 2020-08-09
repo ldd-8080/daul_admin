@@ -35,12 +35,13 @@ import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
+	@Autowired 
+	private ProfileCls profileCls;
 	protected Log log = LogFactory.getLog(BoardController.class);
 	
 
 	
 	
-	@Autowired private ProfileCls profileCls;
 
 	@Resource(name = "boardService")
 	private BoardService boardService;
