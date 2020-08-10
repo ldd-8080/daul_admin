@@ -109,4 +109,9 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 		suggestionMapper.deleteAllOpinion(vo);
 	}
 
+	@Override
+	public FileVo selectDownloadFile(FileVo fileVo) throws Exception {
+		return suggestionMapper.selectDownloadFile(fileVo);
+	}
+
 }

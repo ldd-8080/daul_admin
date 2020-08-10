@@ -45,4 +45,6 @@ public interface SuggestionService {
 
 	void deleteAllOpinion(SuggestionVo vo) throws Exception;
 
+	FileVo selectDownloadFile(FileVo fileVo) throws Exception;
+
 }

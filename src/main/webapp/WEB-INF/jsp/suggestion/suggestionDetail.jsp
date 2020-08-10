@@ -124,6 +124,19 @@
 <script type="text/javascript">
 	getSuggestionOpinionList();
 	
+	$(document).ready(function(){
+		$("a[name='file']").on("click",function(e){
+			e.preventDefault();
+			fn_downloadFile($(this));
+		});
+   	});
+   
+  	function fn_downloadFile(obj){
+		var save_file_name = obj.parent().find("input[name='save_file_name']").val();
+		console.log(save_file_name);
+		location.href = "${pageContext.request.contextPath}/suggestion/downloadFile.do?save_file_name=" + save_file_name;
+  	}
+	
 	$(window).on("load", function() {
 		var _repFileTarget = $("div[class='dropify-preview']");
 		_repFileTarget.find("span[class='dropify-render']").append("<img src='/suggestion/getImg.do?suggestion_idx=${suggestionVo.suggestion_idx}'>");

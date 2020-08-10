@@ -98,7 +98,7 @@
 	});
    
 	function fn_downloadFile(obj){
-		var save_file_name = obj.parent().find("#save_file_name").val();
+		var save_file_name = obj.siblings("input[name='save_file_name']").val();
 		location.href = "${pageContext.request.contextPath}/board/downloadFile.do?save_file_name=" + save_file_name;
 	}
 	

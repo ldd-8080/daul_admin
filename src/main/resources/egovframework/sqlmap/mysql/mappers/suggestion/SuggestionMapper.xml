@@ -257,4 +257,11 @@
 		 WHERE suggestion_idx = #{suggestion_idx}
 		   AND del_chk != 'Y'
 	</update>
+	
+	<select id="selectDownloadFile" resultType="egovframework.com.cmmn.util.FileVo">
+		SELECT org_file_name
+		     , save_file_name
+		  FROM daul.suggestion_attach
+		 WHERE save_file_name = #{save_file_name}
+	</select>
 </mapper>

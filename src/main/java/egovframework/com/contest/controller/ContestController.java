@@ -1,7 +1,5 @@
 package egovframework.com.contest.controller;
 
-import java.io.File;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -10,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,9 +37,6 @@ public class ContestController {
 
 	@Resource(name = "fileUtil")
 	private FileUtil fileUtil;
-
-	@Value("${file.downloadpath}")
-	private String filePath;
 
 	@Resource(name = "cmmnUtil")
 	private CmmnUtil cmmnUtil;
@@ -254,27 +247,22 @@ public class ContestController {
 
 	@RequestMapping(value = "/downloadFile.do", method = RequestMethod.GET)
 	public void downloadFile(HttpServletResponse response, @RequestParam("save_file_name") String save_file_name, @RequestParam("type") String type) throws Exception {
-		FileVo fileVo = new FileVo();
-		fileVo.setIdx(save_file_name);
-		
-		if ("admin".equals(type)) {
-			fileVo = contestService.selectDownloadFile(fileVo);
-		} else {
-			fileVo = contestService.selectDownloadFile2(fileVo);
+		try {
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(save_file_name);
+			
+			if ("admin".equals(type)) {
+				fileVo = contestService.selectDownloadFile(fileVo);
+			} else {
+				fileVo = contestService.selectDownloadFile2(fileVo);
+			}
+			
+			log.debug("[나눔공모] 나눔공모 첨부파일 다운로드");
+			fileUtil.downloadFile(response, fileVo);
+		} catch (Exception e) {
+			log.debug("[나눔공모] 나눔공모 첨부파일 다운로드 실패");
+			e.printStackTrace();
 		}
-		
-		String stored_File_Name = fileVo.getSave_file_name();
-		String original_File_Name = fileVo.getOrg_file_name();
-		
-		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath + stored_File_Name));
-
-		response.setContentType("application/octet-stream");
-		response.setContentLength(fileByte.length);
-		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
-		response.setHeader("Content-Transfer-Encoding", "binary");
-		response.getOutputStream().write(fileByte);
-		response.getOutputStream().flush();
-		response.getOutputStream().close();
 	}
 	
 	@RequestMapping(value = "getSaveFileName.do")

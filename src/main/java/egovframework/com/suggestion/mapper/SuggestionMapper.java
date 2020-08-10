@@ -47,4 +47,6 @@ public interface SuggestionMapper {
 
 	void deleteAllOpinion(SuggestionVo vo) throws Exception;
 
+	FileVo selectDownloadFile(FileVo fileVo) throws Exception;
+
 }

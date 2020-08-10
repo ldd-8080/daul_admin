@@ -2,20 +2,20 @@ package egovframework.com.cmmn.util;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +26,6 @@ public class FileUtil {
     
     private Log log = LogFactory.getLog(this.getClass());
     
- 
-
 	@Autowired(required=false)
 	private ProfileCls profileCls;
 	
@@ -105,5 +103,20 @@ public class FileUtil {
     		fileVo.setAttach_type(file.getName());
     		fileList.add(fileVo);
     	}
+    }
+    
+    public void downloadFile(HttpServletResponse response, FileVo fileVo) throws Exception {
+    	String stored_File_Name = fileVo.getSave_file_name();
+		String original_File_Name = fileVo.getOrg_file_name();
+		
+		byte[] fileByte = FileUtils.readFileToByteArray(new File(profileCls.getRootPath() + stored_File_Name));
+
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(original_File_Name, "UTF-8") + "\";");
+		response.setHeader("Content-Transfer-Encoding", "binary");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
     }
 }

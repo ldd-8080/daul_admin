@@ -1,7 +1,5 @@
 package egovframework.com.board.controller;
 
-import java.io.File;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -10,17 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,9 +36,6 @@ public class BoardController {
 
 	@Resource(name = "boardService")
 	private BoardService boardService;
-	
-	@Value("${file.downloadpath}")
-	private String filePath;
 	
 	@Resource(name="fileUtil")
 	private FileUtil fileUtil;
@@ -112,7 +104,8 @@ public class BoardController {
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			   
 			vo.setNotice_idx(boardService.selectNoticeIdx());
-			     
+			vo.setCreate_user(userVo.getUser_id());
+			
 			FileVo fileVo = new FileVo();
 				
 			fileVo.setCreate_user(vo.getCreate_user());
@@ -127,11 +120,6 @@ public class BoardController {
 			}		
 			//vo.setReg_user(userVo.getUser_seq());
 		    boardService.insertBoard(vo);
-		   
-		    //boardService.insertBoard(commandMap);
-		 
-		
-			List<BoardVo> boardList = boardService.selectBoardList(vo);
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
 			e.printStackTrace();
@@ -207,24 +195,19 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/downloadFile.do",method = RequestMethod.GET)
-	public void downloadFile(HttpServletRequest requeset, HttpServletResponse response, @RequestParam("save_file_name") String save_file_name) throws Exception{
-		System.out.println("2222 =  " + requeset.getParameter("save_file_name") );
-		FileVo fileVo = new FileVo();
-		fileVo.setIdx(save_file_name);
-		fileVo = boardService.selectDownloadFile(fileVo);
-		String stored_File_Name = fileVo.getSave_file_name();
-		String original_File_Name = fileVo.getOrg_file_name();
-		System.out.println("stored_File_Name = " + stored_File_Name + ", original_File_Name = " + original_File_Name);
-		
-		byte[] fileByte = FileUtils.readFileToByteArray(new File(filePath+ stored_File_Name));
-	         
-        response.setContentType("application/octet-stream");
-        response.setContentLength(fileByte.length);
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(original_File_Name,"UTF-8")+"\";");
-        response.setHeader("Content-Transfer-Encoding", "binary");
-        response.getOutputStream().write(fileByte);	          
-        response.getOutputStream().flush();
-        response.getOutputStream().close();
+	public void downloadFile(HttpServletResponse response, @RequestParam("save_file_name") String save_file_name) throws Exception{
+		try {
+			FileVo fileVo = new FileVo();
+			fileVo.setIdx(save_file_name);
+			
+			fileVo = boardService.selectDownloadFile(fileVo);
+
+			log.debug("[공지사항] 공지사항 첨부파일 다운로드");
+			fileUtil.downloadFile(response, fileVo);
+		} catch (Exception e) {
+			log.debug("[공지사항] 공지사항 첨부파일 다운로드 실패");
+			e.printStackTrace();
+		}
 	 }
 	
 }

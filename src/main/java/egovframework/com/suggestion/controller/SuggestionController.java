@@ -337,4 +337,20 @@ public class SuggestionController {
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/downloadFile.do")
+	public void downloadFile(HttpServletResponse response, @RequestParam("save_file_name") String save_file_name) throws Exception {
+		try {
+			FileVo fileVo = new FileVo();
+			fileVo.setSave_file_name(save_file_name);
+			
+			fileVo = suggestionService.selectDownloadFile(fileVo);
+			
+			log.debug("[열린제안] 열린제안 첨부파일 다운로드");
+			fileUtil.downloadFile(response, fileVo);
+		} catch (Exception e) {
+			log.debug("[열린제안] 열린제안 첨부파일 다운로드 실패");
+			e.printStackTrace();
+		}
+	}
 }
