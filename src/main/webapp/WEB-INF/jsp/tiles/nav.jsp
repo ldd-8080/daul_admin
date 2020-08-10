@@ -8,19 +8,13 @@
       <span class="sr-only">Toggle navigation</span>
       <span class="hamburger-bar"></span>
     </button>
-    <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
-      data-toggle="collapse">
-      <i class="icon md-more" aria-hidden="true"></i>
-    </button>
-    <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-      <img class="navbar-brand-logo" src="${pageContext.request.contextPath}/images/logo.png" title="Remark">
+    <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" >
+      <a href="/main/main.do">
+     	 <img class="navbar-brand-logo" src="${pageContext.request.contextPath}/images/logo.png">
+     </a>
       <span class="navbar-brand-text hidden-xs-down"> Daul</span>
     </div>
-    <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
-      data-toggle="collapse">
-      <span class="sr-only">Toggle Search</span>
-      <i class="icon md-search" aria-hidden="true"></i>
-    </button>
+    
   </div>
 
   <div class="navbar-container container-fluid">
