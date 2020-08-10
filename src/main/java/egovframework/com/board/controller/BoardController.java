@@ -38,10 +38,6 @@ public class BoardController {
 	@Autowired 
 	private ProfileCls profileCls;
 	protected Log log = LogFactory.getLog(BoardController.class);
-	
-
-	
-	
 
 	@Resource(name = "boardService")
 	private BoardService boardService;

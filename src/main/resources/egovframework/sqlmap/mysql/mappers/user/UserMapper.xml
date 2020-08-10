@@ -98,6 +98,8 @@
 	</delete>
 	
 	<select id="selectUserList" resultType="egovframework.com.user.vo.UserVo">
+	SELECT * 
+	  FROM (
 		SELECT @rownum:=@rownum+1 AS num
 			 , user_id
 		     , name
@@ -122,6 +124,8 @@
 		   AND auth_type != 'admin'
 		   </otherwise>
 		   </choose>
+		) sub
+	ORDER BY sub.num DESC;		   
 	</select>
 	
 	<update id="updateUserPw">

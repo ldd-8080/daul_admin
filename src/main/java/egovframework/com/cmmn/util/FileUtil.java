@@ -26,12 +26,8 @@ public class FileUtil {
     
     private Log log = LogFactory.getLog(this.getClass());
     
-    @Resource(name="uploadPath")
-    String uploadPath;
  
-	@Value("${file.uploadpath}")
-	private String filePath;
-	
+
 	@Autowired(required=false)
 	private ProfileCls profileCls;
 	

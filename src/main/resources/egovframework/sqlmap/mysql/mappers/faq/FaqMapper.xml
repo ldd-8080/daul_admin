@@ -4,6 +4,8 @@
 	namespace="egovframework.com.faq.mapper.FaqMapper">
 	
 	<select id="selectFaqList" resultType="egovframework.com.faq.vo.FaqVo">	
+	SELECT * 
+	  FROM (	
 		SELECT 
 			@rownum:=@rownum+1 			         AS num,
 			faq_idx,
@@ -35,7 +37,9 @@
 	    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 	    	]]>
 	    </if>
-	    ORDER BY create_date desc
+	    ORDER BY create_date ASC
+	  ) sub
+	ORDER BY sub.num DESC;
 	</select>
 	
 	<select id="selectFaqIdx" resultType="String">

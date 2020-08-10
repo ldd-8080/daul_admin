@@ -102,9 +102,20 @@
 			data : ContestList,
 
 			fields : [ 
-				{name : "num", title : "번호", type : "text", width : 70, align : "center"}, 
+				{name : "num", title : "번호", type : "text", width : 30, align : "center"}, 
 				{name : "create_user", title : "작성자", type : "text", width : 60}, 
-				{name : "title", title : "제목", type : "text", width : 150}, 
+				{title : "제목", type : "text", width : 150,	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		console.log("length = " + item.title.length);
+		    			if(item.title.length > 30){
+		    				result = item.title.substring(0,30)+'...';		    				
+		    			}else{
+		    				result = item.title;
+		    			}
+		    			return result;
+		    		}
+				}, 
 				{name : "create_date", title : "등록일", type : "text", width : 100, align : "center"}
 			],
 

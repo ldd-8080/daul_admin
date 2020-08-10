@@ -4,38 +4,43 @@
 	namespace="egovframework.com.contest.mapper.ContestMapper">
 	
 	<select id="selectContestList" resultType="egovframework.com.contest.vo.ContestVo">
-		SELECT @rownum:=@rownum+1 						AS num,
-			   admin_contest_idx,
-			   create_user,
-			   title,
-			   content,
-			   DATE_FORMAT(contest_s_date, '%Y-%m-%d') 	AS contest_s_date,
-			   DATE_FORMAT(contest_e_date, '%Y-%m-%d') 	AS contest_e_date,
-			   DATE_FORMAT(submit_s_date, '%Y-%m-%d')  	AS submit_s_date,
-			   DATE_FORMAT(submit_e_date, '%Y-%m-%d')  	AS submit_e_date,
-			   DATE_FORMAT(create_date, '%Y-%m-%d')    	AS create_date
-		  FROM daul.contest_admin
-		     , (SELECT @rownum:=0) TMP
-		 WHERE del_chk != 'Y'
-		 <if test="search_type == 'title'">
-		 	AND title like concat('%',#{search},'%')
-		 </if>
- 		 <if test="search_type == 'content'">
-		 	AND content like concat('%',#{search},'%')
-		 </if>
- 		 <if test="search_type == 'create_user'">
-		 	AND create_user like concat('%',#{search},'%')
-		 </if>
-	 	 <if test="search_s_date != null and search_s_date != ''">
-	 	 	<![CDATA[
-	     	AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
-	     	]]>
-	     </if>
-	      <if test="search_e_date != null and search_e_date != ''">
-	 	 	<![CDATA[
-	     	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
-	     	]]>
-	     </if>
+	SELECT * 
+      FROM (
+			SELECT @rownum:=@rownum+1 						AS num,
+				   admin_contest_idx,
+				   create_user,
+				   title,
+				   content,
+				   DATE_FORMAT(contest_s_date, '%Y-%m-%d') 	AS contest_s_date,
+				   DATE_FORMAT(contest_e_date, '%Y-%m-%d') 	AS contest_e_date,
+				   DATE_FORMAT(submit_s_date, '%Y-%m-%d')  	AS submit_s_date,
+				   DATE_FORMAT(submit_e_date, '%Y-%m-%d')  	AS submit_e_date,
+				   DATE_FORMAT(create_date, '%Y-%m-%d')    	AS create_date
+			  FROM daul.contest_admin
+			     , (SELECT @rownum:=0) TMP
+			 WHERE del_chk != 'Y'
+			 <if test="search_type == 'title'">
+			 	AND title like concat('%',#{search},'%')
+			 </if>
+	 		 <if test="search_type == 'content'">
+			 	AND content like concat('%',#{search},'%')
+			 </if>
+	 		 <if test="search_type == 'create_user'">
+			 	AND create_user like concat('%',#{search},'%')
+			 </if>
+		 	 <if test="search_s_date != null and search_s_date != ''">
+		 	 	<![CDATA[
+		     	AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+		     	]]>
+		     </if>
+		      <if test="search_e_date != null and search_e_date != ''">
+		 	 	<![CDATA[
+		     	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+		     	]]>
+		     </if>
+			ORDER BY create_date ASC
+		) sub
+	ORDER BY sub.num DESC;	     
 	</select>
 
 	<select id="selectAdminContestIdx" resultType="String">
