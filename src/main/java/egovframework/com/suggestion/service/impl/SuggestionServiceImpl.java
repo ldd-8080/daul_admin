@@ -55,13 +55,13 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	}
 
 	@Override
-	public void updateSuggestion(SuggestionVo vo) throws Exception {
-		suggestionMapper.updateSuggestion(vo);
+	public int updateSuggestion(SuggestionVo vo) throws Exception {
+		return suggestionMapper.updateSuggestion(vo);
 	}
 
 	@Override
-	public void deleteSuggestion(SuggestionVo vo) throws Exception {
-		suggestionMapper.deleteSuggestion(vo);
+	public int deleteSuggestion(SuggestionVo vo) throws Exception {
+		return suggestionMapper.deleteSuggestion(vo);
 	}
 
 	@Override
@@ -97,6 +97,16 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	@Override
 	public void deleteSuggestionOpinion(SuggestionOpinionVo vo) throws Exception {
 		suggestionMapper.deleteSuggestionOpinion(vo);
+	}
+
+	@Override
+	public void deleteAllFile(SuggestionVo vo) throws Exception {
+		suggestionMapper.deleteAllFile(vo);
+	}
+
+	@Override
+	public void deleteAllOpinion(SuggestionVo vo) throws Exception {
+		suggestionMapper.deleteAllOpinion(vo);
 	}
 
 }

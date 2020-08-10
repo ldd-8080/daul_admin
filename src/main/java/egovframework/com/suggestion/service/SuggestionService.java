@@ -23,9 +23,9 @@ public interface SuggestionService {
 
 	void deleteFile(FileVo fileVo) throws Exception;
 
-	void updateSuggestion(SuggestionVo vo) throws Exception;
+	int updateSuggestion(SuggestionVo vo) throws Exception;
 
-	void deleteSuggestion(SuggestionVo vo) throws Exception;
+	int deleteSuggestion(SuggestionVo vo) throws Exception;
 
 	String selectSuggestionOpinionIdx() throws Exception;
 
@@ -40,5 +40,9 @@ public interface SuggestionService {
 	void updateSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
 
 	void deleteSuggestionOpinion(SuggestionOpinionVo vo) throws Exception;
+
+	void deleteAllFile(SuggestionVo vo) throws Exception;
+
+	void deleteAllOpinion(SuggestionVo vo) throws Exception;
 
 }

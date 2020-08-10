@@ -184,9 +184,9 @@
 										<div class="col-md-11 text-right">
 											<div class="example example-buttons"> 
 												<button type="button"
-													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn">수정</button>
+													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" data-title="나눔공모">수정 </button>
 												<button type="submit"
-													class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/notieDelete.do">삭제</button>
+													class="btn btn-primary waves-effect waves-classic" id="contestDeleteBtn" data-title="나눔공모" formaction="/contest/contestDelete.do">삭제 </button>
 												<button type="button"
 													class="btn btn-default btn-outline waves-effect waves-classic"
 													id="contestListBtn">목록</button>
@@ -380,7 +380,6 @@
 			console.log("request done");
 			
 			if (data === "success") {
-			
 				var $target = $("input[type='hidden'][name='save_file_name']");
 		
 				for (var i = 0; i < $target.length; i++) {
@@ -406,9 +405,7 @@
 	});
 
 	$("#contestModifyBtn").click(function() {
-		if (!confirm("수정 하시겠습니까?")) return false;
-		
-	
+		if (!submitConfirm($(this))) return false;
 		
 		$("#contestFile").attr("type", "text");
 		$("#contestFile").attr("type", "file");
@@ -428,8 +425,6 @@
             data: formData
         });
         request.done(function(data){
-        	
-        	
         	if(typeof(data) == "object"){
         		valid(data);
         		return false;
@@ -463,6 +458,10 @@
 			}
 		}
 	}
+	
+	$("#contestDeleteBtn").click(function() {
+		if (!submitConfirm($(this))) return false;
+	});
 </script>
 
 

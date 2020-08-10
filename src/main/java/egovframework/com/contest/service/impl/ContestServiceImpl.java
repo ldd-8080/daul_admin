@@ -94,6 +94,26 @@ public class ContestServiceImpl extends EgovAbstractServiceImpl implements Conte
 		
 	}
 
+	@Override
+	public int deleteContest(ContestVo vo) throws Exception {
+		return contestMapper.deleteContest(vo);
+	}
+
+	@Override
+	public void deleteAllAdminFile(ContestVo vo) throws Exception {
+		contestMapper.deleteAllAdminFile(vo);
+	}
+
+	@Override
+	public void deleteAllUserContest(ContestVo vo) throws Exception {
+		contestMapper.deleteAllUserContest(vo);
+	}
+
+	@Override
+	public void deleteAllUserFile(ContestVo vo) throws Exception {
+		contestMapper.deleteAllUserFile(vo);
+	}
+
 
 
 }

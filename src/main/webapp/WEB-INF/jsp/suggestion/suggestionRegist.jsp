@@ -49,27 +49,35 @@
 								<label class="col-md-2 col-form-label">첨부파일</label>
 								<div class="col-md-8">
 									<div class="input-group input-group-file" data-plugin="inputGroupFile">
-										<input type="text" class="form-control" id="attachTitle" readonly/>
-										<button type="button" class="input-search-close icon md-close" id="attachDelBtn" style="position: absolute; display: none;"></button>
+										<input type="text" class="form-control" id="sgstFileTitle" readonly/>
 										<span class="input-group-append">
 											<span class="btn btn-primary btn-file">
 												<i class="icon md-upload" aria-hidden="true"></i>
-												<input multiple="multiple" type="file" id="publicFile" name="publicFile"/>
+												<input multiple="multiple" type="file" id="sgstFile" name="sgstFile"/>
 											</span>
 										</span>
  									</div>
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="form-gorup row mb-20">
 								<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">대표이미지 </label>
-									<div class="col-md-8">
-		                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
-		                  			</div>
+								<label class="col-md-2 col-form-label"></label>
+								<div class="col-md-8">
+									<div id="sgstFileName-list"></div>
+								</div>
 							</div>
 							
-				            <div class="form-group form-material row">
-								<div class="col-md-9 offset-md-9">
+							<div class="form-group row">
+								<div class="col-md-1"></div>
+								<label class="col-md-2 col-form-label">대표이미지 </label>
+								<div class="col-md-8">
+	                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+	                  			</div>
+							</div>
+							
+							<br/>
+				            <div class="col-md-12 text-right">
+								<div class="example example-buttons">  	
 									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionRegistBtn" formaction="/suggestion/suggestionRegist.do">등록 </button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
 								</div>
@@ -87,28 +95,59 @@
 		location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
 	});
 	
-	function publicFileChange() {
-		var fileValue = $("#publicFile")[0].files[0];
+	
+	var sgstFileList = new Array();
+	
+	function sgstFileChange() {
+		var fileValue = $("#sgstFile")[0].files;
 		
-		if (fileValue !== undefined) {
-			$("#attachTitle").val($("#publicFile")[0].files[0].name);
-			
-			$("#attachDelBtn").show();
-		} else {
-			$("#attachTitle").val("");
-			
-			$("#attachDelBtn").hide();
+		if (fileValue.length > 0) {
+	  		for (var i = 0; i < fileValue.length; i++) {
+				var exist = false;
+				
+				for (var k = 0; k < sgstFileList.length; k++) {
+					if (fileValue[i].name === sgstFileList[k].name) {
+						console.log("this file is already exist", fileValue[i].name);
+						exist = true;
+						break;
+					}
+				}
+				
+				if (!exist) {
+					sgstFileList.push(fileValue[i]);
+
+					$("#sgstFileTitle").val( '파일 '+ sgstFileList.length + '개');
+					
+					var str = '<li>'+
+		  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
+		  			'<span class="file-img"></span>' +
+		  			'<a href="#this" name="file"> (new) ' + fileValue[i].name + '</a>' +
+		  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
+		  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
+		  			'</li>';
+		  			
+					$("#sgstFileName-list").append(str);
+				}
+			}
+	  	}
+	}
+	
+	function newFileDel(_this) {
+		var fileName = $(_this).siblings().first().val();
+		
+		for (var i = 0; i < sgstFileList.length; i++) {
+			if (fileName === sgstFileList[i].name) {
+				sgstFileList.splice(i, 1);
+				
+				$(_this).parent().remove();
+				
+				$("#sgstFileTitle").val( '파일 '+ sgstFileList.length + '개');
+			}
 		}
 	}
 	
-	$("#publicFile").change(function() {
-		publicFileChange();
-	});
-	
-	$("#attachDelBtn").click(function() {
-		$("#publicFile").val("");
-		
-		publicFileChange();
+	$("#sgstFile").change(function() {
+		sgstFileChange();
 	});
 	
 	$("#suggestionRegistBtn").click(function() {

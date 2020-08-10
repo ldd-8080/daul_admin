@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Core  -->
 <script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>
 
@@ -94,3 +95,17 @@
 <script src="${pageContext.request.contextPath}/js/uikit/progress-bars.js"></script>
 <script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>       
 <%-- <script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script> --%>
+
+<script type="text/javascript">
+function submitConfirm($type) {
+	var type = $type.text();
+	var title = $type.data("title");
+	var msg = "";
+	
+	if (title !== undefined) msg += title + "을(를) ";
+	msg += type + "하시겠습니까?";
+	
+	if (!confirm(msg)) return false;
+	else return true;
+}
+</script>

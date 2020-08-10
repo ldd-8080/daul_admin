@@ -21,5 +21,9 @@ public interface ContestService {
 	List<FileVo> selectContestOpinionFileList(ContestOpinionVo vo) throws Exception;
 	FileVo selectDownloadFile2(FileVo vo) throws Exception;
 	void deleteContestOpinion(ContestOpinionVo vo) throws Exception;
+	int deleteContest(ContestVo vo) throws Exception;
+	void deleteAllAdminFile(ContestVo vo) throws Exception;
+	void deleteAllUserContest(ContestVo vo) throws Exception;
+	void deleteAllUserFile(ContestVo vo) throws Exception;
 	
 }

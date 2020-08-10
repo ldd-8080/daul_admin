@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.suggestion.service.SuggestionService;
 import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
+import egovframework.com.user.vo.UserVo;
 
 @Controller
 @RequestMapping(value="/suggestion")
@@ -35,6 +38,9 @@ public class SuggestionController {
 	
 	@Resource(name="fileUtil")
 	private FileUtil fileUtil;
+	
+	@Resource(name = "cmmnUtil")
+	private CmmnUtil cmmnUtil;
 
 	@RequestMapping(value="/suggestionListPage.do")
 	public String suggestionListPage() {
@@ -149,59 +155,54 @@ public class SuggestionController {
 	
 	
 	@RequestMapping(value="/suggestionModify.do", method=RequestMethod.POST)
-	public String suggestionModify(SuggestionVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception{
+	public ResponseEntity<?> suggestionModify(SuggestionVo vo, HttpSession session, HttpServletRequest request, BindingResult bindingResult) throws Exception{
 		try {
-			
-			
 			log.debug("SuggestionVo : " + vo);
-			log.debug("[열린제안] 열린제안 수정");
 			
 			SuggestionValidator suggestionValidator = new SuggestionValidator();
 			suggestionValidator.validate(vo, bindingResult);
 			
 			if(bindingResult.hasErrors()) {
-				return "suggestion/suggestionDetail";
+				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
 			}			
 			
-			suggestionService.updateSuggestion(vo);
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setUpdate_user(userVo.getUser_id());
 			
-			FileVo fileVo = new FileVo();
-			fileVo.setIdx(vo.getSuggestion_idx());
-			fileVo.setCreate_user(vo.getUpdate_user());
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+			log.debug("[열린제안] 열린제안 수정");
+			int result = suggestionService.updateSuggestion(vo);
 			
-			if (!fileList.isEmpty() && fileList.size() > 0) {
+			if (result > 0) {
+				FileVo fileVo = new FileVo();
+				fileVo.setIdx(vo.getSuggestion_idx());
+				fileVo.setCreate_user(vo.getUpdate_user());
+				
+				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+				
 				for (int i = 0; i < fileList.size(); i++) {
-					fileVo = fileList.get(i); 
-					
-					log.debug("FileVo : " + fileVo);
-					log.debug("[열린제안] 열린제안 파일 삭제");
-					suggestionService.deleteFile(fileVo);
-					
 					log.debug("[열린제안] 열린제안 파일 등록");
-					suggestionService.insertFile(fileVo);
+					suggestionService.insertFile(fileList.get(i));
 				}
 			}
 		} catch (Exception e) {
+			log.debug("[열린제안] 열린제안 수정 실패");
 			e.printStackTrace();
 		}
 		
-		return "redirect:/suggestion/suggestionListPage.do";
+		log.debug("[열린제안] 열린제안 수정 완료");
+		return new ResponseEntity<>(vo.getSuggestion_idx(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/suggestionAttachFileDelete.do", method=RequestMethod.POST)
 	public ResponseEntity<?> suggestionAttachFileDelete(@RequestBody Map<String, String> param) throws Exception {
 		System.out.println(param);
+		FileVo fileVo = new FileVo();
+		
 		try {
-			if ("N".equals(param.get("del_chk"))) {
-				FileVo fileVo = new FileVo();
-				fileVo.setIdx(param.get("suggestion_idx"));
-				fileVo.setAttach_type(param.get("attach_type"));
-				//fileVo.setSave_file_name(param.get("save_file_name"));
-				
-				log.debug("[열린제안] 열린제안 파일 삭제");
-				suggestionService.deleteFile(fileVo);
-			}
+			fileVo.setSave_file_name(param.get("file_name"));
+			
+			log.debug("[열린제안] 열린제안 파일 삭제");
+			suggestionService.deleteFile(fileVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,19 +233,27 @@ public class SuggestionController {
 	}
 	
 	@RequestMapping(value="/suggestionDelete.do", method=RequestMethod.POST)
-	public String suggestionDelete(SuggestionVo vo) throws Exception {
+	public String suggestionDelete(SuggestionVo vo, HttpSession session) throws Exception {
 		try {
-			log.debug("[열린제안] 열린제안 삭제");
-			suggestionService.deleteSuggestion(vo);
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setUpdate_user(userVo.getUser_id());
 			
-			log.debug("[열린제안] 열린제안 파일 삭제");
-			FileVo fileVo = new FileVo();
-			fileVo.setIdx(vo.getSuggestion_idx());
-			suggestionService.deleteFile(fileVo);
+			log.debug("[열린제안] 열린제안 삭제");
+			int result = suggestionService.deleteSuggestion(vo);
+			
+			if (result > 0) {
+				log.debug("[열린제안] 열린제안 댓글 삭제");
+				suggestionService.deleteAllOpinion(vo);
+				
+				log.debug("[열린제안] 열린제안 첨부파일 삭제");
+				suggestionService.deleteAllFile(vo);
+			}
 		} catch (Exception e) {
+			log.debug("[열린제안] 열린제안 삭제 실패");
 			e.printStackTrace();
 		}
 		
+		log.debug("[열린제안] 열린제안 삭제 완료");
 		return "redirect:/suggestion/suggestionListPage.do";
 	}
 	

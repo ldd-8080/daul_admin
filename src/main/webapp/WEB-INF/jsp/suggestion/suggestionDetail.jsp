@@ -35,7 +35,7 @@
 							
 							<div class="tab-content pt-20">
 								<div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-									<form:form method="post" modelAttribute="suggestionVo" enctype="multipart/form-data">
+									<form:form method="post" modelAttribute="suggestionVo" enctype="multipart/form-data" id="sgstForm">
 										<form:input type="hidden" class="form-control" path="suggestion_idx"/>
 										<div class="form-group row">
 											<div class="col-md-1"></div>
@@ -66,17 +66,24 @@
 											<label class="col-md-2 col-form-label">첨부파일</label>
 											<div class="col-md-8">
 												<div class="input-group input-group-file" data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="publicFileName" readonly/>
-													<button type="button" class="input-search-close icon md-close" id="publicFileDelBtn" style="position: absolute; display: none;"></button>
+													<input type="text" class="form-control" id="sgstFileTitle" value="파일 0개" readonly/>
 													<span class="input-group-append">
 														<span class="btn btn-primary btn-file">
 															<i class="icon md-upload" aria-hidden="true"></i>
-															<input type="file" id="publicFile" name="publicFile"/>
+															<input multiple="multiple" type="file" id="sgstFile" name="sgstFile"/>
 														</span>
 													</span>
 			 									</div>
 											</div>
 										</div>
+										<div class="form-gorup row mb-20">
+											<div class="col-md-1"></div>
+											<label class="col-md-2 col-form-label"></label>
+											<div class="col-md-8">
+												<div id="sgstFile-list"></div>
+											</div>
+										</div>
+										
 										<div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">대표이미지 </label>
@@ -92,13 +99,13 @@
 								        </header>
 								    
 								        <br/>
-											<div class="col-md-12 text-center">
-												<div class="example example-buttons">  	
-													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionModify.do">수정 </button>
-													<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
-													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
-												</div>
+										<div class="col-md-12 text-right">
+											<div class="example example-buttons">  	
+												<button type="button" class="btn btn-primary waves-effect waves-classic" id="sgstModifyBtn" data-title="열린제안">수정 </button>
+												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
 											</div>
+										</div>
 								
 									</form:form>
 								</div>
@@ -125,18 +132,17 @@
 	
 	// 열린제안 파일 정보 init
 	var fileList = new Array();
-	var public_file = {};
 	var rep_file = {};
 	
 	<c:forEach var="file" items="${fileList}">
 		var file = {};
 		file.suggestion_idx = "${file.suggestion_idx}";
-		file.org_file_name = "${file.org_file_name}";
+		file.org_file_name 	= "${file.org_file_name}";
 		file.save_file_name = "${file.save_file_name}";
-		file.file_size = "${file.file_size}";
-		file.create_user = "${file.create_user}";
-		file.del_chk = "${file.del_chk}";
-		file.attach_type = "${file.attach_type}";
+		file.file_size 		= "${file.file_size}";
+		file.create_user 	= "${file.create_user}";
+		file.del_chk 		= "${file.del_chk}";
+		file.attach_type 	= "${file.attach_type}";
 		fileList.push(file);
 	</c:forEach>
 	
@@ -144,10 +150,16 @@
 		for (var file of fileList) {
 			if (file.attach_type.indexOf("rep") > -1) {
 				rep_file = file;
-			} else if (file.attach_type.indexOf("public") > -1) {
-				$("#publicFileDelBtn").show();
-				$("#publicFileName").val(file.org_file_name);
-				public_file = file;
+			} else if (file.attach_type.indexOf("sgst") > -1) {
+				var str = '<li>'+
+	            	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
+	    			'<span class="file-img"></span>'+
+	    			'<a href="#this" name="file">' +file.org_file_name+'</a>'+
+	    			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+file.file_size+'kb</span>'+
+	    			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="FileDelBtn" ></button>'+
+	    			'</li>';
+    			
+				$("#sgstFile-list").append(str);
 			}
 		}
 	}
@@ -156,68 +168,113 @@
 		location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
 	});
 	
-	function publicFileChange() {
-		var fileValue = $("#publicFile")[0].files[0];
-		
-		if (fileValue !== undefined) {
-			$("#publicFileName").val($("#publicFile")[0].files[0].name);
-			
-			$("#publicFileDelBtn").show();
-		} else {
-			$("#publicFileName").val("");
-			
-			$("#publicFileDelBtn").hide();
-		}
+	var sgstFileList = new Array();
+	
+	function sgstFileChange() {
+		var fileValue = $("#sgstFile")[0].files;
+
+	  	// 새로 추가한 파일fileValue이 존재하면
+	  	// 기존에 등록했던 파일들fileList과 비교를 하고
+	  	// 새로 추가했던 파일들sgstFileList과 비교를 해서 sgstFileList에 push
+	  	if (fileValue.length > 0) {
+	  		for (var i = 0; i < fileValue.length; i++) {
+  				var exist = false;
+  				
+  				for (var j = 0; j < fileList.length; j++) {
+  					if (fileList[j].attach_type === "sgstFile") {
+  						if (fileValue[i].name === fileList[j].org_file_name) {
+  							console.log("this file is already registed", fileValue[i].name);
+  							exist = true;
+  							break;
+  						}
+  					}
+  				}
+  				
+  				for (var k = 0; k < sgstFileList.length; k++) {
+  					if (fileValue[i].name === sgstFileList[k].name) {
+  						console.log("this file is already exist", fileValue[i].name);
+  						exist = true;
+  						break;
+  					}
+  				}
+  				
+  				if (!exist) {
+  					sgstFileList.push(fileValue[i]);
+	
+  					$("#sgstFileTitle").val( '파일 '+ sgstFileList.length + '개');
+  					
+  					var str = '<li>'+
+			  			'<input type="hidden" name="save_file_name" value="' + fileValue[i].name + '">' +
+			  			'<span class="file-img"></span>' +
+			  			'<a href="#this" name="file"> (new) ' + fileValue[i].name + '</a>' +
+			  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
+			  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
+			  			'</li>';
+		  			
+  					$("#sgstFile-list").append(str);
+  				}
+  			}
+	  	}
 	}
 	
-	$("#publicFile").change(function() {
-		publicFileChange();
+	function newFileDel(_this) {
+  		var fileName = $(_this).siblings().first().val();
+  		
+  		for (var i = 0; i < sgstFileList.length; i++) {
+  			if (fileName === sgstFileList[i].name) {
+  				sgstFileList.splice(i, 1);
+  				
+  				$(_this).parent().remove();
+  				
+  				$("#sgstFileTitle").val( '파일 '+ sgstFileList.length + '개');
+  			}
+  		}
+  	}
+	
+	$("#sgstFile").change(function() {
+		sgstFileChange();
 	});
 	
-	$("#publicFileDelBtn").click(function() {
+	$("button[name='FileDelBtn']").click(function() {
+		var save_file_name = $(this).parent().find("input[name='save_file_name']").val();
+		
 		if (!confirm("해당 파일이 삭제됩니다. 삭제하시겠습니까?")) return;
 		
-		// public_file 데이터를 넘겨서 삭제
-		// del_chk가 N인것만 삭제를 하며 삭제 성공시 del_chk를 N -> Y로 변경
-		if (public_file.del_chk === "N") {
 			var request = $.ajax({
 				url: "/suggestion/suggestionAttachFileDelete.do",
 				method: "post",
 				contentType: "application/json",
-				data: JSON.stringify(public_file)
+				data: JSON.stringify({file_name: save_file_name})
 			});
 			
 			request.done(function(data) {
 				console.log("request done", data);
-				if (data === "success") public_file.del_chk = "Y";
+				if (data === "success") {
+					var $target = $("input[type='hidden'][name='save_file_name']");
+					
+					for (var i = 0; i < $target.length; i++) {
+						if (save_file_name === $target.eq(i).val()) {
+							$target.eq(i).parent().remove();
+						}
+					}
+					
+					for (var j = 0; j < fileList.length; j++) {
+						if (fileList[j].attach_type === "sgstFile" && fileList[j].save_file_name === save_file_name) {
+							fileList.splice(j, 1);
+						}
+					}
+				}
 			});
 			
 			request.fail(function(error) {
 				console.log("request fail", error);
 			});
-		}
-		
-		$("#publicFile").val("");
-		
-		publicFileChange();
 	});
 	
 	$("#sgstOpnRegBtn").click(function() {
 		$("#opinion_idx").val("");
 	});
 
-	function submitConfirm($type) {
-		var type = $type.text();
-		var title = $type.data("title");
-		var msg = "";
-		
-		if (title !== undefined) msg += title + "을(를) ";
-		msg += type + "하시겠습니까?";
-		
-		if (!confirm(msg)) return false;
-		else return true;
-	}
-	
 	$("#suggestionOpinionRegistBtn").click(function() {
 		if (!submitConfirm($(this))) return false;
 		
@@ -363,6 +420,57 @@
 				$("#chk-error-modify").text(data);
 			}
 		});
+	}
+	
+	$("#sgstModifyBtn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
+		$("#sgstFile").attr("type", "text");
+		$("#sgstFile").attr("type", "file");
+		
+		var formData = new FormData($("#sgstForm")[0]);
+		
+		for (var i = 0; i < sgstFileList.length; i++) {
+			formData.append("sgstFile", sgstFileList[i]);
+		}
+		
+		var request = $.ajax({
+			url: "/suggestion/suggestionModify.do",
+			method: "post",
+			enctype: "multipart/form-data",
+			processData: false,
+			contentType: false,
+			data: formData
+		});
+		
+		request.done(function(data) {
+			if (typeof(data) === "object") {
+				valid(data);
+				
+				return false;
+			} else if (typeof(data) === "string") {
+				location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
+			}
+		});
+	});
+	
+	function valid(data){	
+		$("#chk-error-title").text('');
+		$("#chk-error-content").text('');
+	
+		for(var i = 0; i < data.length; i++){
+			var obj = data[i];
+			
+			for (var key in obj) {
+				if(key=="title"){
+					$("#chk-error-title").text(obj[key]);
+					
+				}else if(key=="content"){
+					$("#chk-error-content").text(obj[key]);
+				}
+			
+			}
+		}
 	}
 </script>
 	    	

@@ -126,6 +126,9 @@
 		   SET del_chk = 'Y'
 		 WHERE save_file_name = #{save_file_name}
 		   AND del_chk != 'Y'
+		   <if test="attach_type != null and attach_type != ''">
+		   AND attach_type = #{attach_type}
+		   </if>
 	</update>
 	
 	<update id="updateContest">
@@ -194,4 +197,35 @@
 		WHERE user_contest_idx = #{user_contest_idx}
 		  AND del_chk = 'N'
 	</select>
+	
+	<update id="deleteContest">
+		UPDATE daul.contest_admin
+		   SET del_chk = 'Y'
+		     , update_user = #{update_user}
+		     , update_date = SYSDATE()
+		 WHERE admin_contest_idx = #{admin_contest_idx}
+	</update>
+	
+	<update id="deleteAllAdminFile">
+		UPDATE daul.contest_admin_attach
+		   SET del_chk = 'Y'
+	     WHERE admin_contest_idx = #{admin_contest_idx}
+	       AND del_chk != 'Y'
+	</update>
+	
+	<update id="deleteAllUserContest">
+		UPDATE daul.contest_user
+		   SET del_chk = 'Y'
+		     , update_user = #{update_user}
+		     , update_date = SYSDATE()
+		 WHERE admin_contest_idx = #{admin_contest_idx}
+		   AND del_chk != 'Y'
+	</update>
+	
+	<update id="deleteAllUserFile">
+		UPDATE daul.contest_user_attach
+		   SET del_chk = 'Y'
+	     WHERE admin_contest_idx = #{admin_contest_idx}
+	       AND del_chk != 'Y'
+	</update>
 </mapper>

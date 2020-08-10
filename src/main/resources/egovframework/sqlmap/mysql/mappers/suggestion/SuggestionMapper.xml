@@ -130,7 +130,7 @@
 	<update id="deleteFile">
 		UPDATE daul.suggestion_attach
 		   SET del_chk = 'Y'
-		 WHERE suggestion_idx = #{idx}
+		 WHERE save_file_name = #{save_file_name}
 		   AND del_chk != 'Y'
 		   <if test="attach_type != null and attach_type != ''">
 		   AND attach_type = #{attach_type}
@@ -236,5 +236,21 @@
 		UPDATE daul.suggestion_opinion
 		   SET del_chk = 'Y'
 		 WHERE opinion_idx = #{opinion_idx}
+	</update>
+	
+	<update id="deleteAllFile">
+		UPDATE daul.suggestion_attach
+		   SET del_chk = 'Y'
+		 WHERE suggestion_idx = #{suggestion_idx}
+		   AND del_chk != 'Y'
+	</update>
+	
+	<update id="deleteAllOpinion">
+		UPDATE daul.suggestion_opinion
+		   SET del_chk = 'Y'
+		     , update_user = #{update_user}
+		     , update_date = SYSDATE()
+		 WHERE suggestion_idx = #{suggestion_idx}
+		   AND del_chk != 'Y'
 	</update>
 </mapper>

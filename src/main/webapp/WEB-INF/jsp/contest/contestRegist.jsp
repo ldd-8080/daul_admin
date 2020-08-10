@@ -217,11 +217,6 @@ $("#contestFile").change(function() {
 	contestFileChange();
 });
 
-$("#contestFileDelBtn").click(function() {
-	$("#contestFile").val("");
-	contestFileChange();
-});
-
 function propFileChange() {
 	var fileValue = $("#propFile")[0].files[0];
 

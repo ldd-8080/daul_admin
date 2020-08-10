@@ -260,18 +260,6 @@
 		$("#opinion_content_textarea").val("");
 	});
 	
-	function submitConfirm($type) {
-		var type = $type.text();
-		var title = $type.data("title");
-		var msg = "";
-		
-		if (title !== undefined) msg += title + "을(를) ";
-		msg += type + "하시겠습니까?";
-		
-		if (!confirm(msg)) return false;
-		else return true;
-	}
-	
 	$("#surveyOpinionRegistBtn").click(function() {
 		if (!submitConfirm($(this))) return false;
 		

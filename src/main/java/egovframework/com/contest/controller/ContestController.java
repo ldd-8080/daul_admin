@@ -124,7 +124,6 @@ public class ContestController {
 			throws Exception {
 
 		ContestVo vo = new ContestVo();
-		FileVo fileVo = new FileVo();
 		List<Map<String, String>> fileList = null;
 
 		List<ContestOpinionVo> contestOpinionList = null;
@@ -239,9 +238,8 @@ public class ContestController {
 				
 				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 				
-				log.debug("[나눔공모] 나눔공모 파일 등록" + fileList.size());
-				
 				for (int i = 0; i < fileList.size(); i++) {
+					log.debug("[나눔공모] 나눔공모 파일 등록");
 					contestService.insertFile(fileList.get(i));
 				}
 			}
@@ -288,8 +286,32 @@ public class ContestController {
 		opinionFileList = contestService.selectContestOpinionFileList(vo);
 		
 		return new ResponseEntity<>(opinionFileList, HttpStatus.OK);
-		
 	}
 	
-
+	@RequestMapping(value="/contestDelete.do", method=RequestMethod.POST)
+	public String contestDelete(ContestVo vo, HttpSession session) throws Exception {
+		try {
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			vo.setUpdate_user(userVo.getUser_id());
+			
+			log.debug("[나눔공모] 나눔공모 삭제");
+			int result = contestService.deleteContest(vo);
+			
+			if (result > 0) {
+				log.debug("[나눔공모] 나눔공모 admin 첨부파일 삭제");
+				contestService.deleteAllAdminFile(vo);
+				
+				log.debug("[나눔공모] 나눔공모 user 제안 삭제");
+				contestService.deleteAllUserContest(vo);
+				
+				log.debug("[나눔공모] 나눔공모 user 첨부파일 삭제");
+				//contestService.deleteAllUserFile(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		log.debug("[나눔공모] 나눔공모 삭제 완료");
+		return "redirect:/contest/contestListPage.do";
+	}
 }
