@@ -114,6 +114,7 @@ public class ContestController {
 			}
 			return "redirect:/contest/contestListPage.do";
 		}catch(Exception e){
+			e.printStackTrace();
 			return "common/error.jsp";
 		}
 	}

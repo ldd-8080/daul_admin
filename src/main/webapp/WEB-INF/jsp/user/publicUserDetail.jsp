@@ -114,7 +114,7 @@
 	    							</div>
 	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
-		    							<label class="col-md-2 col-form-label">계정 <span class="required">*</span></label>
+		    							<label class="col-md-2 col-form-label">계정 </label>
 		    							<div class="col-md-6">
 			    							<form:select data-plugin="selectpicker" class="w-p100" path="channel" disabled="true">
 			    								<option value="일반">일반</option>
