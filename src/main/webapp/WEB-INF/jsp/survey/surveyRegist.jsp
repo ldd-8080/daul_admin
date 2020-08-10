@@ -107,8 +107,8 @@
 								
 								
 					            <div class="form-group form-material row">
-									<div class="col-md-9 offset-md-9">
-										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" formaction="/survey/registSurvey.do">등록 </button>
+									<div class="col-md-12 text-right">
+										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" data-title="설문조사" formaction="/survey/registSurvey.do">등록 </button>
 										<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 									</div>
 								</div>
@@ -137,7 +137,8 @@ $("#registSurvey").click(function() {
 	}else{
 		
 	}
-	if (!confirm("등록하시겠습니까?")) return false;
+
+	if (!submitConfirm($(this))) return false;
 });
 
 

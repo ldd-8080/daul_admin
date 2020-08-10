@@ -150,8 +150,8 @@
 									</div>
 								</div>
 					            <div class="form-group form-material row">
-									<div class="col-md-9">
-										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="contestRegistBtn" formaction="/contest/contestRegist.do">등록 </button>
+									<div class="col-md-12 text-right">
+										<button type="submit" class="btn btn-primary waves-effect waves-classic" id="contestRegistBtn" data-title="나눔공모" formaction="/contest/contestRegist.do">등록 </button>
 										<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="contestListBtn">목록 </button>
 									</div>
 								</div>
@@ -246,5 +246,9 @@ $("#propFile").change(function() {
 $("#propFileDelBtn").click(function() {
 	$("#propFile").val("");
 	propFileChange();
+});
+
+$("#contestRegistBtn").click(function() {
+	if (!submitConfirm($(this))) return false;
 });
 </script>

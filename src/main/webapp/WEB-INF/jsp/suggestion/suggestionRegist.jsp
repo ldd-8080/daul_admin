@@ -78,7 +78,7 @@
 							<br/>
 				            <div class="col-md-12 text-right">
 								<div class="example example-buttons">  	
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionRegistBtn" formaction="/suggestion/suggestionRegist.do">등록 </button>
+									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="suggestionRegistBtn" data-title="열린제안" formaction="/suggestion/suggestionRegist.do">등록 </button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
 								</div>
 							</div>
@@ -151,7 +151,7 @@
 	});
 	
 	$("#suggestionRegistBtn").click(function() {
-		if (!confirm("등록하시겠습니까?")) return false;
+		if (!submitConfirm($(this))) return false;
 	});
 </script>
 	    	

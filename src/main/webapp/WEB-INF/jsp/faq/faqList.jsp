@@ -111,8 +111,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-btn" >등 &nbsp;&nbsp; 록</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn" >취 &nbsp;&nbsp; 소</button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-btn" data-title="FAQ">등록 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn" >취소 </button>
         	</div>
         </form>
        
@@ -152,8 +152,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-update-btn" >수 &nbsp;&nbsp; 정</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="faq-modal-delete-btn" >삭 &nbsp;&nbsp; 제</button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-update-btn" data-title="FAQ">수정 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="faq-modal-delete-btn" data-title="FAQ">삭제 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn2" >취 &nbsp;&nbsp; 소</button>
         	</div>
         </form>
@@ -187,14 +187,20 @@ $(function() {
 	});
 	
 	$("#faq-modal-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		insertFaq();
 	});
 	
 	$("#faq-modal-update-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		updateFaq();
 	});
 	
 	$("#faq-modal-delete-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		deleteFaq();
 	});
 	
@@ -261,10 +267,6 @@ function updateFaq() {
 
 
 function deleteFaq() {
-	
-	if (!confirm("해당 게시글이 삭제됩니다. 삭제하시겠습니까?")) return;
-	
-	
 	var request = $.ajax({
 		url: "/faq/deleteFaq.do",
 		method: "post",

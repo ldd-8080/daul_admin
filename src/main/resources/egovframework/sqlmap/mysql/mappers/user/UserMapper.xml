@@ -138,6 +138,5 @@
 		SELECT COUNT(*)
 		  FROM daul.user
 		 WHERE user_id = #{user_id}
-		   AND del_chk != 'Y'
 	</select>
 </mapper>

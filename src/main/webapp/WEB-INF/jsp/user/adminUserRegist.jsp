@@ -85,8 +85,8 @@
 	    							<form:input type="hidden" path="channel" value="일반"/>
 	    							<form:input type="hidden" path="auth_type" value="admin"/>
 	    							<div class="form-group form-material row">
-	    								<div class="col-md-9">
-		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userCreate" formaction="/user/create.do">등록 </button>
+	    								<div class="col-md-12 text-right">
+		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userCreate" data-title="회원" formaction="/user/create.do">등록 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
 	    								</div>
 	    							</div>
@@ -152,7 +152,7 @@
 			return false;
 		}
 		
-		if (!confirm("등록하시겠습니까?")) return false;
+		if (!submitConfirm($(this))) return false;
 	});
 	
 	$("#userList").click(function() {

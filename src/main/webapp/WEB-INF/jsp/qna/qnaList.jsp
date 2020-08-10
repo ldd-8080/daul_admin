@@ -111,8 +111,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-btn" >등 &nbsp;&nbsp; 록</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn" >취 &nbsp;&nbsp; 소</button>
+        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-btn" data-title="QNA">등록 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn" >취소 </button>
         	</div>
         </form>
        
@@ -155,8 +155,8 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn2" >삭 &nbsp;&nbsp; 제</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn2" >닫 &nbsp;&nbsp; 기</button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn2" data-title="QNA">삭제 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn2" >닫기 </button>
         	</div>
         </form>
        
@@ -200,9 +200,9 @@
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        	 	<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-update-btn" >수 &nbsp;&nbsp; 정</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn3" >삭 &nbsp;&nbsp; 제</button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn3" >닫 &nbsp;&nbsp; 기</button>
+        	 	<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-update-btn" data-title="QNA">수정 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn3" data-title="QNA">삭제 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn3" >닫기 </button>
         	</div>
         </form>
        
@@ -235,18 +235,26 @@ $(function() {
 	});
 	
 	$("#qna-modal-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		insertQnaReply();
 	});	
 	$("#qna-modal-update-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		updateQnaReply();
 	});
 
 	$("#qna-modal-delete-btn2").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		deleteQnaReply();
 		$("#qna-modal-cancel-btn2").trigger("click");
 		
 	});
 	$("#qna-modal-delete-btn3").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
 		deleteQnaReply();
 		$("#qna-modal-cancel-btn3").trigger("click");
 	});

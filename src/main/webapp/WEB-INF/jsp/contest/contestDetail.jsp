@@ -181,7 +181,7 @@
 								        <br/>
 								        <br/>
 								        
-										<div class="col-md-11 text-right">
+										<div class="col-md-12 text-right">
 											<div class="example example-buttons"> 
 												<button type="button"
 													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" data-title="나눔공모">수정 </button>
