@@ -11,8 +11,16 @@ public class ContestOpinionVo {
 	private String update_user;
 	private String del_chk;
 	private String attach_cnt;
+	private int num;
 	
 	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public String getAttach_cnt() {
 		return attach_cnt;
 	}

@@ -54,7 +54,61 @@
 		     )
 	</insert>
 	
-	<select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
+<select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
+	SELECT * 
+	  FROM (
+			SELECT 
+		       @rownum:=@rownum+1 AS num,
+		       c.suggestion_idx,
+		       c.title, 
+		       c.content, 
+		       c.like_count,     
+		       c.create_user,
+		       DATE_FORMAT(c.create_date, '%Y-%m-%d') as create_date,
+			   (
+				     SELECT count(*) FROM suggestion_opinion a
+					 LEFT JOIN `user` b 
+					 ON a.create_user = b.user_id
+					 WHERE b.auth_type ='public' AND a.suggestion_idx = c.suggestion_idx
+				) AS public_cnt,
+			   (
+				     SELECT count(*) FROM suggestion_opinion a
+					 LEFT JOIN `user` b 
+					 ON a.create_user = b.user_id
+					 WHERE b.auth_type ='pro' AND a.suggestion_idx = c.suggestion_idx
+				) AS pro_cnt,
+			   (
+				     SELECT count(*) FROM suggestion_opinion a
+					 LEFT JOIN `user` b 
+					 ON a.create_user = b.user_id
+					 WHERE b.auth_type ='admin' AND a.suggestion_idx = c.suggestion_idx
+				) AS admin_cnt
+		FROM suggestion_main c, (SELECT @rownum:=0) TMP   
+		WHERE c.del_chk != 'Y'
+		   <if test="search_type == 'title'">
+		   		AND c.title like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_type == 'content'">
+		   		AND c.content like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_type == 'create_user'">
+		   		AND c.create_user like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_s_date != null and search_s_date != ''">
+			   <![CDATA[
+			   AND sm.create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+			   ]]>
+		   </if>
+		   <if test="search_e_date != null and search_e_date != ''">
+			   <![CDATA[
+			   AND sm.create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+			   ]]>
+		   </if>
+	) sub
+	ORDER BY sub.num DESC; 
+</select> 
+	
+	<!-- <select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
 		SELECT * 
 		  FROM (
 			SELECT @rownum:=@rownum+1 AS num
@@ -112,7 +166,7 @@
 			  	 , (SELECT @rownum:=0) TMP  
 		) sub
 	ORDER BY sub.num DESC; 
-	</select>
+	</select> -->
 	
 	<select id="selectSuggestion" resultType="egovframework.com.suggestion.vo.SuggestionVo">
 		SELECT *

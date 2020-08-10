@@ -91,10 +91,32 @@ function setContestOpinionListTable(ContestList) {
 	    data: ContestList,
 
 	    fields: [
-	    	{name: "user_contest_idx",title: "번호", type: "text", width: 70, align: "center"},
-	    	{name: "create_user", title: "작성자", type: "text", width: 60},
-	    	{name: "title", title: "제목", type: "text", width: 150}, 
-	    	{name: "content", title: "내용", type: "text", width: 200}, 
+	    	{name: "num",title: "번호", type: "text", width: 30, align: "center"},
+	    	{name: "create_user", title: "작성자", type: "text", width: 70},
+	    	{title: "제목", type: "text", width: 150,	    		
+				itemTemplate: function(_, item) {
+	    			var result="";
+		    		console.log("length = " + item.title.length);
+	    			if(item.title.length > 30){
+	    				result = item.title.substring(0,30)+'...';		    				
+	    			}else{
+	    				result = item.title;
+	    			}
+	    			return result;
+	    		}
+	    	}, 
+	    	{title: "내용", type: "text", width: 200,	    		
+				itemTemplate: function(_, item) {
+	    			var result="";
+		    		console.log("length = " + item.content.length);
+	    			if(item.content.length > 30){
+	    				result = item.content.substring(0,30)+'...';		    				
+	    			}else{
+	    				result = item.content;
+	    			}
+	    			return result;
+	    		}
+	    	}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
 	    	{title: "제안서", width: 100, align: "center",
 	    		itemTemplate: function(_, item) {

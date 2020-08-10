@@ -218,6 +218,8 @@
 	</update>
 	
 	<select id="selectSurveyOpinionList" resultType="egovframework.com.survey.vo.SurveyOpinionVo">
+	SELECT * 
+	  FROM (		
 		SELECT @rownum:=@rownum+1 AS num
 			 , so.*
 		     , u.auth_type 
@@ -227,7 +229,9 @@
 		 <!-- WHERE so.del_chk != 'Y' --> 
 		 WHERE so.survey_idx = #{survey_idx}
 		 ORDER BY so.survey_ref
-		        , so.survey_step
+		        , so.survey_step DESC
+		) sub
+	ORDER BY sub.num DESC;
 	</select>
 	
 	<select id="selectParentSurveyOpinion" resultType="egovframework.com.survey.vo.SurveyOpinionVo">

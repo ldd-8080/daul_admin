@@ -17,9 +17,17 @@ public class SuggestionVo extends SearchVo{
 	
 	private int pro_cnt;
 	private int public_cnt;
+	private int admin_cnt;
 	
 	private int num;
 	
+	
+	public int getAdmin_cnt() {
+		return admin_cnt;
+	}
+	public void setAdmin_cnt(int admin_cnt) {
+		this.admin_cnt = admin_cnt;
+	}
 	public String getSuggestion_idx() {
 		return suggestion_idx;
 	}

@@ -121,7 +121,6 @@ function setBoardListTable(BoardList) {
 	    			}
 	    			return result;
 	    		}
-	    		
 	    	}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
 	    	{name: "view_count", title: "조회수", type: "text", width: 50, align: "center"}

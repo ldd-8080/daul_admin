@@ -312,12 +312,12 @@
 			data : ParticipationList,
 
 			fields : [ 
-				{name : "participation_user", title : "아이디", type : "text", width : 50, align : "center"}, 
+				{name : "participation_user", title : "아이디", type : "text", width : 70, align : "center"}, 
 				{name : "name", title : "이름", type : "text", width : 70}, 
-				{name : "email", title : "이메일", type : "text", width : 100}, 
-				{name : "phone", title : "전화번호", type : "text", width : 100, align : "center"}, 
+				{name : "email", title : "이메일", type : "text", width : 120}, 
+				{name : "phone", title : "전화번호", type : "text", width : 120, align : "center"}, 
 				{name : "create_date", title : "참여일", type : "text", width : 100, align : "center"}, 
-				{name : "choose", title :"선택", type : "text", width : 100, align : "center"}
+				{name : "choose", title :"선택", type : "text", width : 40, align : "center"}
 			],
 
 			rowClick : function(args) {
@@ -378,7 +378,7 @@
 		    data: surveyOpnList,
 
 		    fields: [
-		    	{name: "num", title: "번호", type: "text", width: 80, align: "center"}, 
+		    	{name: "num", title: "번호", type: "text", width: 30, align: "center"}, 
 		    	{name: "opinion_idx", title: "번호", type: "text", width: 80, align: "center", css: "non-display"}, 
 		    	{title: "내용", type: "text", width: 250, 
 		    		itemTemplate: function(_, item) {
@@ -392,9 +392,17 @@
 		    						result += '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
 		    					}
 		    					
-		    					result += item.opinion_content;
+		    					if(item.opinion_content.length > 30){
+				    				result += item.opinion_content.substring(0,30)+'...';		    				
+				    			}else{
+				    				result += item.opinion_content;
+				    			}
 		    				} else {
-			    				result = item.opinion_content;
+		    					if(item.opinion_content.length > 30){
+				    				result += item.opinion_content.substring(0,30)+'...';		    				
+				    			}else{
+				    				result += item.opinion_content;
+				    			}
 		    				}
 		    			}
 		    				
@@ -405,7 +413,7 @@
 		    	{name: "auth_type", title: "작성자 유형", type: "text", width: 70}, 
 		    	/* {name: "like_count", title: "공감", type: "text", width: 30}, */ 
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
-		    	{title: "", width: 50, align: "center", 
+		    	{title: "", width: 80, align: "center", 
 		    		itemTemplate: function(_, item) {
 		    			if (item.del_chk !== 'Y') {
 			    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#surveyOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
