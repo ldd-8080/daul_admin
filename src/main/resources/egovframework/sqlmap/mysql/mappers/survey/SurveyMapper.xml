@@ -5,15 +5,25 @@
 	
 	<select id="selectSurveyList" resultType="Map">
 		SELECT @rownum:=@rownum+1 					AS num
-			 , survey_idx
-			 , title
-			 , content
-			 , DATE_FORMAT(s_date, '%Y-%m-%d') 		AS s_date
-			 , DATE_FORMAT(e_date, '%Y-%m-%d') 		AS e_date
-			 , survey_type
-			 , create_user
-			 , DATE_FORMAT(create_date, '%Y-%m-%d') AS create_date	
-		  FROM daul.survey_main
+			 , a.survey_idx
+			 , (
+			    SELECT count(*) 
+			      FROM survey_opinion 
+			     WHERE survey_idx = a.survey_idx
+			   ) AS opinion_count
+			 , (
+			    SELECT count(*) 
+			      FROM survey_participation 
+			     WHERE survey_idx = a.survey_idx
+			   ) AS participation_count
+			 , a.title
+			 , a.content
+			 , DATE_FORMAT(a.s_date, '%Y-%m-%d') 		AS s_date
+			 , DATE_FORMAT(a.e_date, '%Y-%m-%d') 		AS e_date
+			 , a.survey_type
+			 , a.create_user
+			 , DATE_FORMAT(a.create_date, '%Y-%m-%d') AS create_date	
+		  FROM daul.survey_main a
 		     , (SELECT @rownum:=0) TMP
 		 WHERE del_chk = 'N'
 		   <if test="search_type == 'title'">

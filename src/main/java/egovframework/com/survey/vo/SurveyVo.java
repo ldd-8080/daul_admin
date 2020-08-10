@@ -17,6 +17,23 @@ public class SurveyVo extends SearchVo{
 	private String update_user;
 	private String update_date;
 	private String del_chk;
+	private int opinion_count;
+	private int participation_count;
+	
+	
+
+	public int getOpinion_count() {
+		return opinion_count;
+	}
+	public void setOpinion_count(int opinion_count) {
+		this.opinion_count = opinion_count;
+	}
+	public int getParticipation_count() {
+		return participation_count;
+	}
+	public void setParticipation_count(int participation_count) {
+		this.participation_count = participation_count;
+	}
 
 	private String question_content;
 

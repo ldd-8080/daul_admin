@@ -361,8 +361,12 @@ $(function() {
 		    			if(item.parent_qna_idx != null){
 		    				result +=  '<i class="md-long-arrow-right" aria-hidden="true"></i> ';
 		    			}
-		    			result += item.question;
-			    		return result; 
+			    		if(item.question.length > 30){
+			    				result += item.question.substring(0,30)+'...';		    				
+			    			}else{
+			    				result += item.question;
+			    			}
+			    			return result;
 			    		}	
 		    	},
 		    	{name: "create_user", title: "작성자", type: "text", width: 60, align: "center"},
@@ -390,6 +394,8 @@ $(function() {
 	    		}else if(args.event.target.cellIndex == 6){
 	    			
 	    		}else{
+	    			
+	    			increaseViewCount(args.item.qna_idx);
 	    			$("#chk-error-question-mod").text('');
 		    		$("#chk-error-content-mod").text('');
 		    		
@@ -488,6 +494,24 @@ $(function() {
 			
 			}
 		}
+	}
+	
+	function increaseViewCount(qna_idx){
+		var request = $.ajax({
+			url: "/qna/increaseViewCount.do?qna_idx="+qna_idx,
+			method: "get"
+		});
+		
+		request.done(function(data) {
+			getQnaList();
+			console.log("success");
+		});
+		
+		request.fail(function(error) {
+			console.log(error);
+		});
+		
+		
 	}
 </script>
 	

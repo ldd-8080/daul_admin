@@ -102,5 +102,11 @@
 			ref= #{qna_idx}
 	</update>
 	
+	<update id = "increaseViewCount">
+		UPDATE daul.daul_qna
+		   SET view_count = view_count + 1
+		 WHERE qna_idx = #{qna_idx}
+	</update>
+	
 	
 </mapper>

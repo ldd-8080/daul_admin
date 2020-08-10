@@ -305,8 +305,30 @@ function deleteFaq() {
 		    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
 		    	{name: "faq_idx",title: "번호", type: "text", width: 70, align: "center", css: "non-display"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 70},
-		    	{name: "question", title: "질의", type: "text", width: 150}, 
-		    	{name: "answer", title: "응답", type: "text", width: 200}, 
+		    	{ title: "질의", type: "text", width: 150,	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		console.log("length = " + item.question.length);
+		    			if(item.question.length > 30){
+		    				result = item.question.substring(0,30)+'...';		    				
+		    			}else{
+		    				result = item.question;
+		    			}
+		    			return result;
+		    		}
+		    	}, 
+		    	{ title: "응답", type: "text", width: 150,	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		console.log("length = " + item.answer.length);
+		    			if(item.answer.length > 30){
+		    				result = item.answer.substring(0,30)+'...';		    				
+		    			}else{
+		    				result = item.answer;
+		    			}
+		    			return result;
+		    		}
+		    	}, 
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}
 	    	],
 	    	

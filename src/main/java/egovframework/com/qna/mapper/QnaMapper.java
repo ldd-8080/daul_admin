@@ -14,4 +14,5 @@ public interface QnaMapper {
 	void updateQnaReply(QnaVo vo) throws Exception;
 	void deleteQnaReply(QnaVo vo) throws Exception;
 	void deleteQnaAll(QnaVo vo) throws Exception;
+	void increaseViewCount(QnaVo vo) throws Exception;
 }

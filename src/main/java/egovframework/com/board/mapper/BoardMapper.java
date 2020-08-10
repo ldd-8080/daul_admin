@@ -21,4 +21,5 @@ public interface BoardMapper {
 	int updateNotice(BoardVo vo) throws Exception;
 	void deleteFile(FileVo fileVo) throws Exception;
 	void deleteNotice(BoardVo vo) throws Exception;
+	void increaseViewCount(BoardVo vo) throws Exception;
 }

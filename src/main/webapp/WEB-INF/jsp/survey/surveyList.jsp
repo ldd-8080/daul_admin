@@ -102,10 +102,23 @@
 		    data: surveyList,
 	
 		    fields: [
-		    	{name: "num",title: "번호", type: "text", width: 50, align: "center"},
+		    	{name: "num",title: "번호", type: "text", width: 30, align: "center"},
 		    	{name: "create_user", title: "작성자", type: "text", width: 40},
-		    	{name: "title", title: "제목", type: "text", width: 150}, 
-		    	{title: "설문기간", type: "text", width: 150, align: "center",
+		    	{name: "title", title: "제목", type: "text", width: 160,	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		console.log("length = " + item.title.length);
+		    			if(item.title.length > 30){
+		    				result = item.title.substring(0,30)+'...';		    				
+		    			}else{
+		    				result = item.title;
+		    			}
+		    			return result;
+		    		}
+		    	}, 
+		    	{name: "participation_count", title: "참여", type: "text", width: 30, align: "center"},
+		    	{name: "opinion_count", title: "댓글", type: "text", width: 30, align: "center"},
+		    	{title: "설문기간", type: "text", width: 110, align: "center",
 		    		itemTemplate: function(_, item) {
 		    			return item.s_date + " ~ " + item.e_date;
 		    		}

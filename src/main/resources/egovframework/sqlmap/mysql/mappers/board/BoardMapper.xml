@@ -4,38 +4,42 @@
 	namespace="egovframework.com.board.mapper.BoardMapper">
 	
 	<select id="selectBoardList" resultType="egovframework.com.board.vo.BoardVo">	
-		SELECT 
-			@rownum:=@rownum+1 as num ,
-			notice_idx, 
-			title, 
-			content, 
-			notice_type,
-			view_count,
-			create_user, 
-			DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
-			del_chk
-		FROM daul.daul_notice a, (SELECT @rownum:=0) TMP
-		WHERE del_chk = 'N'
-		<if test="search_type == 'title'">
-			AND title like concat('%',#{search},'%')
-		</if>
- 		<if test="search_type == 'content'">
-			AND content like concat('%',#{search},'%')
-		</if>
- 		<if test="search_type == 'create_user'">
-			AND create_user like concat('%',#{search},'%')
-		</if>
-	 	<if test="search_s_date != null and search_s_date != ''">
-	 		<![CDATA[
-	    	AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
-	    	]]>
-	    </if>
-	    <if test="search_e_date != null and search_e_date != ''">
-	 		<![CDATA[
-	    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
-	    	]]>
-	    </if>
-		ORDER BY notice_idx desc
+		SELECT * 
+		  FROM (
+			SELECT
+				@rownum:=@rownum+1 as num ,
+				a.notice_idx, 
+				a.title, 
+				a.content, 
+				a.notice_type,
+				a.view_count,
+				a.create_user, 
+				DATE_FORMAT(a.create_date, '%Y-%m-%d') as create_date,
+				a.del_chk
+			FROM daul.daul_notice a, (SELECT @rownum:=0) TMP
+			WHERE a.del_chk = 'N'
+			<if test="search_type == 'title'">
+				AND a.title like concat('%',#{search},'%')
+			</if>
+	 		<if test="search_type == 'content'">
+				AND a.content like concat('%',#{search},'%')
+			</if>
+	 		<if test="search_type == 'create_user'">
+				AND a.create_user like concat('%',#{search},'%')
+			</if>
+		 	<if test="search_s_date != null and search_s_date != ''">
+		 		<![CDATA[
+		    	AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+		    	]]>
+		    </if>
+		    <if test="search_e_date != null and search_e_date != ''">
+		 		<![CDATA[
+		    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+		    	]]>
+		    </if>
+			ORDER BY create_date ASC
+		) sub
+	ORDER BY sub.num DESC;
 	</select>
 		
 	<select id="selectBoardFile" resultType="Map">
@@ -154,5 +158,9 @@
 		   AND del_chk != 'Y'
 	</update>
 	
-	
+		<update id = "increaseViewCount">
+		UPDATE daul.daul_notice
+		   SET view_count = view_count + 1
+		 WHERE notice_idx = #{notice_idx}
+	</update>
 </mapper>

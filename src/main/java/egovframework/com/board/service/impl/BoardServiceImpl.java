@@ -30,9 +30,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public List<Map<String,String>> selectBoardFile(BoardVo vo) throws Exception{
 		List<Map<String,String>> list = new ArrayList<Map<String, String>>();
 		
-		list = boardMapper.selectBoardFile(vo);
-		
-		return list;
+		boardMapper.increaseViewCount(vo);
+		return boardMapper.selectBoardFile(vo);
 		
 	}
 	

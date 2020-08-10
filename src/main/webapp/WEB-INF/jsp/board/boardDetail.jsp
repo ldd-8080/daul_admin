@@ -74,8 +74,8 @@
 					        
 							<div class="col-md-11 text-right">
 								<div class="example example-buttons"> 
-									<button type="button" class="btn btn-primary waves-effect waves-classic" id="noticeModifyBtn" >수정 </button>
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="notcieDeleteBtn" formaction="/board/noticeDelete.do">삭제 </button>
+									<button type="button" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="noticeModifyBtn" >수정 </button>
+									<button type="submit" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="notcieDeleteBtn" name="notcieDeleteBtn" formaction="/board/noticeDelete.do">삭제 </button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
 								</div>
 							</div>
@@ -107,7 +107,8 @@
 	});
   
 	$("#noticeModifyBtn").click(function() {
-		if (!confirm("수정 하시겠습니까?")) return false;
+		//if (!confirm("수정 하시겠습니까?")) return false;
+		if (!submitConfirm($(this))) return false;
 		
 		$("#noticeFile").attr("type", "text");
 		$("#noticeFile").attr("type", "file");
@@ -294,6 +295,24 @@
 			}
 		}
 	}
+	
+	function submitConfirm($type) {
+		var type = $type.text();
+		var title = $type.data("title");
+		var msg = "";
+		
+		if (title !== undefined) msg += title + "을(를) ";
+		msg += type + "하시겠습니까?";
+		
+		if (!confirm(msg)) return false;
+		else return true;
+	}
+	
+	$("button[name='notcieDeleteBtn']").click(function() {
+		if (!submitConfirm($(this))) return false;
+	});
+	
+	
 </script>
 
 

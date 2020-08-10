@@ -67,7 +67,8 @@ public class BoardController {
 		
 		try {
 			 noticeList = boardService.selectBoardList(vo);
-			
+			 
+			 
 		}catch(Exception e){
 			log.debug("BoardController > /boardList.do > Exception");
 		}

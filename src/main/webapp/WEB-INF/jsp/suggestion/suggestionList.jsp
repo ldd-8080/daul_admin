@@ -102,9 +102,20 @@
 		    data: sgstList,
 	
 		    fields: [
-		    	{name: "num",title: "번호", type: "text", width: 70, align: "center"},
-		    	{name: "create_user", title: "작성자", type: "text", width: 60},
-		    	{name: "title", title: "제목", type: "text", width: 150},
+		    	{name: "num",title: "번호", type: "text", width: 20, align: "center"},
+		    	{name: "create_user", title: "작성자", type: "text", width: 50},
+		    	{title: "제목", type: "text", width: 150,	    		
+					itemTemplate: function(_, item) {
+		    			var result="";
+			    		console.log("length = " + item.title.length);
+		    			if(item.title.length > 25){
+		    				result = item.title.substring(0,25)+'...';		    				
+		    			}else{
+		    				result = item.title;
+		    			}
+		    			return result;
+		    		}
+		    	},
 		    	{name: "like_count", title: "공감", type: "text", width: 30, align: "center"}, 
 		    	{name: "pro_cnt", title: "전문가 댓글", type: "text", width: 50, align: "center"}, 
 		    	{name: "public_cnt", title: "일반 댓글", type: "text", width: 50, align: "center"}, 

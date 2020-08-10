@@ -41,15 +41,18 @@ public class QnaServiceImpl extends EgovAbstractServiceImpl implements QnaServic
 
 	@Override
 	public void deleteQnaReply(QnaVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		qnaMapper.deleteQnaReply(vo);
 	}
 
 	@Override
 	public void deleteQnaAll(QnaVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		qnaMapper.deleteQnaAll(vo);
 		
+	}
+
+	@Override
+	public void increaseViewCount(QnaVo vo) throws Exception {
+		qnaMapper.increaseViewCount(vo);
 	}
 	
 	

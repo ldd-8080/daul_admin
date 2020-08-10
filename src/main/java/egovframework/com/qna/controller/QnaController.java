@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.cmmn.util.CmmnUtil;
@@ -114,5 +115,18 @@ public class QnaController {
 			return new ResponseEntity<>("error.", HttpStatus.OK);
 		}
 	}
-
+	
+	@RequestMapping(value="/increaseViewCount",method = RequestMethod.GET)
+	public ResponseEntity increaseViewCount(HttpSession session, @RequestParam("qna_idx") String qna_idx ,HttpServletRequest request, HttpServletResponse response) throws Exception{
+		try {
+			QnaVo qnaVo = new QnaVo();
+			qnaVo.setQna_idx(qna_idx);
+			
+			qnaService.increaseViewCount(qnaVo);
+			
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<>("error.", HttpStatus.OK);
+		}
+	}
 }
