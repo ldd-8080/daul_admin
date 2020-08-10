@@ -379,7 +379,7 @@
 		    	{title: "", width: 50, align: "center", 
 		    		itemTemplate: function(_, item) {
 		    			if (item.del_chk !== 'Y') {
-			    			return '<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
+			    			return '<button class="btn-xs btn-primary btn-outline waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
 		    			}
 		    		}
 	    		}

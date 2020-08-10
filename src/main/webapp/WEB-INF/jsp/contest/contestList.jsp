@@ -116,7 +116,17 @@
 		    			return result;
 		    		}
 				}, 
-				{name : "create_date", title : "등록일", type : "text", width : 100, align : "center"}
+				{title : "공모기간", type : "text", width : 90, align : "center",
+		    		itemTemplate: function(_, item) {
+		    			return item.contest_s_date + " ~<br/>" + item.contest_e_date;
+		    		}
+				},
+				{title : "접수기간", type : "text", width : 90, align : "center",
+		    		itemTemplate: function(_, item) {
+		    			return item.submit_s_date + " ~<br/>" + item.submit_e_date;
+		    		}
+				},
+				{name : "create_date", title : "등록일", type : "text", width : 90, align : "center"}
 			],
 
 			rowClick : function(args) {

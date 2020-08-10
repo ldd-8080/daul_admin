@@ -118,9 +118,9 @@
 		    	}, 
 		    	{name: "participation_count", title: "참여", type: "text", width: 30, align: "center"},
 		    	{name: "opinion_count", title: "댓글", type: "text", width: 30, align: "center"},
-		    	{title: "설문기간", type: "text", width: 110, align: "center",
+		    	{title: "설문기간", type: "text", width: 90, align: "center",
 		    		itemTemplate: function(_, item) {
-		    			return item.s_date + " ~ " + item.e_date;
+		    			return item.s_date + " ~<br/>" + item.e_date;
 		    		}
 	    		},
 		    	{name: "create_date", title: "등록일", type: "text", width: 70, align: "center"}
