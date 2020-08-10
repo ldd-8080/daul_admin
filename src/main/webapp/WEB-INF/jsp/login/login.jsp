@@ -151,8 +151,8 @@
 		});
 	}
 	
-	//$("#user_id").val("admin");
-	//$("#pw").val("1234qwer");
+	$("#user_id").val("admin");
+	$("#pw").val("1234qwer");
 	
 	$("#login-btn").trigger("click");
 </script>

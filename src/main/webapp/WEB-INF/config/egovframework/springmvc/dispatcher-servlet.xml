@@ -114,17 +114,17 @@
     
     <beans profile="local1">   
 		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
-			<property name="rootPath" value="/Users/a1/attach"/>
+			<property name="rootPath" value="/Users/a1/attach/"/>
 		</bean>
 	</beans>
 	<beans profile="local2">   
 		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
-			<property name="rootPath" value="/Users/a2/attach"/>
+			<property name="rootPath" value="/Users/a2/attach/"/>
 		</bean>
 	</beans>
-	<beans profile="production">   
+	<beans profile="prod">   
 		<bean id="ProfileCls" class="egovframework.com.cmmn.util.ProfileCls">
-			<property name="rootPath" value="/home/release"/>
+			<property name="rootPath" value="/home/tababa/attach/"/>
 		</bean>
 	</beans>
 

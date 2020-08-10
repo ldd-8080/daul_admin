@@ -43,7 +43,7 @@ public class FileUtil {
     	String IDX = String.valueOf(vo.getIdx());
     	String creaID = (String) vo.getCreate_user();
     	
-    	File target = new File(filePath);
+    	File target = new File(profileCls.getRootPath());
     	if(!target.exists()) target.mkdirs();
     	
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
@@ -72,7 +72,7 @@ public class FileUtil {
     public void getImgFile(HttpServletResponse response, String filename) throws Exception {
 		try {
 			response.setContentType("application/png");
-			String url = "file://" + filePath;
+			String url = "file://" + profileCls.getRootPath();
 			URL fileUrl = new URL(url + filename);
 			log.debug("getRepImgFile : " + fileUrl);
 			IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
@@ -97,7 +97,7 @@ public class FileUtil {
     		log.debug("content type: "+file.getContentType());
     		log.debug("================== file   END ==================");
     		
-    		target = new File(filePath, saveFileName);
+    		target = new File(profileCls.getRootPath(), saveFileName);
     		file.transferTo(target);
     		
     		FileVo fileVo = new FileVo();
