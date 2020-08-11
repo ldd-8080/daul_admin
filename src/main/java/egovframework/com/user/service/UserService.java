@@ -19,4 +19,6 @@ public interface UserService {
 	List<UserVo> selectUserList(UserVo vo) throws Exception;
 
 	int selectUserIdCheck(String user_id) throws Exception;
+	
+	UserVo selectUserCnt(UserVo vo) throws Exception;
 }

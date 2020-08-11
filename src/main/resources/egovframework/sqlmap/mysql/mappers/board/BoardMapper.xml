@@ -15,6 +15,12 @@
 				a.view_count,
 				a.create_user, 
 				DATE_FORMAT(a.create_date, '%Y-%m-%d') as create_date,
+				(
+					SELECT count(*) 
+					  FROM daul_notice_attach b 
+					 WHERE b.notice_idx = a.notice_idx 
+					   AND del_chk ='N'
+				) as attach_count,
 				a.del_chk
 			FROM daul.daul_notice a, (SELECT @rownum:=0) TMP
 			WHERE a.del_chk = 'N'

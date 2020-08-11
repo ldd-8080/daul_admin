@@ -423,7 +423,7 @@
 	    	],
 	    	
 	    	rowClick: function(args) {
-	    		if (args.item.del_chk !== 'Y' && args.event.target.cellIndex !== 5 && args.event.target.name !== 'opnToOpnModal') {
+	    		if (args.item.del_chk !== 'Y' && args.event.target.cellIndex !== 6 && args.event.target.name !== 'opnToOpnModal') {
 	    			
 	    			$("#chk-error-modify").text('');
 	    			

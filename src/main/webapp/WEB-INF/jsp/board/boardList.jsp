@@ -118,6 +118,11 @@ function setBoardListTable(BoardList) {
 	    			}else{
 	    				result = item.content;
 	    			}
+	    			
+	    			if(item.attach_count > 0){
+	    				result +='&nbsp;&nbsp;<i class="icon wb-file" aria-hidden="true"></i>';
+	    			}
+	    			
 	    			return result;
 	    		}
 	    	}, 

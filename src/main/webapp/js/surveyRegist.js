@@ -32,9 +32,6 @@ function addQuestion() {
     function deleteFile(obj) {
         obj.parent().parent().remove();
     }
-    
-  
-    
     idx++;
 }
 

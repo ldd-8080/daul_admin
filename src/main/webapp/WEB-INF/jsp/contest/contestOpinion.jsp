@@ -52,8 +52,8 @@
 					<div style="text-align: center">
 						<button type="button"
 							class="btn btn-primary waves-effect waves-classics"
-							name="sgstSubmitBtn"
-							onclick="deleteContestOpinion()">삭제</button>
+							name="sgstSubmitBtn" data-title="열린제안"
+							id="contestOpinionDeleteBtn">삭제</button>
 						<button type="button"
 							class="btn btn-default waves-effect waves-classics"
 							data-dismiss="modal" aria-label="Close" id = "cancel-btn">취소</button>
@@ -171,7 +171,9 @@ function getcontestOpinionList() {
 }
 
 
-function deleteContestOpinion() {
+$("#contestOpinionDeleteBtn").click(function() {
+	if (!submitConfirm($(this))) return false;
+	
 	var idx = $("#detailOpinionIdx").val();
 	var request = $.ajax({
 		url: "/contest/contestOpinionDelete.do?user_contest_idx="+idx,
@@ -186,7 +188,7 @@ function deleteContestOpinion() {
 	request.fail(function(error) {
 		console.log(error);
 	});
-}
+});
 
 function getContestOpinionFileList(idx) {
 	var request = $.ajax({

@@ -53,4 +53,9 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 		return userMapper.selectUserIdCheck(user_id);
 	}
 
+	@Override
+	public UserVo selectUserCnt(UserVo vo) throws Exception {
+		return userMapper.selectUserCnt(vo);
+	}
+
 }

@@ -63,14 +63,21 @@ public class UserController {
 	@RequestMapping(value="userDetailPage.do")
 	public String publicUserDetailPage(ModelMap model, @RequestParam("id") String id) throws Exception{
 		UserVo vo = new UserVo();
+		UserVo userCntVo = new UserVo();
+		
+		
 		
 		try {
 			vo.setUser_id(id);
+			
+			userCntVo = userService.selectUserCnt(vo);
 			vo = userService.selectUser(vo);
+			
+			System.out.println("userCntVo = " + userCntVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		model.addAttribute("userCntVo", userCntVo);
 		model.addAttribute("userVo", vo);
 		
 		if ("admin".equals(vo.getAuth_type()) ) {

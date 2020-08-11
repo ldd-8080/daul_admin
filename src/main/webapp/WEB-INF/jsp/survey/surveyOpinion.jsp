@@ -34,7 +34,7 @@
       			<input type="hidden" name="survey_idx" value="${surveyVo.survey_idx}"/>
       			<input type="hidden" name="opinion_idx" id="opinion_idx" value=""/>
       		</div>
-        	
+        	  	<br/>
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" id="surveyOpinionRegistBtn" >등록 </button>
         	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close">취소 </button>
@@ -74,7 +74,7 @@
       			<input type="hidden" name="survey_idx" id="detailSurveyIdx" value="${surveyVo.survey_idx}"/>
       			<input type="hidden" name="opinion_idx" id="detailOpinionIdx" value=""/>
       		</div>
-        	
+        		<br/>
         	<div style="text-align:center">
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="surveyOpnUpdate('mod', this)">수정 </button>
         		<button type="button" class="btn btn-primary waves-effect waves-classics" data-title="댓글" onclick="surveyOpnUpdate('del', this)">삭제 </button>

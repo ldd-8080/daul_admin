@@ -139,4 +139,39 @@
 		  FROM daul.user
 		 WHERE user_id = #{user_id}
 	</select>
+	
+	<select id="selectUserCnt" resultType="egovframework.com.user.vo.UserVo">
+		SELECT a.cnt AS 'contest_cnt' , 
+		       b.cnt AS 'suggestion_cnt', 
+		       c.cnt AS 'participation_cnt', 
+		       (
+					SELECT 
+						(
+							SELECT count(*) AS cnt FROM suggestion_opinion
+							 WHERE create_user = #{user_id}
+							   AND del_chk = 'N'
+						) 
+						+ 
+						(
+							SELECT count(*) AS cnt FROM survey_opinion 
+					 		 WHERE create_user = #{user_id}
+						) 
+					) AS 'opinion_cnt'
+		FROM 
+			(
+				SELECT count(*) AS cnt FROM contest_user
+				WHERE create_user = #{user_id}
+		 	  	AND del_chk  = 'N'
+			) a,
+			(
+				SELECT count(*) AS cnt FROM suggestion_main
+				WHERE create_user = #{user_id}
+			  	AND del_chk  = 'N'
+			) b,
+			(
+				 SELECT count(*) AS cnt FROM survey_participation sm 
+				 WHERE participation_user = #{user_id}
+			) c
+	
+	</select>
 </mapper>

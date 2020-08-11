@@ -14,8 +14,17 @@ public class BoardVo extends SearchVo{
 	private String update_date;
 	private String del_chk;
 	private int num;
+	private int attach_count;
 	
 	
+	
+	
+	public int getAttach_count() {
+		return attach_count;
+	}
+	public void setAttach_count(int attach_count) {
+		this.attach_count = attach_count;
+	}
 	public int getNum() {
 		return num;
 	}

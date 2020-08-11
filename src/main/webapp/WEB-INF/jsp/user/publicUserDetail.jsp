@@ -35,25 +35,25 @@
     								<div class="input-group-append">
     									<span class="input-group-text">열린제안</span>
     								</div>
-    								<input type="text" class="form-control"/>
+    								<input type="text" class="form-control text-center" value="${userCntVo.suggestion_cnt}"/>
     							</div>
     							<div class="input-group">
     								<div class="input-group-append">
     									<span class="input-group-text">설문참여</span>
     								</div>
-    								<input type="text" class="form-control"/>
+    								<input type="text" class="form-control text-center" value="${userCntVo.participation_cnt}"/>
     							</div>
     							<div class="input-group">
     								<div class="input-group-append">
-    									<span class="input-group-text">공모참여</span>
+    									<span class="input-group-text" >공모참여</span>
     								</div>
-    								<input type="text" class="form-control"/>
+    								<input type="text" class="form-control text-center" value="${userCntVo.contest_cnt}"/>
     							</div>
     							<div class="input-group">
     								<div class="input-group-append">
     									<span class="input-group-text">답변활동</span>
     								</div>
-    								<input type="text" class="form-control"/>
+    								<input type="text" class="form-control text-center" value="${userCntVo.opinion_cnt}"/>
     							</div>
     						</div>
     					</div>

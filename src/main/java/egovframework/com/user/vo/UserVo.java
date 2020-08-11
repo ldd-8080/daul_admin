@@ -17,6 +17,46 @@ public class UserVo {
 	private String sms_chk;
 	private String auth_type;
 	
+	private int contest_cnt;
+	private int suggestion_cnt;
+	private int participation_cnt;
+	private int opinion_cnt;
+	
+	
+	
+	
+	public int getContest_cnt() {
+		return contest_cnt;
+	}
+
+	public void setContest_cnt(int contest_cnt) {
+		this.contest_cnt = contest_cnt;
+	}
+
+	public int getSuggestion_cnt() {
+		return suggestion_cnt;
+	}
+
+	public void setSuggestion_cnt(int suggestion_cnt) {
+		this.suggestion_cnt = suggestion_cnt;
+	}
+
+	public int getParticipation_cnt() {
+		return participation_cnt;
+	}
+
+	public void setParticipation_cnt(int participation_cnt) {
+		this.participation_cnt = participation_cnt;
+	}
+
+	public int getOpinion_cnt() {
+		return opinion_cnt;
+	}
+
+	public void setOpinion_cnt(int opinion_cnt) {
+		this.opinion_cnt = opinion_cnt;
+	}
+
 	private String key = "daul";
 	
 	private int num;
@@ -147,10 +187,14 @@ public class UserVo {
 
 	@Override
 	public String toString() {
-		return "UserVo [user_id=" + user_id + ", name=" + name + ", pw=" + pw + ", email=" + email + ", phone=" + phone
-				+ ", channel=" + channel + ", reg_date=" + reg_date + ", last_login_date=" + last_login_date
-				+ ", email_chk=" + email_chk + ", talk_chk=" + talk_chk + ", sms_chk=" + sms_chk + ", auth_type="
-				+ auth_type + ", key=" + key + "]";
+		return "UserVo [user_id=" + user_id + ", name=" + name + ", pw=" + pw + ", new_pw=" + new_pw + ", email="
+				+ email + ", phone=" + phone + ", channel=" + channel + ", reg_date=" + reg_date + ", last_login_date="
+				+ last_login_date + ", email_chk=" + email_chk + ", talk_chk=" + talk_chk + ", sms_chk=" + sms_chk
+				+ ", auth_type=" + auth_type + ", contest_cnt=" + contest_cnt + ", suggestion_cnt=" + suggestion_cnt
+				+ ", participation_cnt=" + participation_cnt + ", opinion_cnt=" + opinion_cnt + ", key=" + key
+				+ ", num=" + num + "]";
 	}
+
+
 	
 }
