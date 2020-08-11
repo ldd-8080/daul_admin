@@ -115,11 +115,11 @@
 				{title : "유형",  width : 70	, align: "center",	    		
 					itemTemplate: function(_, item) {
 		    			var result="";
-			    		console.log("length = " + item.auth_type.length);
+			    		
 		    			if(item.auth_type === "admin"){
-		    				result = '관리자';		    				
+		    				result = "관리자";		    				
 		    			}else if(item.auth_type === "pro"){
-		    				result = '전문가';
+		    				result = "전문가";
 		    			}else if(item.auth_type === "public"){
 		    				result = "일반";
 		    			}else{
@@ -139,7 +139,7 @@
 				console.log(args);
 				var idx = args.item.user_id;
 
-				location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?id=" + idx;
+				location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?auth_type=public&id=" + idx;
 			}
 		});
 	}

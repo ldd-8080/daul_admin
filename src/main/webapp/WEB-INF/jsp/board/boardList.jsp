@@ -113,7 +113,6 @@ function setBoardListTable(BoardList) {
 	    	{title: "내용", width: 200,	    		
 				itemTemplate: function(_, item) {
 	    			var result="";
-		    		console.log("length = " + item.content.length);
 	    			if(item.content.length > 30){
 	    				result = item.content.substring(0,30)+'...';		    				
 	    			}else{
