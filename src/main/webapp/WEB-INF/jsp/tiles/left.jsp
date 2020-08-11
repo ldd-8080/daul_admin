@@ -83,6 +83,13 @@
 	             	</li>
 	           	</ul>
 	       	</li>
+	       	
+	       	<li class="site-menu-item has-sub">
+            	<a class="animsition-link" href="/chatbot/intentListPage.do">
+                	<i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                	<span class="site-menu-title">chatbot</span>
+            	</a>
+            </li>
         </ul>
   	</div>
 </div>

@@ -98,7 +98,6 @@
            <mvc:mapping path="/**"/>
            <mvc:exclude-mapping path="/log*/*.do"/>
            <mvc:exclude-mapping path="/user/signUp*.do"/>
-           <mvc:exclude-mapping path="/chat/*.do"/>
            <bean  class="egovframework.com.cmmn.interceptor.cmmnInterceptor"/>
            
        </mvc:interceptor>

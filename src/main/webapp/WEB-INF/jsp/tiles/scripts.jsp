@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Core  -->
-<script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>
+
 
 <script src="${pageContext.request.contextPath}/js/popper-js/umd/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap/bootstrap.js"></script>
@@ -33,7 +33,7 @@
 <script src="${pageContext.request.contextPath}/js/datatables.net-buttons/buttons.print.js"></script>
 <script src="${pageContext.request.contextPath}/js/datatables.net-buttons/buttons.colVis.js"></script>
 <script src="${pageContext.request.contextPath}/js/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script>
-<script src="${pageContext.request.contextPath}/js/asrange/jquery-asRange.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/asrange/jquery-asRange.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootbox/bootbox.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-ui/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/blueimp-tmpl/tmpl.js"></script>
@@ -55,7 +55,6 @@
         
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/Component.js"></script>
-<script src="${pageContext.request.contextPath}/js/Plugin.js"></script>
 <script src="${pageContext.request.contextPath}/js/Base.js"></script>
 <script src="${pageContext.request.contextPath}/js/Config.js"></script>
 
@@ -88,13 +87,11 @@
 
 <script src="${pageContext.request.contextPath}/js/Plugin/asprogress.js"></script>
 
-<script src="${pageContext.request.contextPath}/js/Plugin/select2.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-select.js"></script>
 
 <script src="${pageContext.request.contextPath}/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="${pageContext.request.contextPath}/js/uikit/progress-bars.js"></script>
-<script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>       
-<%-- <script src="${pageContext.request.contextPath}/js/forms/advanced.js"></script> --%>
+<script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>    
 
 <script type="text/javascript">
 function submitConfirm($type) {

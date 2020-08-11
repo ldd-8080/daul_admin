@@ -58,6 +58,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/icon.css">
         
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jstree/jstree.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-tokenfield/bootstrap-tokenfield.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/webui-popover/webui-popover.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/notebook/notebook.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/intents/intents.css">
 <!--[if lt IE 9]>
 <script src="../../global/vendor/html5shiv/html5shiv.min.js"></script>
 <![endif]-->
@@ -71,6 +77,15 @@
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
 <script src="${pageContext.request.contextPath}/js/jsgrid/jsgrid.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jstree/jstree.js"></script>       
+<script src="${pageContext.request.contextPath}/js/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>    
+<script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+<script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>   
+<script src="${pageContext.request.contextPath}/js/Plugin.js"></script>
+<script src="${pageContext.request.contextPath}/js/webui-popover/jquery.webui-popover.js"></script>
+<script src="${pageContext.request.contextPath}/js/Plugin/select2.js"></script>
+<script src="${pageContext.request.contextPath}/js/select2/select2.full.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> --%> 
  
 <script type="text/javascript">
