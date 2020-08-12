@@ -10,6 +10,9 @@
 			<i class="icon md-chevron-right" aria-hidden="true"></i>
 		</div>
 		<div class="page-aside-inner">
+			<div class="scenario-add-btn">
+				<input type="button" class="form-control" id="scenario-add-btn" style="cursor:pointer; color:blue" value="+ 시나리오"/>
+			</div>
 			<div class="input-search">
 				<form class="form-group m-0" role="search">
 					<div class="input-search">
@@ -644,7 +647,7 @@
 <script type="text/javascript">
 $("body").addClass("app-notebook page-aside-left dialog");
 
-initialize_jstree();
+//initialize_jstree();
 initialize_components();
 
 function initialize_components(){
@@ -952,23 +955,14 @@ function initialize_components(){
     }
 }
 
-function initialize_jstree(){
+function initialize_jstree(Listdata){
+	
+	console.log(Listdata);
     //===== jstree category/intent node tree ==================
     $('#jstree').jstree({
       'core': {
         "check_callback": true,
-        'data' : [
-            {"id": 1, "text": "\uc758\ub3c4 \ud2b8\ub9ac", "parent": "#", "type": "R", "position": 0, "module": 2},
-            {"id": 2, "text": "new category", "parent": 1, "type": "C", "position": 0, "module": 2},
-            {"id": 3, "text": "new Intent", "parent": 2, "type": "I", "position": 1, "module": 2},
-            {"id": 4, "text": "new Intent", "parent": 2, "type": "I", "position": 2, "module": 2},
-            {"id": 5, "text": "new Intent", "parent": 2, "type": "I", "position": 3, "module": 2},
-            {"id": 6, "text": "new Intent", "parent": 2, "type": "I", "position": 4, "module": 2},
-            {"id": 7, "text": "new Intent", "parent": 2, "type": "I", "position": 5, "module": 2},
-            {"id": 8, "text": "new Intent", "parent": 2, "type": "I", "position": 6, "module": 2},
-            {"id": 9, "text": "new Intent", "parent": 2, "type": "I", "position": 7, "module": 2},
-            {"id": 10, "text": "new Intent", "parent": 2, "type": "I", "position": 8, "module": 2}
-          ]
+        'data' : Listdata
       },
       "types" : {
         "#" : {
@@ -995,223 +989,122 @@ function initialize_jstree(){
               "Create_Category": {
                 "separator_before": false,
                 "separator_after": false,
-                "label": "add category",
+                "label": "시나리오생성",
                 "icon": "fa-folder-o",
+             
                 "action": function (obj) {
-                  let ref = $('#jstree').jstree(true)
-                  let sel = ref.get_selected();
-                  if(!sel.length) {
-                    return false;
-                  }
-                  sel = sel[0];
-                  let parent = ref.get_node(sel);
-                  if (parent.type === 'I'){
-                    alertify.alert("인텐트노드는 자식노드를 생성할 수 없습니다.")
-                  }
-                  sel = ref.create_node(sel, {
-                    'text': 'new category',
-                    "type" : "C"
-                  });
-                  if(sel) {
-                    ref.edit(sel);
-                  }
+                	let ref = $('#jstree').jstree(true)
+                    let sel = ref.get_selected();
+                    if(!sel.length) {
+                      return false;
+                    }
+                    sel = sel[0];
+                    let parent = ref.get_node(sel);
+
+                	console.log(parent.children.length);
+                	
+                	if(parent.type === "R"){
+                		alert("루트는 삭제할 수 없습니다.");
+                		return false;
+                	}
+                	
+                	if(parent.children.length > 0){
+                		alert("하위 블록이 있을 경우 삭제할 수 없습니다.");
+                		return false;
+                	}
+            		deleteCategory(parent.id);
                 }
               },
               "Create_Intent": {
-                "separator_before": false,
-                "separator_after": false,
-                "label": "add intent",
-                "icon": "fa-comments-o",
-                "action": function (obj) {
-                  let ref = $('#jstree').jstree(true)
-                  let sel = ref.get_selected();
-                  if(!sel.length) {
-                    return false;
-                  }
-                  sel = sel[0];
-                  let parent = ref.get_node(sel);
-                  if (parent.type === 'I'){
-                    alertify.alert("인텐트노드는 자식노드를 생성할 수 없습니다.")
-                  }
-                  sel = ref.create_node(sel, {
-                    'text': 'new Intent',
-                    "type" : "I"
-                  });
-                  if(sel) {
-                    ref.edit(sel);
-                  }
-                }
-              },
-              "Rename": {
-                "separator_before": false,
-                "separator_after": false,
-                "label": "rename",
-                "icon": "fa-edit",
-                "action": function (obj) {
-                  let ref = $('#jstree').jstree(true), sel = ref.get_selected();
-                  if(!sel.length) { return false; }
-                  sel = sel[0];
-                  let node = ref.get_node(sel);
-                  if (node.type === 'R'){
-                    alertify.alert("루트노드는 수정할 수 없습니다.");
-                  }
-                  ref.edit(sel);
-                }
-              },
-              "Remove": {
-                "separator_before": false,
-                "separator_after": false,
-                "label": "delete",
-                "icon": "fa-trash",
-                "action": function (obj) {
-                  let ref = $('#jstree').jstree(true), sel = ref.get_selected();
-                  if (!sel.length) {
-                    return false;
-                  }
-                  sel = sel[0];
-                  let node = ref.get_node(sel);
-                  if (node.type === 'C'){
-                    alertify.confirm("카테고리노드 ["+node['text']+"] 를 삭제하시겠습니까? (하위노드까지 함께 삭제됩니다.)", function () {
-                      ref.delete_node(sel);
+                  "separator_before": false,
+                  "separator_after": false,
+                  "label": "add intent",
+                  "icon": "fa-comments-o",
+                  "action": function (obj) {
+                    let ref = $('#jstree').jstree(true)
+                    let sel = ref.get_selected();
+                    if(!sel.length) {
+                      return false;
+                    }
+                    sel = sel[0];
+                    let parent = ref.get_node(sel);
+                    if (parent.type === 'I'){
+                      alertify.alert("인텐트노드는 자식노드를 생성할 수 없습니다.")
+                    }
+                    sel = ref.create_node(sel, {
+                      'text': 'new Intent',
+                      "type" : "I"
                     });
+                    if(sel) {
+                      ref.edit(sel);
+                    }
                   }
-                  else if (node.type === 'I'){
-                    alertify.confirm("인텐트노드 ["+node['text']+"] 를 삭제하시겠습니까?", function () {
-                      ref.delete_node(sel);
-                    });
-                  }
-                  else if (node.type === 'R') {
-                    alertify.alert("루트 노드는 삭제할 수 없습니다.");
-                  }
+                },
+                "Rename": {
+                    "separator_before": false,
+                    "separator_after": false,
+                    "label": "rename",
+                    "icon": "fa-edit",
+                    "action": function (obj) {
+                      let ref = $('#jstree').jstree(true), sel = ref.get_selected();
+                      if(!sel.length) { return false; }
+                      sel = sel[0];
+                      let node = ref.get_node(sel);
+                      if (node.type === 'R'){
+                        alertify.alert("루트노드는 수정할 수 없습니다.");
+                      }
+                      ref.edit(sel);
+                    }
+                  },
+                    "Remove": {
+                      "separator_before": false,
+                      "separator_after": false,
+                      "label": "삭제",
+                      "icon": "fa-trash",
+                      "action": function (obj) {
+                    	  let ref = $('#jstree').jstree(true)
+                          let sel = ref.get_selected();
+                          if(!sel.length) {
+                            return false;
+                          }
+                          sel = sel[0];
+                          let parent = ref.get_node(sel);
+
+                      	console.log(parent.children.length);
+                      	
+                      	if(parent.type === "R"){
+                      		alert("루트는 삭제할 수 없습니다.");
+                      		return false;
+                      	}
+                      	
+                      	if(parent.children.length > 0){
+                      		alert("하위 블록이 있을 경우 삭제할 수 없습니다.");
+                      		return false;
+                      	}
+                  		deleteCategory(parent.id);
+                    }
                 }
-              },
-              "Refresh": {
-                "separator_before": true,
-                "separator_after": false,
-                "label": "새로고침",
-                "icon": "fa-refresh",
-                "action": function (obj) {
-                  let ref = $('#jstree').jstree(true);
-                  ref.refresh();
-                }
-              }
-            };
+            }
         }
       },
-      'plugins': ['dnd', 'search', "types", 'state', "wholerow", 'contextmenu']
-    })
-    .on('create_node.jstree', function (e, data) {
-      var ref = $('#jstree').jstree(true);
-      let old_node = data.node;
-      $.ajax({
-        type: 'POST',
-        url: "{% url 'dialog:add_intent_node' %}",
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-          data: JSON.stringify(old_node),
-        },
-        success: function (rst) {
-          // 서버에 저장 후 새로 받은 ID setting
-          ref.set_id(old_node.id, String(rst['id']))
-          console.log('create_node', ref.get_node(String(rst['id'])))
-        },
-        error: function (rst,status) {
-          alertify.alert('Error!!');
-          ref.refresh()
-        }
-      })
-    })
-    .on('rename_node.jstree', function (e, data) {
-      var ref = $('#jstree').jstree(true);
-      if (data.text === data.old){
-        return;
-      }
-      let node = data.node;
-      $.ajax({
-        type: 'POST',
-        url: "{% url 'dialog:rename_intent_node' %}",
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-          data: JSON.stringify(node),
-        },
-        success: function (rst) {
-          let node_id = rst['id'];
-          console.log('rename_node', ref.get_node(node_id))
-        },
-        error: function (rst,status) {
-          alertify.alert('Error!!');
-          ref.refresh()
-        }
-      })
-    })
-    .on('delete_node.jstree', function (e, data) {
-      var ref = $('#jstree').jstree(true);
-      let node = data.node;
-      $.ajax({
-        type: 'POST',
-        url: "{% url 'dialog:delete_intent_node' %}",
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-          data: JSON.stringify(node),
-        },
-        success: function (rst) {
-          console.log('delete_node', node.id)
-        },
-        error: function (rst,status) {
-          alertify.alert('Error!!');
-          ref.refresh()
-        }
-      })
-    })
-    .on('move_node.jstree', function (e, data) {
-      let ref = $('#jstree').jstree(true);
-
-      let nodes = data.new_instance._model.data;
-
-      var root_node_id = '';
-      $.each(nodes, function( key, child ) {
-        if (child.parent === '#') {
-          root_node_id = key;
-        }
-      });
-
-      function get_children(node_id){
-          var list = [];
-          $.each(nodes[node_id].children, function( index, child_id ) {
-              list.push(get_children(child_id));
-          });
-          return {'id':node_id, 'children': list}
-      }
-
-      let parent = ref.get_node(data.parent)
-      let node = data.node;
-      $.ajax({
-        type: 'POST',
-        url: "{% url 'dialog:move_intent_node' %}",
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-          parent: JSON.stringify(parent),
-          node: JSON.stringify(get_children(root_node_id))
-        },
-        success: function (rst) {
-          console.log('move_node', node.id)
-        },
-        error: function (rst,status) {
-          alertify.alert('Error!!');
-          ref.refresh()
-        }
-      })
-    })
-    .on('changed.jstree', function (e, data) {
+      'plugins': [ 'search', "types", 'state', "wholerow", 'contextmenu']
+    }).on("select_node.jstree", function (event, data) {
+    	// 노드가 선택된 뒤 처리할 이벤트
+    	var id = data.instance.get_node(data.selected).id;
+    	console.log("data.node : " + JSON.stringify(data.node));
+    	// 선택한 Node에 따라 하위 목록 가져오기 fn_Common.jstreeDynamic(data.node.id); 
+    	});
+    	
+    /* .on('changed.jstree', function (e, data) {
       if (data.action == 'select_node'){
         let node = data.node;
-        reloadDetailView(node.id)
+       // reloadDetailView(node.id);
       }else {
-        reloadDetailView(0);
+       // reloadDetailView(0);
       }
-    });
+    }); */
 }
-
+/* 
 function reloadDetailView(node_id){
     let div_detail = $('#dlgIntents');
     if (node_id === '' || node_id === 0 || node_id === null){
@@ -1257,5 +1150,70 @@ function showDivIntentTitleInput(){
     $("#intentTitleInput input").val(text);
     $('#jstree').jstree('rename_node', intent_id , text);
     hideDivIntentTitleInput();
-}
+} */
+  
+	function getIntentList() {
+		var request = $.ajax({
+			url : "/chatbot/getIntentList.do",
+			method : "get"
+		});
+
+		request.done(function(data) {
+		
+			//console.log(data);
+			//var datalist = data;
+			initialize_jstree(data);
+		
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
+  
+	$(function() {
+		getIntentList();
+	});
+	
+	function createScenario(){
+		console.log("click");	
+		var request = $.ajax({
+			url : "/chatbot/addScenario.do",
+			method : "get"
+		});
+
+		request.done(function(data) {
+		
+			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+			//getIntentList();
+		
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+		
+	}
+	
+	function deleteCategory(idx){
+		console.log("delete " + idx);
+		
+		var request = $.ajax({
+			url : "/chatbot/deleteCategory.do?intent_idx="+idx,
+			method : "get"
+		});
+
+		request.done(function(data) {
+		
+			//location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+			//getIntentList();
+			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+		
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+		
+	}
 </script>

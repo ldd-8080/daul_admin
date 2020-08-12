@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="egovframework.com.chatbot.mapper.ChatbotMapper">
+
+	<select id="getIntentList" resultType="egovframework.com.chatbot.vo.IntentVo">
+		SELECT 								
+			   intent_id as id,
+			   title as text,
+			   parent_id as parent,
+			   type,
+			   position,
+			   module		    
+		  FROM chatbot_intent_list
+		 WHERE del_chk = 'N';
+	</select>
+
+	<insert id="addScenario">
+		INSERT INTO daul.chatbot_intent_list
+					(
+						intent_id		, 
+						title			, 
+						parent_id		, 
+						`type`			, 
+						`position`		, 
+						module			, 
+						create_user		, 
+						create_date		, 
+						update_user		, 
+						update_date		, 
+						del_chk
+					)
+			VALUES
+					(
+						(select concat('IT-',LPAD(count(*)+1,'4','0')) from chatbot_intent_list a),
+						(select concat('시나리오',LPAD(count(*)+1,'2','0')) from chatbot_intent_list b where b.type = 'C'), 
+						'IT-0001',
+						'C',
+						(select (count(*)) from chatbot_intent_list c where c.type = 'C'),
+	    				'2',
+	   					#{create_user}, 
+	   					sysdate(), 
+		   				null, 
+		   				null, 
+		   				'N'
+	 				)
+	</insert>
+	
+	<update id="deleteCategory">
+		UPDATE daul.chatbot_intent_list
+		   SET del_chk = 'Y'
+		 WHERE intent_id = #{id}
+	
+	</update>
+</mapper>
