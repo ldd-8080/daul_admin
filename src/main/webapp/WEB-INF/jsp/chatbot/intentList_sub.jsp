@@ -149,7 +149,7 @@
                 <p class="mb-5 font-size-16 font-weight-400 " style="color: #616161;">+ 응답추가</p>
                 <div class="btn-group mt-5">
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputTextbox">
+                    <button type="button" class="btn w-80 px-0" data-title="text" id="outputTextbox">
                       <i class="icon md-comment-more font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">텍스트</span>
@@ -157,7 +157,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputImage">
+                    <button type="button" class="btn w-80 px-0" data-title="image" id="outputImage">
                       <i class="icon md-comment-image font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">이미지</span>
@@ -165,7 +165,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputCard">
+                    <button type="button" class="btn w-80 px-0" data-title="card" id="outputCard">
                       <i class="icon md-comment-edit font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">카드</span>
@@ -173,7 +173,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputList">
+                    <button type="button" class="btn w-80 px-0" data-title="list" id="outputList">
                       <i class="icon md-comment-list font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">리스트</span>
@@ -181,7 +181,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputSkill">
+                    <button type="button" class="btn w-80 px-0" data-title="skill" id="outputSkill">
                       <i class="icon fa-code font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">스킬</span>
@@ -189,7 +189,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputQuick">
+                    <button type="button" class="btn w-80 px-0" data-title="quick" id="outputQuick">
                       <i class="icon fa-location-arrow font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">퀵버튼</span>
@@ -197,7 +197,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputCondition">
+                    <button type="button" class="btn w-80 px-0" data-title="condition" id="outputCondition">
                       <i class="icon fa-code-fork font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">조건</span>
@@ -533,25 +533,18 @@ function showDivIntentTitleInput(){
 
   	var globalIdx = 0;
   
- 	/* const outputTextbox = document.getElementById("outputTextbox");
- 	const outputImage = document.getElementById("outputImage"); */
- 	
  	window.onload = function() {
- 		/* outputTextbox.addEventListener("click", function() {
-	 		addResponseListHtml("텍스트형");
-	 	});
-	 	
-	 	outputImage.addEventListener("click", function() {
-	 		addResponseListHtml("이미지형");
-	 	}); */
-	 	
 	 	var allOutputAddBtn = document.querySelectorAll("[id^='output']");
 	 	
 	 	allOutputAddBtn.forEach(function(t) {
 	 		t.addEventListener("click", function() {
 	 			var title = t.querySelector(".hidden-sm-down").innerHTML;
+	 			var tKey = t.dataset.title;
 	 			
-	 			addResponseListHtml(title);
+	 			var obj = {name: tKey};
+	 			obj[obj.name] = title;
+	 			
+	 			addResponseListHtml(obj);
 	 		});
 	 	});
  	}
