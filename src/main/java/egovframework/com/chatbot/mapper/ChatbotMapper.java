@@ -9,5 +9,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 public interface ChatbotMapper {
 	List<IntentVo> getIntentList() throws Exception;
 	void addScenario(IntentVo vo) throws Exception;
+	void addBlock(IntentVo vo) throws Exception;
 	void deleteCategory(IntentVo vo) throws Exception;
+	void renameCategory(IntentVo vo) throws Exception;
 }

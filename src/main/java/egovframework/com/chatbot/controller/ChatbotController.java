@@ -50,12 +50,32 @@ public class ChatbotController {
 	}
 	
 	@RequestMapping(value="/deleteCategory.do")
-	public ResponseEntity<?> deleteCategory(HttpSession session, @RequestParam("intent_idx") String intent_idx) throws Exception{
+	public ResponseEntity<?> deleteCategory(HttpSession session, @RequestParam("intent_id") String intent_idx) throws Exception{
 		IntentVo vo = new IntentVo();
 		vo.setId(intent_idx);
 		chatbotService.deleteCategory(vo);
 
 		return  new ResponseEntity<>("success", HttpStatus.OK);		
 	}
-
+	
+	@RequestMapping(value="/renameCategory.do")
+	public ResponseEntity<?> renameCategory(@RequestParam("intent_id") String intent_id,@RequestParam("title") String title) throws Exception{
+		IntentVo vo = new IntentVo();
+		vo.setId(intent_id);
+		vo.setText(title);
+		chatbotService.renameCategory(vo);
+		
+		return  new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/addBlock.do")
+	public ResponseEntity<?> addBlock(HttpSession session,@RequestParam("intent_id") String intent_id) throws Exception{
+		UserVo userVo = (UserVo) session.getAttribute("login");
+		IntentVo vo = new IntentVo();
+		vo.setCreate_user(userVo.getUser_id());
+		vo.setId(intent_id);
+		chatbotService.addBlock(vo);
+		
+		return  new ResponseEntity<>("success", HttpStatus.OK);		
+	}
 }

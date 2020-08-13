@@ -10,9 +10,10 @@
 			<i class="icon md-chevron-right" aria-hidden="true"></i>
 		</div>
 		<div class="page-aside-inner">
-			<div class="scenario-add-btn">
-				<input type="button" class="form-control" id="scenario-add-btn" style="cursor:pointer; color:blue" value="+ 시나리오"/>
-			</div>
+		<!-- 	<div class="scenario-add-btn">
+					<input type="button" class="form-control" id="scenario-add-btn" style="cursor:pointer; color:blue" value="+ 시나리오"/>
+				</div> 
+		-->
 			<div class="input-search">
 				<form class="form-group m-0" role="search">
 					<div class="input-search">
@@ -1003,22 +1004,18 @@ function initialize_jstree(Listdata){
 
                 	console.log(parent.children.length);
                 	
-                	if(parent.type === "R"){
-                		alert("루트는 삭제할 수 없습니다.");
+                	if(parent.type !== "R"){
+                		alert("루트노드에서만 생성이 가능합니다.");
                 		return false;
                 	}
-                	
-                	if(parent.children.length > 0){
-                		alert("하위 블록이 있을 경우 삭제할 수 없습니다.");
-                		return false;
-                	}
-            		deleteCategory(parent.id);
+             
+                	createScenario();
                 }
               },
               "Create_Intent": {
                   "separator_before": false,
                   "separator_after": false,
-                  "label": "add intent",
+                  "label": "블록생성",
                   "icon": "fa-comments-o",
                   "action": function (obj) {
                     let ref = $('#jstree').jstree(true)
@@ -1029,31 +1026,38 @@ function initialize_jstree(Listdata){
                     sel = sel[0];
                     let parent = ref.get_node(sel);
                     if (parent.type === 'I'){
-                      alertify.alert("인텐트노드는 자식노드를 생성할 수 없습니다.")
+                      alert("블록노드는 블록을 생성할 수 없습니다.")
+                      return false;
                     }
-                    sel = ref.create_node(sel, {
-                      'text': 'new Intent',
-                      "type" : "I"
-                    });
-                    if(sel) {
-                      ref.edit(sel);
-                    }
+                    if (parent.type === 'R'){
+                        alert("루트노드는 블록을 생성할 수 없습니다.")
+                        return false;
+                     }
+                 
+                    
+                    console.log(parent.id);
+                    createBlock(parent.id);
+                    
                   }
                 },
                 "Rename": {
                     "separator_before": false,
                     "separator_after": false,
-                    "label": "rename",
+                    "label":"이름변경",
                     "icon": "fa-edit",
                     "action": function (obj) {
                       let ref = $('#jstree').jstree(true), sel = ref.get_selected();
+                     
                       if(!sel.length) { return false; }
                       sel = sel[0];
                       let node = ref.get_node(sel);
                       if (node.type === 'R'){
-                        alertify.alert("루트노드는 수정할 수 없습니다.");
+                        alert("루트노드는 수정할 수 없습니다.");
                       }
+                    
                       ref.edit(sel);
+                      console.log(ref);
+                      
                     }
                   },
                     "Remove": {
@@ -1073,7 +1077,7 @@ function initialize_jstree(Listdata){
                       	console.log(parent.children.length);
                       	
                       	if(parent.type === "R"){
-                      		alert("루트는 삭제할 수 없습니다.");
+                      		alert("루트노드는 삭제할 수 없습니다.");
                       		return false;
                       	}
                       	
@@ -1093,7 +1097,18 @@ function initialize_jstree(Listdata){
     	var id = data.instance.get_node(data.selected).id;
     	console.log("data.node : " + JSON.stringify(data.node));
     	// 선택한 Node에 따라 하위 목록 가져오기 fn_Common.jstreeDynamic(data.node.id); 
-    	});
+    	})
+    	.on('rename_node.jstree', function (e, data) {
+            var ref = $('#jstree').jstree(true);
+            console.log(data.node.id);
+            if (data.text === data.old){
+              return;
+            }
+            if (!confirm("이름을 수정하시겠습니까?")) return false;
+            
+            rename(data.text,data.node.id);
+          })
+          ;
     	
     /* .on('changed.jstree', function (e, data) {
       if (data.action == 'select_node'){
@@ -1195,11 +1210,33 @@ function showDivIntentTitleInput(){
 		
 	}
 	
-	function deleteCategory(idx){
-		console.log("delete " + idx);
+	function createBlock(id){
+		console.log("block생성" + id);	
+		 
+		var request = $.ajax({
+			url : "/chatbot/addBlock.do?intent_id="+id,
+			method : "get"
+		});
+
+		request.done(function(data) {
+		
+			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+			//getIntentList();
+		
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+		 
+	}
+	
+	
+	function deleteCategory(id){
+		console.log("delete " + id);
 		
 		var request = $.ajax({
-			url : "/chatbot/deleteCategory.do?intent_idx="+idx,
+			url : "/chatbot/deleteCategory.do?intent_id="+id,
 			method : "get"
 		});
 
@@ -1215,5 +1252,25 @@ function showDivIntentTitleInput(){
 			console.log(error);
 		});
 		
+	}
+	
+	function rename(text,id){
+		
+		var request = $.ajax({
+			url : "/chatbot/renameCategory.do?intent_id="+id+"&title="+text,
+			method : "get"
+		});
+
+		request.done(function(data) {
+		
+			//location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+			//getIntentList();
+			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
+		
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
 	}
 </script>

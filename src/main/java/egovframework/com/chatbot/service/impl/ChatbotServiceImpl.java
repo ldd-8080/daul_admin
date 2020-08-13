@@ -26,10 +26,21 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public void addScenario(IntentVo vo) throws Exception {
 		chatbotMapper.addScenario(vo);
 	}
+	
+	@Override
+	public void addBlock(IntentVo vo) throws Exception {
+		chatbotMapper.addBlock(vo);
+	}
 
 	@Override
 	public void deleteCategory(IntentVo vo) throws Exception {
 		chatbotMapper.deleteCategory(vo);
+		
+	}
+
+	@Override
+	public void renameCategory(IntentVo vo) throws Exception {
+		chatbotMapper.renameCategory(vo);
 		
 	}
 

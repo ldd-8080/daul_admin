@@ -32,7 +32,7 @@
 			VALUES
 					(
 						(select concat('IT-',LPAD(count(*)+1,'4','0')) from chatbot_intent_list a),
-						(select concat('시나리오',LPAD(count(*)+1,'2','0')) from chatbot_intent_list b where b.type = 'C'), 
+						'시나리오', 
 						'IT-0001',
 						'C',
 						(select (count(*)) from chatbot_intent_list c where c.type = 'C'),
@@ -44,10 +44,47 @@
 		   				'N'
 	 				)
 	</insert>
+	<insert id="addBlock">
+	  INSERT INTO daul.chatbot_intent_list
+	        (
+				intent_id,
+				 title,
+				 parent_id, 
+				 `type`, 
+				 `position`, 
+				 module, 
+				 create_user, 
+				 create_date, 
+				 update_user, 
+				 update_date, 
+				 del_chk
+			 )
+			VALUES
+			(
+				(select concat('IT-',LPAD(count(*)+1,'4','0')) from chatbot_intent_list a),
+				'블록', 
+				#{id},
+				'I',
+				(select (count(*)) from chatbot_intent_list c where c.type = 'I' and c.parent_id = #{id}),
+			    '2',
+			   	#{create_user}, 
+			   	sysdate(), 
+			    null, 
+			    null, 
+			    'N'
+		   );
+	</insert>   
 	
 	<update id="deleteCategory">
 		UPDATE daul.chatbot_intent_list
 		   SET del_chk = 'Y'
+		 WHERE intent_id = #{id}
+	
+	</update>
+	
+	<update id="renameCategory">
+		UPDATE daul.chatbot_intent_list
+		   SET title = #{text}
 		 WHERE intent_id = #{id}
 	
 	</update>
