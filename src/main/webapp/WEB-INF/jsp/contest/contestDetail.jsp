@@ -120,8 +120,7 @@
 														<div class="input-group-prepend">
 															<span class="input-group-text"> &nbsp;_&nbsp;</span>
 														</div>
-														<form:input type="text" class="form-control"
-															path="submit_e_date" />
+														<form:input type="text" class="form-control" path="submit_e_date" />
 													</div>
 												</div>
 											</div>

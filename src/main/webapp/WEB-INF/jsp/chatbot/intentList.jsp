@@ -10,10 +10,13 @@
 			<i class="icon md-chevron-right" aria-hidden="true"></i>
 		</div>
 		<div class="page-aside-inner">
-		<!-- 	<div class="scenario-add-btn">
-					<input type="button" class="form-control" id="scenario-add-btn" style="cursor:pointer; color:blue" value="+ 시나리오"/>
-				</div> 
-		-->
+			<!-- 			
+			<div class="scenario-add-btn">
+				<input type="button" class="form-control" id="tree-open-btn" style="cursor:pointer; color:blue" value="모두열기"/>
+				<input type="button" class="form-control" id="tree-close-btn" style="cursor:pointer; color:blue" value="모두닫기"/>
+			</div> 
+			 -->
+		
 			<div class="input-search">
 				<form class="form-group m-0" role="search">
 					<div class="input-search">
@@ -648,7 +651,7 @@
 <script type="text/javascript">
 $("body").addClass("app-notebook page-aside-left dialog");
 
-//initialize_jstree();
+initialize_jstree();
 initialize_components();
 
 function initialize_components(){
@@ -956,14 +959,17 @@ function initialize_components(){
     }
 }
 
-function initialize_jstree(Listdata){
-	
-	console.log(Listdata);
+function initialize_jstree(){
+	refresh=true;
+	console.log();
     //===== jstree category/intent node tree ==================
     $('#jstree').jstree({
       'core': {
         "check_callback": true,
-        'data' : Listdata
+        'data' : {
+        	url:"/chatbot/getIntentList.do",
+        	dataType:"json"
+        }
       },
       "types" : {
         "#" : {
@@ -1087,7 +1093,25 @@ function initialize_jstree(Listdata){
                       	}
                   		deleteCategory(parent.id);
                     }
-                }
+                },
+                "Open": {
+                    "separator_before": false,
+                    "separator_after": false,
+                    "label": "전체열기",
+                    "icon": "fa-folder-open",
+                    "action": function (obj) {
+                  	 	treeOpen();
+                  }
+              },
+                "Close": {
+                    "separator_before": false,
+                    "separator_after": false,
+                    "label": "전체닫기",
+                    "icon": "fa-folder",
+                    "action": function (obj) {
+                  	 	treeClose();
+                  }
+              }
             }
         }
       },
@@ -1167,24 +1191,7 @@ function showDivIntentTitleInput(){
     hideDivIntentTitleInput();
 } */
   
-	function getIntentList() {
-		var request = $.ajax({
-			url : "/chatbot/getIntentList.do",
-			method : "get"
-		});
 
-		request.done(function(data) {
-		
-			//console.log(data);
-			//var datalist = data;
-			initialize_jstree(data);
-		
-		});
-
-		request.fail(function(error) {
-			console.log(error);
-		});
-	}
   
 	$(function() {
 		getIntentList();
@@ -1198,10 +1205,7 @@ function showDivIntentTitleInput(){
 		});
 
 		request.done(function(data) {
-		
-			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-			//getIntentList();
-		
+			$("#jstree").jstree("refresh");
 		});
 
 		request.fail(function(error) {
@@ -1219,10 +1223,7 @@ function showDivIntentTitleInput(){
 		});
 
 		request.done(function(data) {
-		
-			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-			//getIntentList();
-		
+			$("#jstree").jstree("refresh");
 		});
 
 		request.fail(function(error) {
@@ -1241,11 +1242,7 @@ function showDivIntentTitleInput(){
 		});
 
 		request.done(function(data) {
-		
-			//location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-			//getIntentList();
-			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-		
+			$("#jstree").jstree("refresh");
 		});
 
 		request.fail(function(error) {
@@ -1262,15 +1259,18 @@ function showDivIntentTitleInput(){
 		});
 
 		request.done(function(data) {
-		
-			//location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-			//getIntentList();
-			location.href = "${pageContext.request.contextPath}/chatbot/intentListPage.do";
-		
+			$("#jstree").jstree("refresh");
 		});
 
 		request.fail(function(error) {
 			console.log(error);
 		});
+	}
+	
+	function treeOpen(){
+		$("#jstree").jstree("open_all");
+	}
+	function treeClose(){
+		$("#jstree").jstree("close_all");
 	}
 </script>
