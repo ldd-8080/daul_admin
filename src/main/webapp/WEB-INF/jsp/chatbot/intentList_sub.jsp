@@ -149,7 +149,7 @@
                 <p class="mb-5 font-size-16 font-weight-400 " style="color: #616161;">+ 응답추가</p>
                 <div class="btn-group mt-5">
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0" id="outputBoxText">
+                    <button type="button" class="btn w-80 px-0" id="outputTextbox">
                       <i class="icon md-comment-more font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">텍스트</span>
@@ -157,7 +157,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputImage">
                       <i class="icon md-comment-image font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">이미지</span>
@@ -165,7 +165,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputCard">
                       <i class="icon md-comment-edit font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">카드</span>
@@ -173,7 +173,7 @@
                   </div>
 
                   <div class="btn-group" role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputList">
                       <i class="icon md-comment-list font-size-20" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">리스트</span>
@@ -181,7 +181,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputSkill">
                       <i class="icon fa-code font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">스킬</span>
@@ -189,7 +189,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputQuick">
                       <i class="icon fa-location-arrow font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">퀵버튼</span>
@@ -197,7 +197,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0">
+                    <button type="button" class="btn w-80 px-0" id="outputCondition">
                       <i class="icon fa-code-fork font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">조건</span>
@@ -216,317 +216,13 @@
       </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/outputTextBox.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/js/outputTextBox.js"></script> --%>
+<script src="${pageContext.request.contextPath}/js/outputResponseList.js"></script>
 <script type="text/javascript">
 $("body").addClass("app-notebook page-aside-left dialog");
 
 initialize_jstree();
-initialize_components();
 
-function initialize_components(){
-    var to = false;
-    
-    $('#jstreeSearch').keydown(function (event) {
-      if (event.keyCode === 13) {
-        $(this).blur();
-      }
-      if (to) {
-        clearTimeout(to);
-      }
-      to = setTimeout(function () {
-        var v = $('#jstreeSearch').val();
-        $('#jstree').jstree(true).search(v);
-      }, 250);
-    });
-
-    let tokenfield = $(".input-box .tokenfield");
-    tokenfield.tokenfield({ delimiter: '|' });
-
-    // SortableJS options go here
-    // See: (https://github.com/SortableJS/jquery-sortablejs)
-    // See: (https://github.com/SortableJS/Sortable#options)
-    $('.response-card-box').sortable({
-      handle: '.handle-card', // handle's class
-        filter: ".ignore-elements",
-        draggable: ".response-card",
-      animation: 150
-    });
-
-    $('.response-qbtn-box').sortable({
-      handle: '.handle-qbtn', // handle's class
-        filter: ".ignore-elements",
-        draggable: ".quick-btn",
-      animation: 150
-    });
-
-    $('.card-block-btns').sortable({
-      handle: '.handle-card-btn', // handle's class
-        filter: ".ignore-elements",
-        draggable: ".response-card-btn",
-      animation: 150
-    });
-
-    var defaults = Plugin.getDefaults("webuiPopover");
-
-    var popEditTextHeader = $('#popoverEditTextHeader').html();
-    var popEditTextContent = $('#popoverEditText').html();
-    var popEditTextSettings = {
-      title:popEditTextHeader,
-      content: popEditTextContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-    var popEditTitleTextHeader = $('#popoverEditTitleTextHeader').html();
-    var popEditTitleTextContent = $('#popoverEditTitleText').html();
-    var popEditTitleTextSettings = {
-      title:popEditTitleTextHeader,
-      content: popEditTitleTextContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-    var popEditBtnHeader = $('#popoverEditBtnHeader').html();
-    var popEditBtnContent = $('#popoverEditBtn').html();
-    var popEditBtnSettings = {
-      title:popEditBtnHeader,
-      content:popEditBtnContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-    var popEditImgHeader = $('#popoverEditImgHeader').html();
-    var popEditImgContent = $('#popoverEditImg').html();
-    var popEditImgSettings = {
-      title:popEditImgHeader,
-      content:popEditImgContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-    var popEditListTitleHeader = $('#popoverListTitleHeader').html();
-    var popEditListTitleContent = $('#popoverListTitle').html();
-    var popEditListTitleSettings = {
-      title:popEditListTitleHeader,
-      content: popEditListTitleContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-    var popoverListItemHeader = $('#popoverListItemHeader').html();
-    var popoverListItemContent = $('#popoverListItem').html();
-    var popoverListItemSettings = {
-      title:popoverListItemHeader,
-      content: popoverListItemContent,
-      placement:'auto',
-      width: 400,
-      animation:'fade',
-      backdrop:true,
-      closeable: true
-    };
-
-
-    var arr_response = $(".response");
-    for (var i = 0; i < arr_response.length; i++) {
-      //console.log(arr_response[i].id)
-      var response_id = '#'+arr_response[i].id;
-
-      $(response_id+" .sending-type-btns > .btn").click({response_id: response_id}, function(param){
-        $(param.data.response_id+" .sending-type-btns > .btn").removeClass("active");
-        $(this).addClass("active");
-      });
-
-      $(response_id+" .box-aside").hide();
-      $(response_id).mouseover({response_id: response_id}, function(param){
-        $(param.data.response_id+" .box-aside").show();
-      });
-      $(response_id).mouseout({response_id: response_id}, function(param){
-        $(param.data.response_id+" .box-aside").hide();
-      });
-
-      var select_response_rule = $(response_id+" .select-response-rule")
-      select_response_rule.select2({
-        dropdownCssClass: "increasedzindexclass",
-        data: [
-            {id: 'sys.is_login', text: '로그인 상태 체크 (sys.is_login)'},
-            {id: 'sys.is_logout', text: '로그아웃 상태 체크 (sys.is_logout)'}
-        ]
-      });
-
-      var select_response_skill = $(response_id+" .select-response-skill")
-      select_response_skill.select2({
-        dropdownCssClass: "increasedzindexclass",
-        data: [
-            {id: 'sys.get_news', text: '뉴스 가져오기 (sys.get_news)'},
-            {id: 'sys.get_poppular_news', text: '인기 뉴스 가져오기 (sys.get_poppular_news)'}
-        ]
-      });
-
-      $(response_id+" .response-qbtn-box .quick-btn").webuiPopover($.extend({
-          onShow: function($element) {
-            var popover_id = $element[0].id;
-            var select_btn_type = $("#"+popover_id+" .select-btn-type");
-            var select_intent = $("#"+popover_id+" .select-intent");
-            var div_select_intent = $("#"+popover_id+" .div-select-intent");
-            var div_input_url = $("#"+popover_id+" .div-input-url");
-
-            div_select_intent.show();
-            div_input_url.hide();
-
-            if (!select_btn_type.data('select2')) {
-              select_btn_type.select2({
-                dropdownCssClass: "increasedzindexclass",
-                data: [
-                    {id: 'intent', text: 'intent 링크'},
-                    {id: 'url', text: 'URL 링크'}
-                ]
-              });
-              select_btn_type.on('select2:select', function (e) {
-                e.preventDefault();
-                var data = e.params.data;
-                if (data.id == 'intent'){
-                  div_select_intent.show();
-                  div_input_url.hide();
-                }
-                else if (data.id == 'url'){
-                console.log(data.id);
-                  div_select_intent.hide();
-                  div_input_url.show();
-                }
-                console.log(data);
-              });
-            }
-
-            if (!select_intent.data('select2')) {
-              select_intent.select2({
-                dropdownCssClass: "increasedzindexclass",
-                data: [
-                  {id: 0, text: '의도 0'},
-                  {id: 1, text: '의도 1'}
-                ]
-              });
-            }
-          }, // callback after show
-          onHide: function($element) {}, // callback after hide
-      }, defaults, popEditBtnSettings));
-
-      // quick buttons actions show/hide
-      var qbtn_id = response_id +' .quick-btn'
-      $(qbtn_id+" .quick-btn-action").hide();
-      $(qbtn_id).mouseover({qbtn_id: qbtn_id}, function(param){
-        $(param.data.qbtn_id+" .quick-btn-action").show();
-      });
-      $(qbtn_id).mouseout({qbtn_id: qbtn_id}, function(param){
-        $(param.data.qbtn_id+" .quick-btn-action").hide();
-      });
-
-      var arr_response_card = $(response_id+" .response-card")
-      for (var c_i = 0; c_i < arr_response_card.length; c_i++) {
-        console.log(arr_response_card[c_i].id)
-        var card_id = response_id + ' #'+arr_response_card[c_i].id
-
-        // card actions show/hide
-        $(card_id+" .response-card-actions").hide();
-        $(card_id).mouseover({card_id: card_id}, function(param){
-          $(param.data.card_id+" .response-card-actions").show();
-        });
-        $(card_id).mouseout({card_id: card_id}, function(param){
-          $(param.data.card_id+" .response-card-actions").hide();
-        });
-
-        // card buttons actions show/hide
-        var btn_id = card_id +' .response-card-btn'
-        $(btn_id+" .icon").hide();
-        $(btn_id).mouseover({btn_id: btn_id}, function(param){
-          $(param.data.btn_id+" .icon").show();
-        });
-        $(btn_id).mouseout({btn_id: btn_id}, function(param){
-          $(param.data.btn_id+" .icon").hide();
-        });
-
-        // card webuiPopover
-        $(card_id+" .card-block-text").webuiPopover($.extend({}, defaults, popEditTextSettings));
-        $(card_id+" .card-block-title-text").webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
-        $(card_id+" .card-block-img").webuiPopover($.extend({}, defaults, popEditImgSettings));
-        $(card_id+" .response-card-btn").webuiPopover($.extend({
-          onShow: function($element) {
-            var popover_id = $element[0].id
-            var select_btn_type = $("#"+popover_id+" .select-btn-type")
-            var select_intent = $("#"+popover_id+" .select-intent")
-            var div_select_intent = $("#"+popover_id+" .div-select-intent")
-            var div_input_url = $("#"+popover_id+" .div-input-url")
-
-            div_select_intent.show()
-            div_input_url.hide()
-
-            if (!select_btn_type.data('select2')) {
-              select_btn_type.select2({
-                dropdownCssClass: "increasedzindexclass",
-                data: [
-                    {
-                        id: 'intent',
-                        text: 'intent 링크'
-                    },
-                    {
-                        id: 'url',
-                        text: 'URL 링크'
-                    }
-                ]
-              });
-              select_btn_type.on('select2:select', function (e) {
-                e.preventDefault();
-                var data = e.params.data;
-                if (data.id == 'intent'){
-                  div_select_intent.show()
-                  div_input_url.hide()
-                }
-                else if (data.id == 'url'){
-                console.log(data.id);
-                  div_select_intent.hide()
-                  div_input_url.show()
-                }
-                console.log(data);
-              });
-            }
-
-            if (!select_intent.data('select2')) {
-              select_intent.select2({
-                dropdownCssClass: "increasedzindexclass",
-                data: [
-                  {
-                    id: 0,
-                    text: '의도 0'
-                  },
-                  {
-                    id: 1,
-                    text: '의도 1'
-                  }
-                ]
-              });
-            }
-          }, // callback after show
-          onHide: function($element) {}, // callback after hide
-        }, defaults, popEditBtnSettings));
-        $(card_id+" .card-block-list-title").webuiPopover($.extend({}, defaults, popEditListTitleSettings));
-        $(card_id+" .card-block-list-item").webuiPopover($.extend({}, defaults, popoverListItemSettings));
-      }
-    }
-}
 
 function initialize_jstree(){
     //===== jstree category/intent node tree ==================
@@ -837,9 +533,26 @@ function showDivIntentTitleInput(){
 
   	var globalIdx = 0;
   
- 	const outputBoxText = document.getElementById("outputBoxText");
+ 	/* const outputTextbox = document.getElementById("outputTextbox");
+ 	const outputImage = document.getElementById("outputImage"); */
  	
  	window.onload = function() {
-	 	outputBoxText.addEventListener("click", addTextBoxHtml);
+ 		/* outputTextbox.addEventListener("click", function() {
+	 		addResponseListHtml("텍스트형");
+	 	});
+	 	
+	 	outputImage.addEventListener("click", function() {
+	 		addResponseListHtml("이미지형");
+	 	}); */
+	 	
+	 	var allOutputAddBtn = document.querySelectorAll("[id^='output']");
+	 	
+	 	allOutputAddBtn.forEach(function(t) {
+	 		t.addEventListener("click", function() {
+	 			var title = t.querySelector(".hidden-sm-down").innerHTML;
+	 			
+	 			addResponseListHtml(title);
+	 		});
+	 	});
  	}
 </script>
