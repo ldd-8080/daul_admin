@@ -11,7 +11,7 @@
 			   position,
 			   module		    
 		  FROM chatbot_intent_list
-		 WHERE del_chk = 'N';
+		 WHERE del_chk = 'N'
 	</select>
 
 	<insert id="addScenario">
@@ -47,7 +47,7 @@
 	<insert id="addBlock">
 	  INSERT INTO daul.chatbot_intent_list
 	        (
-				intent_id,
+				 intent_id,
 				 title,
 				 parent_id, 
 				 `type`, 
@@ -72,8 +72,26 @@
 			    null, 
 			    null, 
 			    'N'
-		   );
+		   )
 	</insert>   
+	<insert id="registInputText">
+		INSERT INTO daul.chatbot_input
+	        (
+				input_id,
+				intent_id,
+				input_text,
+				create_user,
+				create_date
+			 )
+			VALUES
+			(
+				(select concat('IP-',LPAD(count(*)+1,'4','0')) from chatbot_input b),
+				#{intent_id}, 
+				#{input_text},
+				#{create_user},
+				sysdate()				
+		   )
+	</insert>
 	
 	<update id="deleteCategory">
 		UPDATE daul.chatbot_intent_list
@@ -86,6 +104,27 @@
 		UPDATE daul.chatbot_intent_list
 		   SET title = #{text}
 		 WHERE intent_id = #{id}
-	
 	</update>
+	
+	<select id="check" resultType="int">
+		SELECT count(*)
+		  FROM chatbot_input
+		 WHERE intent_id = #{intent_id}
+	</select>
+	
+	<update id="updateInputText">
+		UPDATE daul.chatbot_input
+		   SET input_text = #{input_text},
+		       update_user = #{update_user},
+		       update_date = sysdate()
+		 WHERE intent_id = #{intent_id}
+	</update>
+	
+	<select id="getInputText" resultType="egovframework.com.chatbot.vo.InputVo">
+		SELECT *
+		  FROM daul.chatbot_input
+		 WHERE intent_id = #{intent_id}
+	
+	</select>
+	
 </mapper>

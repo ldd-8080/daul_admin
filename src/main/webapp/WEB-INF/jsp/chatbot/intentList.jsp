@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
-    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/intentInput.js"></script>
+
+  
 <div class="page">
 	<!-- Sidebar -->
 	<div class="page-aside">
@@ -48,7 +52,7 @@
             <!-- Header -->
             <div class="panel-heading">
               <h3 id="intentTitle" class="intent-title panel-title" onclick="showDivIntentTitleInput('')">
-                #<span class="title">New Intent</span>
+                #<span class="title" id="title"></span>
               </h3>
               <div id="intentTitleInput"
                    class="intent-title-input panel-title form-group form-material w-500 pb-10 pt-5"
@@ -60,7 +64,7 @@
                        onblur="hideDivIntentTitleInput('')"/>
               </div>
               <div class="panel-actions panel-actions-keep">
-                <button type="button" class="btn btn-primary" onclick="">
+                <button type="button" class="btn btn-primary" id="chatbot-regist-btn" data-title="발화및응답">
                   <i class="icon fa-save" aria-hidden="true"></i> 저장</button>
                 <button type="button" class="btn btn-default" onclick="">
                   <i class="icon fa-trash-o" aria-hidden="true"></i> 삭제</button>
@@ -87,26 +91,26 @@
                 </div>
               </div>
               <!-- End Input - Title -->
-
-              <!-- Input Box - Input Sentences -->
-              <div class="box input">
-                <div class="panel box-main">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">사용자 발화 - 문장형</h3>
-                  </div>
-                  <div class="panel-body input-box p-15">
-                    <div class="form-group w-p100">
-                      <div class="input-group">
-                        <input type="text" class="form-control tokenfield"
-                          value="안뇽|안녕|안녕하세용"
-                          placeholder="해당 의도(Intent)에 대한 사용자의 예상 발화를 입력해주세요." />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Input Box - Input Sentences -->
-
+			  <form id="input-text-form">
+			  	<input type="hidden" id="intent-id" name="intent_id"/>
+			    
+	              <!-- Input Box - Input Sentences -->
+	              <div class="box input">
+	                <div class="panel box-main">
+	                  <div class="panel-heading">
+	                    <h3 class="panel-title">사용자 발화 - 문장형</h3>
+	                  </div>
+	                  <div class="panel-body input-box p-15">
+	                    <div class="form-group w-p100">
+	                      <div class="input-group" id="tokenfield-div">
+	                      
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	              <!-- End Input Box - Input Sentences -->
+			  </form>
               <!-- End Input Groups -->
 
 
@@ -648,6 +652,8 @@
         </div>
       </div>
 </div>
+
+
 <script type="text/javascript">
 $("body").addClass("app-notebook page-aside-left dialog");
 
@@ -670,8 +676,11 @@ function initialize_components(){
       }, 250);
     });
 
-    let tokenfield = $(".input-box .tokenfield");
-    tokenfield.tokenfield({ delimiter: '|' });
+/* 
+	let tokenfield = $(".input-box .tokenfield");
+    tokenfield[0].value = "a|b";
+    tokenfield.tokenfield({ delimiter: '|' }); 
+*/
 
     // SortableJS options go here
     // See: (https://github.com/SortableJS/jquery-sortablejs)
@@ -961,7 +970,7 @@ function initialize_components(){
 
 function initialize_jstree(){
 	refresh=true;
-	console.log();
+	
     //===== jstree category/intent node tree ==================
     $('#jstree').jstree({
       'core': {
@@ -1116,23 +1125,27 @@ function initialize_jstree(){
         }
       },
       'plugins': [ 'search', "types", 'state', "wholerow", 'contextmenu']
-    }).on("select_node.jstree", function (event, data) {
+    }).on("ready.jstree",function (){
+    	$("#jstree").jstree("close_all");
+    })
+    .on("select_node.jstree", function (event, data) {
     	// 노드가 선택된 뒤 처리할 이벤트
-    	var id = data.instance.get_node(data.selected).id;
-    	console.log("data.node : " + JSON.stringify(data.node));
-    	// 선택한 Node에 따라 하위 목록 가져오기 fn_Common.jstreeDynamic(data.node.id); 
-    	})
-    	.on('rename_node.jstree', function (e, data) {
-            var ref = $('#jstree').jstree(true);
-            console.log(data.node.id);
-            if (data.text === data.old){
-              return;
-            }
-            if (!confirm("이름을 수정하시겠습니까?")) return false;
-            
-            rename(data.text,data.node.id);
-          })
-          ;
+		var type = data.instance.get_node(data.selected).type;
+    	if( type === 'I'){
+    		loadRightPage(data);
+		}
+   	})
+   	.on('rename_node.jstree', function (e, data) {
+           var ref = $('#jstree').jstree(true);
+           console.log(data.node.id);
+           if (data.text === data.old){
+             return;
+           }
+           if (!confirm("이름을 수정하시겠습니까?")) return false;
+           
+           rename(data.text,data.node.id);
+         })
+         ;
     	
     /* .on('changed.jstree', function (e, data) {
       if (data.action == 'select_node'){
@@ -1193,9 +1206,7 @@ function showDivIntentTitleInput(){
   
 
   
-	$(function() {
-		getIntentList();
-	});
+	
 	
 	function createScenario(){
 		console.log("click");	
@@ -1270,7 +1281,34 @@ function showDivIntentTitleInput(){
 	function treeOpen(){
 		$("#jstree").jstree("open_all");
 	}
+	
 	function treeClose(){
 		$("#jstree").jstree("close_all");
+	}
+	
+	function loadRightPage(data){
+    	var id = data.instance.get_node(data.selected).id;
+    	var text = data.instance.get_node(data.selected).text;
+    	console.log(id);
+    	console.log(text);
+    	
+    	$("#intent-id").val(id);
+    	$("#title").text('');
+    	$("#title").append(text);
+    	
+    	var request = $.ajax({
+			url : "/chatbot/getInputText.do?intent_id="+id,
+			method : "get"
+		});
+
+		request.done(function(data) {
+			console.log(data);
+			setInputText(data);
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+    	
 	}
 </script>

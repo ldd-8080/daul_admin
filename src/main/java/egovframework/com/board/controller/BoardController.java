@@ -30,7 +30,8 @@ import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value = "/board")
 public class BoardController {
-	@Autowired 
+	
+	@Autowired(required=false)
 	private ProfileCls profileCls;
 	protected Log log = LogFactory.getLog(BoardController.class);
 
@@ -42,6 +43,7 @@ public class BoardController {
 
 	@Resource(name = "cmmnUtil")
 	private CmmnUtil cmmnUtil;
+	
 	
 	@RequestMapping(value = "/boardListPage.do")
 	public String boardListPage() {

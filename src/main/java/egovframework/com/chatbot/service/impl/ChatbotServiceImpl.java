@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.com.chatbot.mapper.ChatbotMapper;
 import egovframework.com.chatbot.service.ChatbotService;
+import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -42,6 +43,27 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public void renameCategory(IntentVo vo) throws Exception {
 		chatbotMapper.renameCategory(vo);
 		
+	}
+
+	@Override
+	public void registInputText(InputVo vo) throws Exception {
+		chatbotMapper.registInputText(vo);
+	}
+
+	@Override
+	public int check(InputVo vo) throws Exception {
+		
+		return chatbotMapper.check(vo);
+	}
+
+	@Override
+	public void updateInputText(InputVo vo) throws Exception {
+		chatbotMapper.updateInputText(vo);
+	}
+
+	@Override
+	public List<InputVo> getInputText(InputVo vo) throws Exception {
+		return chatbotMapper.getInputText(vo);
 	}
 
 }

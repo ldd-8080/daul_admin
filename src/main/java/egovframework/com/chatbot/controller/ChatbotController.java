@@ -3,6 +3,8 @@ package egovframework.com.chatbot.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -10,10 +12,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.chatbot.service.ChatbotService;
+import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.user.vo.UserVo;
 
@@ -26,7 +31,8 @@ public class ChatbotController {
 	private ChatbotService chatbotService;
 	
 	@RequestMapping(value="/intentListPage.do")
-	public String intentsListPage() {
+	public String intentsListPage(ModelMap model) {
+		model.addAttribute("inputVo", new InputVo());
 		return "chatbot/intentList";
 	}
 	
@@ -67,7 +73,7 @@ public class ChatbotController {
 		
 		return  new ResponseEntity<>("success", HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value="/addBlock.do")
 	public ResponseEntity<?> addBlock(HttpSession session,@RequestParam("intent_id") String intent_id) throws Exception{
 		UserVo userVo = (UserVo) session.getAttribute("login");
@@ -77,5 +83,36 @@ public class ChatbotController {
 		chatbotService.addBlock(vo);
 		
 		return  new ResponseEntity<>("success", HttpStatus.OK);		
+	}
+	
+	@RequestMapping(value="/registInputText.do")
+	public ResponseEntity<?> insertInputText(HttpSession session,InputVo vo , BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		UserVo userVo = (UserVo) session.getAttribute("login");
+		vo.setCreate_user(userVo.getUser_id());
+		vo.setUpdate_user(userVo.getUser_id());
+		int cnt = chatbotService.check(vo);
+		
+		if(cnt > 0) {
+			chatbotService.updateInputText(vo);
+		}else {
+			chatbotService.registInputText(vo);
+		}
+		
+		return  new ResponseEntity<>("success", HttpStatus.OK);
+	
+	}
+	
+	@RequestMapping(value="/getInputText.do")
+	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception{
+		InputVo inputVo = new InputVo();
+		inputVo.setIntent_id(intent_id);
+		List<InputVo> inputList = null;
+		
+		inputList = chatbotService.getInputText(inputVo);
+		
+		if(inputList.size() == 0){
+			return  new ResponseEntity<>("nodata", HttpStatus.OK);
+		}
+		return  new ResponseEntity<>(inputList, HttpStatus.OK);
 	}
 }
