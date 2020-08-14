@@ -216,6 +216,54 @@
       </div>
 </div>
 
+<!-- Popover Edit Text  -->
+<div id="popoverEditTextHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">텍스트 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverEditText" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">텍스트<span class="red-600 ml-5">*</span></label>
+    <textarea class="form-control" rows="5" placeholder="텍스트를 입력해주세요." autocomplete="off" style="resize: none;"></textarea>
+  </div>
+  <div class="form-group form-material float-right">
+    <button type="button" class="btn btn-primary btn-save">저장</button>
+    <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+  </div>
+</div>
+<!-- End Popover Edit Text -->
+
+<!-- Popover Edit Button  -->
+<div id="popoverEditBtnHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">버튼 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverEditBtn" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">버튼명<span class="red-600 ml-5">*</span></label>
+    <input type="text" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label class="form-control-label mb-0">버튼기능<span class="red-600 ml-5">*</span></label>
+    <div class="position-relative">
+      <div style="width:130px; float: left; "> <select class="form-control select-btn-type" ></select></div>
+      <div class="div-select-intent" style="width:223px; float: left; margin-left: 5px; "> <select class="form-control select-intent" ></select></div>
+      <div class="div-input-url" style="width:223px; float: left; margin-left: 5px;" > <input type="text" class="form-control input-url" /></div>
+    </div>
+  </div>
+  <div class="form-group form-material float-right mt-20">
+    <button type="button" class="btn btn-primary btn-save">저장</button>
+    <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+  </div>
+</div>
+<!-- End Popover Edit Button -->
+
 <%-- <script src="${pageContext.request.contextPath}/js/outputTextBox.js"></script> --%>
 <script src="${pageContext.request.contextPath}/js/outputResponseList.js"></script>
 <script type="text/javascript">
@@ -533,6 +581,32 @@ function showDivIntentTitleInput(){
 
   	var globalIdx = 0;
   
+ 	var defaults = Plugin.getDefaults("webuiPopover");
+ 	
+ 	var popEditTextHeader = $('#popoverEditTextHeader').html();
+    var popEditTextContent = $('#popoverEditText').html();
+    var popEditTextSettings = {
+      	title:popEditTextHeader,
+      	content: popEditTextContent,
+      	placement:'auto',
+      	width: 400,
+      	animation:'fade',
+      	backdrop:true,
+      	closeable: true
+    };
+    
+    var popEditBtnHeader = $('#popoverEditBtnHeader').html()
+    var popEditBtnContent = $('#popoverEditBtn').html()
+    var popEditBtnSettings = {
+      title:popEditBtnHeader,
+      content:popEditBtnContent,
+      placement:'auto',
+      width: 400,
+      animation:'fade',
+      backdrop:true,
+      closeable: true
+    };
+    
  	window.onload = function() {
 	 	var allOutputAddBtn = document.querySelectorAll("[id^='output']");
 	 	

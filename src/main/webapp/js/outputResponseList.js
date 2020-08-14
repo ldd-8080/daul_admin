@@ -143,6 +143,7 @@ function addResponseListHtml(obj) {
 		add_quick_btn.addEventListener("click", function() {
 			var button = document.createElement("button");
 			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
+			button.id = response_list_id + "_" + childIdx;
 			
 			var html = 
 				`<div class="btn-group" style="display:none">
@@ -166,6 +167,8 @@ function addResponseListHtml(obj) {
 			button.addEventListener("mouseout", function() {
 				response_list.querySelector(".btn-group").style.display = "none";
 			});
+			
+			childIdx++;
 		});
 	}
 	
@@ -198,6 +201,8 @@ function addResponseCardHtml(childIdx, response_card_id, response_list, obj) {
 	response_card_after.before(div);
 	
 	cardMouseAndRemoveEvent(div.id);
+	
+	addPopover(obj, div.id);
 }
 
 // Output HTML
@@ -205,7 +210,8 @@ function cardHtml(obj) {
 	switch (obj.name) {
 		case "text"  :
 			return `<div class="card-block card-block-evt card-block-text">
-	           	     <p class="card-text">내용을 입력하세요.</p>
+	           	      <p class="card-text">내용을 입력하세요.</p>
+	           	      <input type="hidden" name="content"/>
 			        </div>
 			        <div class="card-block">
 			          <button type="button" class="btn btn-block card-btn-action">+ 버튼 추가</button>
@@ -257,4 +263,127 @@ function cardMouseAndRemoveEvent(id) {
 	response_card_header_del_btn.addEventListener("click", function() {
 		response_card.remove();
 	});
+}
+
+// 텍스트형 내용입력 popover
+function addPopover(obj, response_card_id) {
+	let btnIdx = 0;
+	
+	switch (obj.name) {
+		case "text":
+			// 카드형 내용 popover 이벤트
+			var popover_target = $("#" + response_card_id + " .card-block-text");
+			popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
+			
+			var response_card = document.getElementById(response_card_id);
+			
+			popover_target.one("click", function() {
+				var popover_id = $(this).data("target");
+				
+				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+				var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
+
+				save_btn.addEventListener("click", function() {
+					response_card.querySelector("input[name='content']").value = textarea.value;
+					response_card.querySelector("p.card-text").innerHTML = textarea.value;
+					
+					WebuiPopovers.hide(popover_target);
+				});
+				
+				cancel_btn.addEventListener("click", function() {
+					textarea.value = response_card.querySelector("input[name='content']").value;
+					WebuiPopovers.hide(popover_target);
+				});
+			});
+			
+			// 버튼추가, popover 이벤트
+			var add_btn = response_card.querySelector("button.btn.btn-block.card-btn-action");
+			
+			add_btn.addEventListener("click", function() {
+				var button = document.createElement("button");
+				button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
+				button.id = response_card_id + "_btn_" + btnIdx++;
+				
+				var html = 
+					`<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
+				
+				button.innerHTML = html;
+				
+				this.before(button);
+				
+				$(button).webuiPopover($.extend({
+					onShow: function($element) {
+						var popover_id = $element[0].id;
+						var div_select_intent = $("#" + popover_id + " .div-select-intent");
+						var div_input_url = $("#" + popover_id + " .div-input-url");
+						var select_btn_type = $("#" + popover_id + " .select-btn-type");
+						var select_intent = $("#" + popover_id + " .select-intent");
+						
+						div_select_intent.show();
+						div_input_url.hide();
+						
+						if (!select_btn_type.data("select2")) {
+							select_btn_type.select2({
+								
+								dropdownCssClass: "increasedzindexclass",
+								data: [
+									{id: "intent", text: "intent 링크"},
+									{id: "url", text: "URL 링크"}
+								]
+							});
+							
+							select_btn_type.on("select2:select", function(e) {
+								var data = e.params.data;
+								
+								if (data.id === "intent") {
+									div_select_intent.show();
+									div_input_url.hide();
+								} else if (data.id === "url") {
+									div_select_intent.hide();
+									div_input_url.show();
+								}
+							});
+						}
+						
+						if (!select_intent.data("select2")) {
+							select_intent.select2({
+								dropdownCssClass: "increasedzindexclass",
+								data: [
+									{id: "0", text: "의도 0"},
+									{id: "1", text: "의도 1"}
+								]
+							});
+						}
+					}
+				}, defaults, popEditBtnSettings));
+				
+				$(button).one("click", function() {
+					var $this = $(this);
+					var popover_id = $this.data("target");
+					
+					var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+					var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+					var input = document.getElementById(popover_id).querySelector("input.form-control");
+					
+					save_btn.addEventListener("click", function() {
+						$this.text(input.value);
+						
+						WebuiPopovers.hide($(button));
+					});
+					
+					cancel_btn.addEventListener("click", function() {
+						input.value = $this.text();
+						WebuiPopovers.hide($(button));
+					});
+				});
+			});
+			
+			break;
+	}
+}
+
+// 버튼추가 이벤트
+function addButton(_this) {
+	
 }
