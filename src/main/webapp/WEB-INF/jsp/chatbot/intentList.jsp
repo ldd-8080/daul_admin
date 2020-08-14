@@ -108,32 +108,35 @@
 	                </div>
 	              </div>
 	              <!-- End Input Box - Input Sentences -->
-			  </form>
-              <!-- End Input Groups -->
-
-
-              <!-- Output Groups -->
-              <!-- -------------------------------------------------------------------------------------- -->
-              <!-- Output - Title -->
-              <div class="mt-50">
-                <div class="media">
-                  <div class="pr-10">
-                    <a class="avatar " href="javascript:void(0)">
-                      <img src="${pageContext.request.contextPath}/images/chatbot.png" alt="...">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="mt-5 mb-5">챗봇 응답</h4>
-                  </div>
-                </div>
-              </div>
-              <!-- End Output - Title -->
-
-			  <!-- Output Box - Rule -->
-			  <div id="response-list">
-			  </div>
-              <!-- End Output Box - Rule -->
-
+			  
+	              <!-- End Input Groups -->
+	
+	
+	              <!-- Output Groups -->
+	              <!-- -------------------------------------------------------------------------------------- -->
+	              <!-- Output - Title -->
+	              <div class="mt-50">
+	                <div class="media">
+	                  <div class="pr-10">
+	                    <a class="avatar " href="javascript:void(0)">
+	                      <img src="${pageContext.request.contextPath}/images/chatbot.png" alt="...">
+	                    </a>
+	                  </div>
+	                  <div class="media-body">
+	                    <h4 class="mt-5 mb-5">챗봇 응답</h4>
+	                  </div>
+	                </div>
+	              </div>
+	              <!-- End Output - Title -->
+	
+				  <!-- Output Box - Rule -->
+				  <div id="response-list">
+				  </div>
+	              <!-- End Output Box - Rule -->
+				</form>
+				
+				
+				
               <!-- Output - Button Group -->
               <div class="mt-30 mb-30 ml-50">
                 <p class="mb-5 font-size-16 font-weight-400 " style="color: #616161;">+ 응답추가</p>

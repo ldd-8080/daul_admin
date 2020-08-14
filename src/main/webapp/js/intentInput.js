@@ -15,7 +15,6 @@ $(function() {
 
 
 function chatbotReg(){
-	console.log("chatbotReg");
 	
 	var request = $.ajax({
 		url: "/chatbot/registInputText.do",
@@ -25,7 +24,6 @@ function chatbotReg(){
 		data: $("#input-text-form").serialize()
 	});
 	request.done(function(data) {
-		console.log(data);
 	});
 	request.fail(function(error) {
 		console.log(error);
@@ -34,7 +32,6 @@ function chatbotReg(){
 }
 
 function chatbotDelete(){
-	console.log("chatbotDelete");
 	
 	var request = $.ajax({
 		url: "/chatbot/deleteIntent.do?",
@@ -44,7 +41,6 @@ function chatbotDelete(){
 		data: $("#input-text-form").serialize()
 	});
 	request.done(function(data) {
-		console.log(data);
 		location.href = "/chatbot/intentListPage.do";
 	});
 	request.fail(function(error) {
@@ -57,8 +53,6 @@ function chatbotDelete(){
 
 function setInputText(data){
 	
-
-	console.log(data[0].input_text);
 	
 	$("#input_text").val(data[0].input_text);
 	
@@ -81,6 +75,4 @@ function setInputText(data){
 	    tokenfield.tokenfield({ delimiter: '|' }); 
 	    $("#input_text").val(data[0].input_text);
 	}
-	
-  
 }

@@ -92,6 +92,7 @@
 <script src="${pageContext.request.contextPath}/js/bootstrap-select/bootstrap-select.js"></script>
 <script src="${pageContext.request.contextPath}/js/uikit/progress-bars.js"></script>
 <script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>    
+<script src="${pageContext.request.contextPath}/js/jquery.serialize-object.js"></script>    
 
 <script type="text/javascript">
 function submitConfirm($type) {
