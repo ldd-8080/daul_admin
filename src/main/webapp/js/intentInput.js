@@ -5,13 +5,11 @@ $(function() {
 		chatbotReg();
 	});
 	
-
-	function test(){
-		console.log("test");
-//		let tokenfield = $(".input-box .tokenfield");
-//		 tokenfield.tokenfield({ delimiter: '|' }); 
-	}
-	
+	$("#chatbot-delete-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
+		chatbotDelete();
+	});	
 	
 });	
 
@@ -34,6 +32,28 @@ function chatbotReg(){
 		console.log("request fail");
 	});	
 }
+
+function chatbotDelete(){
+	console.log("chatbotDelete");
+	
+	var request = $.ajax({
+		url: "/chatbot/deleteIntent.do?",
+		method: "post",
+		//contentType: "application/json",
+		//dataType: "json",
+		data: $("#input-text-form").serialize()
+	});
+	request.done(function(data) {
+		console.log(data);
+		location.href = "/chatbot/intentListPage.do";
+	});
+	request.fail(function(error) {
+		console.log(error);
+		console.log("request fail");
+	});	
+}
+
+
 
 function setInputText(data){
 	

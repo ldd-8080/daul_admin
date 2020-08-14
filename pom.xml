@@ -19,6 +19,7 @@
 	<properties>
 	    <spring.maven.artifact.version>4.3.22.RELEASE</spring.maven.artifact.version>
 		<egovframework.rte.version>3.9.0</egovframework.rte.version>
+		<org.aspectj-version>1.8.9</org.aspectj-version>
 		   <!-- Jenkins에서 사용하는 부분 -->
 
             <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -154,6 +155,32 @@
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc-14.jar</systemPath>
         </dependency>
         -->
+        
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.3.22.RELEASE</version>
+		</dependency>
+        
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.3.22.RELEASE</version>
+		</dependency>
+		
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.9.2</version>
+		</dependency> 
+		       
+        <dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjrt</artifactId>
+		    <version>1.9.2</version>
+		</dependency>
+        
         
         <!--  파일업로드  -->
         <dependency>

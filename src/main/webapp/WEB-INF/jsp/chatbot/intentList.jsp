@@ -64,7 +64,7 @@
               <div class="panel-actions panel-actions-keep">
                 <button type="button" class="btn btn-primary" id="chatbot-regist-btn" data-title="발화및응답">
                   <i class="icon fa-save" aria-hidden="true"></i> 저장</button>
-                <button type="button" class="btn btn-default" onclick="">
+                <button type="button" class="btn btn-default" id="chatbot-delete-btn" data-title="발화및응답">
                   <i class="icon fa-trash-o" aria-hidden="true"></i> 삭제</button>
               </div>
             </div>
