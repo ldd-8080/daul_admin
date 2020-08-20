@@ -259,24 +259,48 @@
 <!-- End Popover Edit Button -->
 
 <!-- Popover Edit Image  -->
-    <div id="popoverEditImgHeader" class="popover-header" hidden>
-      <p class="position-relative h-20">
-        <span class="position-absolute" style="top: 10px; left: 5px;">이미지 설정</span>
-        <button type="button" class="btn btn-icon btn-pure float-right">
-          <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
-      </p>
-    </div>
-    <div id="popoverEditImg" class="popover-content" hidden>
-      <div class="form-group">
-        <label class="form-control-label mb-0">이미지 업로드<span class="red-600 ml-5">*</span></label>
-        <input type="file" class="form-control">
-      </div>
-      <div class="form-group form-material float-right">
-        <!-- <button type="button" class="btn btn-primary btn-save">저장</button> -->
-        <button type="reset" class="btn btn-default btn-outline btn-close">닫기</button>
-      </div>
-    </div>
-    <!-- End Popover Edit Image -->
+<div id="popoverEditImgHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">이미지 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverEditImg" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">이미지 업로드<span class="red-600 ml-5">*</span></label>
+    <input type="file" class="form-control">
+  </div>
+  <div class="form-group form-material float-right">
+    <!-- <button type="button" class="btn btn-primary btn-save">저장</button> -->
+    <button type="reset" class="btn btn-default btn-outline btn-close">닫기</button>
+  </div>
+</div>
+<!-- End Popover Edit Image -->
+
+<!-- Popover Edit Title Text  -->
+<div id="popoverEditTitleTextHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">텍스트 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverEditTitleText" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">타이틀</label>
+    <input type="text" class="form-control" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+  </div>
+  <div class="form-group">
+    <label class="form-control-label mb-0">텍스트</label>
+    <textarea class="form-control" rows="5" placeholder="텍스트를 입력해주세요." autocomplete="off" style="resize: none;"></textarea>
+  </div>
+  <div class="form-group form-material float-right">
+    <button type="button" class="btn btn-primary btn-save">저장</button>
+    <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+  </div>
+</div>
+<!-- End Popover Edit Title Text -->
 
 <!-- WebuiPopover -->
 
@@ -605,6 +629,18 @@ function initialize_jstree(){
     var popEditImgSettings = {
       title:popEditImgHeader,
       content:popEditImgContent,
+      placement:'auto',
+      width: 400,
+      animation:'fade',
+      backdrop:true,
+      closeable: true
+    };
+    
+    var popEditTitleTextHeader = $('#popoverEditTitleTextHeader').html()
+    var popEditTitleTextContent = $('#popoverEditTitleText').html()
+    var popEditTitleTextSettings = {
+      title:popEditTitleTextHeader,
+      content: popEditTitleTextContent,
       placement:'auto',
       width: 400,
       animation:'fade',

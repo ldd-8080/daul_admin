@@ -231,7 +231,9 @@ function cardHtml(obj) {
                          src="../images/placeholder.png" alt="Card image cap" />
                     <div class="card-block card-block-evt card-block-title-text">
                       <h5 class="card-title">타이틀을 입력하세요.</h5>
+                      <input type="hidden" name="cardTitle"/>
                       <p class="card-text">내용을 입력하세요.</p>
+                      <input type="hidden" name="cardContent"/>
                     </div>
                     <div class="card-block card-block-btns">
                       <button type="button" class="btn btn-block card-btn-action ignore-elements">+ 버튼 추가</button>
@@ -275,16 +277,13 @@ function cardMouseAndRemoveEvent(id) {
 
 // 텍스트형 내용입력 popover
 function addPopover(obj, response_card_id) {
-	let btnIdx = 0;
-	
 	var response_card = document.getElementById(response_card_id);
 	
 	switch (obj.name) {
 		case "text":
-			// 텍스트형 내용 popover 이벤트
+			// 텍스트 내용 popover 이벤트
 			var popover_target = $("#" + response_card_id + " .card-block-text");
 			popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
-			
 			
 			popover_target.one("click", function() {
 				var popover_id = $(this).data("target");
@@ -306,95 +305,149 @@ function addPopover(obj, response_card_id) {
 				});
 			});
 			
-			// 버튼추가, popover 이벤트
-			var add_btn = response_card.querySelector("button.btn.btn-block.card-btn-action");
+			// 버튼 popover 이벤트
+			btnPopoverEvent(response_card_id);
 			
-			add_btn.addEventListener("click", function() {
-				var button = document.createElement("button");
-				button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
-				button.id = response_card_id + "_btn_" + btnIdx++;
+			break;
+		case "image":
+			// 이미지 popover 이벤트
+			imgPopoverEvent(response_card_id);
+			
+			break;
+		case "card":
+			// 이미지 popover 이벤트
+			imgPopoverEvent(response_card_id);
+			// 버튼 popover 이벤트
+			btnPopoverEvent(response_card_id);
+			// 텍스트 타이틀 내용 popover 이벤트
+			var popover_target = $("#" + response_card_id + " .card-block-title-text");
+			popover_target.webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
+			
+			popover_target.one("click", function() {
+				var popover_id = $(this).data("target");
+
+				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+				var input = document.getElementById(popover_id).querySelector("input.form-control");
+				var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
 				
-				var html = 
-					`<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
-				
-				button.innerHTML = html;
-				
-				this.before(button);
-				
-				$(button).webuiPopover($.extend({
-					onShow: function($element) {
-						var popover_id = $element[0].id;
-						var div_select_intent = $("#" + popover_id + " .div-select-intent");
-						var div_input_url = $("#" + popover_id + " .div-input-url");
-						var select_btn_type = $("#" + popover_id + " .select-btn-type");
-						var select_intent = $("#" + popover_id + " .select-intent");
-						
-						div_select_intent.show();
-						div_input_url.hide();
-						
-						if (!select_btn_type.data("select2")) {
-							select_btn_type.select2({
-								
-								dropdownCssClass: "increasedzindexclass",
-								data: [
-									{id: "intent", text: "intent 링크"},
-									{id: "url", text: "URL 링크"}
-								]
-							});
-							
-							select_btn_type.on("select2:select", function(e) {
-								var data = e.params.data;
-								
-								if (data.id === "intent") {
-									div_select_intent.show();
-									div_input_url.hide();
-								} else if (data.id === "url") {
-									div_select_intent.hide();
-									div_input_url.show();
-								}
-							});
-						}
-						
-						if (!select_intent.data("select2")) {
-							select_intent.select2({
-								dropdownCssClass: "increasedzindexclass",
-								data: [
-									{id: "0", text: "의도 0"},
-									{id: "1", text: "의도 1"}
-								]
-							});
-						}
-					}
-				}, defaults, popEditBtnSettings));
-				
-				$(button).one("click", function() {
-					var $this = $(this);
-					var popover_id = $this.data("target");
+				save_btn.addEventListener("click", function() {
+					response_card.querySelector("input[name='cardTitle']").value = input.value;
+					response_card.querySelector("h5.card-title").innerHTML = input.value;
 					
-					var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-					var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-					var input = document.getElementById(popover_id).querySelector("input.form-control");
+					response_card.querySelector("input[name='cardContent']").value = textarea.value;
+					response_card.querySelector("p.card-text").innerHTML = textarea.value;
 					
-					save_btn.addEventListener("click", function() {
-						$this.text(input.value);
-						
-						WebuiPopovers.hide($(button));
-					});
+					WebuiPopovers.hide(popover_target);
+				});
+				
+				cancel_btn.addEventListener("click", function() {
+					input.value = response_card.querySelector("input[name='cardTitle']").value;
+					textarea.value = response_card.querySelector("input[name='cardContent']").value; 
 					
-					cancel_btn.addEventListener("click", function() {
-						input.value = $this.text();
-						WebuiPopovers.hide($(button));
-					});
+					WebuiPopovers.hide(popover_target);
 				});
 			});
 			
 			break;
-		case "image":
-			// 이미지형 popover 이벤트
-			imgPopoverEvent(response_card_id);
-			
-			break;
 	}
+}
+
+function btnPopoverEvent(response_card_id) {
+	var btnIdx = 0;
+	
+	var add_btn = document.getElementById(response_card_id).querySelector("button.btn.btn-block.card-btn-action");
+	
+	add_btn.addEventListener("click", function() {
+		var button = document.createElement("button");
+		button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
+		button.id = response_card_id + "_btn_" + btnIdx++;
+		
+		var html = 
+			`<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
+		
+		button.innerHTML = html;
+		
+		this.before(button);
+		
+		$(button).webuiPopover($.extend({
+			onShow: function($element) {
+				var popover_id = $element[0].id;
+				var div_select_intent = $("#" + popover_id + " .div-select-intent");
+				var div_input_url = $("#" + popover_id + " .div-input-url");
+				var select_btn_type = $("#" + popover_id + " .select-btn-type");
+				var select_intent = $("#" + popover_id + " .select-intent");
+				
+				var select_btn_type_val = select_btn_type.val();
+				
+				if (select_btn_type_val) {
+					if (select_btn_type_val === "intent") {
+						div_select_intent.show();
+						div_input_url.hide();
+					} else if (select_btn_type_val === "url") {
+						div_select_intent.hide();
+						div_input_url.show();
+					}
+				} else {
+					div_select_intent.show();
+					div_input_url.hide();
+				}
+				
+				if (!select_btn_type.data("select2")) {
+					select_btn_type.select2({
+						
+						dropdownCssClass: "increasedzindexclass",
+						data: [
+							{id: "intent", text: "intent 링크"},
+							{id: "url", text: "URL 링크"}
+						]
+					});
+					
+					select_btn_type.on("select2:select", function(e) {
+						var data = e.params.data;
+						
+						if (data.id === "intent") {
+							div_select_intent.show();
+							div_input_url.hide();
+						} else if (data.id === "url") {
+							div_select_intent.hide();
+							div_input_url.show();
+						}
+					});
+				}
+				
+				if (!select_intent.data("select2")) {
+					select_intent.select2({
+						dropdownCssClass: "increasedzindexclass",
+						data: [
+							{id: "0", text: "의도 0"},
+							{id: "1", text: "의도 1"}
+						]
+					});
+				}
+			}
+		}, defaults, popEditBtnSettings));
+		
+		$(button).one("click", function() {
+			var $this = $(this);
+			var popover_id = $this.data("target");
+			
+			var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+			var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+			var input = document.getElementById(popover_id).querySelector("input.form-control");
+			
+			save_btn.addEventListener("click", function() {
+				$this.text(input.value);
+				
+				WebuiPopovers.hide($(button));
+			});
+			
+			cancel_btn.addEventListener("click", function() {
+				input.value = $this.text();
+				WebuiPopovers.hide($(button));
+			});
+		});
+	});
 }
 
 function imgPopoverEvent(response_card_id) {
@@ -404,31 +457,10 @@ function imgPopoverEvent(response_card_id) {
 	popover_target.one("click", function() {
 		var popover_id = $(this).data("target");
 		
-		//var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
 		var close_btn = document.getElementById(popover_id).querySelector("button.btn-close");
 		var inputFile = document.getElementById(popover_id).querySelector(".form-control");
 		
 		var prevFile;
-		
-		/*
-		save_btn.addEventListener("click", function() {
-			var file = inputFile.files[0];
-			
-			if (file) {
-				var reader = new FileReader();
-				
-				reader.onload = function(e) {
-					popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
-				}
-				
-				reader.readAsDataURL(file);
-				
-				prevFile = file;
-			}
-			
-			WebuiPopovers.hide(popover_target);
-		});
-		*/
 		
 		close_btn.addEventListener("click", function() {
 			WebuiPopovers.hide(popover_target);
