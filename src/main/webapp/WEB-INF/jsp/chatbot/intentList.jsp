@@ -272,8 +272,8 @@
         <input type="file" class="form-control">
       </div>
       <div class="form-group form-material float-right">
-        <button type="button" class="btn btn-primary btn-save">저장</button>
-        <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+        <!-- <button type="button" class="btn btn-primary btn-save">저장</button> -->
+        <button type="reset" class="btn btn-default btn-outline btn-close">닫기</button>
       </div>
     </div>
     <!-- End Popover Edit Image -->

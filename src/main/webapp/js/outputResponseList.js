@@ -391,47 +391,67 @@ function addPopover(obj, response_card_id) {
 			break;
 		case "image":
 			// 이미지형 popover 이벤트
-			var popover_target = $("#" + response_card_id + " .card-block-img");
-			popover_target.webuiPopover($.extend({}, defaults, popEditImgSettings));
-			
-			popover_target.one("click", function() {
-				var popover_id = $(this).data("target");
-				
-				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-				var inputFile = document.getElementById(popover_id).querySelector(".form-control");
-				
-				var prevFile;
-				
-				save_btn.addEventListener("click", function() {
-					var file = inputFile.files[0];
-					
-					if (file) {
-						var reader = new FileReader();
-						
-						reader.onload = function(e) {
-							popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
-							
-						}
-						
-						reader.readAsDataURL(file);
-						
-						prevFile = file;
-					}
-					
-					WebuiPopovers.hide(popover_target);
-				});
-				
-				cancel_btn.addEventListener("click", function() {
-					if (!prevFile) {
-						inputFile.type = "text";
-						inputFile.type = "file";
-					}
-					
-					WebuiPopovers.hide(popover_target);
-				});
-			});
+			imgPopoverEvent(response_card_id);
 			
 			break;
 	}
+}
+
+function imgPopoverEvent(response_card_id) {
+	var popover_target = $("#" + response_card_id + " .card-block-img");
+	popover_target.webuiPopover($.extend({}, defaults, popEditImgSettings));
+	
+	popover_target.one("click", function() {
+		var popover_id = $(this).data("target");
+		
+		//var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+		var close_btn = document.getElementById(popover_id).querySelector("button.btn-close");
+		var inputFile = document.getElementById(popover_id).querySelector(".form-control");
+		
+		var prevFile;
+		
+		/*
+		save_btn.addEventListener("click", function() {
+			var file = inputFile.files[0];
+			
+			if (file) {
+				var reader = new FileReader();
+				
+				reader.onload = function(e) {
+					popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
+				}
+				
+				reader.readAsDataURL(file);
+				
+				prevFile = file;
+			}
+			
+			WebuiPopovers.hide(popover_target);
+		});
+		*/
+		
+		close_btn.addEventListener("click", function() {
+			WebuiPopovers.hide(popover_target);
+		});
+		
+		inputFile.addEventListener("change", function() {
+			var file = inputFile.files[0];
+			
+			if (file) {
+				var reader = new FileReader();
+				
+				reader.onload = function(e) {
+					popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
+				}
+				
+				reader.readAsDataURL(file);
+				
+				prevFile = file;
+			} else {
+				popover_target.attr("src", "../images/placeholder.png").width(popover_target.width()).height(popover_target.height());
+			}
+			
+			WebuiPopovers.hide(popover_target);
+		});
+	});	
 }
