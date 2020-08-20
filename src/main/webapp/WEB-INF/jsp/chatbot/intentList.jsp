@@ -302,6 +302,54 @@
 </div>
 <!-- End Popover Edit Title Text -->
 
+<!-- Popover Edit List Title Text  -->
+<div id="popoverListTitleHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">타이틀 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverListTitle" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">타이틀<span class="red-600 ml-5">*</span></label>
+    <input type="text" class="form-control" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+  </div>
+  <div class="form-group form-material float-right">
+    <button type="button" class="btn btn-primary btn-save">저장</button>
+    <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+  </div>
+</div>
+<!-- End Popover Edit Title Text -->
+
+<!-- Popover Edit List Title Text  -->
+<div id="popoverListItemHeader" class="popover-header" hidden>
+  <p class="position-relative h-20">
+    <span class="position-absolute" style="top: 10px; left: 5px;">리스트목록 설정</span>
+    <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+  </p>
+</div>
+<div id="popoverListItem" class="popover-content" hidden>
+  <div class="form-group">
+    <label class="form-control-label mb-0">타이틀<span class="red-600 ml-5">*</span></label>
+    <input type="text" class="form-control title" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+  </div>
+  <div class="form-group">
+    <label class="form-control-label mb-0">설명</label>
+    <input type="text" class="form-control content" placeholder="설명을 입력해주세요." autocomplete="off" />
+  </div>
+  <div class="form-group">
+    <label class="form-control-label mb-0">썸네일 이미지</label>
+    <input type="file" class="form-control image">
+  </div>
+  <div class="form-group form-material float-right">
+    <button type="button" class="btn btn-primary btn-save">저장</button>
+    <button type="reset" class="btn btn-default btn-outline btn-cancel">취소</button>
+  </div>
+</div>
+<!-- End Popover Edit Title Text -->
+
 <!-- WebuiPopover -->
 
 <script src="${pageContext.request.contextPath}/js/outputResponseList.js"></script>
@@ -641,6 +689,30 @@ function initialize_jstree(){
     var popEditTitleTextSettings = {
       title:popEditTitleTextHeader,
       content: popEditTitleTextContent,
+      placement:'auto',
+      width: 400,
+      animation:'fade',
+      backdrop:true,
+      closeable: true
+    };
+    
+    var popEditListTitleHeader = $('#popoverListTitleHeader').html()
+    var popEditListTitleContent = $('#popoverListTitle').html()
+    var popEditListTitleSettings = {
+      title:popEditListTitleHeader,
+      content: popEditListTitleContent,
+      placement:'auto',
+      width: 400,
+      animation:'fade',
+      backdrop:true,
+      closeable: true
+    };
+
+    var popoverListItemHeader = $('#popoverListItemHeader').html()
+    var popoverListItemContent = $('#popoverListItem').html()
+    var popoverListItemSettings = {
+      title:popoverListItemHeader,
+      content: popoverListItemContent,
       placement:'auto',
       width: 400,
       animation:'fade',
