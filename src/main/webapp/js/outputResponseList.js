@@ -9,6 +9,7 @@ function responseTypeHtml(obj, response_list_id) {
 		              <span class="action-title">전송타입 </span>
 		              <div class="action-btns">
 		                <div class="sending-type-btns btn-group btn-group-sm panel-action" aria-label="Small button group" role="group">
+		                  <input type="hidden" name="trans_type" value="caro"/>
 		                  <button type="button" class="btn cbtn-action w-60 active" id="${response_list_id+'_sending_btn_caro'}">케로셀</button>
 		                  <button type="button" class="btn cbtn-action w-60" id="${response_list_id+'_sending_btn_ran'}">랜덤형</button>
 		                </div>
@@ -79,6 +80,7 @@ function addResponseListHtml(obj) {
               </button>
             </div>
             <div class="panel box-main">
+              <input type="hidden" name="type" value="${obj.name}" />
               ${typeHtml}
             </div>`;
 	
@@ -117,7 +119,13 @@ function addResponseListHtml(obj) {
 		function sendingBtnEvent(e) {
 			var exist = e.target.classList.contains("active");
 			
-			if (!exist) e.target.classList.add("active");
+			if (!exist) {
+				e.target.classList.add("active");
+				
+				var id_arr = e.target.id.split("_");
+				
+				document.querySelector("input[name='trans_type']").value = id_arr[id_arr.length - 1];
+			}
 			
 			if (e.target.id.indexOf("caro") > -1) 	sending_btn_ran.classList.remove("active");
 			else									sending_btn_caro.classList.remove("active");
@@ -201,7 +209,7 @@ function addResponseCardHtml(childIdx, response_card_id, response_list, obj) {
 	response_card_after.before(div);
 	
 	cardMouseAndRemoveEvent(div.id);
-	
+
 	addPopover(obj, div.id);
 }
 
@@ -269,13 +277,14 @@ function cardMouseAndRemoveEvent(id) {
 function addPopover(obj, response_card_id) {
 	let btnIdx = 0;
 	
+	var response_card = document.getElementById(response_card_id);
+	
 	switch (obj.name) {
 		case "text":
-			// 카드형 내용 popover 이벤트
+			// 텍스트형 내용 popover 이벤트
 			var popover_target = $("#" + response_card_id + " .card-block-text");
 			popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
 			
-			var response_card = document.getElementById(response_card_id);
 			
 			popover_target.one("click", function() {
 				var popover_id = $(this).data("target");
@@ -380,10 +389,49 @@ function addPopover(obj, response_card_id) {
 			});
 			
 			break;
+		case "image":
+			// 이미지형 popover 이벤트
+			var popover_target = $("#" + response_card_id + " .card-block-img");
+			popover_target.webuiPopover($.extend({}, defaults, popEditImgSettings));
+			
+			popover_target.one("click", function() {
+				var popover_id = $(this).data("target");
+				
+				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+				var inputFile = document.getElementById(popover_id).querySelector(".form-control");
+				
+				var prevFile;
+				
+				save_btn.addEventListener("click", function() {
+					var file = inputFile.files[0];
+					
+					if (file) {
+						var reader = new FileReader();
+						
+						reader.onload = function(e) {
+							popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
+							
+						}
+						
+						reader.readAsDataURL(file);
+						
+						prevFile = file;
+					}
+					
+					WebuiPopovers.hide(popover_target);
+				});
+				
+				cancel_btn.addEventListener("click", function() {
+					if (!prevFile) {
+						inputFile.type = "text";
+						inputFile.type = "file";
+					}
+					
+					WebuiPopovers.hide(popover_target);
+				});
+			});
+			
+			break;
 	}
-}
-
-// 버튼추가 이벤트
-function addButton(_this) {
-	
 }
