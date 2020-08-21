@@ -146,38 +146,42 @@ function addResponseListHtml(obj) {
 	
 	if (obj.name === "quick") {
 		// 리스트의 퀵버튼 추가 버튼 이벤트
-		var add_quick_btn = response_list.querySelector(".ignore-elements");
+		btnPopoverEvent(response_list_id, obj);
+	}
+	
+	if (obj.name === "skill" || obj.name === "condition") {
+		var select = response_list.querySelector("select.select-response-rule");
+		console.log(select);
 		
-		add_quick_btn.addEventListener("click", function() {
-			var button = document.createElement("button");
-			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
-			button.id = response_list_id + "_" + childIdx;
-			
-			var html = 
-				`<div class="btn-group" style="display:none">
-					 <span class="btn btn-round btn-sm btn-icon quick-btn-action handle-qbtn bg-grey-50 mr-10">
-			           <i class="icon md-code-setting" aria-hidden="true"></i>
-			         </span>
-			         <span class="btn btn-round btn-sm btn-icon quick-btn-action handle-qbtn bg-grey-50 ml-10">
-			           <i class="icon md-delete" aria-hidden="true"></i>
-			         </span>
-		         </div>
-		         Default`;
-			
-			button.innerHTML = html;
-			
-			add_quick_btn.before(button);
-			
-			button.addEventListener("mouseover", function() {
-				response_list.querySelector(".btn-group").style.display = "";
-			});
-			
-			button.addEventListener("mouseout", function() {
-				response_list.querySelector(".btn-group").style.display = "none";
-			});
-			
-			childIdx++;
-		});
+		var dataArr = [];
+		if (obj.name === "condition") {
+			dataArr = [
+				{
+					id: "sys.is_login",
+					text: "로그인 상태 체크 (sys.is_login)"
+				},
+				{
+					id: "sys.is_logout",
+					text: "로그아웃 상태 체크 (sys.is_logout)"
+				}
+			] 
+		} else if (obj.name === "skill") {
+			dataArr = [
+				{
+					id: "sys.get_news",
+					text: "뉴스 가져오기 (sys.get_news)"
+				},
+				{
+					id: "sys.get_poppular_news",
+					text: "인기 뉴스 가져오기 (sys.get_poppular_news)"
+				}
+			]
+		}
+		
+        $(select).select2({
+          dropdownCssClass: "increasedzindexclass",
+          data: dataArr
+        });
 	}
 	
 	globalIdx++;
@@ -309,7 +313,7 @@ function addPopover(obj, response_card_id) {
 			});
 			
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id);
+			btnPopoverEvent(response_card_id, obj);
 			
 			break;
 		case "image":
@@ -321,7 +325,7 @@ function addPopover(obj, response_card_id) {
 			// 이미지 popover 이벤트
 			imgPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id);
+			btnPopoverEvent(response_card_id, obj);
 			// 텍스트 타이틀 내용 popover 이벤트
 			var popover_target = $("#" + response_card_id + " .card-block-title-text");
 			popover_target.webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
@@ -456,23 +460,43 @@ function addPopover(obj, response_card_id) {
 				});
 			});
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id);
+			btnPopoverEvent(response_card_id, obj);
 			break;
 	}
 }
 
-function btnPopoverEvent(response_card_id) {
+function btnPopoverEvent(response_card_id, obj) {
 	var btnIdx = 0;
 	
-	var add_btn = document.getElementById(response_card_id).querySelector("button.btn.btn-block.card-btn-action");
+	var add_btn;
+	
+	if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
+		add_btn = document.getElementById(response_card_id).querySelector("button.btn.btn-block.card-btn-action");
+	} else if (obj.name === "quick") {
+		add_btn = document.getElementById(response_card_id).querySelector("button.ignore-elements");
+	}
 	
 	add_btn.addEventListener("click", function() {
+		var html;
+		
 		var button = document.createElement("button");
-		button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
 		button.id = response_card_id + "_btn_" + btnIdx++;
 		
-		var html = 
-			`<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
+		if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
+			button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
+			
+			html = `<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
+		} else if (obj.name === "quick") {
+			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
+			
+			html = 
+				`<div class="btn-group" style="display:none">
+					<span class="btn btn-round btn-sm btn-icon quick-btn-action handle-qbtn bg-grey-50">
+                    	<i class="icon md-code-setting" aria-hidden="true"></i>
+                    </span>
+				 </div>
+				 Default`;
+		}
 		
 		button.innerHTML = html;
 		
@@ -555,6 +579,18 @@ function btnPopoverEvent(response_card_id) {
 				WebuiPopovers.hide($(button));
 			});
 		});
+		
+		if (obj.name === "quick") {
+			$(button).on("mouseover", function() {
+				console.log("mouseover");
+				$(this).find(".btn-group").show();
+			});
+			
+			$(button).on("mouseout", function() {
+				console.log("mouseout");
+				$(this).find(".btn-group").hide();
+			});
+		}
 	});
 }
 
