@@ -288,30 +288,8 @@ function addPopover(obj, response_card_id) {
 	
 	switch (obj.name) {
 		case "text":
-			// 텍스트 내용 popover 이벤트
-			var popover_target = $("#" + response_card_id + " .card-block-text");
-			popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
-			
-			popover_target.one("click", function() {
-				var popover_id = $(this).data("target");
-				
-				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-				var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
-
-				save_btn.addEventListener("click", function() {
-					response_card.querySelector("input[name='content']").value = textarea.value;
-					response_card.querySelector("p.card-text").innerHTML = textarea.value;
-					
-					WebuiPopovers.hide(popover_target);
-				});
-				
-				cancel_btn.addEventListener("click", function() {
-					textarea.value = response_card.querySelector("input[name='content']").value;
-					WebuiPopovers.hide(popover_target);
-				});
-			});
-			
+			// 내용 popover 이벤트
+			contentPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
 			btnPopoverEvent(response_card_id, obj);
 			
@@ -326,141 +304,18 @@ function addPopover(obj, response_card_id) {
 			imgPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
 			btnPopoverEvent(response_card_id, obj);
-			// 텍스트 타이틀 내용 popover 이벤트
-			var popover_target = $("#" + response_card_id + " .card-block-title-text");
-			popover_target.webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
-			
-			popover_target.one("click", function() {
-				var popover_id = $(this).data("target");
-
-				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-				var input = document.getElementById(popover_id).querySelector("input.form-control");
-				var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
-				
-				save_btn.addEventListener("click", function() {
-					response_card.querySelector("input[name='cardTitle']").value = input.value;
-					response_card.querySelector("h5.card-title").innerHTML = input.value;
-					
-					response_card.querySelector("input[name='cardContent']").value = textarea.value;
-					response_card.querySelector("p.card-text").innerHTML = textarea.value;
-					
-					WebuiPopovers.hide(popover_target);
-				});
-				
-				cancel_btn.addEventListener("click", function() {
-					input.value = response_card.querySelector("input[name='cardTitle']").value;
-					textarea.value = response_card.querySelector("input[name='cardContent']").value; 
-					
-					WebuiPopovers.hide(popover_target);
-				});
-			});
+			// 타이틀 내용 popover 이벤트
+			titleContentPopoverEvent(response_card_id);
 			
 			break;
 		case "list":
 			// 타이틀 popover 이벤트
-			var popover_target = $("#" + response_card_id + " .card-block-list-title");
-			popover_target.webuiPopover($.extend({}, defaults, popEditListTitleSettings));
-			
-			popover_target.one("click", function() {
-				var popover_id = $(this).data("target");
-				
-				var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-				var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-				var input = document.getElementById(popover_id).querySelector("input.form-control");
-				
-				save_btn.addEventListener("click", function() {
-					response_card.querySelector("input[name='listTitle']").value = input.value;
-					response_card.querySelector("h5.card-title").innerHTML = input.value;
-					
-					WebuiPopovers.hide(popover_target);
-				});
-				
-				cancel_btn.addEventListener("click", function() {
-					input.value = response_card.querySelector("input[name='listTitle']").value; 
-					
-					WebuiPopovers.hide(popover_target);
-				});
-			});
-			
-			// 목록추가 버튼
-			var list_add_btn = response_card.querySelector("button.btn.btn-block.btn-pure");
-			
-			list_add_btn.addEventListener("click", function() {
-				var li = document.createElement("li");
-				li.classList.add("list-group-item", "card-block-list-item", "card-block-evt");
-				li.id = response_card_id + "_list_btn_" + listBtnIdx++;
-				
-				var html = 
-					`<div class="media">
-                       <div class="media-body">
-                         <p class="title">타이틀을 입력하세요.</p>
-                         <input type="hidden" name="listTitle"/>
-                         <p class="content text-truncate">내용을 입력하세요.</p>
-                         <input type="hidden" name="listContent"/>
-                       </div>
-                       <div class="pl-20">
-                         <a href="javascript:void(0)">
-                           <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
-                         </a>
-                       </div>
-                     </div>`;
-				
-				li.innerHTML = html;
-				
-				this.parentElement.before(li);
-				
-				$(li).webuiPopover($.extend({}, defaults, popoverListItemSettings));
-				
-				$(li).one("click", function() {
-					var $this = $(this);
-					var popover_id = $this.data("target");
-					
-					var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
-					var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-					var title = document.getElementById(popover_id).querySelector("input.form-control.title");
-					var content = document.getElementById(popover_id).querySelector("input.form-control.content");
-					var image = document.getElementById(popover_id).querySelector("input.form-control.image");
-					
-					save_btn.addEventListener("click", function() {
-						$this.find("input[name='listTitle']").val(title.value);
-						$this.find("p.title").text(title.value);
-						
-						$this.find("input[name='listContent']").val(content.value);
-						$this.find("p.content").text(content.value);
-						
-						WebuiPopovers.hide($(li));
-					});
-					
-					cancel_btn.addEventListener("click", function() {
-						title.value = $this.find("input[name='listTitle']").val();
-						content.value = $this.find("input[name='listContent']").val();
-						
-						WebuiPopovers.hide($(li));
-					});
-					
-					
-					image.addEventListener("change", function() {
-						var file = image.files[0];
-						var img = $this.find("img.image");
-						
-						if (file) {
-							var reader = new FileReader();
-							
-							reader.onload = function(e) {
-								img.attr("src", e.target.result).width(img.width()).height(img.height());
-							}
-							
-							reader.readAsDataURL(file);
-						} else {
-							img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
-						}
-					});
-					
-				});
-			});
+			titlePopoverEvent(response_card_id);
+			// 목록 추가 버튼
+			listBtnPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
 			btnPopoverEvent(response_card_id, obj);
+			
 			break;
 	}
 }
@@ -626,4 +481,173 @@ function imgPopoverEvent(response_card_id) {
 			WebuiPopovers.hide(popover_target);
 		});
 	});	
+}
+
+function contentPopoverEvent(response_card_id) {
+	var response_card = document.getElementById(response_card_id);
+	
+	var popover_target = $("#" + response_card_id + " .card-block-text");
+	popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
+	
+	popover_target.one("click", function() {
+		var popover_id = $(this).data("target");
+		
+		var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+		var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+		var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
+
+		save_btn.addEventListener("click", function() {
+			response_card.querySelector("input[name='content']").value = textarea.value;
+			response_card.querySelector("p.card-text").innerHTML = textarea.value;
+			
+			WebuiPopovers.hide(popover_target);
+		});
+		
+		cancel_btn.addEventListener("click", function() {
+			textarea.value = response_card.querySelector("input[name='content']").value;
+			WebuiPopovers.hide(popover_target);
+		});
+	});
+}
+
+function titleContentPopoverEvent(response_card_id) {
+	var response_card = document.getElementById(response_card_id);
+	
+	var popover_target = $("#" + response_card_id + " .card-block-title-text");
+	popover_target.webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
+	
+	popover_target.one("click", function() {
+		var popover_id = $(this).data("target");
+
+		var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+		var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+		var input = document.getElementById(popover_id).querySelector("input.form-control");
+		var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
+		
+		save_btn.addEventListener("click", function() {
+			response_card.querySelector("input[name='cardTitle']").value = input.value;
+			response_card.querySelector("h5.card-title").innerHTML = input.value;
+			
+			response_card.querySelector("input[name='cardContent']").value = textarea.value;
+			response_card.querySelector("p.card-text").innerHTML = textarea.value;
+			
+			WebuiPopovers.hide(popover_target);
+		});
+		
+		cancel_btn.addEventListener("click", function() {
+			input.value = response_card.querySelector("input[name='cardTitle']").value;
+			textarea.value = response_card.querySelector("input[name='cardContent']").value; 
+			
+			WebuiPopovers.hide(popover_target);
+		});
+	});
+}
+
+function titlePopoverEvent(response_card_id) {
+	var response_card = document.getElementById(response_card_id);
+	
+	var popover_target = $("#" + response_card_id + " .card-block-list-title");
+	popover_target.webuiPopover($.extend({}, defaults, popEditListTitleSettings));
+	
+	popover_target.one("click", function() {
+		var popover_id = $(this).data("target");
+		
+		var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+		var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+		var input = document.getElementById(popover_id).querySelector("input.form-control");
+		
+		save_btn.addEventListener("click", function() {
+			response_card.querySelector("input[name='listTitle']").value = input.value;
+			response_card.querySelector("h5.card-title").innerHTML = input.value;
+			
+			WebuiPopovers.hide(popover_target);
+		});
+		
+		cancel_btn.addEventListener("click", function() {
+			input.value = response_card.querySelector("input[name='listTitle']").value; 
+			
+			WebuiPopovers.hide(popover_target);
+		});
+	});
+}
+
+function listBtnPopoverEvent(response_card_id) {
+	var listBtnIdx = 0;
+	
+	var response_card = document.getElementById(response_card_id);
+	
+	var list_add_btn = response_card.querySelector("button.btn.btn-block.btn-pure");
+	
+	list_add_btn.addEventListener("click", function() {
+		var li = document.createElement("li");
+		li.classList.add("list-group-item", "card-block-list-item", "card-block-evt");
+		li.id = response_card_id + "_list_btn_" + listBtnIdx++;
+		
+		var html = 
+			`<div class="media">
+               <div class="media-body">
+                 <p class="title">타이틀을 입력하세요.</p>
+                 <input type="hidden" name="listTitle"/>
+                 <p class="content text-truncate">내용을 입력하세요.</p>
+                 <input type="hidden" name="listContent"/>
+               </div>
+               <div class="pl-20">
+                 <a href="javascript:void(0)">
+                   <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
+                 </a>
+               </div>
+             </div>`;
+		
+		li.innerHTML = html;
+		
+		this.parentElement.before(li);
+		
+		$(li).webuiPopover($.extend({}, defaults, popoverListItemSettings));
+		
+		$(li).one("click", function() {
+			var $this = $(this);
+			var popover_id = $this.data("target");
+			
+			var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
+			var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
+			var title = document.getElementById(popover_id).querySelector("input.form-control.title");
+			var content = document.getElementById(popover_id).querySelector("input.form-control.content");
+			var image = document.getElementById(popover_id).querySelector("input.form-control.image");
+			
+			save_btn.addEventListener("click", function() {
+				$this.find("input[name='listTitle']").val(title.value);
+				$this.find("p.title").text(title.value);
+				
+				$this.find("input[name='listContent']").val(content.value);
+				$this.find("p.content").text(content.value);
+				
+				WebuiPopovers.hide($(li));
+			});
+			
+			cancel_btn.addEventListener("click", function() {
+				title.value = $this.find("input[name='listTitle']").val();
+				content.value = $this.find("input[name='listContent']").val();
+				
+				WebuiPopovers.hide($(li));
+			});
+			
+			image.addEventListener("change", function() {
+				var file = image.files[0];
+				var img = $this.find("img.image");
+				
+				if (file) {
+					var reader = new FileReader();
+					
+					reader.onload = function(e) {
+						img.attr("src", e.target.result).width(img.width()).height(img.height());
+					}
+					
+					reader.readAsDataURL(file);
+				} else {
+					img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
+				}
+			});
+			
+		});
+	});
 }
