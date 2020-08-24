@@ -117,7 +117,7 @@ public class ChatbotController {
 	}
 	
 	@RequestMapping(value="/serializedObj.do", method=RequestMethod.POST)
-	public ResponseEntity<?> getInputText(@RequestBody Map<Object, Object> params) throws Exception{
+	public ResponseEntity<?> serializedObj(@RequestBody Map<Object, Object> params) throws Exception{
 		System.out.println(params);
 		
 		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
@@ -129,5 +129,15 @@ public class ChatbotController {
 		chatbotService.registResponeList(list);
 		
 		return  new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getInputText.do", method=RequestMethod.GET)
+	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception{
+		
+		InputVo vo = new InputVo();
+		vo.setIntent_id(intent_id);
+		List<InputVo> inputList = null;
+		inputList = chatbotService.getInputText(vo);
+		return  new ResponseEntity<>(inputList, HttpStatus.OK);
 	}
 }
