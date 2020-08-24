@@ -5,11 +5,49 @@ public class ItemVo {
 	private String skill_id;
 	private String condition_item_id;
 	private String condition_id;
+	private String list_item_id;
+	private String title;
+	private String content;
+	private String position;
+	private String list_type_id;
 	
 	private String name;
 	private String function_name;
 	
 	
+	
+	
+	
+	public String getList_item_id() {
+		return list_item_id;
+	}
+	public void setList_item_id(String list_item_id) {
+		this.list_item_id = list_item_id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public String getList_type_id() {
+		return list_type_id;
+	}
+	public void setList_type_id(String list_type_id) {
+		this.list_type_id = list_type_id;
+	}
 	public String getSkill_item_id() {
 		return skill_item_id;
 	}

@@ -124,7 +124,190 @@
 		SELECT *
 		  FROM daul.chatbot_input
 		 WHERE intent_id = #{intent_id}
-	
 	</select>
+	
+	
+	<select id="getListId" resultType="String">
+		SELECT  concat('R-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_list;
+	</select>
+	
+	<select id="getTextId" resultType="String">
+		SELECT  concat('TT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_text_type;
+	</select>
+	
+	<select id="getListTypeId" resultType="String">
+		SELECT  concat('LT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_list_type;
+	</select>
+	
+	<select id="getListTypeItemId" resultType="String">
+		SELECT  concat('LTI-',LPAD(count(*)+1,'6','0'))  FROM chatbot_list_type_item;
+	</select>
+	
+	<select id="getBtnId" resultType="String">
+		SELECT  concat('TTB-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_btn;
+	</select>
+	
+	<select id="getImgTypeId" resultType="String">
+		SELECT  concat('IMG-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_image_type;
+	</select>
+	<select id="getCardTypeId" resultType="String">
+		SELECT  concat('CT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_card_type;
+	</select>
+	<select id="getSkillTypeId" resultType="String">
+		SELECT  concat('ST-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_skill_type;
+	</select>
+	<select id="getDirectTypeId" resultType="String">
+		SELECT  concat('DT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_direct_type;
+	</select>
+	
+	<insert id="registResponeList">
+		
+		insert into chatbot_respone_list(
+			list_id,
+			intent_id,
+			type,
+			trans_type
+		)
+		values
+		(
+			#{list_id},
+			#{intent_id},
+			#{type},
+			#{trans_type}			
+		)
+
+	</insert>
+	
+	<insert id="registTextTypeList" >
+		
+			insert into chatbot_respone_text_type(
+				text_id,
+				list_id,
+				content,
+				position
+			)
+			values
+			(
+				#{text_id},
+				#{list_id},
+				#{content},
+				#{position}			
+			)
+		
+	</insert>
+	
+	<insert id="registListTypeList">
+			insert into chatbot_respone_list_type(
+				list_type_id,
+				list_id,
+				title,
+				position
+			)values
+		
+			(
+				#{list_type_id},
+				#{list_id},
+				#{title},
+				#{position}			
+			)
+		
+	</insert>
+	
+	<insert id="registListTypeItemList" >
+		insert into chatbot_list_type_item(
+			list_item_id,
+			list_type_id,
+			title,
+			content,
+			position
+		)values
+		
+		(
+			#{list_item_id},
+			#{list_type_id},
+			#{title},
+			#{content},
+			#{position}			
+		)
+	</insert>
+	<insert id="registBtn" >
+		insert into chatbot_respone_btn(
+			btn_id,
+			parent_id,
+			name,
+			position,
+			function1,
+			function2
+		)
+		values
+		(
+			#{btn_id},
+			#{parent_id},
+			#{name},
+			#{position},
+			#{function1},
+			#{function2}		
+		)
+	</insert>
+	<insert id="registImgTypeList" >
+		insert into chatbot_respone_image_type(
+			img_id,
+			list_id,
+			position
+		)
+		values
+		(
+			#{img_id},
+			#{list_id},
+			#{position}			
+		)
+	</insert>
+	<insert id="registCardTypeList" >
+		insert into chatbot_respone_card_type(
+			card_id,
+			list_id,
+			title,
+			content,
+			position
+		)
+		values
+		(
+			#{card_id},
+			#{list_id},
+			#{title},
+			#{content},
+			#{position}			
+		)
+	</insert>
+	
+	<insert id="registSkillTypeList" >
+		insert into chatbot_respone_skill_type(
+			skill_id,
+			list_id,
+			position,
+			skill_item_id
+		)
+		values
+		(
+			#{skill_id},
+			#{list_id},
+			#{position},
+			#{skill_item_id}			
+		)
+	</insert>
+	
+		<insert id="registDirectTypeList" >
+		insert into chatbot_respone_direct_type(
+			direct_btn_id,
+			list_id,
+			position
+		)
+		values
+		(
+			#{direct_btn_id},
+			#{list_id},
+			#{position}			
+		)
+	</insert>
 	
 </mapper>

@@ -1,6 +1,7 @@
 package egovframework.com.chatbot.service;
 
 import java.util.List;
+import java.util.Map;
 
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
@@ -15,5 +16,6 @@ public interface ChatbotService {
 	void updateInputText(InputVo vo) throws Exception;
 	int check(InputVo vo) throws Exception;
 	List<InputVo> getInputText(InputVo vo) throws Exception;
+	void registResponeList(List<Map<Object, Object>> list) throws Exception;
 
 }

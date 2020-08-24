@@ -1,6 +1,7 @@
 package egovframework.com.chatbot.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.chatbot.service.ChatbotService;
@@ -113,17 +116,18 @@ public class ChatbotController {
 	
 	}
 	
-	@RequestMapping(value="/getInputText.do")
-	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception{
-		InputVo inputVo = new InputVo();
-		inputVo.setIntent_id(intent_id);
-		List<InputVo> inputList = null;
+	@RequestMapping(value="/serializedObj.do", method=RequestMethod.POST)
+	public ResponseEntity<?> getInputText(@RequestBody Map<Object, Object> params) throws Exception{
+		System.out.println(params);
 		
-		inputList = chatbotService.getInputText(inputVo);
-		
-		if(inputList.size() == 0){
-			return  new ResponseEntity<>("nodata", HttpStatus.OK);
+		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
+		for(int i = 0; i < list.size(); i++) {
+			list.get(i).put("intent_id",params.get("intent_id"));
 		}
-		return  new ResponseEntity<>(inputList, HttpStatus.OK);
+		System.out.println(" >>>list = "  + list);
+		
+		chatbotService.registResponeList(list);
+		
+		return  new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

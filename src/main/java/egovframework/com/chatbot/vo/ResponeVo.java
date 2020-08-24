@@ -10,16 +10,31 @@ public class ResponeVo {
 	private String skill_id;
 	private String direct_btn_id;
 	private String condition_id;
-	
+	private String skill_item_id;
 
 	private String content;
 	private String type;
 	private String trans_type;
-	private int position;
+	private String position;
+	private String title;
 	
 	
 	
 	
+	
+	
+	public String getSkill_item_id() {
+		return skill_item_id;
+	}
+	public void setSkill_item_id(String skill_item_id) {
+		this.skill_item_id = skill_item_id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getText_id() {
 		return text_id;
 	}
@@ -92,10 +107,10 @@ public class ResponeVo {
 	public void setTrans_type(String trans_type) {
 		this.trans_type = trans_type;
 	}
-	public int getPosition() {
+	public String getPosition() {
 		return position;
 	}
-	public void setPosition(int position) {
+	public void setPosition(String position) {
 		this.position = position;
 	}
 	@Override
