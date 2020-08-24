@@ -1,4 +1,4 @@
-function responseTypeHtml(obj, response_list_id) {
+function responseTypeHtml(obj, response_list_id, parentIdx) {
 	switch (obj.name) {
 		case "text"  :
 		case "image" :
@@ -9,7 +9,7 @@ function responseTypeHtml(obj, response_list_id) {
 		              <span class="action-title">전송타입 </span>
 		              <div class="action-btns">
 		                <div class="sending-type-btns btn-group btn-group-sm panel-action" aria-label="Small button group" role="group">
-		                  <input type="hidden" name="trans_type" value="caro"/>
+		                  <input type="hidden" name="cardList[${parentIdx}][trans_type]" value="caro"/>
 		                  <button type="button" class="btn cbtn-action w-60 active" id="${response_list_id+'_sending_btn_caro'}">케로셀</button>
 		                  <button type="button" class="btn cbtn-action w-60" id="${response_list_id+'_sending_btn_ran'}">랜덤형</button>
 		                </div>
@@ -65,10 +65,11 @@ function addResponseListHtml(obj) {
 	div.classList.add("box", "response");
 	div.id = response_list_id;
 	
-	var typeHtml = responseTypeHtml(obj, response_list_id);
+	var typeHtml = responseTypeHtml(obj, response_list_id, parentIdx);
 	
 	var html = 
 		   `<div class="box-aside" style="display:none;">
+		   	  <input type="hidden" name="cardList[${parentIdx}][position]" value="${parentIdx}"/>
               <button type="button" class="btn btn-icon btn-sm btn-round cbtn-action btn-box-move-up">
                 <i class="icon md-chevron-up" aria-hidden="true"></i>
               </button>
@@ -80,7 +81,8 @@ function addResponseListHtml(obj) {
               </button>
             </div>
             <div class="panel box-main">
-              <input type="hidden" name="type" value="${obj.name}" />
+			  <input type="hidden" name="cardList[${parentIdx}][type]" value="${obj.name}" />
+			  <input type="hidden" name="intent_id" value="" />
               ${typeHtml}
             </div>`;
 	
@@ -124,7 +126,8 @@ function addResponseListHtml(obj) {
 				
 				var id_arr = e.target.id.split("_");
 				
-				document.querySelector("input[name='trans_type']").value = id_arr[id_arr.length - 1];
+				//document.querySelector("input[name='trans_type']").value = id_arr[id_arr.length - 1];
+				response_list.querySelector("input[type='hidden'][name*='trans_type']").value = id_arr[id_arr.length - 1];
 			}
 			
 			if (e.target.id.indexOf("caro") > -1) 	sending_btn_ran.classList.remove("active");
@@ -138,7 +141,7 @@ function addResponseListHtml(obj) {
 		var add_textbox_btn = response_list.querySelector("#" +response_list_id + "_add_textbox_btn");
 		
 		add_textbox_btn.addEventListener("click", function() {
-			addResponseCardHtml(childIdx, response_card_id, response_list, obj);
+			addResponseCardHtml(childIdx, response_card_id, response_list, obj, parentIdx);
 			
 			childIdx++;
 		});
@@ -187,15 +190,16 @@ function addResponseListHtml(obj) {
 	globalIdx++;
 }
 
-function addResponseCardHtml(childIdx, response_card_id, response_list, obj) {
+function addResponseCardHtml(childIdx, response_card_id, response_list, obj, parentIdx) {
 	var div = document.createElement("div");
 	div.classList.add("response-card");
 	div.id = response_card_id + "_" + childIdx;
 	
-	var typeHtml = cardHtml(obj);
+	var typeHtml = cardHtml(obj, parentIdx, childIdx);
 	
 	var html = 
 		`<div class="response-card-actions" style="display:none";>
+			<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][position]" value="${childIdx}"/>
             <button type="button" class="btn btn-icon btn-pure m-0 p-5 float-left handle-card">
               <i class="icon md-code-setting font-size-16 mr-0" aria-hidden="true"></i>
             </button>
@@ -214,30 +218,32 @@ function addResponseCardHtml(childIdx, response_card_id, response_list, obj) {
 	
 	cardMouseAndRemoveEvent(div.id);
 
-	addPopover(obj, div.id);
+	addPopover(obj, div.id, parentIdx, childIdx);
 }
 
 // Output HTML
-function cardHtml(obj) {
+function cardHtml(obj, parentIdx, childIdx) {
 	switch (obj.name) {
 		case "text"  :
 			return `<div class="card-block card-block-evt card-block-text">
 	           	      <p class="card-text">내용을 입력하세요.</p>
-	           	      <input type="hidden" name="content"/>
+	           	      <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][content]"/>
 			        </div>
 			        <div class="card-block">
 			          <button type="button" class="btn btn-block card-btn-action">+ 버튼 추가</button>
 			        </div>`;
 		case "image" :
-			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />`;
+			return `
+				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
+				<input type="file" style="display: none" name="cardList[${parentIdx}][card][${childIdx}][img]"/>`;
 		case "card"  :
-			return `<img class="card-img-top img-fluid card-block-evt card-block-img"
-                         src="../images/placeholder.png" alt="Card image cap" />
+			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
+					<input type="file" style="display: none" name="cardList[${parentIdx}][card][${childIdx}][img]"/>
                     <div class="card-block card-block-evt card-block-title-text">
                       <h5 class="card-title">타이틀을 입력하세요.</h5>
-                      <input type="hidden" name="cardTitle"/>
+                      <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][title]"/>
                       <p class="card-text">내용을 입력하세요.</p>
-                      <input type="hidden" name="cardContent"/>
+                      <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][content]"/>
                     </div>
                     <div class="card-block card-block-btns">
                       <button type="button" class="btn btn-block card-btn-action ignore-elements">+ 버튼 추가</button>
@@ -245,7 +251,7 @@ function cardHtml(obj) {
 		case "list"  :
 			return `<div class="card-header card-header-transparent card-header-bordered card-block-list-title card-block-evt">
 			          <h5 class="card-title text-center">타이틀을 입력하세요.</h5>
-			          <input type="hidden" name="listTitle"/>
+			          <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][title]"/>
 				    </div>
 				    <div class="card-block card-block-list">
 				      <ul class="list-group list-group-full list-group-dividered">
@@ -281,9 +287,7 @@ function cardMouseAndRemoveEvent(id) {
 }
 
 // 텍스트형 내용입력 popover
-function addPopover(obj, response_card_id) {
-	var listBtnIdx = 0;
-	
+function addPopover(obj, response_card_id, parentIdx, childIdx) {
 	var response_card = document.getElementById(response_card_id);
 	
 	switch (obj.name) {
@@ -291,7 +295,7 @@ function addPopover(obj, response_card_id) {
 			// 내용 popover 이벤트
 			contentPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id, obj);
+			btnPopoverEvent(response_card_id, obj, parentIdx, childIdx);
 			
 			break;
 		case "image":
@@ -303,7 +307,7 @@ function addPopover(obj, response_card_id) {
 			// 이미지 popover 이벤트
 			imgPopoverEvent(response_card_id);
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id, obj);
+			btnPopoverEvent(response_card_id, obj, parentIdx, childIdx);
 			// 타이틀 내용 popover 이벤트
 			titleContentPopoverEvent(response_card_id);
 			
@@ -312,15 +316,15 @@ function addPopover(obj, response_card_id) {
 			// 타이틀 popover 이벤트
 			titlePopoverEvent(response_card_id);
 			// 목록 추가 버튼
-			listBtnPopoverEvent(response_card_id);
+			listBtnPopoverEvent(response_card_id, parentIdx, childIdx);
 			// 버튼, popover 이벤트
-			btnPopoverEvent(response_card_id, obj);
+			btnPopoverEvent(response_card_id, obj, parentIdx, childIdx);
 			
 			break;
 	}
 }
 
-function btnPopoverEvent(response_card_id, obj) {
+function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
 	var btnIdx = 0;
 	
 	var add_btn;
@@ -335,12 +339,16 @@ function btnPopoverEvent(response_card_id, obj) {
 		var html;
 		
 		var button = document.createElement("button");
-		button.id = response_card_id + "_btn_" + btnIdx++;
+		button.id = response_card_id + "_btn_" + btnIdx;
 		
 		if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
 			button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
 			
-			html = `<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>Default`;
+			html = `
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][position]" value="${btnIdx}"/>
+				<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]"/>
+				<div class="btn-name">Default</div>`;
 		} else if (obj.name === "quick") {
 			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
 			
@@ -424,13 +432,14 @@ function btnPopoverEvent(response_card_id, obj) {
 			var input = document.getElementById(popover_id).querySelector("input.form-control");
 			
 			save_btn.addEventListener("click", function() {
-				$this.text(input.value);
+				$this.find(".btn-name").text(input.value);
+				$this.find("input[name*='name']").val(input.value);
 				
 				WebuiPopovers.hide($(button));
 			});
 			
 			cancel_btn.addEventListener("click", function() {
-				input.value = $this.text();
+				input.value = $this.find(".btn-name").text();
 				WebuiPopovers.hide($(button));
 			});
 		});
@@ -446,6 +455,8 @@ function btnPopoverEvent(response_card_id, obj) {
 				$(this).find(".btn-group").hide();
 			});
 		}
+		
+		btnIdx++;
 	});
 }
 
@@ -471,11 +482,14 @@ function imgPopoverEvent(response_card_id) {
 				
 				reader.onload = function(e) {
 					popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
+					popover_target.next()[0].files = inputFile.files;
 				}
 				
 				reader.readAsDataURL(file);
 			} else {
 				popover_target.attr("src", "../images/placeholder.png").width(popover_target.width()).height(popover_target.height());
+				popover_target.next().attr("type", "text");
+				popover_target.next().attr("type", "file");
 			}
 			
 			WebuiPopovers.hide(popover_target);
@@ -497,7 +511,7 @@ function contentPopoverEvent(response_card_id) {
 		var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
 
 		save_btn.addEventListener("click", function() {
-			response_card.querySelector("input[name='content']").value = textarea.value;
+			response_card.querySelector("input[name*='content']").value = textarea.value;
 			response_card.querySelector("p.card-text").innerHTML = textarea.value;
 			
 			WebuiPopovers.hide(popover_target);
@@ -525,10 +539,10 @@ function titleContentPopoverEvent(response_card_id) {
 		var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
 		
 		save_btn.addEventListener("click", function() {
-			response_card.querySelector("input[name='cardTitle']").value = input.value;
+			response_card.querySelector("input[name*='title']").value = input.value;
 			response_card.querySelector("h5.card-title").innerHTML = input.value;
 			
-			response_card.querySelector("input[name='cardContent']").value = textarea.value;
+			response_card.querySelector("input[name*='content']").value = textarea.value;
 			response_card.querySelector("p.card-text").innerHTML = textarea.value;
 			
 			WebuiPopovers.hide(popover_target);
@@ -557,7 +571,7 @@ function titlePopoverEvent(response_card_id) {
 		var input = document.getElementById(popover_id).querySelector("input.form-control");
 		
 		save_btn.addEventListener("click", function() {
-			response_card.querySelector("input[name='listTitle']").value = input.value;
+			response_card.querySelector("input[name*='title']").value = input.value;
 			response_card.querySelector("h5.card-title").innerHTML = input.value;
 			
 			WebuiPopovers.hide(popover_target);
@@ -571,7 +585,7 @@ function titlePopoverEvent(response_card_id) {
 	});
 }
 
-function listBtnPopoverEvent(response_card_id) {
+function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 	var listBtnIdx = 0;
 	
 	var response_card = document.getElementById(response_card_id);
@@ -581,19 +595,20 @@ function listBtnPopoverEvent(response_card_id) {
 	list_add_btn.addEventListener("click", function() {
 		var li = document.createElement("li");
 		li.classList.add("list-group-item", "card-block-list-item", "card-block-evt");
-		li.id = response_card_id + "_list_btn_" + listBtnIdx++;
+		li.id = response_card_id + "_list_btn_" + listBtnIdx;
 		
 		var html = 
 			`<div class="media">
                <div class="media-body">
                  <p class="title">타이틀을 입력하세요.</p>
-                 <input type="hidden" name="listTitle"/>
+                 <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][title]"/>
                  <p class="content text-truncate">내용을 입력하세요.</p>
-                 <input type="hidden" name="listContent"/>
+                 <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][content]"/>
                </div>
                <div class="pl-20">
                  <a href="javascript:void(0)">
                    <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
+                   <input type="file" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][img]" style="display: none"/>
                  </a>
                </div>
              </div>`;
@@ -615,10 +630,10 @@ function listBtnPopoverEvent(response_card_id) {
 			var image = document.getElementById(popover_id).querySelector("input.form-control.image");
 			
 			save_btn.addEventListener("click", function() {
-				$this.find("input[name='listTitle']").val(title.value);
+				$this.find("input[name*='title']").val(title.value);
 				$this.find("p.title").text(title.value);
 				
-				$this.find("input[name='listContent']").val(content.value);
+				$this.find("input[name*='content']").val(content.value);
 				$this.find("p.content").text(content.value);
 				
 				WebuiPopovers.hide($(li));
@@ -647,7 +662,8 @@ function listBtnPopoverEvent(response_card_id) {
 					img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
 				}
 			});
-			
 		});
+		
+		listBtnIdx++;
 	});
 }

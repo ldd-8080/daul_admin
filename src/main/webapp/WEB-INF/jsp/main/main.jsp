@@ -21,7 +21,9 @@
 	<input type="text" name="cardList[0][card][1][button][0][name]" value="text.btn2_1_name"/> 
 	<input type="text" name="cardList[0][card][1][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[0][card][1][button][1][name]" value="text.btn2_2_name"/> 
-	<input type="text" name="cardList[0][card][1][button][1][position]" value="1"/> 
+	<input type="text" name="cardList[0][card][1][button][1][position]" value="1"/>
+	<br/>
+	<br/> 
 	
 	<input type="text" name="cardList[1][type]" value="list"/> 
 	<input type="text" name="cardList[1][trans_type]" value="2"/> 
@@ -39,7 +41,9 @@
 	<input type="text" name="cardList[1][card][0][button][0][name]" value="list.btn1_1_name"/> 
 	<input type="text" name="cardList[1][card][0][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[1][card][0][button][1][name]" value="list.btn1_2_name"/> 
-	<input type="text" name="cardList[1][card][0][button][1][position]" value="1"/> 
+	<input type="text" name="cardList[1][card][0][button][1][position]" value="1"/>
+	<br/>
+	<br/> 
 	
 	<input type="text" name="cardList[2][type]" value="img"/> 
 	<input type="text" name="cardList[2][trans_type]" value="2"/> 
@@ -47,6 +51,8 @@
 	<input type="text" name="cardList[2][card][0][img]" value="3번째리스트의 첫번째카드 이미지"/>
 	<input type="text" name="cardList[2][card][1][img]" value="3번째리스트의 두번째카드 이미지"/>
 	<input type="text" name="cardList[2][card][2][img]" value="3번째리스트의 세번째카드 이미지"/>
+	<br/>
+	<br/>
 	
 	<input type="text" name="cardList[3][type]" value="card"/> 
 	<input type="text" name="cardList[3][trans_type]" value="1"/> 
@@ -58,12 +64,16 @@
 	<input type="text" name="cardList[3][card][0][button][0][name]" value="card.btn1_1_name"/> 
 	<input type="text" name="cardList[3][card][0][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[3][card][0][button][1][name]" value="card.btn1_2_name"/> 
-	<input type="text" name="cardList[3][card][0][button][1][position]" value="1"/> 
+	<input type="text" name="cardList[3][card][0][button][1][position]" value="1"/>
+	<br/>
+	<br/> 
 	
 	<input type="text" name="cardList[4][type]" value="skill"/>
 	<input type="text" name="cardList[4][position]" value="4"/>
 	<input type="text" name="cardList[4][card][0][position]" value ="0"/>
 	<input type="text" name="cardList[4][card][0][skill_item_id]" value="스킬아이디"/>
+	<br/>
+	<br/>
 	
 	<input type="text" name="cardList[5][type]" value="direct"/>
 	<input type="text" name="cardList[5][position]" value="5"/>
