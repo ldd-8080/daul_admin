@@ -348,6 +348,8 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][position]" value="${btnIdx}"/>
 				<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function1]"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]"/>
 				<div class="btn-name">Default</div>`;
 		} else if (obj.name === "quick") {
 			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
