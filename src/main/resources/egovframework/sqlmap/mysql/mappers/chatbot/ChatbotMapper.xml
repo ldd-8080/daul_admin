@@ -150,12 +150,15 @@
 	<select id="getImgTypeId" resultType="String">
 		SELECT  concat('IMG-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_image_type;
 	</select>
+	
 	<select id="getCardTypeId" resultType="String">
 		SELECT  concat('CT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_card_type;
 	</select>
+	
 	<select id="getSkillTypeId" resultType="String">
 		SELECT  concat('ST-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_skill_type;
 	</select>
+	
 	<select id="getDirectTypeId" resultType="String">
 		SELECT  concat('DT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_direct_type;
 	</select>
@@ -166,14 +169,16 @@
 			list_id,
 			intent_id,
 			type,
-			trans_type
+			trans_type,
+			position
 		)
 		values
 		(
 			#{list_id},
 			#{intent_id},
 			#{type},
-			#{trans_type}			
+			#{trans_type},
+			#{position}			
 		)
 
 	</insert>
@@ -296,7 +301,7 @@
 		)
 	</insert>
 	
-		<insert id="registDirectTypeList" >
+	<insert id="registDirectTypeList" >
 		insert into chatbot_respone_direct_type(
 			direct_btn_id,
 			list_id,
@@ -309,5 +314,131 @@
 			#{position}			
 		)
 	</insert>
+	
+	<select id="getResponeListVoList" resultType="Map">
+		SELECT list_id,
+		       intent_id,
+		       type,
+		       trans_type,
+		       position
+		 FROM chatbot_respone_list
+		WHERE intent_id = #{intent_id}
+	</select>
+	
+	<select id="getTextTypeCardList" parameterType="String" resultType="Map">
+		SELECT text_id,
+			   list_id,
+			   content,
+			   position
+		  FROM chatbot_respone_text_type
+		 WHERE list_id = #{list_id}
+	</select>
+	
+	<select id="getTextTypeCardBtnList" parameterType="String" resultType="Map">
+		SELECT btn_id,
+			   parent_id,
+			   name,
+			   position,
+			   function1,
+			   function2
+		  FROM chatbot_respone_btn
+		 WHERE parent_id = #{text_id}
+	</select>
+	
+	<select id="getImgTypeCardList" parameterType="String" resultType="Map">
+		SELECT img_id,
+			   list_id,
+			   position
+		  FROM chatbot_respone_image_type
+		 WHERE list_id = #{list_id}
+	</select>
+	
+	<select id="getCardTypeCardList" parameterType="String" resultType="Map">
+		SELECT card_id,
+			   list_id,
+			   title,
+			   content,
+			   position
+		  FROM chatbot_respone_card_type
+		 WHERE list_id = #{list_id}
+	</select>
+	
+	<select id="getCardTypeCardBtnList" parameterType="String" resultType="Map">
+		SELECT btn_id,
+			   parent_id,
+			   name,
+			   position,
+			   function1,
+			   function2
+		  FROM chatbot_respone_btn
+		 WHERE parent_id = #{card_id}
+	</select>
+		
+	<select id="getListTypeCardList" parameterType="String" resultType="Map">
+		SELECT list_type_id,
+			   list_id,
+			   title,
+			   position
+		  FROM chatbot_respone_list_type
+		 WHERE list_id = #{list_id}
+	</select>	
+	
+	<select id="getListTypeCardItemList" parameterType="String" resultType="Map">
+		SELECT list_item_id,
+			   list_type_id,
+			   title,
+			   content,
+			   position
+		  FROM chatbot_list_type_item
+		 WHERE list_type_id = #{list_type_id}
+	</select>
+	
+	<select id="getListTypeCardBtnList" parameterType="String" resultType="Map">
+		SELECT btn_id,
+			   parent_id,
+			   name,
+			   position,
+			   function1,
+			   function2
+		  FROM chatbot_respone_btn
+		 WHERE parent_id = #{list_type_id}
+	</select>
+		
+		<select id="getSkillTypeCardList" parameterType="String" resultType="Map">
+		SELECT skill_id,
+			   list_id,
+			   position,
+			   skill_item_id
+		  FROM chatbot_respone_skill_type
+		 WHERE list_id = #{list_id}
+	</select>	
+	
+	<select id="getDirectTypeCardList" parameterType="String" resultType="Map">
+		SELECT direct_btn_id,
+			   list_id,
+			   position
+		  FROM chatbot_respone_direct_type
+		 WHERE list_id = #{list_id}
+	</select>	
+	
+	<select id="getSkillTypeCardItemList" parameterType="String" resultType="Map">
+		SELECT skill_item_id,
+			   skill_id,
+			   name,
+			   function_name
+		  FROM chatbot_skill_type_item
+		 WHERE skill_id = #{skill_id}
+	</select>
+	
+	<select id="getDirectTypeCardBtnList" parameterType="String" resultType="Map">
+		SELECT btn_id,
+			   parent_id,
+			   name,
+			   position,
+			   function1,
+			   function2
+		  FROM chatbot_respone_btn
+		 WHERE parent_id = #{direct_id}
+	</select>
 	
 </mapper>

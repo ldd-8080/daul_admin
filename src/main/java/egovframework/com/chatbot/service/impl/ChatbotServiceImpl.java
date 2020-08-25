@@ -258,4 +258,69 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 			}
 		}
 	}
+
+	@Override
+	public List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception {
+		return chatbotMapper.getResponeListVoList(vo);
+	}
+
+	@Override
+	public List<Map<String,Object>> getTextTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getTextTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getTextTypeCardBtnList(String text_id) throws Exception {
+		return chatbotMapper.getTextTypeCardBtnList(text_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getImgTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getImgTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCardTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getCardTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getCardTypeCardBtnList(String card_id) throws Exception {
+		return chatbotMapper.getCardTypeCardBtnList(card_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getListTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getListTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getListTypeCardItemList(String list_type_id) throws Exception {
+		return chatbotMapper.getListTypeCardItemList(list_type_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getListTypeCardBtnList(String list_type_id) throws Exception {
+		return chatbotMapper.getListTypeCardBtnList(list_type_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSkillTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getSkillTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getDirectTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getDirectTypeCardList(list_id);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSkillTypeCardItemList(String skill_id) throws Exception {
+		return chatbotMapper.getSkillTypeCardItemList(skill_id);	
+	}
+
+	@Override
+	public List<Map<String, Object>> getDirectTypeCardBtnList(String direct_id) throws Exception {
+		return chatbotMapper.getDirectTypeCardBtnList(direct_id);
+	}
 }
