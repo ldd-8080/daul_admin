@@ -63,9 +63,9 @@
               </div>
               <div class="panel-actions panel-actions-keep">
                 <button type="button" class="btn btn-primary" id="chatbot-regist-btn" data-title="발화및응답">
-                  <i class="icon fa-save" aria-hidden="true"></i> 저장</button>
+                  <i class="icon fa-save" aria-hidden="true"></i>저장 </button>
                 <button type="button" class="btn btn-default" id="chatbot-delete-btn" data-title="발화및응답">
-                  <i class="icon fa-trash-o" aria-hidden="true"></i> 삭제</button>
+                  <i class="icon fa-trash-o" aria-hidden="true"></i>삭제 </button>
               </div>
             </div>
 
@@ -734,5 +734,30 @@ function initialize_jstree(){
 	 			addResponseListHtml(obj);
 	 		});
 	 	});
+ 	}
+ 	
+ 	$("#chatbot-regist-btn").click(function() {
+ 		if (!submitConfirm($(this))) return false;
+ 		
+ 		saveChatbotData();
+ 	});
+ 	
+ 	function saveChatbotData() {
+ 		var request = $.ajax({
+ 			url: "/chatbot/serializedObj.do",
+			method: "post",
+			contentType: "application/json",
+			//dataType: "json",
+			data: JSON.stringify($("#response-list").serializeObject())
+ 		});
+ 		
+ 		request.done(function(data) {
+ 			console.log(data);
+ 		});
+ 		
+ 		request.fail(function(error) {
+			console.log(error);
+			console.log("request fail");
+		});	
  	}
 </script>

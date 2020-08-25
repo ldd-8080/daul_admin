@@ -1,9 +1,9 @@
 $(function() {	
-	$("#chatbot-regist-btn").click(function() {
-		if (!submitConfirm($(this))) return false;
-		
-		chatbotReg();
-	});
+//	$("#chatbot-regist-btn").click(function() {
+//		if (!submitConfirm($(this))) return false;
+//		
+//		chatbotReg();
+//	});
 	
 	$("#chatbot-delete-btn").click(function() {
 		if (!submitConfirm($(this))) return false;
