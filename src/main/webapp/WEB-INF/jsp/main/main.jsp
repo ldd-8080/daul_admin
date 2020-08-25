@@ -6,7 +6,7 @@
 
 
 <form id="form"> 
-	<input type="text" name="intent_id" value="IT-0004"/> 
+	<input type="text" name="intent_id" value="IT-0037"/> 
 	<input type="text" name="cardList[0][type]" value="text"/> 
 	<input type="text" name="cardList[0][position]" value="0"/> 
 	<input type="text" name="cardList[0][trans_type]" value="1"/> 
@@ -21,10 +21,9 @@
 	<input type="text" name="cardList[0][card][1][button][0][name]" value="text.btn2_1_name"/> 
 	<input type="text" name="cardList[0][card][1][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[0][card][1][button][1][name]" value="text.btn2_2_name"/> 
-	<input type="text" name="cardList[0][card][1][button][1][position]" value="1"/>
+	<input type="text" name="cardList[0][card][1][button][1][position]" value="1"/> 
 	<br/>
-	<br/> 
-	
+	<br/>
 	<input type="text" name="cardList[1][type]" value="list"/> 
 	<input type="text" name="cardList[1][trans_type]" value="2"/> 
 	<input type="text" name="cardList[1][position]" value="1"/> 
@@ -41,19 +40,20 @@
 	<input type="text" name="cardList[1][card][0][button][0][name]" value="list.btn1_1_name"/> 
 	<input type="text" name="cardList[1][card][0][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[1][card][0][button][1][name]" value="list.btn1_2_name"/> 
-	<input type="text" name="cardList[1][card][0][button][1][position]" value="1"/>
+	<input type="text" name="cardList[1][card][0][button][1][position]" value="1"/> 
 	<br/>
-	<br/> 
-	
+	<br/>
 	<input type="text" name="cardList[2][type]" value="img"/> 
 	<input type="text" name="cardList[2][trans_type]" value="2"/> 
 	<input type="text" name="cardList[2][position]" value="2"/> 
 	<input type="text" name="cardList[2][card][0][img]" value="3번째리스트의 첫번째카드 이미지"/>
+	<input type="text" name="cardList[2][card][0][position]" value="30"/>
 	<input type="text" name="cardList[2][card][1][img]" value="3번째리스트의 두번째카드 이미지"/>
+	<input type="text" name="cardList[2][card][0][position]" value="1"/>
 	<input type="text" name="cardList[2][card][2][img]" value="3번째리스트의 세번째카드 이미지"/>
+	<input type="text" name="cardList[2][card][0][position]" value="2"/>
 	<br/>
 	<br/>
-	
 	<input type="text" name="cardList[3][type]" value="card"/> 
 	<input type="text" name="cardList[3][trans_type]" value="1"/> 
 	<input type="text" name="cardList[3][position]" value="3"/> 
@@ -64,17 +64,15 @@
 	<input type="text" name="cardList[3][card][0][button][0][name]" value="card.btn1_1_name"/> 
 	<input type="text" name="cardList[3][card][0][button][0][position]" value="0"/> 
 	<input type="text" name="cardList[3][card][0][button][1][name]" value="card.btn1_2_name"/> 
-	<input type="text" name="cardList[3][card][0][button][1][position]" value="1"/>
+	<input type="text" name="cardList[3][card][0][button][1][position]" value="1"/> 
 	<br/>
-	<br/> 
-	
+	<br/>
 	<input type="text" name="cardList[4][type]" value="skill"/>
 	<input type="text" name="cardList[4][position]" value="4"/>
 	<input type="text" name="cardList[4][card][0][position]" value ="0"/>
 	<input type="text" name="cardList[4][card][0][skill_item_id]" value="스킬아이디"/>
 	<br/>
 	<br/>
-	
 	<input type="text" name="cardList[5][type]" value="direct"/>
 	<input type="text" name="cardList[5][position]" value="5"/>
 	<input type="text" name="cardList[5][card][0][position]" value ="0"/>
@@ -86,18 +84,28 @@
 </form>
 
 <button type="button" id="serialized-btn"> btn </button>
+
+<button type="button" id="getResponeList-btn"> 가져오기 </button>
+
+
 </div>
 
 <script type="text/javascript">
-$(function() {
-	var obj = $("#form").serializeObject();
-	console.log(obj);
-});
+	$(function() {
+		var obj = $("#form").serializeObject();
+		console.log(obj);
+	});
+		
+	$("#serialized-btn").click(function(){
+		var obj = $("#form").serializeObject();
+		serializedObj(obj);
+	});
 	
-$("#serialized-btn").click(function(){
-	var obj = $("#form").serializeObject();
-	serializedObj(obj);
-});
+	$("#getResponeList-btn").click(function(){
+		
+		getResponeList();
+	});
+
 	
 	function serializedObj(obj){
 		
@@ -119,7 +127,23 @@ $("#serialized-btn").click(function(){
 		});	
 	}
 	
+	function getResponeList(){
+		var request = $.ajax({
+			url: "/chatbot/getRespone.do?intent_id=IT-0037",
+			method: "get",
 
+		});
+		request.done(function(data) {
+			
+			console.log(data);
+			//location.href = "/chatbot/intentListPage.do";
+		});
+		request.fail(function(error) {
+			console.log(error);
+			console.log("request fail");
+		});	
+	};
+	
 </script>
 
 <script src="${pageContext.request.contextPath}/js/jquery.serialize-object.js"></script> 

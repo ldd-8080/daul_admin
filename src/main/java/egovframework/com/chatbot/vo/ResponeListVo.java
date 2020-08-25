@@ -1,5 +1,7 @@
 package egovframework.com.chatbot.vo;
 
+import java.util.List;
+
 public class ResponeListVo {
 	private String intent_id;
 	private String list_id;
@@ -7,9 +9,17 @@ public class ResponeListVo {
 	private String trans_type;
 	private String position;
 	
-
+	private List<ResponeVo> responeVo;
 	
 	
+	
+	
+	public List<ResponeVo> getResponeVo() {
+		return responeVo;
+	}
+	public void setResponeVo(List<ResponeVo> responeVo) {
+		this.responeVo = responeVo;
+	}
 	public String getIntent_id() {
 		return intent_id;
 	}
