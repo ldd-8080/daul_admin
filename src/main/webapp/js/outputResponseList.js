@@ -37,7 +37,7 @@ function responseTypeHtml(obj, response_list_id, parentIdx) {
 				            <p class="card-title font-weight-400">
 				              <i class="icon fa-code-fork font-size-18  mx-5 mb-5" aria-hidden="true"></i> ${obj[obj.name]} 함수
 				            </p>
-				            <select class="form-control select-response-rule"></select>
+				            <select class="form-control select-response-rule" name="cardList[${parentIdx}][${obj.name}_item_id]"></select>
 				          </div>
 				        </div>
 				      </div>
@@ -149,7 +149,7 @@ function addResponseListHtml(obj) {
 	
 	if (obj.name === "quick") {
 		// 리스트의 퀵버튼 추가 버튼 이벤트
-		btnPopoverEvent(response_list_id, obj);
+		btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_list_id);
 	}
 	
 	if (obj.name === "skill" || obj.name === "condition") {
@@ -324,24 +324,24 @@ function addPopover(obj, response_card_id, parentIdx, childIdx) {
 	}
 }
 
-function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
+function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_list_id) {
 	var btnIdx = 0;
 	
 	var add_btn;
 	
 	if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
 		add_btn = document.getElementById(response_card_id).querySelector("button.btn.btn-block.card-btn-action");
-	} else if (obj.name === "quick") {
-		add_btn = document.getElementById(response_card_id).querySelector("button.ignore-elements");
+	} else if (obj.name === "quick" && response_list_id !== undefined) {
+		add_btn = document.getElementById(response_list_id).querySelector("button.ignore-elements");
 	}
 	
 	add_btn.addEventListener("click", function() {
 		var html;
 		
 		var button = document.createElement("button");
-		button.id = response_card_id + "_btn_" + btnIdx;
 		
 		if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
+			button.id = response_card_id + "_btn_" + btnIdx;
 			button.classList.add("btn", "btn-block", "card-btn", "response-card-btn");
 			
 			html = `
@@ -352,15 +352,20 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]"/>
 				<div class="btn-name">Default</div>`;
 		} else if (obj.name === "quick") {
+			button.id = `${response_card_id}_${btnIdx}_btn_${childIdx}`;
 			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
 			
 			html = 
 				`<div class="btn-group" style="display:none">
+					<input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][position]" value="${btnIdx}"/>
 					<span class="btn btn-round btn-sm btn-icon quick-btn-action handle-qbtn bg-grey-50">
                     	<i class="icon md-code-setting" aria-hidden="true"></i>
                     </span>
 				 </div>
-				 Default`;
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function1]"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function2]"/>
+				 <div class="btn-name">Default</div>`;
 		}
 		
 		button.innerHTML = html;
@@ -432,10 +437,20 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
 			var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
 			var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
 			var input = document.getElementById(popover_id).querySelector("input.form-control");
+			var select = document.getElementById(popover_id).querySelector("select.select-btn-type");
+			var select_intent = document.getElementById(popover_id).querySelector("select.select-intent");
+			var input_url = document.getElementById(popover_id).querySelector("input.input-url");
 			
 			save_btn.addEventListener("click", function() {
 				$this.find(".btn-name").text(input.value);
 				$this.find("input[name*='name']").val(input.value);
+				$this.find("input[name*='function1']").val(select.value);
+				
+				if (select.value === "intent") {
+					$this.find("input[name*='function2']").val(select_intent.value);
+				} else if (select.value === "url") {
+					$this.find("input[name*='function2']").val(input_url.value);
+				}
 				
 				WebuiPopovers.hide($(button));
 			});
@@ -448,12 +463,10 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx) {
 		
 		if (obj.name === "quick") {
 			$(button).on("mouseover", function() {
-				console.log("mouseover");
 				$(this).find(".btn-group").show();
 			});
 			
 			$(button).on("mouseout", function() {
-				console.log("mouseout");
 				$(this).find(".btn-group").hide();
 			});
 		}
