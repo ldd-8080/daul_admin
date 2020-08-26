@@ -3,6 +3,8 @@ package egovframework.com.chatbot.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
@@ -19,7 +21,7 @@ public interface ChatbotService {
 	int check(InputVo vo) throws Exception;
 	List<InputVo> getInputText(InputVo vo) throws Exception;
 	List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception;
-	void registResponeList(List<Map<Object, Object>> list) throws Exception;
+	void registResponeList(HttpSession session, List<Map<Object, Object>> list) throws Exception;
 	//textType
 	List<Map<String,Object>> getTextTypeCardList(String list_id) throws Exception;
 	List<Map<String,Object>> getTextTypeCardBtnList(String text_id) throws Exception;

@@ -8,12 +8,18 @@ public class ResponeListVo {
 	private String type;
 	private String trans_type;
 	private String position;
-	
+	private String create_user;
 	private List<ResponeVo> responeVo;
 	
 	
 	
 	
+	public String getCreate_user() {
+		return create_user;
+	}
+	public void setCreate_user(String create_user) {
+		this.create_user = create_user;
+	}
 	public List<ResponeVo> getResponeVo() {
 		return responeVo;
 	}

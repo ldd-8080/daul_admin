@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.user.vo.UserVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("chatbotService")
@@ -72,12 +74,12 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	}
 
 	@Override
-	public void registResponeList(List<Map<Object, Object>> list) throws Exception {
+	public void registResponeList(HttpSession session, List<Map<Object, Object>> list) throws Exception {
+		
+		UserVo userVo = (UserVo) session.getAttribute("login");
+	
 		
 		for(int listCnt = 0 ; listCnt < list.size() ; listCnt++) {
-			System.out.println(list.get(listCnt).get("intent_id"));
-			System.out.println(list.get(listCnt).get("type"));
-			System.out.println(list.get(listCnt).get("trans_type"));
 			String type = (String) list.get(listCnt).get("type");
 			
 			ResponeListVo vo = new ResponeListVo();
@@ -88,6 +90,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 			vo.setType((String)list.get(listCnt).get("type"));
 			vo.setPosition((String)list.get(listCnt).get("position"));
 			vo.setList_id(list_id);
+			vo.setCreate_user(userVo.getUser_id());
 			int num = chatbotMapper.registResponeList(vo);
 			
 			switch(type) {

@@ -121,7 +121,7 @@ public class ChatbotController {
 	}
 
 	@RequestMapping(value = "/serializedObj.do", method = RequestMethod.POST)
-	public ResponseEntity<?> serializedObj(@RequestBody Map<Object, Object> params) throws Exception {
+	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
 		System.out.println(params);
 
 		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
@@ -130,7 +130,7 @@ public class ChatbotController {
 		}
 		System.out.println(" >>>list = " + list);
 
-		chatbotService.registResponeList(list);
+		chatbotService.registResponeList(session, list);
 
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}

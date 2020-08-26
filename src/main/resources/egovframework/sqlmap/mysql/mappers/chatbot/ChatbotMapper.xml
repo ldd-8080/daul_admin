@@ -170,7 +170,10 @@
 			intent_id,
 			type,
 			trans_type,
-			position
+			position,
+			create_user,
+			create_date
+			
 		)
 		values
 		(
@@ -178,7 +181,9 @@
 			#{intent_id},
 			#{type},
 			#{trans_type},
-			#{position}			
+			#{position},
+			#{create_user},
+			sysdate()			
 		)
 
 	</insert>
