@@ -82,7 +82,6 @@ function addResponseListHtml(obj) {
             </div>
             <div class="panel box-main">
 			  <input type="hidden" name="cardList[${parentIdx}][type]" value="${obj.name}" />
-			  <input type="hidden" name="intent_id" value="" />
               ${typeHtml}
             </div>`;
 	

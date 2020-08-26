@@ -231,7 +231,7 @@ public class ChatbotController {
 		}
 		
 		System.out.println("***responeListVoList = " + responeListVoList);
-		return new ResponseEntity<>("sucecss", HttpStatus.OK);
+		return new ResponseEntity<>(responeListVoList, HttpStatus.OK);
 	}
 //	List<Map<String, Object>> aList
 //	aList.get(i).add(bList)

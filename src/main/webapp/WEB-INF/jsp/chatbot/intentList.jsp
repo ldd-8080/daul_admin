@@ -132,6 +132,7 @@
 	
 				  <!-- Output Box - Rule -->
 				  <form id="response-list">
+				  	<input type="hidden" name="intent_id" id="list_intent_id"/>
 				  </form>
 	              <!-- End Output Box - Rule -->
 				
@@ -621,9 +622,8 @@ function initialize_jstree(){
 	function loadRightPage(data){
     	var id = data.instance.get_node(data.selected).id;
     	var text = data.instance.get_node(data.selected).text;
-    	console.log(id);
-    	console.log(text);
     	
+    	document.getElementById("list_intent_id").value = id;
     	$("#intent-id").val(id);
     	$("#title").text('');
     	$("#title").append(text);
@@ -653,8 +653,7 @@ function initialize_jstree(){
 		});
 		request.done(function(data) {
 			console.log(data);
-			
-			setResponseList(data);
+			if (typeof data !== "string") setResponseList(data);
 		});
 		request.fail(function(error) {
 			console.log(error);
@@ -665,6 +664,7 @@ function initialize_jstree(){
 	function setResponseList(data) {
 		// data length(size)만큼 뺑뺑이
 		for (var i = 0; i < data.length; i++) {
+			console.log(data[i]);
 			var type = data[i].type;
 			
 			// list 추가
@@ -792,6 +792,8 @@ function initialize_jstree(){
     };
     
  	window.onload = function() {
+ 		//document.getElementById("jstree").querySelectorAll("ul.jstree-no-dots ul.jstree-children ul.jstree-children")[0].querySelector("a").click();
+ 		
 	 	var allOutputAddBtn = document.querySelectorAll("[id^='output']");
 	 	
 	 	allOutputAddBtn.forEach(function(t) {
