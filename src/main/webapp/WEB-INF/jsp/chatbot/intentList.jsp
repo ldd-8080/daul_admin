@@ -636,12 +636,83 @@ function initialize_jstree(){
 		request.done(function(data) {
 			console.log(data);
 			setInputText(data);
+			
+			getResponseList(id);			
 		});
 
 		request.fail(function(error) {
 			console.log(error);
 		});
-    	
+	}
+	
+	function getResponseList(intent_id) {
+		var request = $.ajax({
+			url: "/chatbot/getRespone.do?intent_id=" + intent_id,
+			method: "get",
+
+		});
+		request.done(function(data) {
+			console.log(data);
+			
+			setResponseList(data);
+		});
+		request.fail(function(error) {
+			console.log(error);
+			console.log("request fail");
+		});
+	}
+	
+	function setResponseList(data) {
+		// data length(size)만큼 뺑뺑이
+		for (var i = 0; i < data.length; i++) {
+			var type = data[i].type;
+			
+			// list 추가
+			document.querySelector("button[data-title='" + type + "']").click();
+			
+			// type, intent_id, position, trans_type 설정
+			var response_list = document.getElementById("response_" + i);
+			response_list.querySelector("input[name='intent_id']").value = data[i].intent_id;
+			response_list.querySelector("input[name*='type']").value = data[i].type;
+			response_list.querySelector("input[name*='position']").value = data[i].position;
+			if (data[i].hasOwnProperty("trans_type")) response_list.querySelector("input[name*='trans_type']").value = data[i].trans_type;
+			
+			switch (type) {
+				case "text":
+					var card = data[i].card;
+					
+					for (var j = 0; j < card.length; j++) {
+						//card 추가
+						document.getElementById("response_" + i + "_add_card_btn").click();
+						
+						// content, position
+						var response_card = document.getElementById("responseCard_" + i + "_" + j);
+						response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						response_card.querySelector("input[name*='position']").value = card[j].position;
+						
+						var button = card[j].button;
+						
+						for (var k = 0; k < button.length; k++) {
+							// button 추가
+							response_card.querySelector("button.card-btn-action").click();
+							
+							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
+							response_button.querySelector("input[name*='position']").value = button[k].position;
+							response_button.querySelector("input[name*='name']").value = button[k].name;
+							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							response_button.querySelector("input[name*='function1']").value = button[k].function1;
+							response_button.querySelector("input[name*='function2']").value = button[k].function2;
+						}
+					}
+				case "image":
+				case "card":
+				case "list":
+				case "skill":
+				case "condition":
+				case "quick":
+					break;
+			}
+		}
 	}
 	
 	var globalIdx = 0;

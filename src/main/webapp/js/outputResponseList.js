@@ -18,7 +18,7 @@ function responseTypeHtml(obj, response_list_id, parentIdx) {
 		            <div class="panel-body response-card-box">
 		              <div class="response-card-empty card ignore-elements bg-transparent" >
 		                <span class="align-center" aria-hidden="true">
-		                  <button type="button" class="btn btn-round cbtn-action btn-addcard" id="${response_list_id+'_add_textbox_btn'}"
+		                  <button type="button" class="btn btn-round cbtn-action btn-addcard" id="${response_list_id+'_add_card_btn'}"
 		                          data-placement="right" data-toggle="tooltip" data-original-title="카드 추가">
 		                    <i class="icon md-plus font-size-26" aria-hidden="true"></i>
 		                  </button>
@@ -138,9 +138,9 @@ function addResponseListHtml(obj) {
 		sending_btn_ran.addEventListener("click", sendingBtnEvent);
 		
 		// 리스트의 텍스트형,이미지형,카드형,리스트형 추가 버튼 이벤트
-		var add_textbox_btn = response_list.querySelector("#" +response_list_id + "_add_textbox_btn");
+		var add_card_btn = response_list.querySelector("#" +response_list_id + "_add_card_btn");
 		
-		add_textbox_btn.addEventListener("click", function() {
+		add_card_btn.addEventListener("click", function() {
 			addResponseCardHtml(childIdx, response_card_id, response_list, obj, parentIdx);
 			
 			childIdx++;
