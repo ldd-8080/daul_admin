@@ -115,7 +115,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 			vo.setCreate_user(userVo.getUser_id());
 			int num = chatbotMapper.registResponeList(vo);
 
-			
+			System.out.println("type = " + type);
 			switch(type) {
 				case "text":
 										
@@ -269,7 +269,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 					
 					break;
 				case "skill":
-					List<Map<Object, Object>> skillTypeList =   (List<Map<Object, Object>>) list.get(listCnt).get("card");
+					List<Map<Object, Object>> skillTypeList =   (List<Map<Object, Object>>) list;
 					ResponeVo skillTypeVo = new ResponeVo();
 					for(int skillTypeCnt = 0; skillTypeCnt < skillTypeList.size(); skillTypeCnt ++) {
 						String skillTypeId = chatbotMapper.getSkillTypeId();

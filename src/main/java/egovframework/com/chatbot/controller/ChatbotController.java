@@ -134,19 +134,21 @@ public class ChatbotController {
 			chatbotService.deleteIntentId((String)params.get("intent_id"));
 		}
 		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
-		
-		for (int i = 0; i < list.size(); i++) {
-			
-			if(list.get(i) != null) {
-				list.get(i).put("intent_id", params.get("intent_id"));
-			}else {
-				list.remove(i);
+		if(list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				
+				if(list.get(i) != null) {
+					list.get(i).put("intent_id", params.get("intent_id"));
+				}else {
+					list.remove(i);
+				}
 			}
+			System.out.println(" >>>list = " + list);
+	
+			chatbotService.registResponeList(session, list);
+		}else {
+			
 		}
-		System.out.println(" >>>list = " + list);
-
-		chatbotService.registResponeList(session, list);
-
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
