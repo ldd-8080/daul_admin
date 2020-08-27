@@ -124,9 +124,20 @@ public class ChatbotController {
 	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
 		System.out.println(params);
 
+		//저장전에 해당 intent_id가 있으면 다 지움
+		System.out.println("intent_cnt = "+chatbotService.checkIntentId((String)params.get("intent_id")));
+		if(chatbotService.checkIntentId((String)params.get("intent_id")) != 0) {
+			chatbotService.deleteIntentId((String)params.get("intent_id"));
+		}
 		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
+		
 		for (int i = 0; i < list.size(); i++) {
-			list.get(i).put("intent_id", params.get("intent_id"));
+			
+			if(list.get(i) != null) {
+				list.get(i).put("intent_id", params.get("intent_id"));
+			}else {
+				list.remove(i);
+			}
 		}
 		System.out.println(" >>>list = " + list);
 
@@ -141,7 +152,13 @@ public class ChatbotController {
 		InputVo vo = new InputVo();
 		vo.setIntent_id(intent_id);
 		List<InputVo> inputList = null;
+		
+		
 		inputList = chatbotService.getInputText(vo);
+		System.out.println("inputList = " + inputList);
+		if(inputList.size() == 0) {
+			return new ResponseEntity<>("nodata", HttpStatus.OK);
+		}
 		return new ResponseEntity<>(inputList, HttpStatus.OK);
 	}
 

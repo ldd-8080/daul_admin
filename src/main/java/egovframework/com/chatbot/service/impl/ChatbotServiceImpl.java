@@ -74,6 +74,27 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	}
 
 	@Override
+	public int checkIntentId(String intent_id) throws Exception {
+		return chatbotMapper.checkIntentId(intent_id);
+	}
+	
+	@Override
+	public void deleteIntentId(String intent_id) throws Exception {
+		chatbotMapper.deleteResponeList(intent_id);
+		chatbotMapper.deleteResponeTextType(intent_id);
+		chatbotMapper.deleteResponeImageType(intent_id);
+		chatbotMapper.deleteResponeCardType(intent_id);
+		chatbotMapper.deleteResponeListType(intent_id);
+		chatbotMapper.deleteResponeSkillType(intent_id);
+		chatbotMapper.deleteResponeDirectType(intent_id);
+		chatbotMapper.deleteResponeBtn(intent_id);
+		chatbotMapper.deleteResponeSkillTypeItem(intent_id);
+		chatbotMapper.deleteResponeListTypeItem(intent_id);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public void registResponeList(HttpSession session, List<Map<Object, Object>> list) throws Exception {
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
@@ -84,6 +105,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 			
 			ResponeListVo vo = new ResponeListVo();
 			
+		
 			String list_id = chatbotMapper.getListId();
 			vo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 			vo.setTrans_type((String)list.get(listCnt).get("trans_type"));
@@ -92,13 +114,15 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 			vo.setList_id(list_id);
 			vo.setCreate_user(userVo.getUser_id());
 			int num = chatbotMapper.registResponeList(vo);
+			if(list.get(listCnt).get("card") == null) {
+				System.out.println("리스트가널이야 ! ");
+			}
 			
 			switch(type) {
 				case "text":
 										
 					List<Map<Object, Object>> textTypeList =  (List<Map<Object, Object>>) list.get(listCnt).get("card");
 					for(int textTypeCnt = 0; textTypeCnt < textTypeList.size(); textTypeCnt++) {
-						System.out.println(textTypeList.get(textTypeCnt));
 						ResponeVo textResponeVo = new ResponeVo();
 						
 						String text_id = chatbotMapper.getTextId();
@@ -106,22 +130,22 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						textResponeVo.setText_id((text_id));
 						textResponeVo.setContent((String)textTypeList.get(textTypeCnt).get("content"));
 						textResponeVo.setPosition((String)textTypeList.get(textTypeCnt).get("position"));
-						
+						textResponeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registTextTypeList(textResponeVo);
-						
-						List<Map<Object, Object>> textTypeBtnList =   (List<Map<Object, Object>>) textTypeList.get(textTypeCnt).get("button");
-						System.out.println("****textTypeBtnList = " + textTypeBtnList);
-						
-						for(int textTypeBtnCnt = 0; textTypeBtnCnt < textTypeBtnList.size(); textTypeBtnCnt++ ) {
-							BtnVo textTypeBtnVo = new BtnVo();
-							String textTypeBtnId = chatbotMapper.getBtnId();
-						
-							textTypeBtnVo.setBtn_id(textTypeBtnId);
-							textTypeBtnVo.setParent_id(text_id);
-							textTypeBtnVo.setName((String)textTypeBtnList.get(textTypeBtnCnt).get("name"));
-							textTypeBtnVo.setPosition((String)textTypeBtnList.get(textTypeBtnCnt).get("position"));
+						if(textTypeList.get(textTypeCnt).get("button") != null) {
+							List<Map<Object, Object>> textTypeBtnList =   (List<Map<Object, Object>>) textTypeList.get(textTypeCnt).get("button");
 							
-							chatbotMapper.registBtn(textTypeBtnVo);
+							for(int textTypeBtnCnt = 0; textTypeBtnCnt < textTypeBtnList.size(); textTypeBtnCnt++ ) {
+								BtnVo textTypeBtnVo = new BtnVo();
+								String textTypeBtnId = chatbotMapper.getBtnId();
+							
+								textTypeBtnVo.setBtn_id(textTypeBtnId);
+								textTypeBtnVo.setParent_id(text_id);
+								textTypeBtnVo.setName((String)textTypeBtnList.get(textTypeBtnCnt).get("name"));
+								textTypeBtnVo.setPosition((String)textTypeBtnList.get(textTypeBtnCnt).get("position"));
+								textTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
+								chatbotMapper.registBtn(textTypeBtnVo);
+							}
 						}
 					}
 					break;
@@ -137,36 +161,39 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						listResponeVo.setList_type_id(listType_id);
 						listResponeVo.setTitle((String)listTypeList.get(listTypeCnt).get("title"));
 						listResponeVo.setPosition((String)listTypeList.get(listTypeCnt).get("position"));
-						
+						listResponeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registListTypeList(listResponeVo);
 						
-						List<Map<Object, Object>> listTypeItemList =   (List<Map<Object, Object>>) listTypeList.get(listTypeCnt).get("list");
-						System.out.println("****listTypeItemList = " + listTypeList);
-						System.out.println("****listTypeItemList = " + listTypeItemList);
-						
-						for(int listTypeItemCnt = 0; listTypeItemCnt < listTypeItemList.size(); listTypeItemCnt++) {
-							ItemVo listTypeItemVo = new ItemVo();
+						if( listTypeList.get(listTypeCnt).get("list") != null) {
+							List<Map<Object, Object>> listTypeItemList =   (List<Map<Object, Object>>) listTypeList.get(listTypeCnt).get("list");
 							
-							String ListItem_id = chatbotMapper.getListTypeItemId();
-							listTypeItemVo.setList_item_id(ListItem_id);
-							listTypeItemVo.setList_type_id(listType_id);
-							listTypeItemVo.setTitle((String)listTypeItemList.get(listTypeItemCnt).get("title"));
-							listTypeItemVo.setContent((String)listTypeItemList.get(listTypeItemCnt).get("content"));
-							listTypeItemVo.setPosition((String)listTypeItemList.get(listTypeItemCnt).get("position"));
-							
-							chatbotMapper.registListTypeItemList(listTypeItemVo);
+							for(int listTypeItemCnt = 0; listTypeItemCnt < listTypeItemList.size(); listTypeItemCnt++) {
+								ItemVo listTypeItemVo = new ItemVo();
+								
+								String ListItem_id = chatbotMapper.getListTypeItemId();
+								listTypeItemVo.setList_item_id(ListItem_id);
+								listTypeItemVo.setList_type_id(listType_id);
+								listTypeItemVo.setTitle((String)listTypeItemList.get(listTypeItemCnt).get("title"));
+								listTypeItemVo.setContent((String)listTypeItemList.get(listTypeItemCnt).get("content"));
+								listTypeItemVo.setPosition((String)listTypeItemList.get(listTypeItemCnt).get("position"));
+								listTypeItemVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
+								chatbotMapper.registListTypeItemList(listTypeItemVo);
+							}
 						}
-						List<Map<Object, Object>> listTypeBtnList =   (List<Map<Object, Object>>) listTypeList.get(listTypeCnt).get("button");
-						for(int listTypeBtnCnt = 0; listTypeBtnCnt < listTypeBtnList.size(); listTypeBtnCnt++ ) {
-							BtnVo listTypeBtnVo = new BtnVo();
-							String listTypeBtnId = chatbotMapper.getBtnId();
 						
-							listTypeBtnVo.setBtn_id(listTypeBtnId);
-							listTypeBtnVo.setParent_id(listType_id);
-							listTypeBtnVo.setName((String)listTypeBtnList.get(listTypeBtnCnt).get("name"));
-							listTypeBtnVo.setPosition((String)listTypeBtnList.get(listTypeBtnCnt).get("position"));
+						if( (List<Map<Object, Object>>) listTypeList.get(listTypeCnt).get("button") != null) {
+							List<Map<Object, Object>> listTypeBtnList =   (List<Map<Object, Object>>) listTypeList.get(listTypeCnt).get("button");
+							for(int listTypeBtnCnt = 0; listTypeBtnCnt < listTypeBtnList.size(); listTypeBtnCnt++ ) {
+								BtnVo listTypeBtnVo = new BtnVo();
+								String listTypeBtnId = chatbotMapper.getBtnId();
 							
-							chatbotMapper.registBtn(listTypeBtnVo);
+								listTypeBtnVo.setBtn_id(listTypeBtnId);
+								listTypeBtnVo.setParent_id(listType_id);
+								listTypeBtnVo.setName((String)listTypeBtnList.get(listTypeBtnCnt).get("name"));
+								listTypeBtnVo.setPosition((String)listTypeBtnList.get(listTypeBtnCnt).get("position"));
+								listTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
+								chatbotMapper.registBtn(listTypeBtnVo);
+							}
 						}
 					}
 					break;
@@ -180,7 +207,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						imgTypeVo.setList_id(list_id);
 						imgTypeVo.setImg_id(imgTypeId);
 						imgTypeVo.setPosition((String)imgTypeList.get(imgTypeCnt).get("position"));
-						
+						imgTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registImgTypeList(imgTypeVo);
 					}
 					
@@ -198,20 +225,22 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						cardTypeVo.setTitle((String)cardTypeList.get(cardTypeCnt).get("title"));
 						cardTypeVo.setContent((String)cardTypeList.get(cardTypeCnt).get("content"));
 						cardTypeVo.setPosition((String)cardTypeList.get(cardTypeCnt).get("position"));
-						
+						cardTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registCardTypeList(cardTypeVo);
-						List<Map<Object, Object>> cardTypeBtnList =   (List<Map<Object, Object>>) cardTypeList.get(cardTypeCnt).get("button");
-						
-						for(int cardTypeBtnCnt = 0; cardTypeBtnCnt < cardTypeBtnList.size(); cardTypeBtnCnt++ ) {
-							BtnVo cardTypeBtnVo = new BtnVo();
-							String cardTypeBtnId = chatbotMapper.getBtnId();
-						
-							cardTypeBtnVo.setBtn_id(cardTypeBtnId);
-							cardTypeBtnVo.setParent_id(cardTypeId);
-							cardTypeBtnVo.setName((String)cardTypeBtnList.get(cardTypeBtnCnt).get("name"));
-							cardTypeBtnVo.setPosition((String)cardTypeBtnList.get(cardTypeBtnCnt).get("position"));
+						if((List<Map<Object, Object>>) cardTypeList.get(cardTypeCnt).get("button") != null) {
+							List<Map<Object, Object>> cardTypeBtnList =   (List<Map<Object, Object>>) cardTypeList.get(cardTypeCnt).get("button");
 							
-							chatbotMapper.registBtn(cardTypeBtnVo);
+							for(int cardTypeBtnCnt = 0; cardTypeBtnCnt < cardTypeBtnList.size(); cardTypeBtnCnt++ ) {
+								BtnVo cardTypeBtnVo = new BtnVo();
+								String cardTypeBtnId = chatbotMapper.getBtnId();
+							
+								cardTypeBtnVo.setBtn_id(cardTypeBtnId);
+								cardTypeBtnVo.setParent_id(cardTypeId);
+								cardTypeBtnVo.setName((String)cardTypeBtnList.get(cardTypeBtnCnt).get("name"));
+								cardTypeBtnVo.setPosition((String)cardTypeBtnList.get(cardTypeBtnCnt).get("position"));
+								cardTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
+								chatbotMapper.registBtn(cardTypeBtnVo);
+							}
 						}
 					}
 					
@@ -226,6 +255,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						skillTypeVo.setList_id(list_id);
 						skillTypeVo.setPosition((String)skillTypeList.get(skillTypeCnt).get("position"));
 						skillTypeVo.setSkill_item_id((String)skillTypeList.get(skillTypeCnt).get("skill_item_id"));
+						skillTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registSkillTypeList(skillTypeVo);
 					}
 					break;
@@ -240,20 +270,24 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						directTypeVo.setDirect_btn_id(directTypeId);
 						directTypeVo.setList_id(list_id);
 						directTypeVo.setPosition((String)directTypeList.get(directTypeCnt).get("position"));
+						directTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 						chatbotMapper.registDirectTypeList(directTypeVo);
-						List<Map<Object, Object>> directTypeBtnList =   (List<Map<Object, Object>>) directTypeList.get(directTypeCnt).get("button");
+						if(directTypeList.get(directTypeCnt).get("button") != null) {
+							List<Map<Object, Object>> directTypeBtnList =   (List<Map<Object, Object>>) directTypeList.get(directTypeCnt).get("button");
 						
-						for(int directTypeBtnCnt = 0; directTypeBtnCnt < directTypeBtnList.size(); directTypeBtnCnt++ ) {
-							BtnVo buttonTypeBtnVo = new BtnVo();
-							String directTypeBtnId = chatbotMapper.getBtnId();
-						
-							buttonTypeBtnVo.setBtn_id(directTypeBtnId);
-							buttonTypeBtnVo.setParent_id(directTypeId);
-							buttonTypeBtnVo.setName((String)directTypeBtnList.get(directTypeBtnCnt).get("name"));
-							buttonTypeBtnVo.setPosition((String)directTypeBtnList.get(directTypeBtnCnt).get("position"));
-							buttonTypeBtnVo.setFunction1((String)directTypeBtnList.get(directTypeBtnCnt).get("function1"));
-							buttonTypeBtnVo.setFunction2((String)directTypeBtnList.get(directTypeBtnCnt).get("function2"));
-							chatbotMapper.registBtn(buttonTypeBtnVo);
+							for(int directTypeBtnCnt = 0; directTypeBtnCnt < directTypeBtnList.size(); directTypeBtnCnt++ ) {
+								BtnVo directTypeBtnVo = new BtnVo();
+								String directTypeBtnId = chatbotMapper.getBtnId();
+							
+								directTypeBtnVo.setBtn_id(directTypeBtnId);
+								directTypeBtnVo.setParent_id(directTypeId);
+								directTypeBtnVo.setName((String)directTypeBtnList.get(directTypeBtnCnt).get("name"));
+								directTypeBtnVo.setPosition((String)directTypeBtnList.get(directTypeBtnCnt).get("position"));
+								directTypeBtnVo.setFunction1((String)directTypeBtnList.get(directTypeBtnCnt).get("function1"));
+								directTypeBtnVo.setFunction2((String)directTypeBtnList.get(directTypeBtnCnt).get("function2"));
+								directTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
+								chatbotMapper.registBtn(directTypeBtnVo);
+							}
 						}
 					}
 				default:
@@ -326,4 +360,6 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public List<Map<String, Object>> getDirectTypeCardBtnList(String direct_id) throws Exception {
 		return chatbotMapper.getDirectTypeCardBtnList(direct_id);
 	}
+
+
 }

@@ -7,8 +7,16 @@ public class BtnVo {
 	private String position;
 	private String function1;
 	private String function2;
+	private String intent_id;
 	
 	
+	
+	public String getIntent_id() {
+		return intent_id;
+	}
+	public void setIntent_id(String intent_id) {
+		this.intent_id = intent_id;
+	}
 	public String getBtn_id() {
 		return btn_id;
 	}

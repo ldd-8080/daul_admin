@@ -13,7 +13,16 @@ public class ItemVo {
 	
 	private String name;
 	private String function_name;
+	private String intent_id;
 	
+	
+	
+	public String getIntent_id() {
+		return intent_id;
+	}
+	public void setIntent_id(String intent_id) {
+		this.intent_id = intent_id;
+	}
 	
 	
 	

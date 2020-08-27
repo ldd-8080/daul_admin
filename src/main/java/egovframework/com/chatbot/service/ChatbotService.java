@@ -22,6 +22,9 @@ public interface ChatbotService {
 	List<InputVo> getInputText(InputVo vo) throws Exception;
 	List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception;
 	void registResponeList(HttpSession session, List<Map<Object, Object>> list) throws Exception;
+	int checkIntentId(String intent_id) throws Exception;
+	void deleteIntentId(String intent_id) throws Exception;
+	
 	//textType
 	List<Map<String,Object>> getTextTypeCardList(String list_id) throws Exception;
 	List<Map<String,Object>> getTextTypeCardBtnList(String text_id) throws Exception;

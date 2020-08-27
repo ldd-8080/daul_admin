@@ -12,7 +12,16 @@ public class IntentVo {
 	private String update_user;
 	private String update_date;
 	private String del_chk;
-
+	private String intent_id;
+	
+	
+	
+	public String getIntent_id() {
+		return intent_id;
+	}
+	public void setIntent_id(String intent_id) {
+		this.intent_id = intent_id;
+	}
 	
 	
 	public String getId() {

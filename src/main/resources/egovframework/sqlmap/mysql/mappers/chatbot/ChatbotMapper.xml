@@ -163,6 +163,74 @@
 		SELECT  concat('DT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_direct_type;
 	</select>
 	
+	
+	<select id="checkIntentId" resultType="int">
+		SELECT COUNT(*) FROM chatbot_respone_list
+		WHERE intent_id = #{intent_id}
+	</select>
+	
+		
+	<delete id="deleteResponeList">
+		DELETE 
+		FROM chatbot_respone_list
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeTextType">
+		DELETE 
+		FROM chatbot_respone_text_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeImageType">
+		DELETE 
+		FROM chatbot_respone_image_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeCardType">
+		DELETE 
+		FROM chatbot_respone_card_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeListType">
+		DELETE 
+		FROM chatbot_respone_list_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeSkillType">
+		DELETE 
+		FROM chatbot_respone_skill_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeDirectType">
+		DELETE 
+		FROM chatbot_respone_direct_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeBtn">
+		DELETE 
+		FROM chatbot_respone_btn
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeSkillTypeItem">
+		DELETE 
+		FROM chatbot_skill_type_item
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeListTypeItem">
+		DELETE 
+		FROM chatbot_list_type_item
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	
 	<insert id="registResponeList">
 		
 		insert into chatbot_respone_list(
@@ -194,14 +262,16 @@
 				text_id,
 				list_id,
 				content,
-				position
+				position,
+				intent_id
 			)
 			values
 			(
 				#{text_id},
 				#{list_id},
 				#{content},
-				#{position}			
+				#{position},
+				#{intent_id}		
 			)
 		
 	</insert>
@@ -211,14 +281,16 @@
 				list_type_id,
 				list_id,
 				title,
-				position
+				position,
+				intent_id
 			)values
 		
 			(
 				#{list_type_id},
 				#{list_id},
 				#{title},
-				#{position}			
+				#{position},
+				#{intent_id}			
 			)
 		
 	</insert>
@@ -229,7 +301,8 @@
 			list_type_id,
 			title,
 			content,
-			position
+			position,
+			intent_id
 		)values
 		
 		(
@@ -237,7 +310,8 @@
 			#{list_type_id},
 			#{title},
 			#{content},
-			#{position}			
+			#{position},
+			#{intent_id}
 		)
 	</insert>
 	<insert id="registBtn" >
@@ -247,7 +321,8 @@
 			name,
 			position,
 			function1,
-			function2
+			function2,
+			intent_id
 		)
 		values
 		(
@@ -256,20 +331,23 @@
 			#{name},
 			#{position},
 			#{function1},
-			#{function2}		
+			#{function2},
+			#{intent_id}		
 		)
 	</insert>
 	<insert id="registImgTypeList" >
 		insert into chatbot_respone_image_type(
 			img_id,
 			list_id,
-			position
+			position,
+			intent_id
 		)
 		values
 		(
 			#{img_id},
 			#{list_id},
-			#{position}			
+			#{position},
+			#{intent_id}			
 		)
 	</insert>
 	<insert id="registCardTypeList" >
@@ -278,7 +356,8 @@
 			list_id,
 			title,
 			content,
-			position
+			position,
+			intent_id
 		)
 		values
 		(
@@ -286,7 +365,8 @@
 			#{list_id},
 			#{title},
 			#{content},
-			#{position}			
+			#{position},
+			#{intent_id}			
 		)
 	</insert>
 	
@@ -295,14 +375,16 @@
 			skill_id,
 			list_id,
 			position,
-			skill_item_id
+			skill_item_id,
+			intent_id
 		)
 		values
 		(
 			#{skill_id},
 			#{list_id},
 			#{position},
-			#{skill_item_id}			
+			#{skill_item_id},
+			#{intent_id}			
 		)
 	</insert>
 	
@@ -310,13 +392,15 @@
 		insert into chatbot_respone_direct_type(
 			direct_btn_id,
 			list_id,
-			position
+			position,
+			intent_id
 		)
 		values
 		(
 			#{direct_btn_id},
 			#{list_id},
-			#{position}			
+			#{position},
+			#{intent_id}			
 		)
 	</insert>
 	

@@ -41,6 +41,21 @@ public interface ChatbotMapper {
 	String getListTypeId() throws Exception;
 	String getListTypeItemId() throws Exception;
 	String getBtnId() throws Exception;
+	int checkIntentId(String intent_id) throws Exception;
+	
+	
+	//등록전 삭제
+	void deleteResponeList(String intent_id) throws Exception;
+	void deleteResponeTextType(String intent_id) throws Exception;
+	void deleteResponeImageType(String intent_id) throws Exception;
+	void deleteResponeCardType(String intent_id) throws Exception;
+	void deleteResponeListType(String intent_id) throws Exception;
+	void deleteResponeSkillType(String intent_id) throws Exception;
+	void deleteResponeDirectType(String intent_id) throws Exception;
+	void deleteResponeBtn(String intent_id) throws Exception;
+	void deleteResponeSkillTypeItem(String intent_id) throws Exception;
+	void deleteResponeListTypeItem(String intent_id) throws Exception;
+	
 	
 	List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception;
 	//textTyp[e
