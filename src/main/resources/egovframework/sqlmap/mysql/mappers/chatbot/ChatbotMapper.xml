@@ -128,39 +128,84 @@
 	
 	
 	<select id="getListId" resultType="String">
-		SELECT  concat('R-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_list;
+			SELECT  concat('R-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_list'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getTextId" resultType="String">
-		SELECT  concat('TT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_text_type;
+			SELECT  concat('TT-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_text_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getListTypeId" resultType="String">
-		SELECT  concat('LT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_list_type;
+			SELECT  concat('LT-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_list_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getListTypeItemId" resultType="String">
-		SELECT  concat('LTI-',LPAD(count(*)+1,'6','0'))  FROM chatbot_list_type_item;
+			SELECT  concat('LTI-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_list_type_item'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getBtnId" resultType="String">
-		SELECT  concat('TTB-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_btn;
+			SELECT  concat('TTB-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_btn'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getImgTypeId" resultType="String">
-		SELECT  concat('IMG-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_image_type;
+			SELECT  concat('IMG-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_image_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getCardTypeId" resultType="String">
-		SELECT  concat('CT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_card_type;
+			SELECT  concat('CT-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_card_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getSkillTypeId" resultType="String">
-		SELECT  concat('ST-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_skill_type;
+			SELECT  concat('ST-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_skill_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	<select id="getDirectTypeId" resultType="String">
-		SELECT  concat('DT-',LPAD(count(*)+1,'6','0'))  FROM chatbot_respone_direct_type;
+					SELECT  concat('DT-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_direct_type'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
 	</select>
 	
 	
