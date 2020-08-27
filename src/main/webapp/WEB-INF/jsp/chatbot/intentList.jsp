@@ -183,7 +183,7 @@
                   </div>
 
                   <div class="btn-group " role="group">
-                    <button type="button" class="btn w-80 px-0" data-title="quick" id="outputQuick">
+                    <button type="button" class="btn w-80 px-0" data-title="direct" id="outputQuick">
                       <i class="icon fa-location-arrow font-size-18" aria-hidden="true"></i>
                       <br>
                       <span class="text-uppercase hidden-sm-down">퀵버튼</span>
@@ -790,7 +790,7 @@ function initialize_jstree(){
 				case "skill":
 				case "condition":
 					break;
-				case "quick":
+				case "direct":
 					/*
 					var card = data[i].card;
 					var button = card.button;					
