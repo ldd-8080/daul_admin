@@ -672,7 +672,6 @@ function initialize_jstree(){
 			
 			// type, intent_id, position, trans_type 설정
 			var response_list = document.getElementById("response_" + i);
-			response_list.querySelector("input[name='intent_id']").value = data[i].intent_id;
 			response_list.querySelector("input[name*='type']").value = data[i].type;
 			response_list.querySelector("input[name*='position']").value = data[i].position;
 			if (data[i].hasOwnProperty("trans_type")) response_list.querySelector("input[name*='trans_type']").value = data[i].trans_type;
@@ -688,6 +687,7 @@ function initialize_jstree(){
 						// content, position
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
 						response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						response_card.querySelector("input[name*='content']").value = card[j].content;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
 						
 						var button = card[j].button;
@@ -705,10 +705,82 @@ function initialize_jstree(){
 						}
 					}
 				case "image":
+					break;
 				case "card":
+					var card = data[i].card;
+					
+					for (var j = 0; j <card.length; j++) {
+						//card 추가
+						document.getElementById("response_" + i + "_add_card_btn").click();
+						
+						// title, content, position
+						var response_card = document.getElementById("responseCard_" + i + "_" + j);
+						response_card.querySelector("h5.card-title").innerHTML = card[j].title;
+						response_card.querySelector("input[name*='title']").value = card[j].title;
+						response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						response_card.querySelector("input[name*='content']").value = card[j].content;
+						response_card.querySelector("input[name*='position']").value = card[j].position;
+						
+						var button = card[j].button;
+						
+						for (var k = 0; k < button.length; k++) {
+							// button 추가
+							response_card.querySelector("button.card-btn-action").click();
+							
+							response_button.querySelector("input[name*='position']").value = button[k].position;
+							response_button.querySelector("input[name*='name']").value = button[k].name;
+							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							response_button.querySelector("input[name*='function1']").value = button[k].function1;
+							response_button.querySelector("input[name*='function2']").value = button[k].function2;
+						}
+					}
+					
+					break;
 				case "list":
+					var card = data[i].card;
+					
+					for (var j = 0; j < card.length; j++) {
+						//card 추가
+						document.getElementById("response_" + i + "_add_card_btn").click();
+						
+						// title, position
+						var response_card = document.getElementById("responseCard_" + i + "_" + j);
+						response_card.querySelector("h5.card-title").innerHTML = card[j].title;
+						response_card.querySelector("input[name*='title']").value = card[j].title;
+						response_card.querySelector("input[name*='position']").value = card[j].position;
+						
+						var button = card[j].button;
+						
+						for (var k = 0; k < button.length; k++) {
+							// button 추가
+							response_card.querySelector("button.card-btn-action").click();
+							
+							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
+							response_button.querySelector("input[name*='position']").value = button[k].position;
+							response_button.querySelector("input[name*='name']").value = button[k].name;
+							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							response_button.querySelector("input[name*='function1']").value = button[k].function1;
+							response_button.querySelector("input[name*='function2']").value = button[k].function2;
+						}
+						
+						var list = card[j].list;
+						
+						for (var l = 0; l < list.length; l++) {
+							// list 추가
+							response_card.querySelector("button.btn.btn-block.btn-pure").click();
+							
+							var response_list = document.getElementById("responseCard_" + i + "_" + j + "_list_btn_" + l);
+							response_list.querySelector("p.title").innerHTML = list[l].title;
+							response_list.querySelector("input[name*='title']").value = list[l].title;
+							response_list.querySelector("p.content").innerHTML = list[l].content;
+							response_list.querySelector("input[name*='content']").value = list[l].content;
+						}
+					}
+					
+					break;
 				case "skill":
 				case "condition":
+					break;
 				case "quick":
 					break;
 			}
