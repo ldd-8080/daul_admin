@@ -662,6 +662,15 @@ function initialize_jstree(){
 	}
 	
 	function setResponseList(data) {
+		var allResponseList = document.querySelectorAll("div[id*='response_']");
+		
+		if (allResponseList.length > 0) {
+			for (var responseList of allResponseList) {
+				responseList.remove();
+			}
+			
+			globalIdx = 0;
+		}
 		// data length(size)만큼 뺑뺑이
 		for (var i = 0; i < data.length; i++) {
 			console.log("response list", data[i]);
@@ -932,7 +941,7 @@ function initialize_jstree(){
  		request.done(function(data) {
  			console.log("saveChatbotData", data);
  			if (data === "success") {
- 				registImg();
+ 				//registImg();
  			}
  		});
  		
