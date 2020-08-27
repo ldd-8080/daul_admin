@@ -42,7 +42,7 @@ function responseTypeHtml(obj, response_list_id, parentIdx) {
 				        </div>
 				      </div>
 				    </div>`;
-		case "quick" :
+		case "direct" :
 			return `<div class="panel-heading">
 				      <h3 class="panel-title">챗봇 응답 - 바로연결</h3>
 				    </div>
@@ -146,7 +146,7 @@ function addResponseListHtml(obj) {
 		});
 	}
 	
-	if (obj.name === "quick") {
+	if (obj.name === "direct") {
 		// 리스트의 퀵버튼 추가 버튼 이벤트
 		btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_list_id);
 	}
@@ -329,7 +329,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 	
 	if (obj.name === "text" || obj.name === "card" || obj.name === "list") {
 		add_btn = document.getElementById(response_card_id).querySelector("button.btn.btn-block.card-btn-action");
-	} else if (obj.name === "quick" && response_list_id !== undefined) {
+	} else if (obj.name === "direct" && response_list_id !== undefined) {
 		add_btn = document.getElementById(response_list_id).querySelector("button.ignore-elements");
 	}
 	
@@ -349,7 +349,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function1]"/>
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]"/>
 				<div class="btn-name">Default</div>`;
-		} else if (obj.name === "quick") {
+		} else if (obj.name === "direct") {
 			button.id = `${response_card_id}_${btnIdx}_btn_${childIdx}`;
 			button.classList.add("btn", "btn-round", "quick-btn", "mr-2", "mb-2", "pr-20");
 			
@@ -459,7 +459,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			});
 		});
 		
-		if (obj.name === "quick") {
+		if (obj.name === "direct") {
 			$(button).on("mouseover", function() {
 				$(this).find(".btn-group").show();
 			});
