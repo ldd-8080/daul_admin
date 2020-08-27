@@ -52,9 +52,10 @@ function chatbotDelete(){
 
 
 function setInputText(data){
-	
-	
-	$("#input_text").val(data[0].input_text);
+	console.log(data);
+//	if (data.length > 0) {
+//		$("#input_text").val(data[0].input_text);
+//	}
 	
 	$("#tokenfield-div").text('');
 	

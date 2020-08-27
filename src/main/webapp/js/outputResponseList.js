@@ -153,7 +153,6 @@ function addResponseListHtml(obj) {
 	
 	if (obj.name === "skill" || obj.name === "condition") {
 		var select = response_list.querySelector("select.select-response-rule");
-		console.log(select);
 		
 		var dataArr = [];
 		if (obj.name === "condition") {
@@ -197,7 +196,7 @@ function addResponseCardHtml(childIdx, response_card_id, response_list, obj, par
 	var typeHtml = cardHtml(obj, parentIdx, childIdx);
 	
 	var html = 
-		`<div class="response-card-actions" style="display:none";>
+		`<div class="response-card-actions" style="display:none">
 			<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][position]" value="${childIdx}"/>
             <button type="button" class="btn btn-icon btn-pure m-0 p-5 float-left handle-card">
               <i class="icon md-code-setting font-size-16 mr-0" aria-hidden="true"></i>
@@ -234,10 +233,10 @@ function cardHtml(obj, parentIdx, childIdx) {
 		case "image" :
 			return `
 				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-				<input type="file" style="display: none" name="cardList[${parentIdx}][card][${childIdx}][img]"/>`;
+				<input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_img"/>`;
 		case "card"  :
 			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-					<input type="file" style="display: none" name="cardList[${parentIdx}][card][${childIdx}][img]"/>
+					<input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_img"/>
                     <div class="card-block card-block-evt card-block-title-text">
                       <h5 class="card-title">타이틀을 입력하세요.</h5>
                       <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][title]"/>
@@ -622,7 +621,7 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
                <div class="pl-20">
                  <a href="javascript:void(0)">
                    <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
-                   <input type="file" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][img]" style="display: none"/>
+                   <input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_list_${listBtnIdx}_img"/>
                  </a>
                </div>
              </div>`;

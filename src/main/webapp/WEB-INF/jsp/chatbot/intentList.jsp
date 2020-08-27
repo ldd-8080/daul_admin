@@ -530,7 +530,7 @@ function initialize_jstree(){
    	})
    	.on('rename_node.jstree', function (e, data) {
       var ref = $('#jstree').jstree(true);
-      console.log(data.node.id);
+      console.log("rename node", data.node.id);
       if (data.text === data.old){
         return;
       }
@@ -542,7 +542,7 @@ function initialize_jstree(){
   
 	
 	function createScenario(){
-		console.log("click");	
+		console.log("create scenario click");	
 		var request = $.ajax({
 			url : "/chatbot/addScenario.do",
 			method : "get"
@@ -559,7 +559,7 @@ function initialize_jstree(){
 	}
 	
 	function createBlock(id){
-		console.log("block생성" + id);	
+		console.log("create block" + id);	
 		 
 		var request = $.ajax({
 			url : "/chatbot/addBlock.do?intent_id="+id,
@@ -578,7 +578,7 @@ function initialize_jstree(){
 	
 	
 	function deleteCategory(id){
-		console.log("delete " + id);
+		console.log("delete category" + id);
 		
 		var request = $.ajax({
 			url : "/chatbot/deleteCategory.do?intent_id="+id,
@@ -634,7 +634,7 @@ function initialize_jstree(){
 		});
 
 		request.done(function(data) {
-			console.log(data);
+			console.log("getInputText", data);
 			setInputText(data);
 			
 			getResponseList(id);			
@@ -652,7 +652,7 @@ function initialize_jstree(){
 
 		});
 		request.done(function(data) {
-			console.log(data);
+			console.log("getResponseList", data);
 			if (typeof data !== "string") setResponseList(data);
 		});
 		request.fail(function(error) {
@@ -664,7 +664,7 @@ function initialize_jstree(){
 	function setResponseList(data) {
 		// data length(size)만큼 뺑뺑이
 		for (var i = 0; i < data.length; i++) {
-			console.log(data[i]);
+			console.log("response list", data[i]);
 			var type = data[i].type;
 			
 			// list 추가
@@ -782,6 +782,22 @@ function initialize_jstree(){
 				case "condition":
 					break;
 				case "quick":
+					/*
+					var card = data[i].card;
+					var button = card.button;					
+					
+					for (var j = 0; j < button.length; j++) {
+						// button 추가
+						response_list.querySelector("button.ignore-elements").click();
+						
+						var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_0");
+						response_button.querySelector("input[name*='position']").value = button[j].position;
+						response_button.querySelector("input[name*='name']").value = button[j].name;
+						response_button.querySelector("div.btn-name").innerHTML = button[j].name;
+						response_button.querySelector("input[name*='function1']").value = button[j].function1;
+						response_button.querySelector("input[name*='function2']").value = button[j].function2;
+					}
+					*/
 					break;
 			}
 		}
@@ -888,21 +904,63 @@ function initialize_jstree(){
  	});
  	
  	function saveChatbotData() {
+ 		var formData = $("#response-list").serializeObject();
+ 		var allInputFile = document.querySelectorAll("input[type='file'].card-img");
+ 		
+ 		for (var inputFile of allInputFile) {
+ 			var arrName = inputFile.name.split("_");
+ 			
+ 			if (arrName.length > 5) {
+ 				formData[arrName[0]][arrName[1]][arrName[2]][arrName[3]][arrName[4]][arrName[5]][arrName[6]] = inputFile.files[0];
+ 			} else {
+ 				formData[arrName[0]][arrName[1]][arrName[2]][arrName[3]][arrName[4]] = inputFile.files[0];
+ 			}
+ 		}
+ 		
+ 		console.log(formData);
+ 		
  		var request = $.ajax({
  			url: "/chatbot/serializedObj.do",
 			method: "post",
 			contentType: "application/json",
+			//enctype: "multipart/form-data",
 			//dataType: "json",
-			data: JSON.stringify($("#response-list").serializeObject())
+			//data: JSON.stringify($("#response-list").serializeObject())
+			data: JSON.stringify(formData)
  		});
  		
  		request.done(function(data) {
- 			console.log(data);
+ 			console.log("saveChatbotData", data);
+ 			if (data === "success") {
+ 				registImg();
+ 			}
  		});
  		
  		request.fail(function(error) {
 			console.log(error);
 			console.log("request fail");
 		});	
+ 	}
+ 	
+ 	function registImg() {
+ 		var formData = new FormData(document.getElementById("response-list"));
+ 		
+ 		var request = $.ajax({
+ 			url: "/chatbot/registImg.do",
+ 			method: "post",
+ 			enctype: "multipart/form-data",
+ 			processData: false,
+ 			contentType: false,
+ 			data: formData
+ 		});
+ 		
+ 		request.done(function(data) {
+ 			request.doen("registImg succees");
+ 		});
+ 		
+ 		request.fail(function(error) {
+ 			console.log("fail", error);
+ 		});
+ 		
  	}
 </script>
