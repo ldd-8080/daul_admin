@@ -233,6 +233,7 @@ function cardHtml(obj, parentIdx, childIdx) {
 		case "image" :
 			return `
 				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_id]" value="${intentId}_img_${childIdx}"/>
 				<input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_img"/>`;
 		case "card"  :
 			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />

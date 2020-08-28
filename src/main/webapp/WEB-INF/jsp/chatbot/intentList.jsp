@@ -357,6 +357,8 @@
 <script type="text/javascript">
 $("body").addClass("app-notebook page-aside-left dialog");
 
+var intentId;
+
 initialize_jstree();
 
 function initialize_jstree(){
@@ -623,6 +625,7 @@ function initialize_jstree(){
     	var id = data.instance.get_node(data.selected).id;
     	var text = data.instance.get_node(data.selected).text;
     	
+    	intentId = id;
     	document.getElementById("list_intent_id").value = id;
     	$("#intent-id").val(id);
     	$("#title").text('');
@@ -949,7 +952,7 @@ function initialize_jstree(){
  		request.done(function(data) {
  			console.log("saveChatbotData", data);
  			if (data === "success") {
- 				registImg();
+ 				//registImg();
  			}
  		});
  		
@@ -989,7 +992,7 @@ function initialize_jstree(){
  		});
  		
  		request.done(function(data) {
- 			request.doen("registImg succees");
+ 			request.done("registImg succees");
  			location.href = "/chatbot/intentListPage.do";
  		});
  		
