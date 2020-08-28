@@ -145,12 +145,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 										textTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 										chatbotMapper.registBtn(textTypeBtnVo);
 									}else {
-										textTypeBtnList.remove(textTypeBtnCnt);
 									}
 								}
 							}
 						}else {
-							textTypeList.remove(textTypeCnt);
 						}
 					}
 					break;
@@ -184,7 +182,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 										listTypeItemVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 										chatbotMapper.registListTypeItemList(listTypeItemVo);
 									}else {
-										listTypeItemList.remove(listTypeItemCnt);
+										//listTypeItemList.remove(listTypeItemCnt);
 									}
 								}
 							}
@@ -202,12 +200,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 										listTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 										chatbotMapper.registBtn(listTypeBtnVo);
 									}else {
-										listTypeBtnList.remove(listTypeBtnCnt);
 									}
 								}
 							}
 						}else{
-							listTypeList.remove(listTypeCnt);
 						}
 					}
 					break;
@@ -224,7 +220,6 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 							imgTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 							chatbotMapper.registImgTypeList(imgTypeVo);
 						}else {
-							imgTypeList.remove(imgTypeCnt);
 						}
 					}
 					
@@ -258,12 +253,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 										cardTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 										chatbotMapper.registBtn(cardTypeBtnVo);
 									}else {
-										cardTypeBtnList.remove(cardTypeBtnCnt);
 									}
 								}
 							}
 						}else {
-							cardTypeList.remove(cardTypeCnt);
 						}
 					}
 					
@@ -281,7 +274,6 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 							skillTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 							chatbotMapper.registSkillTypeList(skillTypeVo);
 						}else {
-							skillTypeList.remove(skillTypeCnt);
 						}
 					}
 					break;
@@ -314,12 +306,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 										directTypeBtnVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 										chatbotMapper.registBtn(directTypeBtnVo);
 									}else {
-										directTypeBtnList.remove(directTypeBtnCnt);
 									}
 								}
 							}
 						}else {
-							directTypeList.remove(directTypeCnt);
 						}
 					}
 				default:
