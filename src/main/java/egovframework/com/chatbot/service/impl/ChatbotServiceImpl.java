@@ -21,7 +21,9 @@ import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("chatbotService")
 public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements ChatbotService{
-
+	
+	static String intent_id;
+	
 	@Resource(name="chatbotMapper")
 	private ChatbotMapper chatbotMapper;
 	
@@ -98,7 +100,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public void registResponeList(HttpSession session, List<Map<Object, Object>> list) throws Exception {
 		
 		UserVo userVo = (UserVo) session.getAttribute("login");
-	
+		
 		
 		for(int listCnt = 0 ; listCnt < list.size() ; listCnt++) {
 			if(list.get(listCnt) != null) {
@@ -106,7 +108,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 				
 				ResponeListVo vo = new ResponeListVo();
 				
-			
+				intent_id = (String)list.get(listCnt).get("intent_id");
 				String list_id = chatbotMapper.getListId();
 				vo.setIntent_id((String)list.get(listCnt).get("intent_id"));
 				vo.setTrans_type((String)list.get(listCnt).get("trans_type"));
@@ -215,12 +217,14 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 						for(int imgTypeCnt = 0; imgTypeCnt < imgTypeList.size(); imgTypeCnt ++) {
 							ResponeVo imgTypeVo = new ResponeVo();
 							if(imgTypeList.get(imgTypeCnt) != null) {
+								System.out.println("**** intent_id = "+ intent_id);
+								
 								String imgTypeId = chatbotMapper.getImgTypeId();
 								imgTypeVo.setList_id(list_id);
 								imgTypeVo.setImg_id(imgTypeId);
 								imgTypeVo.setPosition((String)imgTypeList.get(imgTypeCnt).get("position"));
-								imgTypeVo.setIntent_id((String)list.get(listCnt).get("intent_id"));
-								imgTypeVo.setImg_attach_id((String)list.get(listCnt).get("img_attach_id"));
+								imgTypeVo.setIntent_id(intent_id);
+								imgTypeVo.setImg_attach_id((String)imgTypeList.get(imgTypeCnt).get("img_attach_id"));
 								chatbotMapper.registImgTypeList(imgTypeVo);
 							}else {
 							}

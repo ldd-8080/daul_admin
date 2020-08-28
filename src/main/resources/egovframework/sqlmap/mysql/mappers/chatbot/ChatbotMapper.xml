@@ -484,7 +484,8 @@
 	<select id="getImgTypeCardList" parameterType="String" resultType="Map">
 		SELECT img_id,
 			   list_id,
-			   position
+			   position,
+			   img_attach_id
 		  FROM chatbot_respone_image_type
 		 WHERE list_id = #{list_id}
 	</select>

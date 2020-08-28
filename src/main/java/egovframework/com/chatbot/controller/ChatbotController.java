@@ -224,7 +224,7 @@ public class ChatbotController {
 					responeListVoList.get(responeListVoCnt).put("card", textTypeCardList);
 				break;
 				
-				case "img":
+				case "image":
 					imgTypeCardList = chatbotService.getImgTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					responeListVoList.get(responeListVoCnt).put("card", imgTypeCardList);
 				break;
