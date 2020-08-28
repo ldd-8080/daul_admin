@@ -939,9 +939,9 @@ function initialize_jstree(){
  		
  		console.log(formData); */
  		
- 		var formData = new FormData(document.getElementById("response-list"));
+ 		var formData2 = new FormData(document.getElementById("response-list"));
  		
- 		for (var data of formData.entries()) {
+ 		for (var data of formData2.entries()) {
  			console.log(data);
  		}
  		
@@ -951,8 +951,7 @@ function initialize_jstree(){
 			contentType: "application/json",
 			//enctype: "multipart/form-data",
 			//dataType: "json",
-			//data: JSON.stringify($("#response-list").serializeObject())
-			data: JSON.stringify(formData)
+			data: JSON.stringify($("#response-list").serializeObject())
  		});
  		
  		request.done(function(data) {
