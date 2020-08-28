@@ -924,7 +924,7 @@ function initialize_jstree(){
 	});
  	
  	function saveChatbotData() {
- 		var formData = $("#response-list").serializeObject();
+ 		/* var formData = $("#response-list").serializeObject();
  		var allInputFile = document.querySelectorAll("input[type='file'].card-img");
  		
  		for (var inputFile of allInputFile) {
@@ -937,7 +937,13 @@ function initialize_jstree(){
  			}
  		}
  		
- 		console.log(formData);
+ 		console.log(formData); */
+ 		
+ 		var formData = new FormData(document.getElementById("response-list"));
+ 		
+ 		for (var data of formData.entries()) {
+ 			console.log(data);
+ 		}
  		
  		var request = $.ajax({
  			url: "/chatbot/serializedObj.do",
