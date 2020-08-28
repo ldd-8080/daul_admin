@@ -9,6 +9,7 @@ import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.cmmn.util.FileVo;
 
 public interface ChatbotService {
 	List<IntentVo> getIntentList() throws Exception;
@@ -43,4 +44,7 @@ public interface ChatbotService {
 	//directType
 	List<Map<String,Object>> getDirectTypeCardList(String list_id) throws Exception;
 	List<Map<String,Object>> getDirectTypeCardBtnList(String direct_id) throws Exception;
+	//imageFile
+	void insertImageFile(FileVo fileVo) throws Exception;
+	void deleteImageFile(String intent_id) throws Exception;
 }

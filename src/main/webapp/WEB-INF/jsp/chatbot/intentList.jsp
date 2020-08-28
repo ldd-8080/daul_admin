@@ -717,6 +717,16 @@ function initialize_jstree(){
 						}
 					}
 				case "image":
+					var card = data[i].card;
+					
+					for (var j = 0; j <card.length; j++) {
+						//card 추가
+						document.getElementById("response_" + i + "_add_card_btn").click();
+						
+						// position
+						var response_card = document.getElementById("responseCard_" + i + "_" + j);
+						response_card.querySelector("input[name*='position']").value = card[j].position;
+					}
 					break;
 				case "card":
 					var card = data[i].card;
@@ -924,20 +934,6 @@ function initialize_jstree(){
 	});
  	
  	function saveChatbotData() {
- 		/* var formData = $("#response-list").serializeObject();
- 		var allInputFile = document.querySelectorAll("input[type='file'].card-img");
- 		
- 		for (var inputFile of allInputFile) {
- 			var arrName = inputFile.name.split("_");
- 			
- 			if (arrName.length > 5) {
- 				formData[arrName[0]][arrName[1]][arrName[2]][arrName[3]][arrName[4]][arrName[5]][arrName[6]] = inputFile.files[0];
- 			} else {
- 				formData[arrName[0]][arrName[1]][arrName[2]][arrName[3]][arrName[4]] = inputFile.files[0];
- 			}
- 		}
- 		
- 		console.log(formData); */
  		chatbotReg();
  		
  		var formData2 = new FormData(document.getElementById("response-list"));
@@ -958,7 +954,7 @@ function initialize_jstree(){
  		request.done(function(data) {
  			console.log("saveChatbotData", data);
  			if (data === "success") {
- 				//registImg();
+ 				registImg();
  			}
  		});
  		
@@ -981,7 +977,7 @@ function initialize_jstree(){
  		});
  		
  		request.done(function(data) {
- 			request.doen("registImg succees");
+ 			request.done("registImg succees");
  			location.href = "/chatbot/intentListPage.do";
  		});
  		

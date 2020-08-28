@@ -578,4 +578,31 @@
 		 WHERE parent_id = #{direct_id}
 	</select>
 	
+	<insert id="insertImageFile">
+		INSERT INTO daul.chatbot_respone_attach
+			 (
+			   parent_id
+			 , org_file_name
+			 , save_file_name
+			 , file_size
+			 , del_chk
+			 , attach_type
+			 , intent_id
+			 )
+		VALUES
+			 (
+			   #{attach_type}
+			 , #{org_file_name}
+			 , #{save_file_name}
+			 , #{file_size}
+			 , 'N'
+			 , #{attach_type}
+			 , #{intent_id}
+			 )
+	</insert>
+	
+	<update id="deleteImageFile">
+		DELETE FROM daul.chatbot_respone_attach
+		 WHERE intent_id = #{intent_id}
+	</update>
 </mapper>

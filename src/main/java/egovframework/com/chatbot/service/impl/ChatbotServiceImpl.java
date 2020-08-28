@@ -16,6 +16,7 @@ import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
@@ -404,5 +405,13 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 		return chatbotMapper.getDirectTypeCardBtnList(direct_id);
 	}
 
+	@Override
+	public void insertImageFile(FileVo fileVo) throws Exception {
+		chatbotMapper.insertImageFile(fileVo);
+	}
 
+	@Override
+	public void deleteImageFile(String intent_id) throws Exception {
+		chatbotMapper.deleteImageFile(intent_id);
+	}
 }

@@ -10,6 +10,10 @@ public class FileVo {
 	private String create_date;
 	private String attach_type;
 
+	// intent
+	private String parent_id;
+	private String intent_id;
+	
 	public String getIdx() {
 		return idx;
 	}
@@ -58,11 +62,24 @@ public class FileVo {
 	public void setAttach_type(String attach_type) {
 		this.attach_type = attach_type;
 	}
+	public String getParent_id() {
+		return parent_id;
+	}
+	public void setParent_id(String parent_id) {
+		this.parent_id = parent_id;
+	}
+	public String getIntent_id() {
+		return intent_id;
+	}
+	public void setIntent_id(String intent_id) {
+		this.intent_id = intent_id;
+	}
 	
 	@Override
 	public String toString() {
 		return "FileVo [idx=" + idx + ", org_file_name=" + org_file_name + ", save_file_name=" + save_file_name
 				+ ", file_size=" + file_size + ", create_user=" + create_user + ", del_chk=" + del_chk
-				+ ", create_date=" + create_date + ", attach_type=" + attach_type + "]";
+				+ ", create_date=" + create_date + ", attach_type=" + attach_type + ", parent_id=" + parent_id
+				+ ", intent_id=" + intent_id + "]";
 	}
 }

@@ -1,6 +1,5 @@
 package egovframework.com.chatbot.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,20 +14,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.chatbot.service.ChatbotService;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
-import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.cmmn.util.FileUtil;
+import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -38,6 +35,9 @@ public class ChatbotController {
 
 	@Resource(name = "chatbotService")
 	private ChatbotService chatbotService;
+	
+	@Resource(name="fileUtil")
+	private FileUtil fileUtil;
 
 	@RequestMapping(value = "/intentListPage.do")
 	public String intentsListPage(ModelMap model) {
@@ -153,25 +153,32 @@ public class ChatbotController {
 	}
 	
 	@RequestMapping(value="/registImg.do", method=RequestMethod.POST)
-	public ResponseEntity<?> registImg(HttpServletRequest request) throws Exception {
-		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
-		MultiValueMap<String, MultipartFile> file = multi.getMultiFileMap();
-		
-		Iterator<String> keys = file.keySet().iterator();
-		
-		while (keys.hasNext()) {
-			String key = keys.next();
+	public ResponseEntity<?> registImg(HttpServletRequest request, @RequestParam Map<String, Object> params) throws Exception {
+		try {
+			System.out.println(params);
 			
-			List<MultipartFile> f = file.get(key);
-
-			for (MultipartFile ff : f) {
-				System.out.println(String.format("키 : %s ------ 파일이름 : %s", key, ff.getOriginalFilename()));
+			String intent_id = (String) params.get("intent_id");
+			
+			log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 삭제");
+			chatbotService.deleteImageFile(intent_id);
+			
+			FileVo fileVo = new FileVo();
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+			
+			System.out.println(fileList);
+			
+			for (int i = 0; i < fileList.size(); i++) {
+				fileList.get(i).setIntent_id(intent_id);
+				
+				log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 등록");
+				chatbotService.insertImageFile(fileList.get(i));
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
-	
 
 	@RequestMapping(value = "/getInputText.do", method = RequestMethod.GET)
 	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception {
