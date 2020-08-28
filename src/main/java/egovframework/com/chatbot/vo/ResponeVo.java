@@ -11,7 +11,7 @@ public class ResponeVo {
 	private String direct_btn_id;
 	private String condition_id;
 	private String skill_item_id;
-
+	private String img_attach_id;
 	private String content;
 	private String type;
 	private String trans_type;
@@ -23,6 +23,12 @@ public class ResponeVo {
 	
 	
 	
+	public String getImg_attach_id() {
+		return img_attach_id;
+	}
+	public void setImg_attach_id(String img_attach_id) {
+		this.img_attach_id = img_attach_id;
+	}
 	public String getSkill_item_id() {
 		return skill_item_id;
 	}

@@ -385,14 +385,16 @@
 			img_id,
 			list_id,
 			position,
-			intent_id
+			intent_id,
+			img_attach_id
 		)
 		values
 		(
 			#{img_id},
 			#{list_id},
 			#{position},
-			#{intent_id}			
+			#{intent_id},
+			#{img_attach_id}			
 		)
 	</insert>
 	<insert id="registCardTypeList" >

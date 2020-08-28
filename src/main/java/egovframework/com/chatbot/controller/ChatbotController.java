@@ -74,11 +74,10 @@ public class ChatbotController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/deleteIntent.do")
+	@RequestMapping(value = "/deleteResponse.do", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteIntent(HttpSession session, InputVo vo) throws Exception {
-		IntentVo intentVo = new IntentVo();
-		intentVo.setId(vo.getIntent_id());
-		chatbotService.deleteCategory(intentVo);
+		System.out.println(vo.getIntent_id());
+		chatbotService.deleteIntentId(vo.getIntent_id());
 
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
