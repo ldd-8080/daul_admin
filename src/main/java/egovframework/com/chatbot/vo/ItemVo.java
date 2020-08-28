@@ -10,23 +10,27 @@ public class ItemVo {
 	private String content;
 	private String position;
 	private String list_type_id;
-	
+	private String img_attach_id;
 	private String name;
 	private String function_name;
 	private String intent_id;
 	
 	
 	
+	
+	
+	public String getImg_attach_id() {
+		return img_attach_id;
+	}
+	public void setImg_attach_id(String img_attach_id) {
+		this.img_attach_id = img_attach_id;
+	}
 	public String getIntent_id() {
 		return intent_id;
 	}
 	public void setIntent_id(String intent_id) {
 		this.intent_id = intent_id;
 	}
-	
-	
-	
-	
 	public String getList_item_id() {
 		return list_item_id;
 	}
