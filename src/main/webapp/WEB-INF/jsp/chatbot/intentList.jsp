@@ -914,6 +914,12 @@ function initialize_jstree(){
  		saveChatbotData();
  	});
  	
+ 	$("#chatbot-delete-btn").click(function() {
+		if (!submitConfirm($(this))) return false;
+		
+		deleteChatbotData();
+	});
+ 	
  	function saveChatbotData() {
  		var formData = $("#response-list").serializeObject();
  		var allInputFile = document.querySelectorAll("input[type='file'].card-img");
@@ -943,7 +949,7 @@ function initialize_jstree(){
  		request.done(function(data) {
  			console.log("saveChatbotData", data);
  			if (data === "success") {
- 				//registImg();
+ 				registImg();
  			}
  		});
  		
@@ -967,11 +973,28 @@ function initialize_jstree(){
  		
  		request.done(function(data) {
  			request.doen("registImg succees");
+ 			location.href = "/chatbot/intentListPage.do";
  		});
  		
  		request.fail(function(error) {
  			console.log("fail", error);
  		});
+ 	}
+ 	
+ 	function deleteChatbotData() {
+ 		var request = $.ajax({
+ 			url: "/chatbot/deleteResponse.do",
+			method: "post",
+			data: $("#input-text-form").serialize()
+ 		});
  		
+ 		request.done(function(data) {
+ 			request.doen("registImg succees");
+ 			location.href = "/chatbot/intentListPage.do";
+ 		});
+ 		
+ 		request.fail(function(error) {
+ 			console.log("fail", error);
+ 		});
  	}
 </script>

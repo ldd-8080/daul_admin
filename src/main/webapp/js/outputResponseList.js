@@ -345,7 +345,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			html = `
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][position]" value="${btnIdx}"/>
 				<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]" value="Default"/>
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function1]"/>
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]"/>
 				<div class="btn-name">Default</div>`;
@@ -360,7 +360,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
                     	<i class="icon md-code-setting" aria-hidden="true"></i>
                     </span>
 				 </div>
-				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]" value="Default"/>
 				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function1]"/>
 				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function2]"/>
 				 <div class="btn-name">Default</div>`;
@@ -440,8 +440,12 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			var input_url = document.getElementById(popover_id).querySelector("input.input-url");
 			
 			save_btn.addEventListener("click", function() {
-				$this.find(".btn-name").text(input.value);
-				$this.find("input[name*='name']").val(input.value);
+				var buttonTitle = input.value;
+				
+				if (buttonTitle === "") buttonTitle = "Default"; 
+					
+				$this.find(".btn-name").text(buttonTitle);
+				$this.find("input[name*='name']").val(buttonTitle);
 				$this.find("input[name*='function1']").val(select.value);
 				
 				if (select.value === "intent") {

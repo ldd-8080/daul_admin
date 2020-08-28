@@ -153,7 +153,7 @@ public class ChatbotController {
 	}
 	
 	@RequestMapping(value="/registImg.do", method=RequestMethod.POST)
-	public void registImg(HttpServletRequest request) throws Exception {
+	public ResponseEntity<?> registImg(HttpServletRequest request) throws Exception {
 		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
 		MultiValueMap<String, MultipartFile> file = multi.getMultiFileMap();
 		
@@ -168,6 +168,8 @@ public class ChatbotController {
 				System.out.println(String.format("키 : %s ------ 파일이름 : %s", key, ff.getOriginalFilename()));
 			}
 		}
+		
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
 

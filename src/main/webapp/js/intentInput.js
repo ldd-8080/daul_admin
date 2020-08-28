@@ -1,16 +1,4 @@
 $(function() {	
-//	$("#chatbot-regist-btn").click(function() {
-//		if (!submitConfirm($(this))) return false;
-//		
-//		chatbotReg();
-//	});
-	
-	$("#chatbot-delete-btn").click(function() {
-		if (!submitConfirm($(this))) return false;
-		
-		chatbotDelete();
-	});	
-	
 });	
 
 
@@ -30,25 +18,6 @@ function chatbotReg(){
 		console.log("request fail");
 	});	
 }
-
-function chatbotDelete(){
-	
-	var request = $.ajax({
-		url: "/chatbot/deleteIntent.do",
-		method: "post",
-		//contentType: "application/json",
-		//dataType: "json",
-		data: $("#input-text-form").serialize()
-	});
-	request.done(function(data) {
-		location.href = "/chatbot/intentListPage.do";
-	});
-	request.fail(function(error) {
-		console.log(error);
-		console.log("request fail");
-	});	
-}
-
 
 
 function setInputText(data){
