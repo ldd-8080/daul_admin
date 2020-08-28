@@ -736,6 +736,7 @@ function initialize_jstree(){
 							// button 추가
 							response_card.querySelector("button.card-btn-action").click();
 							
+							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
 							response_button.querySelector("input[name*='position']").value = button[k].position;
 							response_button.querySelector("input[name*='name']").value = button[k].name;
 							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
@@ -743,7 +744,7 @@ function initialize_jstree(){
 							response_button.querySelector("input[name*='function2']").value = button[k].function2;
 						}
 					}
-					
+
 					break;
 				case "list":
 					var card = data[i].card;
@@ -791,22 +792,23 @@ function initialize_jstree(){
 				case "condition":
 					break;
 				case "direct":
-					/*
-					var card = data[i].card;
-					var button = card.button;					
 					
-					for (var j = 0; j < button.length; j++) {
+					var card = data[i].card;
+					
+					for (var j = 0; j < card.length; j++) {
 						// button 추가
 						response_list.querySelector("button.ignore-elements").click();
 						
+						var button = card[j].button[0];
+						
 						var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_0");
-						response_button.querySelector("input[name*='position']").value = button[j].position;
-						response_button.querySelector("input[name*='name']").value = button[j].name;
-						response_button.querySelector("div.btn-name").innerHTML = button[j].name;
-						response_button.querySelector("input[name*='function1']").value = button[j].function1;
-						response_button.querySelector("input[name*='function2']").value = button[j].function2;
+						response_button.querySelector("input[name*='position']").value = button.position;
+						response_button.querySelector("input[name*='name']").value = button.name;
+						response_button.querySelector("div.btn-name").innerHTML = button.name;
+						response_button.querySelector("input[name*='function1']").value = button.function1;
+						response_button.querySelector("input[name*='function2']").value = button.function2;
 					}
-					*/
+					
 					break;
 			}
 		}

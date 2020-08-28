@@ -34,7 +34,7 @@ function chatbotReg(){
 function chatbotDelete(){
 	
 	var request = $.ajax({
-		url: "/chatbot/deleteIntent.do?",
+		url: "/chatbot/deleteIntent.do",
 		method: "post",
 		//contentType: "application/json",
 		//dataType: "json",
