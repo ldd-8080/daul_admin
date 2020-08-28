@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
     
 <div class="page">
-
+<!-- 
 
 <form id="form"> 
 	<input type="text" name="intent_id" value="IT-0037"/> 
@@ -86,7 +86,7 @@
 <button type="button" id="serialized-btn"> btn </button>
 
 <button type="button" id="getResponeList-btn"> 가져오기 </button>
-
+ -->
 
 </div>
 
