@@ -125,7 +125,7 @@ public class ChatbotController {
 
 	@RequestMapping(value = "/serializedObj.do", method = RequestMethod.POST)
 	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
-		System.out.println(params);
+		System.out.println("params === " + params);
 
 		//저장전에 해당 intent_id가 있으면 다 지움
 		System.out.println("intent_cnt = "+chatbotService.checkIntentId((String)params.get("intent_id")));
@@ -139,7 +139,7 @@ public class ChatbotController {
 				if(list.get(i) != null) {
 					list.get(i).put("intent_id", params.get("intent_id"));
 				}else {
-					list.remove(i);
+				//	list.remove(i);
 				}
 			}
 			System.out.println(" >>>list = " + list);

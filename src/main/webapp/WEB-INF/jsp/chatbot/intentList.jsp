@@ -938,6 +938,7 @@ function initialize_jstree(){
  		}
  		
  		console.log(formData); */
+ 		chatbotReg();
  		
  		var formData2 = new FormData(document.getElementById("response-list"));
  		

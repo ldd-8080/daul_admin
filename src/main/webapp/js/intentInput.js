@@ -30,7 +30,7 @@ function setInputText(data){
 	
 	var str = 
 		 ' <input type="text" class="form-control tokenfield" name="input_text" id=""'+
-         '        value="안뇽|안녕|안녕하세용"' +
+         '        value=""' +
          '        placeholder="해당 의도(Intent)에 대한 사용자의 예상 발화를 입력해주세요." /> ';
 	$("#tokenfield-div").append(str);
 	

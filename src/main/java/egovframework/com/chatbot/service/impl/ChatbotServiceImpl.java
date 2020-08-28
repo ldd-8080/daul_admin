@@ -107,7 +107,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 				String type = (String) list.get(listCnt).get("type");
 				
 				ResponeListVo vo = new ResponeListVo();
-				
+				System.out.println("(String)list.get(listCnt) = " + list.get(listCnt));
 				intent_id = (String)list.get(listCnt).get("intent_id");
 				String list_id = chatbotMapper.getListId();
 				vo.setIntent_id((String)list.get(listCnt).get("intent_id"));
