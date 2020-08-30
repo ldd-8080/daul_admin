@@ -414,4 +414,9 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public void deleteImageFile(String intent_id) throws Exception {
 		chatbotMapper.deleteImageFile(intent_id);
 	}
+
+	@Override
+	public Map<String, String> selectImageFile(String img_attach_id) throws Exception {
+		return chatbotMapper.selectImageFile(img_attach_id);
+	}
 }

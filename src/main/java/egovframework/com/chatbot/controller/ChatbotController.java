@@ -159,8 +159,8 @@ public class ChatbotController {
 			
 			String intent_id = (String) params.get("intent_id");
 			
-			log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 삭제");
-			chatbotService.deleteImageFile(intent_id);
+			//log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 삭제");
+			//chatbotService.deleteImageFile(intent_id);
 			
 			FileVo fileVo = new FileVo();
 			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
@@ -284,6 +284,20 @@ public class ChatbotController {
 		System.out.println("***responeListVoList = " + responeListVoList);
 		return new ResponseEntity<>(responeListVoList, HttpStatus.OK);
 	}
-//	List<Map<String, Object>> aList
-//	aList.get(i).add(bList)
+	
+	@RequestMapping(value="/getImg.do")
+	public void getImage(@RequestParam("img_attach_id") String img_attach_id, HttpServletResponse response) throws Exception {
+		Map<String, String> file = null;
+		
+		try {
+			file = chatbotService.selectImageFile(img_attach_id);
+			System.out.println(file);
+			
+			if (!file.isEmpty()) {
+				fileUtil.getImgFile(response, file.get("save_file_name"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

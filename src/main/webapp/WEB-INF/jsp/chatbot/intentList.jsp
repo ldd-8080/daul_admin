@@ -726,6 +726,8 @@ function initialize_jstree(){
 						// position
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
 						response_card.querySelector("input[name*='position']").value = card[j].position;
+						
+						response_card.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + card[j].img_attach_id;
 					}
 					break;
 				case "card":
@@ -805,7 +807,6 @@ function initialize_jstree(){
 				case "condition":
 					break;
 				case "direct":
-					
 					var card = data[i].card;
 					
 					for (var j = 0; j < card.length; j++) {

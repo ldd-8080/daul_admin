@@ -605,4 +605,10 @@
 		DELETE FROM daul.chatbot_respone_attach
 		 WHERE intent_id = #{intent_id}
 	</update>
+	
+	<select id="selectImageFile" resultType="hashmap">
+		SELECT *
+		  FROM daul.chatbot_respone_attach
+		 WHERE parent_id = #{img_attach_id}
+	</select>
 </mapper>

@@ -47,4 +47,5 @@ public interface ChatbotService {
 	//imageFile
 	void insertImageFile(FileVo fileVo) throws Exception;
 	void deleteImageFile(String intent_id) throws Exception;
+	Map<String, String> selectImageFile(String img_attach_id) throws Exception;
 }
