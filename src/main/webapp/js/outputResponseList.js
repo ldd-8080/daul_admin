@@ -233,11 +233,12 @@ function cardHtml(obj, parentIdx, childIdx) {
 		case "image" :
 			return `
 				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-				<input type="file" style="display: none" class="card-img" name="${intentId}_img_${childIdx}"/>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${childIdx}"/>`;
+				<input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}"/>`;
 		case "card"  :
 			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-					<input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_img"/>
+					<input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}"/>
+					<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}"/>
                     <div class="card-block card-block-evt card-block-title-text">
                       <h5 class="card-title">타이틀을 입력하세요.</h5>
                       <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][title]"/>
@@ -462,6 +463,14 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				input.value = $this.find(".btn-name").text();
 				WebuiPopovers.hide($(button));
 			});
+			
+			var del_btn = document.getElementById(popover_id).querySelector("i.md-delete");
+			
+			del_btn.addEventListener("click", function() {
+				console.log($this);
+				WebuiPopovers.hide($(button));
+				$this.remove();
+			});
 		});
 		
 		if (obj.name === "direct") {
@@ -626,7 +635,8 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
                <div class="pl-20">
                  <a href="javascript:void(0)">
                    <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
-                   <input type="file" style="display: none" class="card-img" name="cardList_${parentIdx}_card_${childIdx}_list_${listBtnIdx}_img"/>
+                   <input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}_${listBtnIdx}"/>
+                   <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}_${listBtnIdx}"/>
                  </a>
                </div>
              </div>`;
@@ -679,6 +689,13 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 				} else {
 					img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
 				}
+			});
+			
+			var del_btn = document.getElementById(popover_id).querySelector("i.md-delete");
+			
+			del_btn.addEventListener("click", function() {
+				WebuiPopovers.hide($this);
+				$this.remove();
 			});
 		});
 		

@@ -723,10 +723,9 @@ function initialize_jstree(){
 						//card 추가
 						document.getElementById("response_" + i + "_add_card_btn").click();
 						
-						// position
+						// position, img
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
 						response_card.querySelector("input[name*='position']").value = card[j].position;
-						
 						response_card.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + card[j].img_attach_id;
 					}
 					break;
