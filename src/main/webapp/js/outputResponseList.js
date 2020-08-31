@@ -9,9 +9,9 @@ function responseTypeHtml(obj, response_list_id, parentIdx) {
 		              <span class="action-title">전송타입 </span>
 		              <div class="action-btns">
 		                <div class="sending-type-btns btn-group btn-group-sm panel-action" aria-label="Small button group" role="group">
-		                  <input type="hidden" name="cardList[${parentIdx}][trans_type]" value="caro"/>
-		                  <button type="button" class="btn cbtn-action w-60 active" id="${response_list_id+'_sending_btn_caro'}">케로셀</button>
-		                  <button type="button" class="btn cbtn-action w-60" id="${response_list_id+'_sending_btn_ran'}">랜덤형</button>
+		                  <input type="hidden" name="cardList[${parentIdx}][trans_type]" value="ran"/>
+	                  	  <button type="button" class="btn cbtn-action w-60" id="${response_list_id+'_sending_btn_caro'}">케로셀</button>
+		                  <button type="button" class="btn cbtn-action w-60 active" id="${response_list_id+'_sending_btn_ran'}">랜덤형</button>
 		                </div>
 		              </div>
 		            </div>
@@ -347,9 +347,9 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			html = `
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][position]" value="${btnIdx}"/>
 				<i class="icon fa-sort handle-card-btn position-absolute" style="left:10px" aria-hidden="true"></i>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]" value="Default"/>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function1]"/>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][name]"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function1]" value="intent"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][button][${btnIdx}][function2]" value=""/>
 				<div class="btn-name">Default</div>`;
 		} else if (obj.name === "direct") {
 			button.id = `${response_card_id}_${btnIdx}_btn_${childIdx}`;
@@ -363,8 +363,8 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
                     </span>
 				 </div>
 				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]" value="Default"/>
-				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function1]"/>
-				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function2]"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function1]" value="intent"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function2]" value=""/>
 				 <div class="btn-name">Default</div>`;
 		}
 		
@@ -374,16 +374,24 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 		
 		$(button).webuiPopover($.extend({
 			onShow: function($element) {
+				console.log("button popover onShow---------------------");
 				var popover_id = $element[0].id;
 				var div_select_intent = $("#" + popover_id + " .div-select-intent");
 				var div_input_url = $("#" + popover_id + " .div-input-url");
 				var select_btn_type = $("#" + popover_id + " .select-btn-type");
 				var select_intent = $("#" + popover_id + " .select-intent");
 				
-				var select_btn_type_val = select_btn_type.val();
+				var input_function1 = $(button).find("input[name*='function1']");
+				var input_function2 = $(button).find("input[name*='function2']");
+				var input_function1_val = $(button).find("input[name*='function1']").val();
+				var input_function2_val = $(button).find("input[name*='function2']").val();
+				console.log("function1", input_function1_val);
+				console.log("function2", input_function2_val);
 				
-				if (select_btn_type_val) {
-					if (select_btn_type_val === "intent") {
+				if (input_function1_val) {
+					select_btn_type.val(input_function1_val);
+					
+					if (input_function1_val === "intent") {
 						div_select_intent.show();
 						div_input_url.hide();
 					} else if (select_btn_type_val === "url") {
@@ -394,6 +402,21 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 					div_select_intent.show();
 					div_input_url.hide();
 				}
+				
+//				var select_btn_type_val = select_btn_type.val();
+//				
+//				if (select_btn_type_val) {
+//					if (select_btn_type_val === "intent") {
+//						div_select_intent.show();
+//						div_input_url.hide();
+//					} else if (select_btn_type_val === "url") {
+//						div_select_intent.hide();
+//						div_input_url.show();
+//					}
+//				} else {
+//					div_select_intent.show();
+//					div_input_url.hide();
+//				}
 				
 				if (!select_btn_type.data("select2")) {
 					select_btn_type.select2({
@@ -427,6 +450,13 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 						]
 					});
 				}
+				
+				var input_btn_name = $("#" + popover_id + " .form-control.input-btn-name");
+				var input_hidden_name = $(button).find("input[name*='name']").val();
+				
+				input_btn_name.val(input_hidden_name);
+//				if (input_hidden_name)	input_btn_name.val(input_hidden_name);
+//				else					input_btn_name.val("");
 			}
 		}, defaults, popEditBtnSettings));
 		
@@ -436,18 +466,15 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			
 			var save_btn = document.getElementById(popover_id).querySelector("button.btn-save");
 			var cancel_btn = document.getElementById(popover_id).querySelector("button.btn-cancel");
-			var input = document.getElementById(popover_id).querySelector("input.form-control");
+			var input = document.getElementById(popover_id).querySelector("input.form-control.input-btn-name");
 			var select = document.getElementById(popover_id).querySelector("select.select-btn-type");
 			var select_intent = document.getElementById(popover_id).querySelector("select.select-intent");
 			var input_url = document.getElementById(popover_id).querySelector("input.input-url");
 			
 			save_btn.addEventListener("click", function() {
-				var buttonTitle = input.value;
-				
-				if (buttonTitle === "") buttonTitle = "Default"; 
-					
-				$this.find(".btn-name").text(buttonTitle);
-				$this.find("input[name*='name']").val(buttonTitle);
+				if (input.value)	$this.find(".btn-name").text(input.value);
+				else				$this.find(".btn-name").text("Default");
+				$this.find("input[name*='name']").val(input.value);
 				$this.find("input[name*='function1']").val(select.value);
 				
 				if (select.value === "intent") {
@@ -467,7 +494,6 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 			var del_btn = document.getElementById(popover_id).querySelector("i.md-delete");
 			
 			del_btn.addEventListener("click", function() {
-				console.log($this);
 				WebuiPopovers.hide($(button));
 				$this.remove();
 			});
@@ -538,14 +564,15 @@ function contentPopoverEvent(response_card_id) {
 		var textarea = document.getElementById(popover_id).querySelector("textarea.form-control");
 
 		save_btn.addEventListener("click", function() {
+			if (textarea.value)	response_card.querySelector("p.card-text").innerHTML = textarea.value;
+			else				response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요.";
 			response_card.querySelector("input[name*='content']").value = textarea.value;
-			response_card.querySelector("p.card-text").innerHTML = textarea.value;
 			
 			WebuiPopovers.hide(popover_target);
 		});
 		
 		cancel_btn.addEventListener("click", function() {
-			textarea.value = response_card.querySelector("input[name='content']").value;
+			textarea.value = response_card.querySelector("input[name*='content']").value;
 			WebuiPopovers.hide(popover_target);
 		});
 	});
