@@ -683,11 +683,14 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 					
 					reader.onload = function(e) {
 						img.attr("src", e.target.result).width(img.width()).height(img.height());
+						img.next()[0].files = image.files;
 					}
 					
 					reader.readAsDataURL(file);
 				} else {
 					img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
+					popover_target.next().attr("type", "text");
+					popover_target.next().attr("type", "file");
 				}
 			});
 			

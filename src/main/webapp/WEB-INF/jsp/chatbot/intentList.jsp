@@ -716,6 +716,8 @@ function initialize_jstree(){
 							response_button.querySelector("input[name*='function2']").value = button[k].function2;
 						}
 					}
+					
+					break;
 				case "image":
 					var card = data[i].card;
 					
