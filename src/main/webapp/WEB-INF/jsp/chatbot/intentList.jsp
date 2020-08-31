@@ -215,14 +215,15 @@
 <div id="popoverEditTextHeader" class="popover-header" hidden>
   <p class="position-relative h-20">
     <span class="position-absolute" style="top: 10px; left: 5px;">텍스트 설정</span>
-    <button type="button" class="btn btn-icon btn-pure float-right">
-      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+    <!-- <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i>
+    </button> -->
   </p>
 </div>
 <div id="popoverEditText" class="popover-content" hidden>
   <div class="form-group">
     <label class="form-control-label mb-0">텍스트<span class="red-600 ml-5">*</span></label>
-    <textarea class="form-control" rows="5" placeholder="텍스트를 입력해주세요." autocomplete="off" style="resize: none;"></textarea>
+    <textarea class="form-control" rows="5" placeholder="내용을 입력하세요." autocomplete="off" style="resize: none;"></textarea>
   </div>
   <div class="form-group form-material float-right">
     <button type="button" class="btn btn-primary btn-save">저장</button>
@@ -242,7 +243,7 @@
 <div id="popoverEditBtn" class="popover-content" hidden>
   <div class="form-group">
     <label class="form-control-label mb-0">버튼명<span class="red-600 ml-5">*</span></label>
-    <input type="text" class="form-control" />
+    <input type="text" class="form-control input-btn-name" placeholder="Default"/>
   </div>
   <div class="form-group">
     <label class="form-control-label mb-0">버튼기능<span class="red-600 ml-5">*</span></label>
@@ -686,7 +687,10 @@ function initialize_jstree(){
 			var response_list = document.getElementById("response_" + i);
 			response_list.querySelector("input[name*='type']").value = data[i].type;
 			response_list.querySelector("input[name*='position']").value = data[i].position;
-			if (data[i].hasOwnProperty("trans_type")) response_list.querySelector("input[name*='trans_type']").value = data[i].trans_type;
+			if (data[i].hasOwnProperty("trans_type")) {
+				//response_list.querySelector("input[name*='trans_type']").value = data[i].trans_type;
+				response_list.querySelector("#response_" + i + "_sending_btn_" + data[i].trans_type).click();
+			}
 			
 			switch (type) {
 				case "text":
@@ -698,7 +702,8 @@ function initialize_jstree(){
 						
 						// content, position
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
-						response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						if (card[j].content)	response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						else				 	response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요";
 						response_card.querySelector("input[name*='content']").value = card[j].content;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
 						
@@ -709,9 +714,10 @@ function initialize_jstree(){
 							response_card.querySelector("button.card-btn-action").click();
 							
 							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
-							response_button.querySelector("input[name*='position']").value = button[k].position;
+							if (button[k].name)	response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							else				response_button.querySelector("div.btn-name").innerHTML = "Default";
 							response_button.querySelector("input[name*='name']").value = button[k].name;
-							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							response_button.querySelector("input[name*='position']").value = button[k].position;
 							response_button.querySelector("input[name*='function1']").value = button[k].function1;
 							response_button.querySelector("input[name*='function2']").value = button[k].function2;
 						}
