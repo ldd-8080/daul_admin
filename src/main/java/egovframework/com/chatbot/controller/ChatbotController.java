@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import egovframework.com.chatbot.service.ChatbotService;
+import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.SkillVo;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
-import egovframework.com.qna.vo.QnaVo;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -317,14 +317,16 @@ public class ChatbotController {
 	}
 	
 	@RequestMapping(value="/getIntentListInBtn.do")
-	public void getIntentListInBtn() throws Exception{
+	public  ResponseEntity<?> getIntentListInBtn() throws Exception{
 		IntentVo vo = new IntentVo();
-		chatbotService.getIntentList();
+		List<IntentVo> intentList = null;
 		
+		chatbotService.getIntentListInBtn();
+		return new ResponseEntity<>(intentList, HttpStatus.OK);	
 	}
 	
 	@RequestMapping(value="/getSkillList.do", method = RequestMethod.GET)
-	public ResponseEntity<?> qnaList(ModelMap model, SkillVo vo) throws Exception{
+	public ResponseEntity<?> getSkillList(ModelMap model, SkillVo vo) throws Exception{
 		List<SkillVo> skillList = null;
 		try {
 			skillList = chatbotService.selectSkillList(vo);
@@ -334,6 +336,19 @@ public class ChatbotController {
 		
 		return new ResponseEntity<>(skillList, HttpStatus.OK);	
 	}
+	
+	@RequestMapping(value="/getConditionList.do", method = RequestMethod.GET)
+	public ResponseEntity<?> getConditionList(ModelMap model, ConditionVo vo) throws Exception{
+		List<ConditionVo> conditionList = null;
+		try {
+			conditionList = chatbotService.selectConditionList(vo);
+		}catch(Exception e) {
+			log.debug("chatbotController > /getSkillList.do > Exception");
+		}		
+		
+		return new ResponseEntity<>(conditionList, HttpStatus.OK);	
+	}
+	
 	
 	
 }

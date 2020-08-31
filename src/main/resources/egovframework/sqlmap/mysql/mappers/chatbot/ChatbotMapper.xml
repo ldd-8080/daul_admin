@@ -2,7 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="egovframework.com.chatbot.mapper.ChatbotMapper">
 
-	<select id="getIntentList" resultType="egovframework.com.chatbot.vo.IntentVo">
+	<select id="getIntentListInBtn" resultType="egovframework.com.chatbot.vo.IntentVo">
+		SELECT 								
+			   intent_id,
+			   title,
+			   parent_id,
+			   type,
+			   position,
+			   module	
+		  FROM chatbot_intent_list
+		 WHERE type = 'C' AND del_chk = 'N'
+	  ORDER BY intent_id ;
+	</select>
+	
+		<select id="getIntentInBtn" resultType="egovframework.com.chatbot.vo.IntentVo">
 		SELECT 								
 			   intent_id as id,
 			   title as text,
@@ -13,6 +26,8 @@
 		  FROM chatbot_intent_list
 		 WHERE del_chk = 'N'
 	</select>
+	
+	
 
 	<insert id="addScenario">
 		INSERT INTO daul.chatbot_intent_list
@@ -634,7 +649,13 @@
 		       del_chk
 		  FROM chatbot_skill_list
 		 WHERE del_chk = 'N'
-		      
-	
+	</select>
+	<select id="selectConditionList" resultType="egovframework.com.chatbot.vo.ConditionVo">
+		SELECT seq,
+		       title,
+		       function,
+		       del_chk
+		  FROM chatbot_condition_list
+		 WHERE del_chk = 'N'
 	</select>
 </mapper> 

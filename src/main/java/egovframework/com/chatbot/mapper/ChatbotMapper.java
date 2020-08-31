@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.com.chatbot.vo.BtnVo;
+import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
@@ -84,4 +85,6 @@ public interface ChatbotMapper {
 	Map<String, String> selectImageFile(String img_attach_id) throws Exception;
 
 	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
+	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
+	List<IntentVo> getIntentListInBtn() throws Exception;
 }

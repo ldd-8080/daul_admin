@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import egovframework.com.chatbot.mapper.ChatbotMapper;
 import egovframework.com.chatbot.service.ChatbotService;
 import egovframework.com.chatbot.vo.BtnVo;
+import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
@@ -430,5 +431,15 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	@Override
 	public List<SkillVo> selectSkillList(SkillVo vo) throws Exception {
 		return chatbotMapper.selectSkillList(vo);
+	}
+
+	@Override
+	public List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception {
+		return chatbotMapper.selectConditionList(vo);
+	}
+
+	@Override
+	public List<IntentVo> getIntentListInBtn() throws Exception {
+		return chatbotMapper.getIntentListInBtn();
 	}
 }

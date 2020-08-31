@@ -13,9 +13,6 @@
 	      <li class="breadcrumb-item"><a href="javascript:void(0)">챗봇</a></li>
 	      <li class="breadcrumb-item active">스킬 관리</li>
 	    </ol>
-	
-	    
-	   
 			
 	    	<div class="panel">
 		        <header class="panel-heading">
@@ -28,58 +25,16 @@
 	    	</div>
 	    
 	</div>
-	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaDetailPositionCenter" id="qnaDetailPositionBtn" href="#">상세</button>
+	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#skillDetailPositionCenter" id="skillDetailPositionBtn" href="#">상세</button>
 	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaUpdatePositionCenter" id="qnaUpdatePositionBtn" href="#">상세</button>
 <!-- End Page -->
 </div>
 
-<!-- Q&A 답글등록 모달 -->
-<div class="modal fade" id="qnaPositionCenter" aria-hidden="true" aria-labelledby="qnaPositionCenter" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-center">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
-        <h4 class="modal-title">Q&A 답글등록</h4>
-      </div>
-      <div class="modal-body">
-        <form id="qna-modal-reply-form">
-        	<div class="example-wrap">
-        		<h4 class="example-title">질문내용</h4>
-      			<textarea class="form-control"id="question_content" rows="5" readonly></textarea>
-      			<h4 class="example-title">답글제목</h4>
-      			<input type="text" class="form-control" id="reply_title" name="question" value="답변입니다."/>
-      			<span class="text-left" style="color:red;" id="chk-error-question-reg"></span>
-    			<h4 class="example-title">답글내용</h4>
-      			<textarea class="form-control"id="reply_content" name="content" rows="5"></textarea>
-				<span class="text-left" style="color:red;" id="chk-error-content-reg"></span>
-				
-				<input type="hidden" id="qna_idx_reply" name="qna_idx"/>
-				<input type="hidden" id="ref_reply" name="ref"/>
-      		</div>
-        	
-        	<span class="text-left" id="chk-error"></span>
-        	<div style="text-align:center">
-        		<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-btn" data-title="QNA">등록 </button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn" >취소 </button>
-        	</div>
-        </form>
-       
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-default btn-pure" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Q&A 답글등록 모달 끝 -->
 
 
 <!-- Q&A 상세 모달 -->
-<div class="modal fade" id="qnaDetailPositionCenter" aria-hidden="true" aria-labelledby="qnaDetailPositionCenter" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-center">
+<div class="modal fade" id="skillDetailPositionCenter" aria-hidden="true" aria-labelledby="skillDetailPositionCenter" role="dialog" tabindex="-1">
+   <div class="modal-dialog modal-simple modal-center">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,23 +43,21 @@
         <h4 class="modal-title">스킬 상세보기</h4>
       </div>
       <div class="modal-body">
-        <form id="qna-modal-detail-form">
+        <form id="skill-modal-update-form">
         	<div class="example-wrap">
-        		<h4 class="example-title">스킬명</h4>
-      			<input type="text" class="form-control" id="detail-skill-title" readonly/>	
-        		
-				<h4 class="example-title">스킬아이디</h4>
-      			<input type="text" class="form-control" id="detail-skill-function" readonly/>	
-        		
+        		<h4 class="example-title">기능명</h4>
+      			<input type="text" class="form-control" id="update_skill_title" />	
+        		<h4 class="example-title">기능아이디</h4>
+      			<input type="text" class="form-control" id="update_skill_function" />	
 
-				<input type="hidden" id="qna_idx_detail" name="qna_idx"/>
-				<input type="hidden" id="parent_qna_idx_detail" name="parent_qna_idx"/>
+				<input type="hidden" id="skill_seq" name="seq"/>
       		</div>
         	
         	<span class="text-left" id="chk-error"></span>
         	<div style="text-align:center">
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn2" data-title="QNA">삭제 </button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn2" >닫기 </button>
+        	 	<button type="button" class="btn btn-primary waves-effect waves-classics" id="skill-modal-update-btn" data-title="SKILL">수정 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="skill-modal-delete-btn3" data-title="SKILL">삭제 </button>
+        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn3" >닫기 </button>
         	</div>
         </form>
        
@@ -118,51 +71,6 @@
 </div>
 <!-- Q&A 상세 모달 끝 -->
 
-
-<!-- Q&A 수정 모달 -->
-<div class="modal fade" id="qnaUpdatePositionCenter" aria-hidden="true" aria-labelledby="qnaUpdatePositionCenter" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-simple modal-center">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">x</span>
-        </button>
-        <h4 class="modal-title">스킬 상세보기</h4>
-      </div>
-      <div class="modal-body">
-        <form id="qna-modal-update-form">
-        	<div class="example-wrap">
-        		<h4 class="example-title">작성자</h4>
-      			<input type="text" class="form-control" id="update_create_user" readonly/>	
-        		<h4 class="example-title">질문제목</h4>
-      			<textarea class="form-control"id="update_qustion" name = "question" rows="5" ></textarea>
-      			<span class="text-left" style="color:red;" id="chk-error-question-mod"></span>
-      			<h4 class="example-title">질문내용</h4>
-      			<textarea class="form-control"id="update_content" name = "content" rows="5" ></textarea>
-      			<span class="text-left" style="color:red;" id="chk-error-content-mod"></span>
-
-				<input type="hidden" id="qna_idx_update" name="qna_idx"/>
-				
-				<input type="hidden" id="parent_qna_idx_update" name="parent_qna_idx"/>
-      		</div>
-        	
-        	<span class="text-left" id="chk-error"></span>
-        	<div style="text-align:center">
-        	 	<button type="button" class="btn btn-primary waves-effect waves-classics" id="qna-modal-update-btn" data-title="QNA">수정 </button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" id="qna-modal-delete-btn3" data-title="QNA">삭제 </button>
-        	 	<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="qna-modal-cancel-btn3" >닫기 </button>
-        	</div>
-        </form>
-       
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-default btn-pure" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Q&A 수정 모달 끝 -->
 
 
 <script type="text/javascript">
@@ -315,14 +223,7 @@ $(function() {
 	    	],
 	    	rowClick: function(args) {
 	    	
-	    		
-	    		if(args.event.target.tagName == "BUTTON"){
-	    			document.getElementById("qna_idx_reply").value = args.item.qna_idx;
-					document.getElementById("ref_reply").value = args.item.qna_idx;
-					
-	    		}else if(args.event.target.cellIndex == 6){
-	    			
-	    		}else{
+	    	
 	    			
 	    			/* increaseViewCount(args.item.qna_idx);
 	    			$("#chk-error-question-mod").text('');
@@ -347,7 +248,13 @@ $(function() {
 		    		}else{
 		    			$("#qnaUpdatePositionBtn").trigger("click");
 		    		} */
-	    		}
+		    		
+		    		document.getElementById("update_skill_title").value = args.item.title;
+					document.getElementById("update_skill_function").value = args.item.function;
+					document.getElementById("skill_seq").value = args.item.seq;
+					
+	    			$("#skillDetailPositionBtn").trigger("click");
+	    		
 			}
 		});
 	}

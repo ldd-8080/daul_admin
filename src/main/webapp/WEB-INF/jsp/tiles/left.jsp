@@ -96,7 +96,7 @@
 	                 		<span class="site-menu-title">의도-응답 관리</span>
 	               		</a>
 	             	</li>
-	             	<li class="site-menu-item">
+	           <!--   	<li class="site-menu-item">
 	               		<a class="animsition-link" href="/chatbot/skillListPage.do">                   
 	                 		<span class="site-menu-title">스킬 관리</span>
 	               		</a>
@@ -105,7 +105,7 @@
 	               		<a class="animsition-link" href="/chatbot/conditionListPage.do">                   
 	                 		<span class="site-menu-title">조건 관리</span>
 	               		</a>
-	             	</li>
+	             	</li> -->
              	</ul>
             </li>
         </ul>
