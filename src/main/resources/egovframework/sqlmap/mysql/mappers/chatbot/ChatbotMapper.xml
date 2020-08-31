@@ -486,22 +486,28 @@
 	</select>
 	
 	<select id="getImgTypeCardList" parameterType="String" resultType="Map">
-		SELECT img_id,
-			   list_id,
-			   position,
-			   img_attach_id
-		  FROM chatbot_respone_image_type
+		SELECT a.img_id,
+			   a.list_id,
+			   a.position,
+			   a.img_attach_id,
+			   b.seq
+		  FROM chatbot_respone_image_type a
+     LEFT JOIN chatbot_respone_attach b
+	    	ON a.img_attach_id = b.parent_id 
 		 WHERE list_id = #{list_id}
 	</select>
 	
 	<select id="getCardTypeCardList" parameterType="String" resultType="Map">
-		SELECT card_id,
-			   list_id,
-			   title,
-			   content,
-			   position,
-			   img_attach_id
-		  FROM chatbot_respone_card_type
+		SELECT a.card_id,
+			   a.list_id,
+			   a.title,
+			   a.content,
+			   a.position,
+			   a.img_attach_id,
+			   b.seq
+	      FROM chatbot_respone_card_type a
+     LEFT JOIN chatbot_respone_attach b
+		 ON a.img_attach_id = b.parent_id 
 		 WHERE list_id = #{list_id}
 	</select>
 	
@@ -526,13 +532,16 @@
 	</select>	
 	
 	<select id="getListTypeCardItemList" parameterType="String" resultType="Map">
-		SELECT list_item_id,
-			   list_type_id,
-			   title,
-			   content,
-			   position,
-			   img_attach_id
-		  FROM chatbot_list_type_item
+		SELECT a.list_item_id,
+			   a.list_type_id,
+			   a.title,
+			   a.content,
+			   a.position,
+			   a.img_attach_id,
+			   b.seq 
+		  FROM chatbot_list_type_item a
+     LEFT JOIN chatbot_respone_attach b
+		    ON a.img_attach_id = b.parent_id 
 		 WHERE list_type_id = #{list_type_id}
 	</select>
 	
@@ -617,4 +626,15 @@
 		  FROM daul.chatbot_respone_attach
 		 WHERE parent_id = #{img_attach_id}
 	</select>
-</mapper>
+	
+	<select id="selectSkillList" resultType="egovframework.com.chatbot.vo.SkillVo">
+		SELECT seq,
+		       title,
+		       function,
+		       del_chk
+		  FROM chatbot_skill_list
+		 WHERE del_chk = 'N'
+		      
+	
+	</select>
+</mapper> 

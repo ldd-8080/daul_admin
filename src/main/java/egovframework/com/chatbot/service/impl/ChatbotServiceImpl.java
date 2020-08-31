@@ -16,6 +16,7 @@ import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.chatbot.vo.SkillVo;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -424,5 +425,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	@Override
 	public Map<String, String> selectImageFile(String img_attach_id) throws Exception {
 		return chatbotMapper.selectImageFile(img_attach_id);
+	}
+
+	@Override
+	public List<SkillVo> selectSkillList(SkillVo vo) throws Exception {
+		return chatbotMapper.selectSkillList(vo);
 	}
 }

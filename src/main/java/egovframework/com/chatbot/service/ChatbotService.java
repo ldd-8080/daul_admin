@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
-import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.chatbot.vo.SkillVo;
 import egovframework.com.cmmn.util.FileVo;
 
 public interface ChatbotService {
@@ -49,4 +49,7 @@ public interface ChatbotService {
 	void insertImageFile(FileVo fileVo) throws Exception;
 	void deleteImageFile(String intent_id) throws Exception;
 	Map<String, String> selectImageFile(String img_attach_id) throws Exception;
+	
+	
+	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 }

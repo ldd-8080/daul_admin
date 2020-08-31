@@ -24,8 +24,10 @@ import egovframework.com.chatbot.service.ChatbotService;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
+import egovframework.com.chatbot.vo.SkillVo;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.qna.vo.QnaVo;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -43,6 +45,18 @@ public class ChatbotController {
 	public String intentsListPage(ModelMap model) {
 		model.addAttribute("inputVo", new InputVo());
 		return "chatbot/intentList";
+	}
+	
+	@RequestMapping(value = "/skillListPage.do")
+	public String skillListPage(ModelMap model) {
+		model.addAttribute("inputVo", new InputVo());
+		return "chatbot/skillList";
+	}
+	
+	@RequestMapping(value = "/conditionListPage.do")
+	public String conditionListPage(ModelMap model) {
+		model.addAttribute("inputVo", new InputVo());
+		return "chatbot/conditionList";
 	}
 
 	@RequestMapping(value = "/getIntentList.do")
@@ -308,5 +322,18 @@ public class ChatbotController {
 		chatbotService.getIntentList();
 		
 	}
+	
+	@RequestMapping(value="/getSkillList.do", method = RequestMethod.GET)
+	public ResponseEntity<?> qnaList(ModelMap model, SkillVo vo) throws Exception{
+		List<SkillVo> skillList = null;
+		try {
+			skillList = chatbotService.selectSkillList(vo);
+		}catch(Exception e) {
+			log.debug("chatbotController > /getSkillList.do > Exception");
+		}		
+		
+		return new ResponseEntity<>(skillList, HttpStatus.OK);	
+	}
+	
 	
 }

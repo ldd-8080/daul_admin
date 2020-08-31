@@ -9,6 +9,7 @@ import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ItemVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.ResponeVo;
+import egovframework.com.chatbot.vo.SkillVo;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -82,4 +83,5 @@ public interface ChatbotMapper {
 	void deleteImageFile(String intent_id) throws Exception;
 	Map<String, String> selectImageFile(String img_attach_id) throws Exception;
 
+	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 }
