@@ -374,34 +374,53 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 		
 		$(button).webuiPopover($.extend({
 			onShow: function($element) {
-				console.log("button popover onShow---------------------");
 				var popover_id = $element[0].id;
 				var div_select_intent = $("#" + popover_id + " .div-select-intent");
 				var div_input_url = $("#" + popover_id + " .div-input-url");
 				var select_btn_type = $("#" + popover_id + " .select-btn-type");
 				var select_intent = $("#" + popover_id + " .select-intent");
+				var input_url = $("#" + popover_id + " input.input-url");
 				
 				var input_function1 = $(button).find("input[name*='function1']");
 				var input_function2 = $(button).find("input[name*='function2']");
 				var input_function1_val = $(button).find("input[name*='function1']").val();
 				var input_function2_val = $(button).find("input[name*='function2']").val();
-				console.log("function1", input_function1_val);
-				console.log("function2", input_function2_val);
 				
-				if (input_function1_val) {
-					select_btn_type.val(input_function1_val);
-					
-					if (input_function1_val === "intent") {
+				if (obj.name !== "direct") {
+					if (input_function1_val) {
+						select_btn_type.val(input_function1_val);
+						
+						if (input_function1_val === "intent") {
+							select_intent.val(input_function2_val);
+							div_select_intent.show();
+							div_input_url.hide();
+						} else if (input_function1_val === "url") {
+							div_select_intent.hide();
+							input_url.val(input_function2_val);
+							div_input_url.show();
+						}
+					} else {
 						div_select_intent.show();
 						div_input_url.hide();
-					} else if (select_btn_type_val === "url") {
-						div_select_intent.hide();
-						div_input_url.show();
 					}
 				} else {
-					div_select_intent.show();
 					div_input_url.hide();
+					select_btn_type.find("option[value='url']").hide();
 				}
+				
+				select_btn_type.on("change", function(e) {
+					var val = $(this).val();
+					
+					if (val === "intent") {
+						div_select_intent.show();
+						div_input_url.hide();
+						input_url.val("");
+					} else if (val === "url") {
+						div_select_intent.hide();
+						select_intent.val("");
+						div_input_url.show();
+					}
+				});
 				
 //				var select_btn_type_val = select_btn_type.val();
 //				
@@ -418,38 +437,38 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 //					div_input_url.hide();
 //				}
 				
-				if (!select_btn_type.data("select2")) {
-					select_btn_type.select2({
-						
-						dropdownCssClass: "increasedzindexclass",
-						data: [
-							{id: "intent", text: "intent 링크"},
-							{id: "url", text: "URL 링크"}
-						]
-					});
-					
-					select_btn_type.on("select2:select", function(e) {
-						var data = e.params.data;
-						
-						if (data.id === "intent") {
-							div_select_intent.show();
-							div_input_url.hide();
-						} else if (data.id === "url") {
-							div_select_intent.hide();
-							div_input_url.show();
-						}
-					});
-				}
-				
-				if (!select_intent.data("select2")) {
-					select_intent.select2({
-						dropdownCssClass: "increasedzindexclass",
-						data: [
-							{id: "0", text: "의도 0"},
-							{id: "1", text: "의도 1"}
-						]
-					});
-				}
+//				if (!select_btn_type.data("select2")) {
+//					select_btn_type.select2({
+//						
+//						dropdownCssClass: "increasedzindexclass",
+//						data: [
+//							{id: "intent", text: "intent 링크"},
+//							{id: "url", text: "URL 링크"}
+//						]
+//					});
+//					
+//					select_btn_type.on("select2:select", function(e) {
+//						var data = e.params.data;
+//						
+//						if (data.id === "intent") {
+//							div_select_intent.show();
+//							div_input_url.hide();
+//						} else if (data.id === "url") {
+//							div_select_intent.hide();
+//							div_input_url.show();
+//						}
+//					});
+//				}
+//				
+//				if (!select_intent.data("select2")) {
+//					select_intent.select2({
+//						dropdownCssClass: "increasedzindexclass",
+//						data: [
+//							{id: "0", text: "의도 0"},
+//							{id: "1", text: "의도 1"}
+//						]
+//					});
+//				}
 				
 				var input_btn_name = $("#" + popover_id + " .form-control.input-btn-name");
 				var input_hidden_name = $(button).find("input[name*='name']").val();
@@ -594,10 +613,12 @@ function titleContentPopoverEvent(response_card_id) {
 		
 		save_btn.addEventListener("click", function() {
 			response_card.querySelector("input[name*='title']").value = input.value;
-			response_card.querySelector("h5.card-title").innerHTML = input.value;
+			if (input.value)	response_card.querySelector("h5.card-title").innerHTML = input.value;
+			else				response_card.querySelector("h5.card-title").innerHTML = "타이틀을 입력하세요.";
 			
 			response_card.querySelector("input[name*='content']").value = textarea.value;
-			response_card.querySelector("p.card-text").innerHTML = textarea.value;
+			if (textarea.value)	response_card.querySelector("p.card-text").innerHTML = textarea.value;
+			else				response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요.";
 			
 			WebuiPopovers.hide(popover_target);
 		});
@@ -626,7 +647,8 @@ function titlePopoverEvent(response_card_id) {
 		
 		save_btn.addEventListener("click", function() {
 			response_card.querySelector("input[name*='title']").value = input.value;
-			response_card.querySelector("h5.card-title").innerHTML = input.value;
+			if (input.value)	response_card.querySelector("h5.card-title").innerHTML = input.value;
+			else 				response_card.querySelector("h5.card-title").innerHTML = "타이틀을 입력하세요.";
 			
 			WebuiPopovers.hide(popover_target);
 		});
@@ -686,10 +708,12 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 			
 			save_btn.addEventListener("click", function() {
 				$this.find("input[name*='title']").val(title.value);
-				$this.find("p.title").text(title.value);
+				if (title.value)	$this.find("p.title").text(title.value);
+				else				$this.find("p.title").text("타이틀을 입력하세요.");
 				
 				$this.find("input[name*='content']").val(content.value);
-				$this.find("p.content").text(content.value);
+				if (content.value)	$this.find("p.content").text(content.value);
+				else				$this.find("p.content").text("내용을 입력하세요.");
 				
 				WebuiPopovers.hide($(li));
 			});

@@ -248,8 +248,19 @@
   <div class="form-group">
     <label class="form-control-label mb-0">버튼기능<span class="red-600 ml-5">*</span></label>
     <div class="position-relative">
-      <div style="width:130px; float: left; "> <select class="form-control select-btn-type" ></select></div>
-      <div class="div-select-intent" style="width:223px; float: left; margin-left: 5px; "> <select class="form-control select-intent" ></select></div>
+      <div style="width:130px; float: left; "> 
+      	<select class="form-control select-btn-type">
+      		<option value="intent">INTENT 링크</option>
+      		<option value="url">URL 링크</option>
+      	</select>
+      </div>
+      <div class="div-select-intent" style="width:223px; float: left; margin-left: 5px; ">
+      	<select class="form-control select-intent">
+      		<option value="">- 선택 -</option>
+      		<option value="0">의도 0</option>
+      		<option value="1">의도 1</option>
+      	</select>
+      </div>
       <div class="div-input-url" style="width:223px; float: left; margin-left: 5px;" > <input type="text" class="form-control input-url" /></div>
     </div>
   </div>
@@ -291,11 +302,11 @@
 <div id="popoverEditTitleText" class="popover-content" hidden>
   <div class="form-group">
     <label class="form-control-label mb-0">타이틀</label>
-    <input type="text" class="form-control" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+    <input type="text" class="form-control" placeholder="타이틀을 입력하세요." autocomplete="off" />
   </div>
   <div class="form-group">
     <label class="form-control-label mb-0">텍스트</label>
-    <textarea class="form-control" rows="5" placeholder="텍스트를 입력해주세요." autocomplete="off" style="resize: none;"></textarea>
+    <textarea class="form-control" rows="5" placeholder="내용을 입력하세요." autocomplete="off" style="resize: none;"></textarea>
   </div>
   <div class="form-group form-material float-right">
     <button type="button" class="btn btn-primary btn-save">저장</button>
@@ -315,7 +326,7 @@
 <div id="popoverListTitle" class="popover-content" hidden>
   <div class="form-group">
     <label class="form-control-label mb-0">타이틀<span class="red-600 ml-5">*</span></label>
-    <input type="text" class="form-control" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+    <input type="text" class="form-control" placeholder="타이틀을 입력하세요." autocomplete="off" />
   </div>
   <div class="form-group form-material float-right">
     <button type="button" class="btn btn-primary btn-save">저장</button>
@@ -335,11 +346,11 @@
 <div id="popoverListItem" class="popover-content" hidden>
   <div class="form-group">
     <label class="form-control-label mb-0">타이틀<span class="red-600 ml-5">*</span></label>
-    <input type="text" class="form-control title" placeholder="타이틀을 입력해주세요." autocomplete="off" />
+    <input type="text" class="form-control title" placeholder="타이틀을 입력하세요." autocomplete="off" />
   </div>
   <div class="form-group">
-    <label class="form-control-label mb-0">설명</label>
-    <input type="text" class="form-control content" placeholder="설명을 입력해주세요." autocomplete="off" />
+    <label class="form-control-label mb-0">내용</label>
+    <input type="text" class="form-control content" placeholder="내용을 입력하세요." autocomplete="off" />
   </div>
   <div class="form-group">
     <label class="form-control-label mb-0">썸네일 이미지</label>
@@ -746,9 +757,11 @@ function initialize_jstree(){
 						
 						// title, content, position
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
-						response_card.querySelector("h5.card-title").innerHTML = card[j].title;
+						if (card[j].title)	response_card.querySelector("h5.card-title").innerHTML = card[j].title;	
+						else 				response_card.querySelector("h5.card-title").innerHTML = "타이틀을 입력하세요.";
 						response_card.querySelector("input[name*='title']").value = card[j].title;
-						response_card.querySelector("p.card-text").innerHTML = card[j].content;
+						if (card[j].content)	response_card.querySelector("p.card-text").innerHTML = card[j].content;	
+						else					response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요.";
 						response_card.querySelector("input[name*='content']").value = card[j].content;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
 						
@@ -759,9 +772,10 @@ function initialize_jstree(){
 							response_card.querySelector("button.card-btn-action").click();
 							
 							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
+							if (button[k].name)	response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							else				response_button.querySelector("div.btn-name").innerHTML = "Default";
 							response_button.querySelector("input[name*='position']").value = button[k].position;
 							response_button.querySelector("input[name*='name']").value = button[k].name;
-							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
 							response_button.querySelector("input[name*='function1']").value = button[k].function1;
 							response_button.querySelector("input[name*='function2']").value = button[k].function2;
 						}
@@ -777,7 +791,8 @@ function initialize_jstree(){
 						
 						// title, position
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
-						response_card.querySelector("h5.card-title").innerHTML = card[j].title;
+						if (card[j].title)	response_card.querySelector("h5.card-title").innerHTML = card[j].title;
+						else				response_card.querySelector("h5.card-title").innerHTML = "타이틀을 입력하세요.";
 						response_card.querySelector("input[name*='title']").value = card[j].title;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
 						
@@ -788,9 +803,10 @@ function initialize_jstree(){
 							response_card.querySelector("button.card-btn-action").click();
 							
 							var response_button = document.getElementById("responseCard_" + i + "_" + j + "_btn_" + k);
+							if (button[k].name)	response_button.querySelector("div.btn-name").innerHTML = button[k].name;
+							else				response_button.querySelector("div.btn-name").innerHTML = "Default";
 							response_button.querySelector("input[name*='position']").value = button[k].position;
 							response_button.querySelector("input[name*='name']").value = button[k].name;
-							response_button.querySelector("div.btn-name").innerHTML = button[k].name;
 							response_button.querySelector("input[name*='function1']").value = button[k].function1;
 							response_button.querySelector("input[name*='function2']").value = button[k].function2;
 						}
@@ -802,9 +818,11 @@ function initialize_jstree(){
 							response_card.querySelector("button.btn.btn-block.btn-pure").click();
 							
 							var response_list = document.getElementById("responseCard_" + i + "_" + j + "_list_btn_" + l);
-							response_list.querySelector("p.title").innerHTML = list[l].title;
+							if (list[l].title)	response_list.querySelector("p.title").innerHTML = list[l].title;
+							else 				response_list.querySelector("p.title").innerHTML = "타이틀을 입력하세요.";
 							response_list.querySelector("input[name*='title']").value = list[l].title;
-							response_list.querySelector("p.content").innerHTML = list[l].content;
+							if (list[l].content)	response_list.querySelector("p.content").innerHTML = list[l].content;
+							else					response_list.querySelector("p.content").innerHTML = "내용을 입력하세요.";
 							response_list.querySelector("input[name*='content']").value = list[l].content;
 						}
 					}
