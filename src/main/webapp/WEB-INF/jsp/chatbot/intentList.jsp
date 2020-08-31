@@ -764,6 +764,7 @@ function initialize_jstree(){
 						else					response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요.";
 						response_card.querySelector("input[name*='content']").value = card[j].content;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
+						response_card.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + card[j].img_attach_id;
 						
 						var button = card[j].button;
 						
