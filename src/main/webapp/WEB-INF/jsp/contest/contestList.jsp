@@ -12,7 +12,6 @@
 			<li class="breadcrumb-item active">나눔공모</li>
 		</ol>
 
-		<div class="page-content">
 			<!-- 검색조건 -->
 			<div class="panel">
 				<div class="panel-body"style="padding-top: 20px; padding-bottom: 1px;">
@@ -82,7 +81,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+	
 	</div>
 </div>
 <script type="text/javascript">

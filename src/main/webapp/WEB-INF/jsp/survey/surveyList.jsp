@@ -12,7 +12,6 @@
 	      <li class="breadcrumb-item active">설문조사</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    	<!-- 검색조건 -->
 			<div class="panel">
 				<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
@@ -81,9 +80,9 @@
 	        			</div>
 	        		</div>
 	        	</div>
-			</div>
-		</div>
+		
 	</div>
+</div>
 
 <!-- End Page -->
 <script type="text/javascript">

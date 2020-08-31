@@ -14,7 +14,6 @@
 	      <li class="breadcrumb-item active">묻고답하기</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    
 	    <!-- 검색조건 -->
 			<div class="panel">
@@ -76,7 +75,7 @@
 		        	 <div id="qnaListTable" class="text-break"></div>
 		        </div>
 	    	</div>
-	    </div>
+	    
 	</div>
 	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaDetailPositionCenter" id="qnaDetailPositionBtn" href="#">상세</button>
 	<button type="button" style="display:none;" class="btn-sm btn-primary btn-outline  waves-effect waves-classic" data-toggle="modal" data-target="#qnaUpdatePositionCenter" id="qnaUpdatePositionBtn" href="#">상세</button>

@@ -18,8 +18,15 @@
         <div class="panel">
 	          <div class="panel-body container-fluid"> 
 
-	    <div class="example-wrap">
+	    		<div class="example-wrap">
+	    
+	    
+	    
                   <div class="nav-tabs-horizontal" data-plugin="tabs">
+                  
+                  
+                  
+                  
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
                           aria-controls="exampleTabsOne" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설&nbsp;&nbsp;문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
@@ -28,6 +35,10 @@
                       <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
                           aria-controls="exampleTabsThree" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;댓글&nbsp;(${surveyOpinionListSize})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                     </ul>
+                    
+                    
+                    
+                    
                     <div class="tab-content pt-20">
                       <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                       	<div class="col-lg-12">
@@ -136,10 +147,9 @@
 								        <br/>
 								        
 											<div class="col-md-12 text-right">
-												<div class="example example-buttons">  
 													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" data-title="설문조사" formaction="/survey/updateSurvey.do">수정 </button>
 													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
-												</div>
+									
 											</div>
 										</form:form>
 									</div>
@@ -151,42 +161,42 @@
                       <!--두번째탭 -->
                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                       <div class="row row-lg">
+                      
 						  <div class="col-md-12">
-						  <h4>◦ 투표결과</h4>
-						  <br/>
-								<div class="row row-lg">
-								<div class="col-md-1"></div>
-									<div class="col-md-6">
-										<div class="example-wrap" id = "surveyResultDiv">
-										</div>
-									</div>
-								</div>
-		                   </div>
-		                </div>
-                
-                    <hr/>
-                    	<br/>
-                    	<div class='form-group row'>
-                      	<h4>◦ 참여자</h4><span>&nbsp;&nbsp;총${ surveyParticipation.size() }명</span>
-                      	</div>  
-						<br/>
+							  <h4>◦ 투표결과</h4>
+							<div class="example-wrap w-p50 pl-20" id = "surveyResultDiv"></div>
+						</div>
 						
-						   <div id="surveyParticipationListTable" class="text-break"></div>
-					
+						  <div class="col-md-12">
+							  <h4>◦ 참여자<span class="small">&nbsp;&nbsp;총${ surveyParticipation.size() }명</span></h4>
+							<div id="surveyParticipationListTable" class="text-break"></div>
+						</div>		
+									
+               			</div>
                		</div>
+               		
+               		
+               		
+               		
                     <!--번째탭 -->
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                       <%@ include file="./surveyOpinion.jsp" %>
              	    </div>
                 	      
                 	      
-             	     </div>
-         			</div> 
+                	     
+             	     </div> 
+                	      
+                	      
+                	      
+         			
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+</div>
+
 
 <script type="text/javascript">
 	getSurveyOpinionList();

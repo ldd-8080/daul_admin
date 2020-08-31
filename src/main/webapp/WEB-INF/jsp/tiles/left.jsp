@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<div class="site-menubar">
+<div class="site-menubar site-menubar-dark">
   	<div class="site-menubar-body">
         <ul class="site-menu" data-plugin="menu">
             <li class="site-menu-item has-sub">
             	<a class="animsition-link" href="/main/main.do">
                 	<i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                	<span class="site-menu-title">Dashboard</span>
+                	<span class="site-menu-title">대시보드</span>
             	</a>
             </li>
             
           	<li class="site-menu-item has-sub">
                	<a href="javascript:void(0)">
-                   	<i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+                   	<i class="site-menu-icon md-account" aria-hidden="true"></i>
                    	<span class="site-menu-title">사용자</span>
                    	<span class="site-menu-arrow"></span>
                	</a>
@@ -34,7 +34,7 @@
      
            	<li class="site-menu-item has-sub">
 	           	<a href="javascript:void(0)">
-	               	<i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+	               	<i class="site-menu-icon md-slideshare" aria-hidden="true"></i>
 	               	<span class="site-menu-title">서비스</span>
 	               	<span class="site-menu-arrow"></span>
 	           	</a>
@@ -60,7 +60,7 @@
    
 	       	<li class="site-menu-item has-sub">
 	           	<a href="javascript:void(0)">
-	               	<i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
+	               	<i class="site-menu-icon md-view-list" aria-hidden="true"></i>
 	               	<span class="site-menu-title">게시판</span>
 	               	<span class="site-menu-arrow"></span>
 	           	</a>
@@ -85,10 +85,18 @@
 	       	</li>
 	       	
 	       	<li class="site-menu-item has-sub">
-            	<a class="animsition-link" href="/chatbot/intentListPage.do">
-                	<i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                	<span class="site-menu-title">chatbot</span>
+            	<a class="animsition-link">
+                	<i class="site-menu-icon md-twitch" aria-hidden="true"></i>
+                	<span class="site-menu-title">챗봇</span>
+	               	<span class="site-menu-arrow"></span>
             	</a>
+	           	<ul class="site-menu-sub">
+	            	<li class="site-menu-item">
+	               		<a class="animsition-link" href="/chatbot/intentListPage.do">                   
+	                 		<span class="site-menu-title">의도-응답 관리</span>
+	               		</a>
+	             	</li>
+             	</ul>
             </li>
         </ul>
   	</div>

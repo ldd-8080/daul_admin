@@ -100,11 +100,10 @@
 								    
 								        <br/>
 										<div class="col-md-12 text-right">
-											<div class="example example-buttons">  	
-												<button type="button" class="btn btn-primary waves-effect waves-classic" id="sgstModifyBtn" data-title="열린제안">수정 </button>
-												<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
-												<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
-											</div>
+											<button type="button" class="btn btn-primary waves-effect waves-classic" id="sgstModifyBtn" data-title="열린제안">수정 </button>
+											<button type="submit" class="btn btn-primary waves-effect waves-classic" name="sgstSubmitBtn" data-title="열린제안" formaction="/suggestion/suggestionDelete.do">삭제 </button>
+											<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="suggestionListBtn">목록 </button>
+										
 										</div>
 								
 									</form:form>

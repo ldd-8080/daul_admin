@@ -15,7 +15,6 @@
 	      <li class="breadcrumb-item active">관리자상세</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    	<div class="row">
 	    		<div class="col-lg-4">
 	    			<div class="mb-30">
@@ -76,11 +75,10 @@
 	    							<br/>
 	    							
 	    							<div class="col-md-12 text-right">
-										<div class="example example-buttons">  	
-		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" data-title="회원" formaction="/user/update.do">저장 </button>
-		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" data-title="회원" formaction="/user/delete.do">삭제 </button>
-		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
-	    								</div>
+	    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" data-title="회원" formaction="/user/update.do">저장 </button>
+	    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" data-title="회원" formaction="/user/delete.do">삭제 </button>
+	    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
+	    					
 	    							</div>
 	    							
 	    						</form:form>
@@ -89,7 +87,7 @@
 	    			</div>
 	    		</div>
 	    	</div>
-		</div>
+
 	</div>
 <!-- End Page -->
 </div>

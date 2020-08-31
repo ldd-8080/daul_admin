@@ -122,6 +122,7 @@
 		   </when>
 		   <otherwise>
 		   AND auth_type != 'admin'
+		   AND last_login_date > DATE_ADD(NOW(), INTERVAL -3 MONTH)
 		   </otherwise>
 		   </choose>
 		) sub

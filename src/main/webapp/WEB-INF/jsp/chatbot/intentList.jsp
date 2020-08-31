@@ -521,7 +521,7 @@ function initialize_jstree(){
       },
       'plugins': [ 'search', "types", 'state', "wholerow", 'contextmenu']
     }).on("ready.jstree",function (){
-    	$("#jstree").jstree("close_all");
+    	//$("#jstree").jstree("close_all");
     })
     .on("select_node.jstree", function (event, data) {
     	// 노드가 선택된 뒤 처리할 이벤트

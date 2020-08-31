@@ -13,14 +13,13 @@
 	      <li class="breadcrumb-item active">관리자</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    
 	    <div class="panel">
 				<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
 					<form id="search-form">
 						<div class="form-group row">
 							<!-- 등록일 -->
-							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
+						<!-- 	<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
 							<div class="col-md-5">
 								<div class="input-daterange" data-plugin="datepicker">
 									<div class="input-group">
@@ -38,7 +37,7 @@
 										<input type="text" class="form-control" name="search_e_date" />
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!-- 검색어 -->
 							<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
 							<div class="col-md-5">
@@ -82,7 +81,7 @@
 		       		</div>
 	    		</div>
 			</div>
-		</div>
+		
 	</div>
 <!-- End Page -->
 </div>

@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+<nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega navbar-inverse" role="navigation">
   <div class="navbar-header">
     <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
       data-toggle="menubar">
@@ -20,7 +20,44 @@
   <div class="navbar-container container-fluid">
     <!-- Navbar Collapse -->
     <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
-      <!-- Navbar Toolbar Right -->
+    	<ul class="nav navbar-toolbar">
+          <li class="nav-item hidden-float" id="toggleMenubar">
+            <a class="nav-link waves-effect waves-light waves-round" data-toggle="menubar" href="#" role="button">
+              <i class="icon hamburger hamburger-arrow-left">
+                <span class="sr-only">Toggle menubar</span>
+                <span class="hamburger-bar"></span>
+              </i>
+            </a>
+          </li>
+          <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+            <a class="nav-link icon icon-fullscreen waves-effect waves-light waves-round" data-toggle="fullscreen" href="#" role="button">
+              <span class="sr-only">Toggle fullscreen</span>
+            </a>
+          </li>
+        </ul>
+        
+        <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right mr-5">
+            <li class="nav-item dropdown">
+              <a class="nav-link navbar-avatar waves-effect waves-light waves-round" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+                <span class="avatar avatar-online">
+                  <img src="${pageContext.request.contextPath}/images/profile.png" alt="...">
+                  <i></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" role="menu" style="margin-right: 5px">
+                <div class="dropdown-header" role="presentation"><c:out value="${login.user_id}"/></div>
+                <div class="dropdown-divider" role="presentation"></div>
+                <a class="dropdown-item waves-effect waves-light waves-round" href="/login/logout.do" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+              </div>
+            </li>
+
+          </ul>
+          
+          
+  
+    
+    
+      <!-- Navbar Toolbar Right 
       <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
         <c:if test="${not empty login}">
         	<li class="nav-item hidden-float">
@@ -39,7 +76,10 @@
 	        	</a>
 	        </li>
         </c:if>
-      </ul>
+      </ul>-->
+      
+      
+      
       <!-- End Navbar Toolbar Right -->
     </div>
     <!-- End Navbar Collapse -->

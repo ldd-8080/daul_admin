@@ -13,76 +13,76 @@
 	      <li class="breadcrumb-item active">일반회원</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    <!-- 검색조건 -->
-			<div class="panel">
-				<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
-					<form id="search-form">
-						<div class="form-group row">
-							<!-- 등록일 -->
-							<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
-							<div class="col-md-5">
-								<div class="input-daterange" data-plugin="datepicker">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"> 
-												<i class="icon md-calendar" aria-hidden="true"></i>
-											</span>
-										</div>
-										<input type="text" class="form-control" name="search_s_date" />
-									</div>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">-</span>
-										</div>
-										<input type="text" class="form-control" name="search_e_date" />
-									</div>
-								</div>
-							</div>
-							<!-- 검색어 -->
-							<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
-							<div class="col-md-5">
+		<div class="panel">
+			<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
+				<form id="search-form">
+					<div class="form-group row">
+						<!-- 등록일 -->
+						<label class="col-md-1 col-form-label"><strong>최종로그인 </strong></label>
+						<div class="col-md-5">
+							<div class="input-daterange" data-plugin="datepicker">
 								<div class="input-group">
-									<div class="input-group-prepend w-p25">
-										<select data-plugin="selectpicker" name="search_type">
-											<option value="" selected>선택하세요</option>
-											<option value="title">제목</option>
-											<option value="content">내용</option>
-											<option value="create_user">작성자</option>
-										</select>
+									<div class="input-group-prepend">
+										<span class="input-group-text"> 
+											<i class="icon md-calendar" aria-hidden="true"></i>
+										</span>
 									</div>
-									<!-- <input type="text" class="form-control"> -->
-									<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
+									<input type="text" class="form-control" name="search_s_date" />
+								</div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">-</span>
+									</div>
+									<input type="text" class="form-control" name="search_e_date" />
 								</div>
 							</div>
 						</div>
-						<div class="form-group row">
-							<div class="col-lg-12">
-								<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색 </button>
+						<!-- 검색어 -->
+						<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
+						<div class="col-md-5">
+							<div class="input-group">
+								<div class="input-group-prepend w-p25">
+									<select data-plugin="selectpicker" name="search_type">
+										<option value="" selected>선택하세요</option>
+										<option value="title">제목</option>
+										<option value="content">내용</option>
+										<option value="create_user">작성자</option>
+									</select>
+								</div>
+								<!-- <input type="text" class="form-control"> -->
+								<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
 							</div>
 						</div>
-					</form>
-				</div>
-			</div>
-			
-	    	<div class="panel">
-		        <header class="panel-heading">
-		          <div class="panel-actions"></div>
-		        </header>
-		        <br/>
-		        <div class="panel-body"  style="padding-top: 20px; padding-bottom: 1px;">
-		        	<div id="userListTable" class="text-break"></div>
-		        </div>
-		         	<div class="col-md-12">
-			         	<div class="example example-buttons">  
-				         	<div>    
-				          		<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="publicUserCreate">등록</button>
-			          		</div>
-		          		</div>
-		       		 </div>
-	    		</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색 </button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
+			
+	    <div class="panel">
+	        <header class="panel-heading">
+	          <div class="panel-actions"></div>
+	        </header>
+	        <br/>
+	        <div class="panel-body"  style="padding-top: 20px; padding-bottom: 1px;">
+	        	<div id="userListTable" class="text-break"></div>
+	        </div>
+         	<div class="col-md-12">
+	         	<div class="example example-buttons">  
+		         	<div>    
+		          		<button class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="publicUserCreate">등록</button>
+	          		</div>
+          		</div>
+       		 </div>
+   		</div>
+
+		
+	</div>
 <!-- End Page -->
 </div>
 <script type="text/javascript">

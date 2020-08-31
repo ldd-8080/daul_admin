@@ -147,6 +147,8 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 												textTypeBtnVo.setParent_id(text_id);
 												textTypeBtnVo.setName((String)textTypeBtnList.get(textTypeBtnCnt).get("name"));
 												textTypeBtnVo.setPosition((String)textTypeBtnList.get(textTypeBtnCnt).get("position"));
+												textTypeBtnVo.setFunction1((String)textTypeBtnList.get(textTypeBtnCnt).get("function1"));
+												textTypeBtnVo.setFunction2((String)textTypeBtnList.get(textTypeBtnCnt).get("function2"));
 												textTypeBtnVo.setIntent_id(intent_id);
 												chatbotMapper.registBtn(textTypeBtnVo);
 											}else {
@@ -205,6 +207,8 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 												listTypeBtnVo.setParent_id(listType_id);
 												listTypeBtnVo.setName((String)listTypeBtnList.get(listTypeBtnCnt).get("name"));
 												listTypeBtnVo.setPosition((String)listTypeBtnList.get(listTypeBtnCnt).get("position"));
+												listTypeBtnVo.setFunction1((String)listTypeBtnList.get(listTypeBtnCnt).get("function1"));
+												listTypeBtnVo.setFunction2((String)listTypeBtnList.get(listTypeBtnCnt).get("function2"));
 												listTypeBtnVo.setIntent_id(intent_id);
 												chatbotMapper.registBtn(listTypeBtnVo);
 											}else {
@@ -265,6 +269,8 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 												cardTypeBtnVo.setParent_id(cardTypeId);
 												cardTypeBtnVo.setName((String)cardTypeBtnList.get(cardTypeBtnCnt).get("name"));
 												cardTypeBtnVo.setPosition((String)cardTypeBtnList.get(cardTypeBtnCnt).get("position"));
+												cardTypeBtnVo.setFunction1((String)cardTypeBtnList.get(cardTypeBtnCnt).get("function1"));
+												cardTypeBtnVo.setFunction2((String)cardTypeBtnList.get(cardTypeBtnCnt).get("function2"));
 												cardTypeBtnVo.setIntent_id(intent_id);
 												chatbotMapper.registBtn(cardTypeBtnVo);
 											}else {

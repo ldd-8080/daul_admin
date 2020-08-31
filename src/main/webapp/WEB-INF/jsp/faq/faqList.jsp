@@ -14,7 +14,6 @@
 	      <li class="breadcrumb-item active">자주하는질문</li>
 	    </ol>
 	
-	    <div class="page-content"><!-- 검색조건 -->
 			<div class="panel">
 				<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
 					<form id="search-form">
@@ -82,7 +81,7 @@
                 	</div>
             	</div>
 	    	</div>
-	    </div>
+	  
 	</div>
 <!-- End Page -->
 </div>

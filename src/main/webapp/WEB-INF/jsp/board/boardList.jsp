@@ -18,7 +18,6 @@
 	      <li class="breadcrumb-item active">공지사항</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    
 	    <!-- 검색조건 -->
 			<div class="panel">
@@ -87,7 +86,7 @@
 		          	</div>
 		        </div>
 		   	</div>
-	    </div>
+	  
 	</div>
 <!-- End Page -->
 </div>

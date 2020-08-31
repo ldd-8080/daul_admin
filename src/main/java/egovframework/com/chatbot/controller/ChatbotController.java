@@ -77,7 +77,9 @@ public class ChatbotController {
 
 	@RequestMapping(value = "/deleteResponse.do", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteIntent(HttpSession session, InputVo vo) throws Exception {
-		System.out.println(vo.getIntent_id());
+		IntentVo intentVo = new IntentVo();
+		intentVo.setId(vo.getIntent_id());
+		chatbotService.deleteCategory(intentVo);
 		chatbotService.deleteIntentId(vo.getIntent_id());
 
 		return new ResponseEntity<>("success", HttpStatus.OK);
@@ -248,7 +250,6 @@ public class ChatbotController {
 				
 				case "list":
 					listTypeCardList = chatbotService.getListTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
-					System.out.println("11111111111111111111111");
 					for(int listTypeCardCnt = 0; listTypeCardCnt < listTypeCardList.size(); listTypeCardCnt++) {
 						listTypeCardItemList = chatbotService.getListTypeCardItemList((String)listTypeCardList.get(listTypeCardCnt).get("list_type_id"));
 						listTypeCardList.get(listTypeCardCnt).put("list", listTypeCardItemList);
@@ -299,5 +300,17 @@ public class ChatbotController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/getIntentListInBtn.do")
+	public void getIntentListInBtn() throws Exception{
+		IntentVo vo = new IntentVo();
+		chatbotService.getIntentList();
+		
+	}
+	
+	
+	@RequestMapping(value="/getImgFile.do")
+	public void getImgFile(@RequestParam("img_attach_id") String img_attach_id, HttpServletResponse response) throws Exception {
 	}
 }

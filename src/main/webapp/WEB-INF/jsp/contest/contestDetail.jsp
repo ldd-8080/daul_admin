@@ -181,7 +181,6 @@
 								        <br/>
 								        
 										<div class="col-md-12 text-right">
-											<div class="example example-buttons"> 
 												<button type="button"
 													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" data-title="나눔공모">수정 </button>
 												<button type="submit"
@@ -189,7 +188,7 @@
 												<button type="button"
 													class="btn btn-default btn-outline waves-effect waves-classic"
 													id="contestListBtn">목록</button>
-											</div>
+											
 										</div>
 									</form:form>
 								</div>

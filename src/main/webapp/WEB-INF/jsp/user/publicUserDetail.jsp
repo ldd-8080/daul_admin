@@ -15,7 +15,6 @@
 	      <li class="breadcrumb-item active">회원상세</li>
 	    </ol>
 	
-	    <div class="page-content">
 	    	<div class="row">
 	    		<div class="col-lg-4">
 	    			<div class="mb-30">
@@ -31,19 +30,19 @@
     							<h3 class="panel-title">활동현황</h3>
     						</div>
     						<div class="panel-body">
-    							<div class="input-group">
+    							<div class="input-group pb-5">
     								<div class="input-group-append">
     									<span class="input-group-text">열린제안</span>
     								</div>
     								<input type="text" class="form-control text-center" value="${userCntVo.suggestion_cnt}"/>
     							</div>
-    							<div class="input-group">
+    							<div class="input-group pb-5">
     								<div class="input-group-append">
     									<span class="input-group-text">설문참여</span>
     								</div>
     								<input type="text" class="form-control text-center" value="${userCntVo.participation_cnt}"/>
     							</div>
-    							<div class="input-group">
+    							<div class="input-group pb-5">
     								<div class="input-group-append">
     									<span class="input-group-text" >공모참여</span>
     								</div>
@@ -62,7 +61,7 @@
     							<h3 class="panel-title">수신여부</h3>
     						</div>
     						<div class="panel-body">
-    							<div class="input-group">
+    							<div class="input-group pb-5">
     								<div class="input-group-append">
     									<span class="input-group-text">이메일</span>
     								</div>
@@ -73,7 +72,7 @@
     									<label class="pt-3" for="emailSwitch">On</label>
     								</div>
     							</div>
-    							<div class="input-group">
+    							<div class="input-group pb-5">
     								<div class="input-group-append">
     									<span class="input-group-text">알림톡</span>
     								</div>
@@ -175,11 +174,10 @@
 								    <br/>
 								       
 	    							<div class="col-md-12 text-right">
-	    								<div class="example example-buttons">
 		    								<button type="submit" class="btn btn-primary waves-effect waves-classic" id="userSave" data-title="회원" formaction="/user/update.do">저장 </button>
-		    								<button type="submit" class="btn btn-danger waves-effect waves-classic" id="userDelete" data-title="회원" formaction="/user/delete.do">삭제 </button>
+		    								<button type="submit" class="btn btn-dark waves-effect waves-classic" id="userDelete" data-title="회원" formaction="/user/delete.do">삭제 </button>
 		    								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
-	    								</div>
+	    								
 	    							</div>
 	    							
 	    						</form:form>
@@ -188,7 +186,7 @@
 	    			</div>
 	    		</div>
 	    	</div>
-		</div>
+	
 	</div>
 <!-- End Page -->
 </div>
