@@ -46,13 +46,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/getUserList.do")
-	public ResponseEntity<?> userListPage(ModelMap model, @RequestParam("auth_type") String auth_type) throws Exception{
+	public ResponseEntity<?> userListPage(ModelMap model,UserVo userVo) throws Exception{
 		List<UserVo> userList = null;
 		UserVo vo = new UserVo();
 		
 		try {
-			vo.setAuth_type(auth_type);
-			userList = userService.selectUserList(vo);
+		//	vo.setAuth_type(userVo);
+			userList = userService.selectUserList(userVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -23,10 +23,6 @@
 	    
 	    
                   <div class="nav-tabs-horizontal" data-plugin="tabs">
-                  
-                  
-                  
-                  
                     <ul class="nav nav-tabs" role="tablist">
                       <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
                           aria-controls="exampleTabsOne" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설&nbsp;&nbsp;문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
@@ -35,10 +31,6 @@
                       <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
                           aria-controls="exampleTabsThree" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;댓글&nbsp;(${surveyOpinionListSize})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                     </ul>
-                    
-                    
-                    
-                    
                     <div class="tab-content pt-20">
                       <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                       	<div class="col-lg-12">
@@ -71,13 +63,13 @@
 													<form:errors style="color:red;" path="content"/>
 												</div>   
 											</div>
-											<div class="form-group row">
+									<%-- 		<div class="form-group row">
 												<div class="col-md-1"></div>
 												<label class="col-md-2 col-form-label">대표이미지 </label>
 												<div class="col-md-8">
-					                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+					                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
 					                  			</div>
-											</div>
+											</div> --%>
 						                  	<div class="form-group row">
 												<div class="col-md-1"></div>
 												<label class="col-md-2 col-form-label">설문기간 </label>		
@@ -159,7 +151,7 @@
                       </div>
                       
                       <!--두번째탭 -->
-                   <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                       <div class="row row-lg">
                       
 						  <div class="col-md-12">
@@ -174,21 +166,11 @@
 									
                			</div>
                		</div>
-               		
-               		
-               		
-               		
-                    <!--번째탭 -->
+                    <!--세번째탭 -->
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                       <%@ include file="./surveyOpinion.jsp" %>
              	    </div>
-                	      
-                	      
-                	     
-             	     </div> 
-                	      
-                	      
-                	      
+             	    </div> 
          			
 				</div>
 			</div>
@@ -210,8 +192,8 @@
 	
 	var s_date = document.getElementById("s_date").value;
 	
-	var today = formatDate(new Date())
-	
+	var today = formatDate(new Date());
+/* 	
 	if(s_date <= today){
 		document.getElementById('addQuestion').setAttribute('disabled', 'disabled');
 		$("button[name='question_delete']").attr("disabled", "disabled");
@@ -223,7 +205,7 @@
 	}else{
 		
 	}
-	
+	 */
 	//파일정보 가져오기
 	var ResultList = new Array();
 	var sumCount= 0;

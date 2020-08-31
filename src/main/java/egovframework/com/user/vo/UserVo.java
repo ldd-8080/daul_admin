@@ -1,6 +1,8 @@
 package egovframework.com.user.vo;
 
-public class UserVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class UserVo  extends SearchVo{
 
 	private String user_id;
 	private String name;

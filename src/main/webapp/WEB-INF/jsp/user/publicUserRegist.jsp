@@ -76,7 +76,7 @@
 		    							<label class="col-md-2 col-form-label">아이디 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="user_id"/>
-		    								<form:errors path="user_id"/>
+		    								<form:errors style="color:red;" path="user_id"/>
 		    							</div>
 		    							<div class="col-md-1">
 		    								<button type="button" class="btn btn-primary waves-effect waves-classic" id="userIdCheck">중복확인 </button>
@@ -90,7 +90,7 @@
 			    								<option value="일반">일반</option>
 			    								<option value="카카오">카카오</option>
 			    							</form:select>
-			    							<form:errors path="channel"/>
+			    							<form:errors style="color:red;" path="channel"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -102,7 +102,7 @@
 			    								<option value="pro">전문가</option>
 			    								<option value="admin">관리자</option>
 			    							</form:select>
-			    							<form:errors path="auth_type"/>
+			    							<form:errors style="color:red;" path="auth_type"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -110,7 +110,7 @@
 		    							<label class="col-md-2 col-form-label">이름 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="name"/>
-		    								<form:errors path="name"/>
+		    								<form:errors style="color:red;" path="name"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -118,7 +118,7 @@
 		    							<label class="col-md-2 col-form-label">비밀번호 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="password" class="form-control" placeholder="영문자, 숫자 혼합 8~15자리" path="pw"/>
-		    								<form:errors path="pw"/>
+		    								<form:errors style="color:red;" path="pw"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -134,7 +134,7 @@
 		    							<label class="col-md-2 col-form-label">전화번호 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="phone" placeholder="ex) xxx-xxxx-xxxx"/>
-		    								<form:errors path="phone"/>
+		    								<form:errors style="color:red;" path="phone"/>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -142,7 +142,7 @@
 		    							<label class="col-md-2 col-form-label">이메일 <span class="required">*</span></label>
 		    							<div class="col-md-6">
 		    								<form:input type="text" class="form-control" path="email" placeholder="ex) example@email.com"/>
-		    								<form:errors path="email"/>
+		    								<form:errors style="color:red;" path="email"/>
 		    							</div>
 	    							</div>
 	    							<form:input type="hidden" path="email_chk" value="N"/>

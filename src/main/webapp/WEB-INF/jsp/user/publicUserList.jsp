@@ -20,6 +20,7 @@
 					<div class="form-group row">
 						<!-- 등록일 -->
 						<label class="col-md-1 col-form-label"><strong>최종로그인 </strong></label>
+						<input type="hidden" name = "auth_type" value = "public" />
 						<div class="col-md-5">
 							<div class="input-daterange" data-plugin="datepicker">
 								<div class="input-group">
@@ -45,13 +46,14 @@
 								<div class="input-group-prepend w-p25">
 									<select data-plugin="selectpicker" name="search_type">
 										<option value="" selected>선택하세요</option>
-										<option value="title">제목</option>
-										<option value="content">내용</option>
-										<option value="create_user">작성자</option>
+										<option value="user_id">아이디</option>
+										<option value="user_name">이름</option>
+										<option value="user_phone">전화번호</option>
+										<option value="user_email">이메일</option>
 									</select>
 								</div>
 								<!-- <input type="text" class="form-control"> -->
-								<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()"> 
+								<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." > 
 							</div>
 						</div>
 					</div>
@@ -136,7 +138,6 @@
 			],
 
 			rowClick : function(args) {
-				console.log(args);
 				var idx = args.item.user_id;
 
 				location.href = "${pageContext.request.contextPath}/user/userDetailPage.do?auth_type=public&id=" + idx;
@@ -147,7 +148,7 @@
 
 	function getUserList() {
 		var request = $.ajax({
-			url : "/user/getUserList.do?auth_type=public",
+			url : "/user/getUserList.do",
 			method : "get",
 			data: $("#search-form").serialize()
 		});
@@ -163,6 +164,14 @@
 	}
 
 	$(function() {
+		var today = formatDate(new Date());
+		var preday = formatPreDate(new Date());
+		$("input[name='search_s_date']").val(preday);
+		$("input[name='search_e_date']").val(today);
+		getUserList();
+	});
+	
+	$("#searchBtn").click(function() {
 		getUserList();
 	});
 	

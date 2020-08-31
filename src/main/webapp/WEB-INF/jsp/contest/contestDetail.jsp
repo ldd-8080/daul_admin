@@ -66,14 +66,14 @@
 												<span class="text-left" style="color:red;" id="chk-error-content"></span>
 											</div>
 										</div>
-										<div class="form-group row">
+										<%-- <div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">대표이미지 </label>
 											<div class="col-md-8">
 												<input type="file" accept="image/*" id="repFile"
-													name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+													name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
 											</div>
-										</div>
+										</div> --%>
 
 										<div class="form-group row">
 											<div class="col-md-1"></div>
@@ -164,10 +164,10 @@
 													</span>
 												</div>
 											</div>
-											<div class="col-md-1" style="padding-left: 0px;">
+										 	<!-- <div class="col-md-1" style="padding-left: 0px;">
 												<button type='button' class='btn btn-primary'
 													id='propFileDelBtn'>삭제</button>
-											</div>
+											</div> -->
 										</div>
 										<div class="form-gorup row mb-20">
 											<div class="col-md-1"></div>

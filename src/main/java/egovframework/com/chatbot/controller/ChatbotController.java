@@ -309,8 +309,4 @@ public class ChatbotController {
 		
 	}
 	
-	
-	@RequestMapping(value="/getImgFile.do")
-	public void getImgFile(@RequestParam("img_attach_id") String img_attach_id, HttpServletResponse response) throws Exception {
-	}
 }

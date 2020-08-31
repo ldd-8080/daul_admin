@@ -153,7 +153,7 @@ public class SurveyController {
 			surveyService.updateSurvey(vo);
 			
 			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
-			
+		
 			FileVo fileVo = new FileVo();
 			
 			fileVo.setCreate_user(vo.getCreate_user());

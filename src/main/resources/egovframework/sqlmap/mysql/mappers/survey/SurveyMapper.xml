@@ -44,7 +44,7 @@
 			   </if>
 			   <if test="search_e_date != null and search_e_date != ''">
 			   <![CDATA[
-			   AND create_date >= date_format(concat(#{search_e_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+			   AND create_date <= date_format(concat(#{search_e_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
 			   ]]>
 			   </if>
 			 ORDER BY create_date ASC

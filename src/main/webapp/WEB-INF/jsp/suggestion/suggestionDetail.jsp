@@ -84,13 +84,13 @@
 											</div>
 										</div>
 										
-										<div class="form-group row">
+										<%-- <div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">대표이미지 </label>
 											<div class="col-md-8">
-				                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+				                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
 				                  			</div>
-										</div>
+										</div> --%>
 										
 										<input type="hidden" name="update_user" value="${login.user_id}"/>
 										
@@ -377,7 +377,8 @@
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
 		    	{title: "", width: 50, align: "center", 
 		    		itemTemplate: function(_, item) {
-		    			if (item.del_chk !== 'Y') {
+		    			console.log(item.suggestion_indent );
+		    			if (item.del_chk !== 'Y' && item.suggestion_indent == 0) {
 			    			return '<button class="btn-xs btn-primary btn-outline waves-effect waves-classic" type="button" data-toggle="modal" data-target="#sgstOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
 		    			}
 		    		}

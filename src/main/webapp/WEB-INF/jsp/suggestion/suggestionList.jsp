@@ -153,6 +153,10 @@
 	}
 	
 	$(function() {
+		var today = formatDate(new Date());
+		var preday = formatPreDate(new Date());
+		$("input[name='search_s_date']").val(preday);
+		$("input[name='search_e_date']").val(today);
 		getSuggestionList();
 	});
 	
@@ -165,4 +169,7 @@
 			getSuggestionList();
 		}
 	}
+	
+	
+	
 </script>
