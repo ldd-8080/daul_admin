@@ -232,6 +232,8 @@
 	var pwFlag = false;
 	var pwRule = /^(?=.*[a-z])(?=.*[0-9]).{8,15}$/;
 	
+	
+	
 	function passwordCheck() {
 		var pw = $("#pw").val();
 		var pwChk = $("#pw-chk").val();

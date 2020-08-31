@@ -74,11 +74,11 @@
 	    							<div class="form-group row">
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">아이디 <span class="required">*</span></label>
-		    							<div class="col-md-6">
+		    							<div class="col-md-6" id="userIdCheckDiv">
 		    								<form:input type="text" class="form-control" path="user_id"/>
 		    								<form:errors style="color:red;" path="user_id"/>
 		    							</div>
-		    							<div class="col-md-1">
+		    							<div class="col-md-1" >
 		    								<button type="button" class="btn btn-primary waves-effect waves-classic" id="userIdCheck">중복확인 </button>
 		    							</div>
 	    							</div>
@@ -126,7 +126,7 @@
 		    							<label class="col-md-2 col-form-label">비밀번호 확인 </label>
 		    							<div class="col-md-6">
 		    								<input type="password" class="form-control" id="pw-chk" placeholder="영문자, 숫자 혼합 8~15자리"/>
-		    								<span class="text-left" id="pwChk-error"></span>
+		    								<span class="text-left" id="pwChk-error" style="color:red;"></span>
 		    							</div>
 	    							</div>
 	    							<div class="form-group row">
@@ -205,6 +205,12 @@
 		passwordCheck();
 	});
 
+	$("#pw").keyup(function(){
+		passwordCheck();
+	});
+	$("#pw-chk").keyup(function(){
+		passwordCheck();
+	});
 	// 수신여부 init
 	var chkArr = ["${userVo.email_chk}", "${userVo.talk_chk}", "${userVo.sms_chk}"];
 	
@@ -296,11 +302,13 @@
 				} else {
 					userIdFlag = true;
 					alert("사용가능한 ID입니다.");
+					$("#userIdCheck").remove();
+					$("#userIdCheckDiv").append("<span style='color:blue;'>사용가능한 아이디입니다.</span>");
+					
 				}
 			});
 		} else {
 			userIdFlag = false;
-			
 			alert("아이디를 입력해주세요.");
 		}
 	});
@@ -308,4 +316,11 @@
 	$("#user_id").change(function() {
 		userIdFlag = false;
 	});
+	
+	$(function() {
+		$("#pw").val('');
+		$("#pw-chk").val('');
+	});
+	
+	
 </script>

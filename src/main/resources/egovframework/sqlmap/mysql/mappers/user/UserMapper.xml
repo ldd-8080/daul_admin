@@ -43,6 +43,7 @@
 			   , phone
 			   , channel
 			   , reg_date
+			   , last_login_date
 			   <if test="email_chk != null and email_chk != ''">
 			   , email_chk 
 			   </if>
@@ -61,6 +62,7 @@
 			   , #{email}
 			   , #{phone}
 			   , #{channel}
+			   , SYSDATE()
 			   , SYSDATE()
 			   <if test="email_chk != null and email_chk != ''">
 			   , #{email_chk} 
@@ -153,7 +155,7 @@
 				   </if>
 				   <if test="search_e_date != null and search_e_date != ''">
 				   <![CDATA[
-				   AND last_login_date <= date_format(concat(#{search_e_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+				   AND last_login_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 				   ]]>
 		   		</if>
 		   </otherwise>

@@ -127,6 +127,4 @@ function formatPreDate(date) {
 	return [year, month, day].join('-'); 
 }
 
-
-
 </script>

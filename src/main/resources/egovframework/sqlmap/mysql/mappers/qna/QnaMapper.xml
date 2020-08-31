@@ -39,7 +39,7 @@
 		    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 		    	]]>
 		    </if>
-			ORDER BY ref ASC
+			ORDER BY ref ASC, indent DESC
 		) sub
 	ORDER BY sub.num DESC;
 	</select>
