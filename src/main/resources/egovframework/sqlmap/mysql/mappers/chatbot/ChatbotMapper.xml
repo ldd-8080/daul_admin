@@ -347,7 +347,8 @@
 			title,
 			content,
 			position,
-			intent_id
+			intent_id,
+			img_attach_id
 		)values
 		
 		(
@@ -356,7 +357,8 @@
 			#{title},
 			#{content},
 			#{position},
-			#{intent_id}
+			#{intent_id},
+			#{img_attach_id}
 		)
 	</insert>
 	<insert id="registBtn" >
@@ -495,7 +497,8 @@
 			   list_id,
 			   title,
 			   content,
-			   position
+			   position,
+			   img_attach_id
 		  FROM chatbot_respone_card_type
 		 WHERE list_id = #{list_id}
 	</select>
@@ -525,7 +528,8 @@
 			   list_type_id,
 			   title,
 			   content,
-			   position
+			   position,
+			   img_attach_id
 		  FROM chatbot_list_type_item
 		 WHERE list_type_id = #{list_type_id}
 	</select>
