@@ -26,6 +26,7 @@ import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
 import egovframework.com.chatbot.vo.ResponeListVo;
 import egovframework.com.chatbot.vo.SkillVo;
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.user.vo.UserVo;
@@ -62,7 +63,11 @@ public class ChatbotController {
 	@RequestMapping(value = "/getIntentList.do")
 	public ResponseEntity<?> getIntentList() throws Exception {
 		List<IntentVo> intentList = null;
-		intentList = chatbotService.getIntentList();
+		try {
+			intentList = chatbotService.getIntentList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return new ResponseEntity<>(intentList, HttpStatus.OK);
 	}
@@ -168,34 +173,6 @@ public class ChatbotController {
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/registImg.do", method=RequestMethod.POST)
-	public ResponseEntity<?> registImg(HttpServletRequest request, @RequestParam Map<String, Object> params) throws Exception {
-		try {
-			System.out.println(params);
-			
-			String intent_id = (String) params.get("intent_id");
-			
-			//log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 삭제");
-			//chatbotService.deleteImageFile(intent_id);
-			
-			FileVo fileVo = new FileVo();
-			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
-			
-			System.out.println(fileList);
-			
-			for (int i = 0; i < fileList.size(); i++) {
-				fileList.get(i).setIntent_id(intent_id);
-				
-				log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 등록");
-				chatbotService.insertImageFile(fileList.get(i));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return new ResponseEntity<>("success", HttpStatus.OK);
-	}
-
 	@RequestMapping(value = "/getInputText.do", method = RequestMethod.GET)
 	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception {
 
@@ -350,5 +327,27 @@ public class ChatbotController {
 	}
 	
 	
-	
+	@RequestMapping(value="/registImg.do", method=RequestMethod.POST)
+	public ResponseEntity<?> registImg(HttpServletRequest request, @RequestParam Map<String, Object> params) throws Exception {
+		List<Long> id = null;
+		
+		try {
+			FileVo fileVo = new FileVo();
+			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
+			id = CmmnUtil.generateKeys(fileList.size());
+			
+			for (int i = 0; i < fileList.size(); i++) {
+				fileList.get(i).setIdx(String.valueOf(id.get(i)));
+				
+				log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 등록");
+				chatbotService.insertImageFile(fileList.get(i));
+			}
+			
+			System.out.println(fileList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(id, HttpStatus.OK);
+	}
 }

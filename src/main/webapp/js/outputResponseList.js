@@ -233,12 +233,12 @@ function cardHtml(obj, parentIdx, childIdx) {
 		case "image" :
 			return `
 				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-				<input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}"/>
-				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}"/>`;
+				<input type="file" style="display: none" class="card-img" name="${obj.name}"/>
+				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value=""/>`;
 		case "card"  :
 			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
-					<input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}"/>
-					<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}"/>
+					<input type="file" style="display: none" class="card-img" name="${obj.name}"/>
+					<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value=""/>
                     <div class="card-block card-block-evt card-block-title-text">
                       <h5 class="card-title">타이틀을 입력하세요.</h5>
                       <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][title]"/>
@@ -555,9 +555,11 @@ function imgPopoverEvent(response_card_id) {
 				reader.onload = function(e) {
 					popover_target.attr("src", e.target.result).width(popover_target.width()).height(popover_target.height());
 					popover_target.next()[0].files = inputFile.files;
+					registImgFile(popover_target);
 				}
 				
 				reader.readAsDataURL(file);
+				
 			} else {
 				popover_target.attr("src", "../images/placeholder.png").width(popover_target.width()).height(popover_target.height());
 				popover_target.next().attr("type", "text");
@@ -684,8 +686,8 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
                <div class="pl-20">
                  <a href="javascript:void(0)">
                    <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
-                   <input type="file" style="display: none" class="card-img" name="${intentId}_img_${parentIdx}_${childIdx}_${listBtnIdx}"/>
-                   <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value="${intentId}_img_${parentIdx}_${childIdx}_${listBtnIdx}"/>
+                   <input type="file" style="display: none" class="card-img" name="list"/>
+                   <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][img_attach_id]" value=""/>
                  </a>
                </div>
              </div>`;
@@ -735,6 +737,7 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 					reader.onload = function(e) {
 						img.attr("src", e.target.result).width(img.width()).height(img.height());
 						img.next()[0].files = image.files;
+						registImgFile(img);
 					}
 					
 					reader.readAsDataURL(file);

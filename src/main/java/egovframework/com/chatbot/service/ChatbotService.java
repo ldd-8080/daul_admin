@@ -51,7 +51,6 @@ public interface ChatbotService {
 	void deleteImageFile(String intent_id) throws Exception;
 	Map<String, String> selectImageFile(String img_attach_id) throws Exception;
 	
-	
 	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
 	List<IntentVo> getIntentListInBtn() throws Exception;

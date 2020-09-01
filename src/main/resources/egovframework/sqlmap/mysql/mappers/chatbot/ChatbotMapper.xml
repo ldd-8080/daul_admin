@@ -15,7 +15,7 @@
 	  ORDER BY intent_id ;
 	</select>
 	
-		<select id="getIntentInBtn" resultType="egovframework.com.chatbot.vo.IntentVo">
+	<select id="getIntentList" resultType="egovframework.com.chatbot.vo.IntentVo">
 		SELECT 								
 			   intent_id as id,
 			   title as text,
@@ -26,8 +26,6 @@
 		  FROM chatbot_intent_list
 		 WHERE del_chk = 'N'
 	</select>
-	
-	
 
 	<insert id="addScenario">
 		INSERT INTO daul.chatbot_intent_list
@@ -608,6 +606,17 @@
 		 WHERE parent_id = #{direct_id}
 	</select>
 	
+	<update id="deleteImageFile">
+		DELETE FROM daul.chatbot_respone_attach
+		 WHERE intent_id = #{intent_id}
+	</update>
+	
+	<select id="selectImageFile" resultType="hashmap">
+		SELECT *
+		  FROM daul.chatbot_respone_attach
+		 WHERE parent_id = #{img_attach_id}
+	</select>
+	
 	<insert id="insertImageFile">
 		INSERT INTO daul.chatbot_respone_attach
 			 (
@@ -621,7 +630,7 @@
 			 )
 		VALUES
 			 (
-			   #{attach_type}
+			   #{idx}
 			 , #{org_file_name}
 			 , #{save_file_name}
 			 , #{file_size}
@@ -630,17 +639,6 @@
 			 , #{intent_id}
 			 )
 	</insert>
-	
-	<update id="deleteImageFile">
-		DELETE FROM daul.chatbot_respone_attach
-		 WHERE intent_id = #{intent_id}
-	</update>
-	
-	<select id="selectImageFile" resultType="hashmap">
-		SELECT *
-		  FROM daul.chatbot_respone_attach
-		 WHERE parent_id = #{img_attach_id}
-	</select>
 	
 	<select id="selectSkillList" resultType="egovframework.com.chatbot.vo.SkillVo">
 		SELECT seq,

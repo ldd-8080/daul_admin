@@ -62,6 +62,8 @@
                        onblur="hideDivIntentTitleInput('')"/>
               </div>
               <div class="panel-actions panel-actions-keep">
+                <button type="button" class="btn btn-primary" id="chatbot-regist-btn2" data-title="발화및응답">
+                  <i class="icon fa-save" aria-hidden="true"></i>테스트저장 </button>
                 <button type="button" class="btn btn-primary" id="chatbot-regist-btn" data-title="발화및응답">
                   <i class="icon fa-save" aria-hidden="true"></i>저장 </button>
                 <button type="button" class="btn btn-default" id="chatbot-delete-btn" data-title="발화및응답">
@@ -745,6 +747,7 @@ function initialize_jstree(){
 						// position, img
 						var response_card = document.getElementById("responseCard_" + i + "_" + j);
 						response_card.querySelector("input[name*='position']").value = card[j].position;
+						response_card.querySelector("input[name*='img_attach_id']").value = card[j].img_attach_id;
 						response_card.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + card[j].img_attach_id;
 					}
 					break;
@@ -764,6 +767,7 @@ function initialize_jstree(){
 						else					response_card.querySelector("p.card-text").innerHTML = "내용을 입력하세요.";
 						response_card.querySelector("input[name*='content']").value = card[j].content;
 						response_card.querySelector("input[name*='position']").value = card[j].position;
+						response_card.querySelector("input[name*='img_attach_id']").value = card[j].img_attach_id;
 						response_card.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + card[j].img_attach_id;
 						
 						var button = card[j].button;
@@ -825,6 +829,8 @@ function initialize_jstree(){
 							if (list[l].content)	response_list.querySelector("p.content").innerHTML = list[l].content;
 							else					response_list.querySelector("p.content").innerHTML = "내용을 입력하세요.";
 							response_list.querySelector("input[name*='content']").value = list[l].content;
+							response_list.querySelector("input[name*='img_attach_id']").value = list[l].img_attach_id;
+							response_list.querySelector("img").src = "/chatbot/getImg.do?img_attach_id=" + list[l].img_attach_id;
 						}
 					}
 					
@@ -980,37 +986,12 @@ function initialize_jstree(){
  		
  		request.done(function(data) {
  			console.log("saveChatbotData", data);
- 			if (data === "success") {
- 				registImg();
- 			}
  		});
  		
  		request.fail(function(error) {
 			console.log(error);
 			console.log("request fail");
 		});	
- 	}
- 	
- 	function registImg() {
- 		var formData = new FormData(document.getElementById("response-list"));
- 		
- 		var request = $.ajax({
- 			url: "/chatbot/registImg.do",
- 			method: "post",
- 			enctype: "multipart/form-data",
- 			processData: false,
- 			contentType: false,
- 			data: formData
- 		});
- 		
- 		request.done(function(data) {
- 			request.done("registImg succees");
- 			location.href = "/chatbot/intentListPage.do";
- 		});
- 		
- 		request.fail(function(error) {
- 			console.log("fail", error);
- 		});
  	}
  	
  	function deleteChatbotData() {
@@ -1023,6 +1004,56 @@ function initialize_jstree(){
  		request.done(function(data) {
  			request.done("registImg succees");
  			location.href = "/chatbot/intentListPage.do";
+ 		});
+ 		
+ 		request.fail(function(error) {
+ 			console.log("fail", error);
+ 		});
+ 	}
+ 	
+ 	$("#chatbot-regist-btn2").click(function() {
+		var formData = new FormData(document.getElementById("response-list"));
+		formData.append("list", JSON.stringify($("#response-list").serializeObject()));
+ 		
+ 		var request = $.ajax({
+ 			url: "/chatbot/testSave.do",
+ 			method: "post",
+ 			enctype: "multipart/form-data",
+ 			processData: false,
+ 			contentType: false,
+ 			data: formData
+ 		});
+ 		
+ 		request.done(function(data) {
+ 			request.done("testSave succees");
+ 			console.log(data);
+ 			//location.href = "/chatbot/intentListPage.do";
+ 		});
+ 		
+ 		request.fail(function(error) {
+ 			console.log("fail", error);
+ 		});
+ 	});
+ 	
+ 	function registImgFile(target) {
+ 		var formData = new FormData();
+ 		var input_file = target.siblings("input[type='file']");
+ 		formData.append(input_file.attr("name"), input_file[0].files[0]);
+ 		
+ 		var request = $.ajax({
+ 			url: "/chatbot/registImg.do",
+ 			method: "post",
+ 			enctype: "multipart/form-data",
+ 			processData: false,
+ 			contentType: false,
+ 			data: formData
+ 		});
+ 		
+ 		request.done(function(data) {
+ 			request.done("testSave succees");
+ 			console.log(data);
+ 			target.siblings("input[name*='img_attach_id']").val(data[0]);
+ 			//location.href = "/chatbot/intentListPage.do";
  		});
  		
  		request.fail(function(error) {

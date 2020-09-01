@@ -191,7 +191,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 												listTypeItemVo.setContent((String)listTypeItemList.get(listTypeItemCnt).get("content"));
 												listTypeItemVo.setPosition((String)listTypeItemList.get(listTypeItemCnt).get("position"));
 												listTypeItemVo.setIntent_id(intent_id);
-												listTypeItemVo.setImg_attach_id((String)listTypeList.get(listTypeCnt).get("img_attach_id"));
+												listTypeItemVo.setImg_attach_id((String)listTypeItemList.get(listTypeItemCnt).get("img_attach_id"));
 												chatbotMapper.registListTypeItemList(listTypeItemVo);
 											}else {
 												//listTypeItemList.remove(listTypeItemCnt);
@@ -427,7 +427,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public Map<String, String> selectImageFile(String img_attach_id) throws Exception {
 		return chatbotMapper.selectImageFile(img_attach_id);
 	}
-
+	
 	@Override
 	public List<SkillVo> selectSkillList(SkillVo vo) throws Exception {
 		return chatbotMapper.selectSkillList(vo);
