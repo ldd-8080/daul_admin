@@ -649,8 +649,8 @@ function titleContentPopoverEvent(response_card_id) {
 		});
 		
 		cancel_btn.addEventListener("click", function() {
-			input.value = response_card.querySelector("input[name='cardTitle']").value;
-			textarea.value = response_card.querySelector("input[name='cardContent']").value; 
+			input.value = response_card.querySelector("input[name*='title']").value;
+			textarea.value = response_card.querySelector("input[name*='content']").value; 
 			
 			WebuiPopovers.hide(popover_target);
 		});
@@ -679,7 +679,7 @@ function titlePopoverEvent(response_card_id) {
 		});
 		
 		cancel_btn.addEventListener("click", function() {
-			input.value = response_card.querySelector("input[name='listTitle']").value; 
+			input.value = response_card.querySelector("input[name*='title']").value; 
 			
 			WebuiPopovers.hide(popover_target);
 		});
