@@ -44,7 +44,7 @@
 				<div class="form-gorup row mb-20">
 					<div class="col-md-1"></div>
 					<label class="col-md-2 col-form-label"></label>
-					<div class="col-md-8">
+					<div class="col-md-10">
 						<div id="opinionFile-list"></div>
 					</div>
 				</div>

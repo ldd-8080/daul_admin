@@ -155,7 +155,7 @@
 											<div class="col-md-7">
 												<div class="input-group input-group-file"
 													data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="propFileTitle" readonly /> 
+													<input type="text" class="form-control" id="propFileTitle" value="파일 0개" readonly /> 
 													<span class="input-group-append"> 
 														<span class="btn btn-primary btn-file"> 
 															<i class="icon md-upload" aria-hidden="true"></i> 
@@ -231,14 +231,12 @@
 
   	function contestFileChange() {
   		var fileValue = $("#contestFile")[0].files;
-
 	  	// 새로 추가한 파일fileValue이 존재하면
 	  	// 기존에 등록했던 파일들fileList과 비교를 하고
 	  	// 새로 추가했던 파일들contestFileList과 비교를 해서 contestFileList에 push
 	  	if (fileValue.length > 0) {
 	  		for (var i = 0; i < fileValue.length; i++) {
   				var exist = false;
-  				
   				for (var j = 0; j < fileList.length; j++) {
   					if (fileList[j].attach_type === "contestFile") {
   						if (fileValue[i].name === fileList[j].org_file_name) {
@@ -248,7 +246,6 @@
   						}
   					}
   				}
-  				
   				for (var k = 0; k < contestFileList.length; k++) {
   					if (fileValue[i].name === contestFileList[k].name) {
   						console.log("this file is already exist", fileValue[i].name);
@@ -256,7 +253,6 @@
   						break;
   					}
   				}
-  				
   				if (!exist) {
   					contestFileList.push(fileValue[i]);
 	
@@ -269,14 +265,53 @@
 			  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;' + (fileValue[i].size/1024).toFixed(2) + ' kb</span>' +
 			  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel(this)"></button>' +
 			  			'</li>';
-		  			
   					$("#contestFile-list").append(str);
   				}
   			}
 	  	}
   	}
+  	var propFileList = new Array();
+  	function propFileChange() {
+      
+	  	var fileValue = $("#propFile")[0].files;
+	  		for(var i = 0; i < fileValue.length; i++){
+	  			var exist = false;
+	  			for (var j = 0; j < fileList.length; j++) {
+  					if (fileList[j].attach_type === "propFile") {
+  						if (fileValue[i].name === fileList[j].org_file_name) {
+  							console.log("this file is already registed", fileValue[i].name);
+  							exist = true;
+  							break;
+  						}
+  					}
+  				}
+  				for (var k = 0; k < contestFileList.length; k++) {
+  					if (fileValue[i].name === propFileList[k].name) {
+  						console.log("this file is already exist", fileValue[i].name);
+  						exist = true;
+  						break;
+  					}
+  				}
+			  	if(!exist){
+				  	if (fileValue !== undefined) {
+				  		propFileList.push(fileValue[i]);
+				  		$("#propFileTitle").val( '파일 '+propFileList.length+'개');
+				  			
+				  			var str = '<li>'+
+				  			'<input type="hidden" name="save_file_name" value="'+ fileValue[i].name+ '">'+
+				  			'<span class="file-img"></span>'+
+				  			'<a href="#this" name="file"> (new) '+fileValue[i].name+'</a>' +
+				  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+(fileValue[i].size/1024).toFixed(2)+' kb</span>'+
+				  			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="newFileDelBtn" onclick="newFileDel2(this)"></button>' +
+				  			'</li>';
+				  			$("#propFile-list").append(str);
+				  		}
+				  		//$("#attachDelBtn").show();
+				  	} 
+	  		}
+  	}  	
   	
-  	function newFileDel(_this) {
+	function newFileDel(_this) {
   		var fileName = $(_this).siblings().first().val();
   		
   		for (var i = 0; i < contestFileList.length; i++) {
@@ -289,31 +324,23 @@
   			}
   		}
   	}
+	
+	function newFileDel2(_this) {
+		console.log("삭제");
+  		var fileName = $(_this).siblings().first().val();
+  		
+  		for (var i = 0; i < propFileList.length; i++) {
+  			if (fileName === propFileList[i].name) {
+  				propFileList.splice(i, 1);
+  				
+  				$(_this).parent().remove();
+  				
+  				$("#propFileTitle").val( '파일 '+ propFileList.length + '개');
+  			}
+  		}
+  	}
+	
   
-  	function propFileChange() {
-      
-	  	var fileValue = $("#propFile")[0].files[0];
-
-	  	if (fileValue !== undefined) {
-	  		$("#propFileTitle").val( '파일 '+$("#propFile")[0].files.length+'개');
-	  			
-	  		for( var i = 0; i <$("#propFile")[0].files.length; i++ ){
-	  			
-	  			var str = '<li>'+
-	  			'<input type="hidden" name="save_file_name" value="'+ +$("#propFile")[0].files[i].name+ '">'+
-	  			'<span class="file-img"></span>'+
-	  			'<a href="#this" name="file"> (new) '+$("#propFile")[0].files[i].name+'</a>' +
-	  			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+($("#propFile")[0].files[i].size/1024).toFixed(2)+' kb</span>'+
-	  			'</li>';
-	  			$("#propFile-list").append(str);
-	  		}
-	  		//$("#attachDelBtn").show();
-	  	} else {
-	  		$("#contestFileTitle").val("");
-	  		//$("#attachDelBtn").hide();
-	  		$("#contestFileName-list").children().remove();
-	  	}
-	}
 	
 	$("#contestFile-list").children().remove();
 	$("#propFile-list").children().remove();

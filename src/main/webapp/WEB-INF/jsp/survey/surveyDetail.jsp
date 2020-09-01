@@ -407,7 +407,7 @@
 		    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"}, 
 		    	{title: "", width: 80, align: "center", 
 		    		itemTemplate: function(_, item) {
-		    			if (item.del_chk !== 'Y') {
+		    			if (item.del_chk !== 'Y' && item.survey_indent == 0) {
 			    			return '<button class="btn-xs btn-primary btn-outline waves-effect waves-classic" type="button" data-toggle="modal" data-target="#surveyOpnRegModal" name="opnToOpnModal" onclick="opnToOpnRegistBtn(this)">댓글 등록 </button>';
 		    			}
 		    		}
