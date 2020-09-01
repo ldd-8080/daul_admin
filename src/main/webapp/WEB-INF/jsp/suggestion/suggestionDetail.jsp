@@ -462,7 +462,7 @@
 				
 				return false;
 			} else if (typeof(data) === "string") {
-				location.href = "${pageContext.request.contextPath}/suggestion/suggestionListPage.do";
+				location.href = "${pageContext.request.contextPath}/suggestion/suggestionDetailPage.do?suggestion_idx=" + data;
 			}
 		});
 	});
