@@ -62,8 +62,6 @@
                        onblur="hideDivIntentTitleInput('')"/>
               </div>
               <div class="panel-actions panel-actions-keep">
-                <button type="button" class="btn btn-primary" id="chatbot-regist-btn2" data-title="발화및응답">
-                  <i class="icon fa-save" aria-hidden="true"></i>테스트저장 </button>
                 <button type="button" class="btn btn-primary" id="chatbot-regist-btn" data-title="발화및응답">
                   <i class="icon fa-save" aria-hidden="true"></i>저장 </button>
                 <button type="button" class="btn btn-default" id="chatbot-delete-btn" data-title="발화및응답">
@@ -277,8 +275,9 @@
 <div id="popoverEditImgHeader" class="popover-header" hidden>
   <p class="position-relative h-20">
     <span class="position-absolute" style="top: 10px; left: 5px;">이미지 설정</span>
-    <button type="button" class="btn btn-icon btn-pure float-right">
-      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+    <!-- <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i>
+    </button> -->
   </p>
 </div>
 <div id="popoverEditImg" class="popover-content" hidden>
@@ -297,8 +296,9 @@
 <div id="popoverEditTitleTextHeader" class="popover-header" hidden>
   <p class="position-relative h-20">
     <span class="position-absolute" style="top: 10px; left: 5px;">텍스트 설정</span>
-    <button type="button" class="btn btn-icon btn-pure float-right">
-      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+    <!-- <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i>
+    </button> -->
   </p>
 </div>
 <div id="popoverEditTitleText" class="popover-content" hidden>
@@ -321,8 +321,9 @@
 <div id="popoverListTitleHeader" class="popover-header" hidden>
   <p class="position-relative h-20">
     <span class="position-absolute" style="top: 10px; left: 5px;">타이틀 설정</span>
-    <button type="button" class="btn btn-icon btn-pure float-right">
-      <i class="icon md-delete mr-0" aria-hidden="true"></i></button>
+    <!-- <button type="button" class="btn btn-icon btn-pure float-right">
+      <i class="icon md-delete mr-0" aria-hidden="true"></i>
+    </button> -->
   </p>
 </div>
 <div id="popoverListTitle" class="popover-content" hidden>
@@ -936,6 +937,24 @@ function initialize_jstree(){
       closeable: true
     };
     
+    var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			var child_count = mutation.target.childElementCount;
+			
+			//if (mutation.target.isEqualNode(div_btn_list)) {
+			if (mutation.target.classList.contains("card-block-btns")) {
+				if (child_count >= 4)	mutation.target.lastElementChild.style.display = "none";
+				else					mutation.target.lastElementChild.style.display = "";
+			} else if (mutation.target.classList.contains("list-group-dividered")){
+				if (child_count >= 6)	mutation.target.lastElementChild.style.display = "none";
+				else					mutation.target.lastElementChild.style.display = "";
+			} else {
+				if (child_count >= 11)	mutation.target.lastElementChild.style.display = "none";
+				else					mutation.target.lastElementChild.style.display = "";
+			}
+		});
+	});
+    
  	window.onload = function() {
  		//document.getElementById("jstree").querySelectorAll("ul.jstree-no-dots ul.jstree-children ul.jstree-children")[0].querySelector("a").click();
  		
@@ -1010,30 +1029,6 @@ function initialize_jstree(){
  			console.log("fail", error);
  		});
  	}
- 	
- 	$("#chatbot-regist-btn2").click(function() {
-		var formData = new FormData(document.getElementById("response-list"));
-		formData.append("list", JSON.stringify($("#response-list").serializeObject()));
- 		
- 		var request = $.ajax({
- 			url: "/chatbot/testSave.do",
- 			method: "post",
- 			enctype: "multipart/form-data",
- 			processData: false,
- 			contentType: false,
- 			data: formData
- 		});
- 		
- 		request.done(function(data) {
- 			request.done("testSave succees");
- 			console.log(data);
- 			//location.href = "/chatbot/intentListPage.do";
- 		});
- 		
- 		request.fail(function(error) {
- 			console.log("fail", error);
- 		});
- 	});
  	
  	function registImgFile(target) {
  		var formData = new FormData();

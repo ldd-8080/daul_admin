@@ -113,6 +113,13 @@ function addResponseListHtml(obj) {
 	
 	// 텍스트, 이미지, 카드, 리스트일 경우에만 전송타입, card 추가 버튼 이벤트
 	if (obj.name === "text" || obj.name === "image" || obj.name === "card" || obj.name === "list") {
+		var add_card_btn = response_list.querySelector("#" +response_list_id + "_add_card_btn");
+		
+		// 텍스트형, 이미지형, 카드형, 리스트형 리스트 추가시 card 갯수 제한
+		var div_response_list = add_card_btn.closest("div.panel-body.response-card-box");
+		
+		observer.observe(div_response_list, {childList: true});
+		
 		// 리스트 전송타입 이벤트 추가
 		var sending_btn_caro = response_list.querySelector("#" + response_list_id + "_sending_btn_caro");
 		var sending_btn_ran = response_list.querySelector("#" + response_list_id + "_sending_btn_ran");
@@ -136,13 +143,29 @@ function addResponseListHtml(obj) {
 		sending_btn_caro.addEventListener("click", sendingBtnEvent);
 		sending_btn_ran.addEventListener("click", sendingBtnEvent);
 		
-		// 리스트의 텍스트형,이미지형,카드형,리스트형 추가 버튼 이벤트
-		var add_card_btn = response_list.querySelector("#" +response_list_id + "_add_card_btn");
+		// 리스트형일 경우 전송타입은 랜덤형만
+		if (obj.name === "list") sending_btn_caro.style = "display: none";
 		
+		// 리스트의 텍스트형,이미지형,카드형,리스트형 추가 버튼 이벤트
 		add_card_btn.addEventListener("click", function() {
 			addResponseCardHtml(childIdx, response_card_id, response_list, obj, parentIdx);
 			
 			childIdx++;
+			
+			// 텍스트형, 이미지형, 카드형, 리스트형 하위 card 추가시 button 또는 list 갯수 제한
+			var last_response_card = add_card_btn.parentElement.parentElement.previousSibling;
+			var div_btn_list = last_response_card.querySelector("div.card-block.card-block-btns");
+			
+			
+			if (obj.name !== "image") {
+				observer.observe(div_btn_list, {childList: true});
+
+				if (obj.name === "list") {
+					var ul_sub_list = last_response_card.querySelector("ul.list-group-dividered");
+					
+					observer.observe(ul_sub_list, {childList: true});
+				}
+			}
 		});
 	}
 	
@@ -227,7 +250,7 @@ function cardHtml(obj, parentIdx, childIdx) {
 	           	      <p class="card-text">내용을 입력하세요.</p>
 	           	      <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][content]"/>
 			        </div>
-			        <div class="card-block">
+			        <div class="card-block card-block-btns">
 			          <button type="button" class="btn btn-block card-btn-action">+ 버튼 추가</button>
 			        </div>`;
 		case "image" :
