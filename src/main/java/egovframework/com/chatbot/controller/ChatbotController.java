@@ -76,31 +76,40 @@ public class ChatbotController {
 	public ResponseEntity<?> addScenario(HttpSession session) throws Exception {
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		IntentVo vo = new IntentVo();
-		vo.setCreate_user(userVo.getUser_id());
-
-		chatbotService.addScenario(vo);
-
+		try {
+			vo.setCreate_user(userVo.getUser_id());
+			chatbotService.addScenario(vo);
+		}catch(Exception e){
+			log.debug("ChatbotController - addScenario.do - Exception");
+		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
+
 	}
 
 	@RequestMapping(value = "/deleteCategory.do")
 	public ResponseEntity<?> deleteCategory(HttpSession session, @RequestParam("intent_id") String intent_id)
 			throws Exception {
 		IntentVo vo = new IntentVo();
-		vo.setId(intent_id);
-		chatbotService.deleteCategory(vo);
-		chatbotService.deleteIntentId(intent_id);
-
+		try {
+			vo.setId(intent_id);
+			chatbotService.deleteCategory(vo);
+			chatbotService.deleteIntentId(intent_id);
+		}catch(Exception e) {
+			log.debug("ChatbotController - deleteCategory.do - Exception");
+		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/deleteResponse.do", method = RequestMethod.POST)
 	public ResponseEntity<?> deleteIntent(HttpSession session, InputVo vo) throws Exception {
 		IntentVo intentVo = new IntentVo();
-		intentVo.setId(vo.getIntent_id());
-		chatbotService.deleteCategory(intentVo);
-		chatbotService.deleteIntentId(vo.getIntent_id());
-
+		try {
+			intentVo.setId(vo.getIntent_id());
+			chatbotService.deleteCategory(intentVo);
+			chatbotService.deleteIntentId(vo.getIntent_id());
+		}catch(Exception e){
+			log.debug("ChatbotController - dleteResponse.do - Exception");
+		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
@@ -108,11 +117,23 @@ public class ChatbotController {
 	public ResponseEntity<?> renameCategory(@RequestParam("intent_id") String intent_id,
 			@RequestParam("title") String title) throws Exception {
 		IntentVo vo = new IntentVo();
-		vo.setId(intent_id);
-		vo.setText(title);
-		chatbotService.renameCategory(vo);
+		String msg = "";
+		try {
+			vo.setId(intent_id);
+			vo.setText(title);
+			
+			int SameNameCnt = chatbotService.checkIntentName(vo);
+			if(SameNameCnt > 0) {
+				msg = "overlap";
+			}else {
+				chatbotService.renameCategory(vo);
+				msg = "success";
+			}
+		}catch(Exception e) {
+			log.debug("ChatbotController - renameCategory.do - Exception");
 
-		return new ResponseEntity<>("success", HttpStatus.OK);
+		}
+		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/addBlock.do")
@@ -120,10 +141,13 @@ public class ChatbotController {
 			throws Exception {
 		UserVo userVo = (UserVo) session.getAttribute("login");
 		IntentVo vo = new IntentVo();
-		vo.setCreate_user(userVo.getUser_id());
-		vo.setId(intent_id);
-		chatbotService.addBlock(vo);
-
+		try {
+			vo.setCreate_user(userVo.getUser_id());
+			vo.setId(intent_id);
+			chatbotService.addBlock(vo);
+		}catch(Exception e) {
+			log.debug("ChatbotController - addBlock.do - Exception");
+		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
@@ -131,44 +155,42 @@ public class ChatbotController {
 	public ResponseEntity<?> insertInputText(HttpSession session, InputVo vo, BindingResult bindingResult,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UserVo userVo = (UserVo) session.getAttribute("login");
-		vo.setCreate_user(userVo.getUser_id());
-		vo.setUpdate_user(userVo.getUser_id());
-		int cnt = chatbotService.check(vo);
-
-		if (cnt > 0) {
-			chatbotService.updateInputText(vo);
-		} else {
-			chatbotService.registInputText(vo);
+		try {
+			vo.setCreate_user(userVo.getUser_id());
+			vo.setUpdate_user(userVo.getUser_id());
+			int cnt = chatbotService.check(vo);
+			
+			if (cnt > 0) {
+				chatbotService.updateInputText(vo);
+			} else {
+				chatbotService.registInputText(vo);
+			}
+		}catch(Exception e){
+			log.debug("ChatbotController - registInputText.do - Exception");
 		}
-
 		return new ResponseEntity<>("success", HttpStatus.OK);
-
 	}
 
 	@RequestMapping(value = "/serializedObj.do", method = RequestMethod.POST)
 	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
 		System.out.println("params === " + params);
-
-		//저장전에 해당 intent_id가 있으면 다 지움
-		System.out.println("intent_cnt = "+chatbotService.checkIntentId((String)params.get("intent_id")));
-		if(chatbotService.checkIntentId((String)params.get("intent_id")) != 0) {
-			chatbotService.deleteIntentId((String)params.get("intent_id"));
-		}
-		List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
-		if(list != null) {
-			for (int i = 0; i < list.size(); i++) {
-				
-				if(list.get(i) != null) {
-					list.get(i).put("intent_id", params.get("intent_id"));
-				}else {
-				//	list.remove(i);
-				}
+		try {
+			//저장전에 해당 intent_id가 있으면 다 지움
+			if(chatbotService.checkIntentId((String)params.get("intent_id")) != 0) {
+				chatbotService.deleteIntentId((String)params.get("intent_id"));
 			}
-			System.out.println(" >>>list = " + list);
-	
-			chatbotService.registResponeList(session, list);
-		}else {
-			
+			List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
+			if(list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					if(list.get(i) != null) {
+						list.get(i).put("intent_id", params.get("intent_id"));
+					}
+				}
+				chatbotService.registResponeList(session, list);
+			}
+		}catch(Exception e){
+			log.debug("ChatbotController - serializedObj.do - Exception");
+
 		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
@@ -177,14 +199,15 @@ public class ChatbotController {
 	public ResponseEntity<?> getInputText(@RequestParam("intent_id") String intent_id) throws Exception {
 
 		InputVo vo = new InputVo();
-		vo.setIntent_id(intent_id);
 		List<InputVo> inputList = null;
-		
-		
-		inputList = chatbotService.getInputText(vo);
-		System.out.println("inputList = " + inputList);
-		if(inputList.size() == 0) {
-			return new ResponseEntity<>("nodata", HttpStatus.OK);
+		try {
+			vo.setIntent_id(intent_id);
+			inputList = chatbotService.getInputText(vo);
+			if(inputList.size() == 0) {
+				return new ResponseEntity<>("nodata", HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			log.debug("ChatbotController - getInputText.do - Exception");
 		}
 		return new ResponseEntity<>(inputList, HttpStatus.OK);
 	}
@@ -207,15 +230,16 @@ public class ChatbotController {
 		List<Map<String,Object>> skillTypeCardItemList = null;
 		List<Map<String,Object>> listTypeCardBtnList = null;
 		List<Map<String,Object>> directTypeCardBtnList = null;
-		responeListVo.setIntent_id(intent_id);
-		responeListVoList = chatbotService.getResponeListVoList(responeListVo);
-		
-	
-		String responeListType = "";
-		for(int responeListVoCnt = 0; responeListVoCnt < responeListVoList.size(); responeListVoCnt++) {
+		try {
+			responeListVo.setIntent_id(intent_id);
+			responeListVoList = chatbotService.getResponeListVoList(responeListVo);
 			
-			responeListType =  (String) responeListVoList.get(responeListVoCnt).get("type");
-			switch(responeListType) {
+			
+			String responeListType = "";
+			for(int responeListVoCnt = 0; responeListVoCnt < responeListVoList.size(); responeListVoCnt++) {
+				
+				responeListType =  (String) responeListVoList.get(responeListVoCnt).get("type");
+				switch(responeListType) {
 				case "text":
 					textTypeCardList = chatbotService.getTextTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					for(int textTypeCardCnt = 0; textTypeCardCnt < textTypeCardList.size(); textTypeCardCnt++) {
@@ -223,13 +247,13 @@ public class ChatbotController {
 						textTypeCardList.get(textTypeCardCnt).put("button", textTypeCardBtnList);
 					}
 					responeListVoList.get(responeListVoCnt).put("card", textTypeCardList);
-				break;
-				
+					break;
+					
 				case "image":
 					imgTypeCardList = chatbotService.getImgTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					responeListVoList.get(responeListVoCnt).put("card", imgTypeCardList);
-				break;
-				
+					break;
+					
 				case "card":
 					cardTypeCardList = chatbotService.getCardTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					for(int cardTypeCardCnt = 0; cardTypeCardCnt < cardTypeCardList.size(); cardTypeCardCnt++ ) {
@@ -237,8 +261,8 @@ public class ChatbotController {
 						cardTypeCardList.get(cardTypeCardCnt).put("button", cardTypeCardBtnList);
 					}
 					responeListVoList.get(responeListVoCnt).put("card", cardTypeCardList);
-				break;
-				
+					break;
+					
 				case "list":
 					listTypeCardList = chatbotService.getListTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					for(int listTypeCardCnt = 0; listTypeCardCnt < listTypeCardList.size(); listTypeCardCnt++) {
@@ -249,8 +273,8 @@ public class ChatbotController {
 					}
 					responeListVoList.get(responeListVoCnt).put("card", listTypeCardList);
 					
-				break;
-				
+					break;
+					
 				case "skill":
 					skillTypeCardList = chatbotService.getSkillTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					for(int skillTypeCardCnt = 0; skillTypeCardCnt < skillTypeCardList.size(); skillTypeCardCnt++) {
@@ -258,8 +282,8 @@ public class ChatbotController {
 						skillTypeCardList.get(skillTypeCardCnt).put("list", skillTypeCardItemList);
 					}
 					responeListVoList.get(responeListVoCnt).put("card", skillTypeCardList);
-				break;
-				
+					break;
+					
 				case "direct":
 					directTypeCardList = chatbotService.getDirectTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
 					for(int directTypeCardCnt = 0; directTypeCardCnt < directTypeCardList.size(); directTypeCardCnt++) {
@@ -267,12 +291,14 @@ public class ChatbotController {
 						directTypeCardList.get(directTypeCardCnt).put("button", directTypeCardBtnList);
 					}
 					responeListVoList.get(responeListVoCnt).put("card", directTypeCardList);
-				break;
+					break;
 				default:
 					System.out.println("모두해당없음");
+				}
 			}
+		}catch(Exception e){
+			log.debug("ChatbotController - getRespone.do - Exception");
 		}
-		
 		System.out.println("***responeListVoList = " + responeListVoList);
 		return new ResponseEntity<>(responeListVoList, HttpStatus.OK);
 	}
@@ -283,13 +309,11 @@ public class ChatbotController {
 		
 		try {
 			file = chatbotService.selectImageFile(img_attach_id);
-			System.out.println(file);
-			
 			if (!file.isEmpty()) {
 				fileUtil.getImgFile(response, file.get("save_file_name"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.debug("ChatbotController - getImg.do - Exception");
 		}
 	}
 	
@@ -297,8 +321,11 @@ public class ChatbotController {
 	public  ResponseEntity<?> getIntentListInBtn() throws Exception{
 		IntentVo vo = new IntentVo();
 		List<IntentVo> intentList = null;
-		
-		chatbotService.getIntentListInBtn();
+		try {
+			chatbotService.getIntentListInBtn();
+		}catch(Exception e) {
+			log.debug("ChatbotController - getIntentListInBtn.do - Exception");
+		}
 		return new ResponseEntity<>(intentList, HttpStatus.OK);	
 	}
 	
@@ -322,7 +349,6 @@ public class ChatbotController {
 		}catch(Exception e) {
 			log.debug("chatbotController > /getSkillList.do > Exception");
 		}		
-		
 		return new ResponseEntity<>(conditionList, HttpStatus.OK);	
 	}
 	
@@ -342,12 +368,9 @@ public class ChatbotController {
 				log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 등록");
 				chatbotService.insertImageFile(fileList.get(i));
 			}
-			
-			System.out.println(fileList);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.debug("ChatbotController - registImg.do - Exception");
 		}
-		
 		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 }

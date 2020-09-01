@@ -205,9 +205,7 @@
 		passwordCheck();
 	});
 
-	$("#pw").keyup(function(){
-		passwordCheck();
-	});
+
 	$("#pw-chk").keyup(function(){
 		passwordCheck();
 	});

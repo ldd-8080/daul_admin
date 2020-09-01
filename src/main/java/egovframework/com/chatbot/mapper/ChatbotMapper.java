@@ -58,7 +58,7 @@ public interface ChatbotMapper {
 	void deleteResponeBtn(String intent_id) throws Exception;
 	void deleteResponeSkillTypeItem(String intent_id) throws Exception;
 	void deleteResponeListTypeItem(String intent_id) throws Exception;
-	
+	int checkIntentName(IntentVo vo) throws Exception;
 	
 	List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception;
 	//textTyp[e
@@ -87,4 +87,5 @@ public interface ChatbotMapper {
 	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
 	List<IntentVo> getIntentListInBtn() throws Exception;
+	
 }

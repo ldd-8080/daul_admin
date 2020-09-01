@@ -656,4 +656,12 @@
 		  FROM chatbot_condition_list
 		 WHERE del_chk = 'N'
 	</select>
+	<select id = "checkIntentName" resultType="int">
+		SELECT COUNT(*) 
+		  FROM chatbot_intent_list 
+		 WHERE title = #{title}
+		   AND del_chk = 'N'
+		   AND type = 'I'
+	</select>
+	
 </mapper> 
