@@ -445,60 +445,10 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 					}
 				});
 				
-//				var select_btn_type_val = select_btn_type.val();
-//				
-//				if (select_btn_type_val) {
-//					if (select_btn_type_val === "intent") {
-//						div_select_intent.show();
-//						div_input_url.hide();
-//					} else if (select_btn_type_val === "url") {
-//						div_select_intent.hide();
-//						div_input_url.show();
-//					}
-//				} else {
-//					div_select_intent.show();
-//					div_input_url.hide();
-//				}
-				
-//				if (!select_btn_type.data("select2")) {
-//					select_btn_type.select2({
-//						
-//						dropdownCssClass: "increasedzindexclass",
-//						data: [
-//							{id: "intent", text: "intent 링크"},
-//							{id: "url", text: "URL 링크"}
-//						]
-//					});
-//					
-//					select_btn_type.on("select2:select", function(e) {
-//						var data = e.params.data;
-//						
-//						if (data.id === "intent") {
-//							div_select_intent.show();
-//							div_input_url.hide();
-//						} else if (data.id === "url") {
-//							div_select_intent.hide();
-//							div_input_url.show();
-//						}
-//					});
-//				}
-//				
-//				if (!select_intent.data("select2")) {
-//					select_intent.select2({
-//						dropdownCssClass: "increasedzindexclass",
-//						data: [
-//							{id: "0", text: "의도 0"},
-//							{id: "1", text: "의도 1"}
-//						]
-//					});
-//				}
-				
 				var input_btn_name = $("#" + popover_id + " .form-control.input-btn-name");
 				var input_hidden_name = $(button).find("input[name*='name']").val();
 				
 				input_btn_name.val(input_hidden_name);
-//				if (input_hidden_name)	input_btn_name.val(input_hidden_name);
-//				else					input_btn_name.val("");
 			}
 		}, defaults, popEditBtnSettings));
 		
@@ -598,7 +548,15 @@ function contentPopoverEvent(response_card_id) {
 	var response_card = document.getElementById(response_card_id);
 	
 	var popover_target = $("#" + response_card_id + " .card-block-text");
-	popover_target.webuiPopover($.extend({}, defaults, popEditTextSettings));
+	popover_target.webuiPopover($.extend({
+		onShow: function($element) {
+			var popover_id = $element[0].id;
+			var textarea = $("#" + popover_id + " textarea");
+			var input_hidden_content = popover_target.find("input[name*='content']");
+			
+			textarea.val(input_hidden_content.val());
+		}
+	}, defaults, popEditTextSettings));
 	
 	popover_target.one("click", function() {
 		var popover_id = $(this).data("target");
@@ -626,7 +584,18 @@ function titleContentPopoverEvent(response_card_id) {
 	var response_card = document.getElementById(response_card_id);
 	
 	var popover_target = $("#" + response_card_id + " .card-block-title-text");
-	popover_target.webuiPopover($.extend({}, defaults, popEditTitleTextSettings));
+	popover_target.webuiPopover($.extend({
+		onShow: function($element) {
+			var popover_id = $element[0].id;
+			var input_title = $("#" + popover_id + " input");
+			var textarea = $("#" + popover_id + " textarea");
+			var input_hidden_title = popover_target.find("input[name*='title']");
+			var input_hidden_content = popover_target.find("input[name*='content']");
+			
+			input_title.val(input_hidden_title.val());
+			textarea.val(input_hidden_content.val());
+		}
+	}, defaults, popEditTitleTextSettings));
 	
 	popover_target.one("click", function() {
 		var popover_id = $(this).data("target");
@@ -661,7 +630,15 @@ function titlePopoverEvent(response_card_id) {
 	var response_card = document.getElementById(response_card_id);
 	
 	var popover_target = $("#" + response_card_id + " .card-block-list-title");
-	popover_target.webuiPopover($.extend({}, defaults, popEditListTitleSettings));
+	popover_target.webuiPopover($.extend({
+		onShow: function($element) {
+			var popover_id = $element[0].id;
+			var input_title = $("#" + popover_id + " input");
+			var input_hidden_title = popover_target.find("input[name*='title']");
+			
+			input_title.val(input_hidden_title.val());
+		}
+	}, defaults, popEditListTitleSettings));
 	
 	popover_target.one("click", function() {
 		var popover_id = $(this).data("target");
@@ -719,7 +696,18 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 		
 		this.parentElement.before(li);
 		
-		$(li).webuiPopover($.extend({}, defaults, popoverListItemSettings));
+		$(li).webuiPopover($.extend({
+			onShow: function($element) {
+				var popover_id = $element[0].id;
+				var input_title = $("#" + popover_id + " input.title");
+				var input_content = $("#" + popover_id + " input.content");
+				var input_hidden_title = $(li).find("input[name*='title']");
+				var input_hidden_content = $(li).find("input[name*='content']");
+				
+				input_title.val(input_hidden_title.val());
+				input_content.val(input_hidden_content.val());
+			}
+		}, defaults, popoverListItemSettings));
 		
 		$(li).one("click", function() {
 			var $this = $(this);
