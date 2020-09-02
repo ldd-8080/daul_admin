@@ -97,6 +97,7 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 		chatbotMapper.deleteResponeBtn(intent_id);
 		chatbotMapper.deleteResponeSkillTypeItem(intent_id);
 		chatbotMapper.deleteResponeListTypeItem(intent_id);
+		chatbotMapper.deleteResponeConditionType(intent_id);
 		
 	}
 	
@@ -282,11 +283,12 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 							break;
 						case "skill":
 							List<Map<Object, Object>> skillTypeList =   (List<Map<Object, Object>>) list;
+							System.out.println("!!!list = " + list);
 							if(skillTypeList != null) {
 								ResponeVo skillTypeVo = new ResponeVo();
 								for(int skillTypeCnt = 0; skillTypeCnt < skillTypeList.size(); skillTypeCnt ++) {
 									String skillTypeId = chatbotMapper.getSkillTypeId();
-									if(skillTypeList.get(skillTypeCnt) != null) {
+									if(skillTypeList.get(skillTypeCnt) != null && list.get(skillTypeCnt).get("type").equals("skill")) {
 										skillTypeVo.setSkill_id(skillTypeId);
 										skillTypeVo.setList_id(list_id);
 										skillTypeVo.setPosition((String)skillTypeList.get(skillTypeCnt).get("position"));
@@ -302,19 +304,23 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 							List<Map<Object, Object>> directTypeList =   (List<Map<Object, Object>>) list.get(listCnt).get("card");
 							if(directTypeList != null) {
 								ResponeVo directTypeVo = new ResponeVo();
+								
 								for(int directTypeCnt = 0; directTypeCnt < directTypeList.size(); directTypeCnt ++) {
 									String directTypeId = chatbotMapper.getDirectTypeId();
+									
 									if(directTypeList.get(directTypeCnt) != null) {
 										directTypeVo.setDirect_btn_id(directTypeId);
 										directTypeVo.setList_id(list_id);
 										directTypeVo.setPosition((String)directTypeList.get(directTypeCnt).get("position"));
 										directTypeVo.setIntent_id(intent_id);
 										chatbotMapper.registDirectTypeList(directTypeVo);
+										
 										if(directTypeList.get(directTypeCnt).get("button") != null) {
 											List<Map<Object, Object>> directTypeBtnList =   (List<Map<Object, Object>>) directTypeList.get(directTypeCnt).get("button");
 										
 											for(int directTypeBtnCnt = 0; directTypeBtnCnt < directTypeBtnList.size(); directTypeBtnCnt++ ) {
 												BtnVo directTypeBtnVo = new BtnVo();
+												
 												if(directTypeBtnList.get(directTypeBtnCnt) != null) {
 													String directTypeBtnId = chatbotMapper.getBtnId();
 													directTypeBtnVo.setBtn_id(directTypeBtnId);
@@ -331,6 +337,26 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 									}
 								}
 							}
+						break;
+						case "condition":
+							List<Map<Object, Object>> conditionTypeList = (List<Map<Object, Object>>) list;
+							System.out.println("!!!list = " + list);
+							if(conditionTypeList != null) {
+								ResponeVo conditionTypeVo = new ResponeVo();
+								for(int conditionTypeCnt = 0; conditionTypeCnt < conditionTypeList.size(); conditionTypeCnt++) {
+									if(list.get(conditionTypeCnt).get("type").equals("condition")) {
+										String conditionTypeId = chatbotMapper.getConditionTypeId();
+										conditionTypeVo.setCondition_id(conditionTypeId);
+										conditionTypeVo.setList_id(list_id);
+										conditionTypeVo.setPosition((String)conditionTypeList.get(conditionTypeCnt).get("position"));
+										conditionTypeVo.setIntent_id(intent_id);
+										conditionTypeVo.setCondition_item_id((String)conditionTypeList.get(conditionTypeCnt).get("condition_item_id"));
+										chatbotMapper.registConditionTypeList(conditionTypeVo);
+									}
+								}
+							}
+							
+						break;
 						default:
 							System.out.println("모두해당안");
 					}
@@ -405,7 +431,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public List<Map<String, Object>> getDirectTypeCardBtnList(String direct_id) throws Exception {
 		return chatbotMapper.getDirectTypeCardBtnList(direct_id);
 	}
-
+	@Override
+	public List<Map<String, Object>> getConditionTypeCardList(String list_id) throws Exception {
+		return chatbotMapper.getConditionTypeCardList(list_id);
+	}
 	@Override
 	public void insertImageFile(FileVo fileVo) throws Exception {
 		chatbotMapper.insertImageFile(fileVo);
@@ -440,4 +469,6 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	public int checkIntentName(IntentVo vo) throws Exception {
 		return chatbotMapper.checkIntentName(vo);
 	}
+
+	
 }

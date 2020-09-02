@@ -220,6 +220,14 @@
 							         ,'6','0')) AS id
 	</select>
 	
+	<select id="getConditionTypeId" resultType="String">
+					SELECT  concat('CDT-',LPAD(
+			                          (SELECT AUTO_INCREMENT
+							             FROM information_schema.tables
+								        WHERE table_name = 'chatbot_respone_condition'
+							              AND table_schema = DATABASE( ))
+							         ,'6','0')) AS id
+	</select>
 	
 	<select id="checkIntentId" resultType="int">
 		SELECT COUNT(*) FROM chatbot_respone_list
@@ -260,6 +268,12 @@
 	<delete id="deleteResponeSkillType">
 		DELETE 
 		FROM chatbot_respone_skill_type
+		WHERE intent_id = #{intent_id}
+	</delete>
+	
+	<delete id="deleteResponeConditionType">
+		DELETE 
+		FROM chatbot_respone_condition
 		WHERE intent_id = #{intent_id}
 	</delete>
 	
@@ -467,6 +481,24 @@
 		)
 	</insert>
 	
+	<insert id="registConditionTypeList" >
+		insert into chatbot_respone_condition(
+			condition_id,
+			list_id,
+			position,
+			condition_item_id,
+			intent_id
+		)
+		values
+		(
+			#{condition_id},
+			#{list_id},
+			#{position},
+			#{condition_item_id},
+			#{intent_id}			
+		)
+	</insert>
+	
 	<select id="getResponeListVoList" resultType="Map">
 		SELECT list_id,
 		       intent_id,
@@ -576,7 +608,14 @@
 		  FROM chatbot_respone_skill_type
 		 WHERE list_id = #{list_id}
 	</select>	
-	
+	<select id="getConditionTypeCardList" parameterType="String" resultType="Map">
+		SELECT condition_id,
+			   list_id,
+			   position,
+			   condition_item_id
+		  FROM chatbot_respone_condition
+		 WHERE list_id = #{list_id}
+	</select>	
 	<select id="getDirectTypeCardList" parameterType="String" resultType="Map">
 		SELECT direct_btn_id,
 			   list_id,

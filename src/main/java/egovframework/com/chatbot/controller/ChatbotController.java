@@ -230,6 +230,7 @@ public class ChatbotController {
 		List<Map<String,Object>> skillTypeCardItemList = null;
 		List<Map<String,Object>> listTypeCardBtnList = null;
 		List<Map<String,Object>> directTypeCardBtnList = null;
+		List<Map<String,Object>> conditionTypeCardList = null;
 		try {
 			responeListVo.setIntent_id(intent_id);
 			responeListVoList = chatbotService.getResponeListVoList(responeListVo);
@@ -277,11 +278,11 @@ public class ChatbotController {
 					
 				case "skill":
 					skillTypeCardList = chatbotService.getSkillTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
-					for(int skillTypeCardCnt = 0; skillTypeCardCnt < skillTypeCardList.size(); skillTypeCardCnt++) {
-						skillTypeCardItemList = chatbotService.getSkillTypeCardItemList((String)skillTypeCardList.get(skillTypeCardCnt).get("skill_id"));
-						skillTypeCardList.get(skillTypeCardCnt).put("list", skillTypeCardItemList);
-					}
-					responeListVoList.get(responeListVoCnt).put("card", skillTypeCardList);
+					System.out.println("@@skillTypeCardList = " + responeListVoCnt + "," + skillTypeCardList);
+					responeListVoList.get(responeListVoCnt).put("list_id", skillTypeCardList.get(0).get("list_id"));
+					responeListVoList.get(responeListVoCnt).put("skill_id", skillTypeCardList.get(0).get("skill_id"));
+					responeListVoList.get(responeListVoCnt).put("position", skillTypeCardList.get(0).get("position"));
+					responeListVoList.get(responeListVoCnt).put("skill_item_id", skillTypeCardList.get(0).get("skill_item_id"));
 					break;
 					
 				case "direct":
@@ -292,12 +293,21 @@ public class ChatbotController {
 					}
 					responeListVoList.get(responeListVoCnt).put("card", directTypeCardList);
 					break;
+				case "condition":
+					conditionTypeCardList = chatbotService.getConditionTypeCardList((String)responeListVoList.get(responeListVoCnt).get("list_id"));
+					System.out.println("@@conditionTypeCardList = "+ responeListVoCnt + ","  + conditionTypeCardList);
+					responeListVoList.get(responeListVoCnt).put("list_id", conditionTypeCardList.get(0).get("list_id"));
+					responeListVoList.get(responeListVoCnt).put("condition_id", conditionTypeCardList.get(0).get("condition_id"));
+					responeListVoList.get(responeListVoCnt).put("position", conditionTypeCardList.get(0).get("position"));
+					responeListVoList.get(responeListVoCnt).put("condition_item_id", conditionTypeCardList.get(0).get("condition_item_id"));
+					break;
 				default:
 					System.out.println("모두해당없음");
 				}
 			}
 		}catch(Exception e){
 			log.debug("ChatbotController - getRespone.do - Exception");
+			e.printStackTrace();
 		}
 		System.out.println("***responeListVoList = " + responeListVoList);
 		return new ResponseEntity<>(responeListVoList, HttpStatus.OK);

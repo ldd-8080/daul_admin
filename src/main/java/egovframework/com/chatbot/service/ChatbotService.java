@@ -47,6 +47,8 @@ public interface ChatbotService {
 	//directType
 	List<Map<String,Object>> getDirectTypeCardList(String list_id) throws Exception;
 	List<Map<String,Object>> getDirectTypeCardBtnList(String direct_id) throws Exception;
+	//conditionType
+	List<Map<String,Object>> getConditionTypeCardList(String list_id) throws Exception;
 	//imageFile
 	void insertImageFile(FileVo fileVo) throws Exception;
 	void deleteImageFile(String intent_id) throws Exception;

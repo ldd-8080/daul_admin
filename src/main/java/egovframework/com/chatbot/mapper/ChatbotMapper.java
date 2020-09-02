@@ -34,6 +34,7 @@ public interface ChatbotMapper {
 	void registCardTypeList(ResponeVo vo) throws Exception;
 	void registSkillTypeList(ResponeVo vo) throws Exception;
 	void registDirectTypeList(ResponeVo vo) throws Exception;
+	void registConditionTypeList(ResponeVo vo) throws Exception;
 	String getTextTypeCnt() throws Exception;
 	String getListId() throws Exception;
 	String getTextId() throws Exception;
@@ -44,6 +45,8 @@ public interface ChatbotMapper {
 	String getListTypeId() throws Exception;
 	String getListTypeItemId() throws Exception;
 	String getBtnId() throws Exception;
+	String getConditionTypeId() throws Exception;
+	
 	int checkIntentId(String intent_id) throws Exception;
 	
 	
@@ -58,6 +61,7 @@ public interface ChatbotMapper {
 	void deleteResponeBtn(String intent_id) throws Exception;
 	void deleteResponeSkillTypeItem(String intent_id) throws Exception;
 	void deleteResponeListTypeItem(String intent_id) throws Exception;
+	void deleteResponeConditionType(String intent_id) throws Exception;
 	int checkIntentName(IntentVo vo) throws Exception;
 	
 	List<Map<String,Object>> getResponeListVoList(ResponeListVo vo) throws Exception;
@@ -79,6 +83,8 @@ public interface ChatbotMapper {
 	//directType
 	List<Map<String,Object>> getDirectTypeCardList(String list_id) throws Exception;
 	List<Map<String,Object>> getDirectTypeCardBtnList(String direct_id) throws Exception;
+	//conditionType
+	List<Map<String,Object>> getConditionTypeCardList(String list_id) throws Exception;
 	//imageFile
 	void insertImageFile(FileVo fileVo) throws Exception;
 	void deleteImageFile(String intent_id) throws Exception;
@@ -87,5 +93,7 @@ public interface ChatbotMapper {
 	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
 	List<IntentVo> getIntentListInBtn() throws Exception;
+	
+	
 	
 }

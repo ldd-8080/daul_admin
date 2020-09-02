@@ -17,12 +17,18 @@ public class ResponeVo {
 	private String trans_type;
 	private String position;
 	private String title;
+	private String condition_item_id;
 	
 	
 	
 	
 	
-	
+	public String getCondition_item_id() {
+		return condition_item_id;
+	}
+	public void setCondition_item_id(String condition_item_id) {
+		this.condition_item_id = condition_item_id;
+	}
 	public String getImg_attach_id() {
 		return img_attach_id;
 	}
