@@ -1059,7 +1059,8 @@ function initialize_jstree(){
  	function getIntentListInBtn(target) {
  		var request = $.ajax({
  			url: "/chatbot/getIntentListInBtn.do",
- 			method: "get"
+ 			method: "get",
+ 			async: false
 		});
  		
  		request.done(function(data) {
@@ -1073,8 +1074,32 @@ function initialize_jstree(){
 		});
  		
  		request.fail(function(error) {
-			console.log("request fail", error);
+			console.log("getIntentListInBtn request fail", error);
 		});
+ 	}
+ 	
+ 	function getSkillConditionList(type) {
+ 		var result = [];
+ 		var type_url = "/chatbot";
+ 		
+ 		if (type === "skill")			type_url += "/getSkillList.do";
+ 		else if (type === "condition")	type_url += "/getConditionList.do";
+ 	
+ 		var request = $.ajax({
+ 			url: type_url,
+ 			method: "get",
+ 			async: false
+		});
+ 		
+ 		request.done(function(data) {
+ 			result = data;
+ 		});
+ 		
+ 		request.fail(function(error) {
+ 			console.log("getSkillConditionList request fail", error);
+ 		});
+ 		
+ 		return result;
  	}
  	
 </script>

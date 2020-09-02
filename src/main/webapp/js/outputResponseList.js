@@ -177,29 +177,15 @@ function addResponseListHtml(obj) {
 	if (obj.name === "skill" || obj.name === "condition") {
 		var select = response_list.querySelector("select.select-response-rule");
 		
+		var resultArr = getSkillConditionList(obj.name);
 		var dataArr = [];
-		if (obj.name === "condition") {
-			dataArr = [
-				{
-					id: "sys.is_login",
-					text: "로그인 상태 체크 (sys.is_login)"
-				},
-				{
-					id: "sys.is_logout",
-					text: "로그아웃 상태 체크 (sys.is_logout)"
-				}
-			] 
-		} else if (obj.name === "skill") {
-			dataArr = [
-				{
-					id: "sys.get_news",
-					text: "뉴스 가져오기 (sys.get_news)"
-				},
-				{
-					id: "sys.get_poppular_news",
-					text: "인기 뉴스 가져오기 (sys.get_poppular_news)"
-				}
-			]
+		
+		for (var i = 0; i < resultArr.length; i++) {
+			var obj = {};
+			obj.id = resultArr[i]["function"];
+			obj.text = resultArr[i].title + " (" + obj.id + ")";
+			
+			dataArr.push(obj);
 		}
 		
         $(select).select2({
@@ -385,7 +371,7 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
                     	<i class="icon md-code-setting" aria-hidden="true"></i>
                     </span>
 				 </div>
-				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]" value="Default"/>
+				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][name]"/>
 				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function1]" value="intent"/>
 				 <input type="hidden" name="cardList[${parentIdx}][card][${btnIdx}][button][${childIdx}][function2]" value=""/>
 				 <div class="btn-name">Default</div>`;
@@ -407,6 +393,8 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				var input_function1_val = $(button).find("input[name*='function1']").val();
 				var input_function2_val = $(button).find("input[name*='function2']").val();
 				
+				getIntentListInBtn(select_intent);
+				
 				if (obj.name !== "direct") {
 					if (input_function1_val) {
 						select_btn_type.val(input_function1_val);
@@ -427,6 +415,8 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				} else {
 					div_input_url.hide();
 					select_btn_type.find("option[value='url']").hide();
+					
+					select_intent.val(input_function2_val);
 				}
 				
 				select_btn_type.on("change", function(e) {
@@ -447,8 +437,6 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				var input_hidden_name = $(button).find("input[name*='name']").val();
 				
 				input_btn_name.val(input_hidden_name);
-				
-				getIntentListInBtn(select_intent);
 			}
 		}, defaults, popEditBtnSettings));
 		
