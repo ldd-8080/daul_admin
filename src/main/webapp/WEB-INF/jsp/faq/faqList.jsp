@@ -8,8 +8,10 @@
 	<div class="page-content container-fluid">
 		<!-- Page -->
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
-			<li class="breadcrumb-item"><a href="javascript:void(0)">게시판</a></li>
+			<li class="breadcrumb-item">
+				<a href="/main/main.do">Home</a>
+			</li>
+			<li class="breadcrumb-item">게시판</li>
 			<li class="breadcrumb-item active">자주하는질문</li>
 		</ol>
 		<div class="panel">
@@ -22,7 +24,8 @@
 							<div class="input-daterange" data-plugin="datepicker">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<span class="input-group-text"> <i class="icon md-calendar" aria-hidden="true"></i>
+										<span class="input-group-text">
+											<i class="icon md-calendar" aria-hidden="true"></i>
 										</span>
 									</div>
 									<input type="text" class="form-control" name="search_s_date" />
@@ -200,13 +203,10 @@
 	});
 
 	function insertFaq() {
-		var request = $.ajax({
-			url : "/faq/insertFaq.do",
-			method : "post",
-			//contentType: "application/json",
-			//dataType: "json",
-			data : $("#faq-modal-form").serialize()
-		});
+		var request = $.ajax({ url : "/faq/insertFaq.do", method : "post",
+		//contentType: "application/json",
+		//dataType: "json",
+		data : $("#faq-modal-form").serialize() });
 		request.done(function(data) {
 			if (typeof (data) == "object") {
 				valid(data);
@@ -229,13 +229,10 @@
 	}
 
 	function updateFaq() {
-		var request = $.ajax({
-			url : "/faq/updateFaq.do",
-			method : "post",
-			//contentType: "application/json",
-			//dataType: "json",
-			data : $("#faq-modal-update-form").serialize()
-		});
+		var request = $.ajax({ url : "/faq/updateFaq.do", method : "post",
+		//contentType: "application/json",
+		//dataType: "json",
+		data : $("#faq-modal-update-form").serialize() });
 		request.done(function(data) {
 			if (typeof (data) == "object") {
 				valid(data);
@@ -257,13 +254,10 @@
 	}
 
 	function deleteFaq() {
-		var request = $.ajax({
-			url : "/faq/deleteFaq.do",
-			method : "post",
-			//contentType: "application/json",
-			//dataType: "json",
-			data : $("#faq-modal-update-form").serialize()
-		});
+		var request = $.ajax({ url : "/faq/deleteFaq.do", method : "post",
+		//contentType: "application/json",
+		//dataType: "json",
+		data : $("#faq-modal-update-form").serialize() });
 		request.done(function(data) {
 
 			if (data === "success") {
@@ -280,93 +274,60 @@
 		});
 	}
 	function setFaqListTable(faqList) {
-		$('#faqListTable').jsGrid({
-			//height: "500px",
-			width : "100%",
+		$('#faqListTable').jsGrid(
+				{
+					//height: "500px",
+					width : "100%",
 
-			//autoload:true,
-			sorting : true,
-			paging : true,
-			//pageIndex: 1, default: 1
-			pageSize : 10, // default: 20
-			//pageButtonCount: 5, default: 15
+					//autoload:true,
+					sorting : true,
+					paging : true,
+					//pageIndex: 1, default: 1
+					pageSize : 10, // default: 20
+					//pageButtonCount: 5, default: 15
 
-			data : faqList,
+					data : faqList,
 
-			fields : [ {
-				name : "num",
-				title : "번호",
-				type : "text",
-				width : 40,
-				align : "center"
-			}, {
-				name : "faq_idx",
-				title : "번호",
-				type : "text",
-				width : 70,
-				align : "center",
-				css : "non-display"
-			}, {
-				name : "create_user",
-				title : "작성자",
-				type : "text",
-				width : 70
-			}, {
-				title : "질의",
-				type : "text",
-				width : 150,
-				itemTemplate : function(_, item) {
-					var result = "";
-					console.log("length = " + item.question.length);
-					if (item.question.length > 30) {
-						result = item.question.substring(0, 30) + '...';
-					} else {
-						result = item.question;
-					}
-					return result;
-				}
-			}, {
-				title : "응답",
-				type : "text",
-				width : 150,
-				itemTemplate : function(_, item) {
-					var result = "";
-					console.log("length = " + item.answer.length);
-					if (item.answer.length > 30) {
-						result = item.answer.substring(0, 30) + '...';
-					} else {
-						result = item.answer;
-					}
-					return result;
-				}
-			}, {
-				name : "create_date",
-				title : "등록일",
-				type : "text",
-				width : 100,
-				align : "center"
-			} ],
+					fields : [
+							{ name : "num", title : "번호", type : "text", width : 40, align : "center" },
+							{ name : "faq_idx", title : "번호", type : "text", width : 70, align : "center", css : "non-display" },
+							{ name : "create_user", title : "작성자", type : "text", width : 70 },
+							{ title : "질의", type : "text", width : 150, itemTemplate : function(_, item) {
+								var result = "";
+								console.log("length = " + item.question.length);
+								if (item.question.length > 30) {
+									result = item.question.substring(0, 30) + '...';
+								} else {
+									result = item.question;
+								}
+								return result;
+							} }, { title : "응답", type : "text", width : 150, itemTemplate : function(_, item) {
+								var result = "";
+								console.log("length = " + item.answer.length);
+								if (item.answer.length > 30) {
+									result = item.answer.substring(0, 30) + '...';
+								} else {
+									result = item.answer;
+								}
+								return result;
+							} }, { name : "create_date", title : "등록일", type : "text", width : 100, align : "center" }
+					],
 
-			rowClick : function(args) {
-				var idx = args.item.faq_idx;
+					rowClick : function(args) {
+						var idx = args.item.faq_idx;
 
-				$("#faqDetailBtn").trigger("click");
+						$("#faqDetailBtn").trigger("click");
 
-				$("#question_update").val(args.item.question);
-				$("#answer_update").val(args.item.answer);
-				$("#faq_idx_update").val(idx);
+						$("#question_update").val(args.item.question);
+						$("#answer_update").val(args.item.answer);
+						$("#faq_idx_update").val(idx);
 
-				//location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
-			}
-		});
+						//location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
+					} });
 	}
 
 	function getFaqList() {
-		var request = $.ajax({
-			url : "/faq/getFaqList.do",
-			method : "get",
-			data : $("#search-form").serialize()
-		});
+		var request = $.ajax({ url : "/faq/getFaqList.do", method : "get", data : $("#search-form").serialize() });
 
 		request.done(function(data) {
 

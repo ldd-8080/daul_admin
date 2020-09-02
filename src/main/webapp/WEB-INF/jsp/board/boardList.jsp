@@ -13,8 +13,8 @@
 	<div class="page-content container-fluid">
 	    <!-- Page -->
 	    <ol class="breadcrumb">
-	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">게시판</a></li>
+	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
+	      <li class="breadcrumb-item">게시판</li>
 	      <li class="breadcrumb-item active">공지사항</li>
 	    </ol>
 	

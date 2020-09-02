@@ -8,8 +8,8 @@
 	<div class="page-content container-fluid">
 	    <!-- Page -->
 	    <ol class="breadcrumb">
-	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">서비스</a></li>
+	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
+	      <li class="breadcrumb-item">서비스</li>
 	      <li class="breadcrumb-item active">열린제안</li>
 	    </ol>
 	

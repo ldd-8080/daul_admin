@@ -9,8 +9,8 @@
 	    <!-- Page -->
 	    <h1 class="page-title">공지사항 상세</h1>
 	    <ol class="breadcrumb">
-	      <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-	      <li class="breadcrumb-item"><a href="javascript:void(0)">공지사항</a></li>
+	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
+	      <li class="breadcrumb-item">공지사항</li>
 	      <li class="breadcrumb-item active">공지사항 상세</li>
 	    </ol>
 	

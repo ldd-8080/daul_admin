@@ -157,7 +157,6 @@
 		file.attach_type 	= "${file.attach_type}";
 		fileList.push(file);
 	</c:forEach>
-	
 	if (fileList.length > 0) {
 		for (var file of fileList) {
 			if (file.attach_type.indexOf("rep") > -1) {
@@ -167,7 +166,7 @@
 	            	'<input type="hidden" name="save_file_name" value="' + file.save_file_name + '">'+
 	    			'<span class="file-img"></span>'+
 	    			'<a href="#this" name="file">' +file.org_file_name+'</a>'+
-	    			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+file.file_size+'kb</span>'+
+	    			'<span>&nbsp;&nbsp;&nbsp;&nbsp;'+(file.file_size/1024).toFixed(2)+'kb</span>'+
 	    			'&nbsp;&nbsp;<button type="button" class="input-search-close icon md-close" name="FileDelBtn" ></button>'+
 	    			'</li>';
     			

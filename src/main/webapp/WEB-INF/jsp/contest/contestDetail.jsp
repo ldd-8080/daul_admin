@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-    
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!-- Page -->
 <div class="page">
@@ -10,8 +9,10 @@
 		<!-- Page -->
 		<h1 class="page-title">나눔공모 상세</h1>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-			<li class="breadcrumb-item"><a href="javascript:void(0)">나눔공모</a></li>
+			<li class="breadcrumb-item">
+				<a href="/main/main.do">Home</a>
+			</li>
+			<li class="breadcrumb-item">나눔공모</li>
 			<li class="breadcrumb-item active">나눔공모 상세</li>
 		</ol>
 
@@ -22,28 +23,23 @@
 						<div class="nav-tabs-horizontal" data-plugin="tabs">
 							<ul class="nav nav-tabs" role="tablist">
 								<li class="nav-item" role="presentation">
-									<a class="nav-link active" data-toggle="tab"
-									href="#exampleTabsOne" aria-controls="exampleTabsOne"
-									role="tab"> 공 모 </a>
+									<a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab"> 공 모 </a>
 								</li>
 								<li class="nav-item" role="presentation">
-									<a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
-									aria-controls="exampleTabsTwo" role="tab"> 제 안 </a>
+									<a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab"> 제 안 </a>
 								</li>
 							</ul>
 
 							<div class="tab-content pt-20">
 								<div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
 
-									<form:form method="post" modelAttribute="contestVo"
-										enctype="multipart/form-data" id="contestForm">
+									<form:form method="post" modelAttribute="contestVo" enctype="multipart/form-data" id="contestForm">
 										<form:input type="hidden" class="form-control" path="admin_contest_idx" />
 										<div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">등록자 </label>
 											<div class="col-md-8">
-												<form:input type="text" readonly="true" class="form-control"
-													path="create_user" />
+												<form:input type="text" readonly="true" class="form-control" path="create_user" />
 												<form:errors path="create_user" />
 											</div>
 										</div>
@@ -53,17 +49,16 @@
 											<div class="col-md-8">
 												<form:input type="text" class="form-control" path="title" />
 												<form:errors path="title" />
-												<span class="text-left" style="color:red;" id="chk-error-title"></span>
+												<span class="text-left" style="color: red;" id="chk-error-title"></span>
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">설명 </label>
 											<div class="col-md-8">
-												<form:textarea type="text" class="form-control"
-													path="content" rows="5" />
+												<form:textarea type="text" class="form-control" path="content" rows="5" />
 												<form:errors path="content" />
-												<span class="text-left" style="color:red;" id="chk-error-content"></span>
+												<span class="text-left" style="color: red;" id="chk-error-content"></span>
 											</div>
 										</div>
 										<%-- <div class="form-group row">
@@ -82,20 +77,18 @@
 												<div class="input-daterange" data-plugin="datepicker">
 													<div class="input-group">
 														<div class="input-group-prepend">
-															<span class="input-group-text"> 
+															<span class="input-group-text">
 																<i class="icon md-calendar" aria-hidden="true"></i>
 															</span>
 														</div>
-														<form:input type="text" class="form-control"
-															path="contest_s_date" />
+														<form:input type="text" class="form-control" path="contest_s_date" />
 														<form:errors style="color:red;" path="contest_s_date" />
 													</div>
 													<div class="input-group">
 														<div class="input-group-prepend">
 															<span class="input-group-text"> &nbsp;_&nbsp;</span>
 														</div>
-														<form:input type="text" class="form-control"
-															path="contest_e_date" />
+														<form:input type="text" class="form-control" path="contest_e_date" />
 													</div>
 												</div>
 											</div>
@@ -108,12 +101,11 @@
 												<div class="input-daterange" data-plugin="datepicker">
 													<div class="input-group">
 														<div class="input-group-prepend">
-															<span class="input-group-text"> 
+															<span class="input-group-text">
 																<i class="icon md-calendar" aria-hidden="true"></i>
 															</span>
 														</div>
-														<form:input type="text" class="form-control"
-															path="submit_s_date" />
+														<form:input type="text" class="form-control" path="submit_s_date" />
 														<form:errors style="color:red;" path="submit_s_date" />
 													</div>
 													<div class="input-group">
@@ -131,13 +123,13 @@
 											<label class="col-md-2 col-form-label">공고문</label>
 											<div class="col-md-7">
 												<div class="input-group input-group-file" data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="contestFileTitle" value="파일 0개" readonly /> 
-													<span class="input-group-append"> 
-														<span class="btn btn-primary btn-file"> 
-															<i class="icon md-upload" aria-hidden="true"></i> 
+													<input type="text" class="form-control" id="contestFileTitle" value="파일 0개" readonly />
+													<span class="input-group-append">
+														<span class="btn btn-primary btn-file">
+															<i class="icon md-upload" aria-hidden="true"></i>
 															<input multiple="multiple" type="file" id="contestFile" name="contestFile" />
 														</span>
-													</span> 
+													</span>
 												</div>
 											</div>
 										</div>
@@ -153,18 +145,17 @@
 											<div class="col-md-1"></div>
 											<label class="col-md-2 col-form-label">제안서</label>
 											<div class="col-md-7">
-												<div class="input-group input-group-file"
-													data-plugin="inputGroupFile">
-													<input type="text" class="form-control" id="propFileTitle" value="파일 0개" readonly /> 
-													<span class="input-group-append"> 
-														<span class="btn btn-primary btn-file"> 
-															<i class="icon md-upload" aria-hidden="true"></i> 
+												<div class="input-group input-group-file" data-plugin="inputGroupFile">
+													<input type="text" class="form-control" id="propFileTitle" value="파일 0개" readonly />
+													<span class="input-group-append">
+														<span class="btn btn-primary btn-file">
+															<i class="icon md-upload" aria-hidden="true"></i>
 															<input type="file" id="propFile" name="propFile" />
 														</span>
 													</span>
 												</div>
 											</div>
-										 	<!-- <div class="col-md-1" style="padding-left: 0px;">
+											<!-- <div class="col-md-1" style="padding-left: 0px;">
 												<button type='button' class='btn btn-primary'
 													id='propFileDelBtn'>삭제</button>
 											</div> -->
@@ -177,18 +168,14 @@
 											</div>
 										</div>
 
-								        <br/>
-								        <br/>
-								        
+										<br />
+										<br />
+
 										<div class="col-md-12 text-right">
-												<button type="button"
-													class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" data-title="나눔공모">수정 </button>
-												<button type="submit"
-													class="btn btn-primary waves-effect waves-classic" id="contestDeleteBtn" data-title="나눔공모" formaction="/contest/contestDelete.do">삭제 </button>
-												<button type="button"
-													class="btn btn-default btn-outline waves-effect waves-classic"
-													id="contestListBtn">목록</button>
-											
+											<button type="button" class="btn btn-primary waves-effect waves-classic" id="contestModifyBtn" data-title="나눔공모">수정</button>
+											<button type="submit" class="btn btn-primary waves-effect waves-classic" id="contestDeleteBtn" data-title="나눔공모" formaction="/contest/contestDelete.do">삭제</button>
+											<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="contestListBtn">목록</button>
+
 										</div>
 									</form:form>
 								</div>
