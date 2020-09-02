@@ -175,7 +175,6 @@ public class ContestController {
 	public ResponseEntity<?> getContestOpinionFileList(@RequestParam("user_contest_idx") String user_contest_idx,
 			ModelMap model) throws Exception {
 
-		System.out.println("user_contest_idx = " + user_contest_idx);
 		List<FileVo> contestOpinionFileList = null;
 		ContestOpinionVo vo = new ContestOpinionVo();
 		vo.setUser_contest_idx(user_contest_idx);
@@ -191,9 +190,10 @@ public class ContestController {
 	
 	@RequestMapping(value = "deleteAttachFile")
 	public ResponseEntity<?> deleteAttachFile(ContestVo vo, HttpServletRequest request) throws Exception {
+		
 		String s_file_name = request.getParameter("file_name");
-
 		FileVo fileVo = new FileVo();
+		
 		try {
 			fileVo.setSave_file_name(s_file_name);
 
@@ -201,6 +201,7 @@ public class ContestController {
 		} catch (Exception e) {
 			return new ResponseEntity<>("error", HttpStatus.OK);
 		}
+
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 
@@ -208,7 +209,6 @@ public class ContestController {
 	@RequestMapping(value = "contestModify")
 	public ResponseEntity<?> contestModify(HttpSession session, ContestVo vo, HttpServletRequest request, BindingResult bindingResult) throws Exception {
 		try {
-			log.debug("ContestVo : " + vo);
 			
 			ContestValidator contestValidator = new ContestValidator();
 			contestValidator.validate(vo, bindingResult);
@@ -219,7 +219,6 @@ public class ContestController {
 			
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setUpdate_user(userVo.getUser_id());
-			
 			log.debug("[나눔공모] 나눔공모 수정");
 			int result = contestService.updateContest(vo);
 			

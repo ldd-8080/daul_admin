@@ -46,13 +46,13 @@
 									<form:errors style="color:red;" path="content"/>
 								</div>   
 							</div>
-							<div class="form-group row">
+							<%-- <div class="form-group row">
 								<div class="col-md-1"></div>
 									<label class="col-md-2 col-form-label">대표이미지 </label>
 									<div class="col-md-8">
-		                    			<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" <%-- data-default-file="${pageContext.request.contextPath}/images/placeholder.png" --%>/>
+		                    			<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
 		                  			</div>
-							</div>
+							</div> --%>
 		                  	<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">설문기간 </label>		
@@ -125,10 +125,10 @@ $("#registSurvey").click(function() {
 	
 	var rep_img = $("#input-file-now-custom-1").val();
 	
-	if(typeof rep_img == "undefined" || rep_img == '' || rep_img == null){
+	/* if(typeof rep_img == "undefined" || rep_img == '' || rep_img == null){
 		alert("대표사진을 넣어주세요.");
 		return false;
-	}
+	} */
 
 		
 	if($("#question-list").children().length < 2){

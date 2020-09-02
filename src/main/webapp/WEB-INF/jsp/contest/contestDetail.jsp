@@ -285,7 +285,7 @@
   						}
   					}
   				}
-  				for (var k = 0; k < contestFileList.length; k++) {
+  				for (var k = 0; k < propFileList.length; k++) {
   					if (fileValue[i].name === propFileList[k].name) {
   						console.log("this file is already exist", fileValue[i].name);
   						exist = true;

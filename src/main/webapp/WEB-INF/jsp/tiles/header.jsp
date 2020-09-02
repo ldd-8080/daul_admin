@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-        
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -44,9 +43,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/fileupload/dropify.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-datepicker/bootstrap-datepicker.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/select2/select2.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select/bootstrap-select.css">  
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/progress-bars.css">      
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jsgrid/jsgrid.min.css">      
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select/bootstrap-select.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/progress-bars.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jsgrid/jsgrid.min.css">
 <!-- Fonts -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/font-awesome/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/material-design/material-design.min.css">
@@ -56,7 +55,7 @@
 <!-- Icons -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/web-icons/web-icons.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/icon.css">
-        
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jstree/jstree.css">
@@ -77,24 +76,24 @@
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
 <script src="${pageContext.request.contextPath}/js/jsgrid/jsgrid.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/jstree/jstree.js"></script>       
-<script src="${pageContext.request.contextPath}/js/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>    
+<script src="${pageContext.request.contextPath}/js/jstree/jstree.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>
 <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-<script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>   
+<script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin.js"></script>
 <script src="${pageContext.request.contextPath}/js/webui-popover/jquery.webui-popover.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/select2.js"></script>
 <script src="${pageContext.request.contextPath}/js/select2/select2.full.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/js/upload/uploads.js"></script> --%> 
- 
+
 <script type="text/javascript">
-    Breakpoints();
-    
+	Breakpoints();
+
 	function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		var results = regex.exec(location.search);
+		return results == null ? "" : decodeURIComponent(results[1].replace(
+				/\+/g, " "));
+	}
 </script>
