@@ -13,8 +13,7 @@ public class IntentVo {
 	private String update_date;
 	private String del_chk;
 	private String intent_id;
-	
-	
+	private String title;
 	
 	public String getIntent_id() {
 		return intent_id;
@@ -22,8 +21,6 @@ public class IntentVo {
 	public void setIntent_id(String intent_id) {
 		this.intent_id = intent_id;
 	}
-	
-	
 	public String getId() {
 		return id;
 	}
@@ -90,13 +87,18 @@ public class IntentVo {
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
 	}
-	@Override
-	public String toString() {
-		return "IntentVo [id=" + id + ", text=" + text + ", parent=" + parent + ", type=" + type
-				+ ", position=" + position + ", module=" + module + ", create_user=" + create_user + ", create_date="
-				+ create_date + ", update_user=" + update_user + ", update_date=" + update_date + ", del_chk=" + del_chk
-				+ "]";
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "IntentVo [id=" + id + ", text=" + text + ", parent=" + parent + ", type=" + type + ", position="
+				+ position + ", module=" + module + ", create_user=" + create_user + ", create_date=" + create_date
+				+ ", update_user=" + update_user + ", update_date=" + update_date + ", del_chk=" + del_chk
+				+ ", intent_id=" + intent_id + ", title=" + title + "]";
+	}
 }

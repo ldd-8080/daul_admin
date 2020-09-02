@@ -3,16 +3,15 @@
 <mapper namespace="egovframework.com.chatbot.mapper.ChatbotMapper">
 
 	<select id="getIntentListInBtn" resultType="egovframework.com.chatbot.vo.IntentVo">
-		SELECT 								
-			   intent_id,
+		SELECT intent_id,
 			   title,
 			   parent_id,
 			   type,
 			   position,
 			   module	
 		  FROM chatbot_intent_list
-		 WHERE type = 'C' AND del_chk = 'N'
-	  ORDER BY intent_id ;
+		 WHERE type = 'I' AND del_chk = 'N'
+	  ORDER BY parent_id, intent_id ;
 	</select>
 	
 	<select id="getIntentList" resultType="egovframework.com.chatbot.vo.IntentVo">

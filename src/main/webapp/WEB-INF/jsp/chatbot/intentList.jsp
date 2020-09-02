@@ -319,12 +319,12 @@
 
 <!-- Popover Edit List Title Text  -->
 <div id="popoverListTitleHeader" class="popover-header" hidden>
-  <p class="position-relative h-20">
-    <span class="position-absolute" style="top: 10px; left: 5px;">타이틀 설정</span>
-    <!-- <button type="button" class="btn btn-icon btn-pure float-right">
-      <i class="icon md-delete mr-0" aria-hidden="true"></i>
-    </button> -->
-  </p>
+	<p class="position-relative h-20">
+		<span class="position-absolute" style="top: 10px; left: 5px;">타이틀 설정</span>
+		<!-- <button type="button" class="btn btn-icon btn-pure float-right">
+			<i class="icon md-delete mr-0" aria-hidden="true"></i>
+		</button> -->
+	</p>
 </div>
 <div id="popoverListTitle" class="popover-content" hidden>
   <div class="form-group">
@@ -1055,4 +1055,26 @@ function initialize_jstree(){
  			console.log("fail", error);
  		});
  	}
+ 	
+ 	function getIntentListInBtn(target) {
+ 		var request = $.ajax({
+ 			url: "/chatbot/getIntentListInBtn.do",
+ 			method: "get"
+		});
+ 		
+ 		request.done(function(data) {
+ 			target.empty();
+ 			target.append("<option value=''>- 선택 -</option>");
+ 			
+ 			for (var i = 0; i < data.length; i++) {
+ 				var option = $("<option value='" + data[i].intent_id + "'>" + data[i].title + "</option>");
+ 				target.append(option);
+ 			}
+		});
+ 		
+ 		request.fail(function(error) {
+			console.log("request fail", error);
+		});
+ 	}
+ 	
 </script>

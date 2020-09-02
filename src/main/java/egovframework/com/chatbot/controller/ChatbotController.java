@@ -319,10 +319,9 @@ public class ChatbotController {
 	
 	@RequestMapping(value="/getIntentListInBtn.do")
 	public  ResponseEntity<?> getIntentListInBtn() throws Exception{
-		IntentVo vo = new IntentVo();
 		List<IntentVo> intentList = null;
 		try {
-			chatbotService.getIntentListInBtn();
+			intentList = chatbotService.getIntentListInBtn();
 		}catch(Exception e) {
 			log.debug("ChatbotController - getIntentListInBtn.do - Exception");
 		}

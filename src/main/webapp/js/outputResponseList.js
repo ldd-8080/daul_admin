@@ -404,8 +404,6 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				var select_intent = $("#" + popover_id + " .select-intent");
 				var input_url = $("#" + popover_id + " input.input-url");
 				
-				var input_function1 = $(button).find("input[name*='function1']");
-				var input_function2 = $(button).find("input[name*='function2']");
 				var input_function1_val = $(button).find("input[name*='function1']").val();
 				var input_function2_val = $(button).find("input[name*='function2']").val();
 				
@@ -449,6 +447,8 @@ function btnPopoverEvent(response_card_id, obj, parentIdx, childIdx, response_li
 				var input_hidden_name = $(button).find("input[name*='name']").val();
 				
 				input_btn_name.val(input_hidden_name);
+				
+				getIntentListInBtn(select_intent);
 			}
 		}, defaults, popEditBtnSettings));
 		
