@@ -21,11 +21,6 @@ function chatbotReg(){
 
 
 function setInputText(data){
-	console.log(data);
-//	if (data.length > 0) {
-//		$("#input_text").val(data[0].input_text);
-//	}
-	
 	$("#tokenfield-div").text('');
 	
 	var str = 
