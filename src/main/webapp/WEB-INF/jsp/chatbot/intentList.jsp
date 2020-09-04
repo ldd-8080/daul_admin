@@ -841,6 +841,7 @@ function initialize_jstree(){
 					response_list.querySelector("input[name*='position']").value = data[i].position;
 					response_list.querySelector("select[name*='" + type + "_item_id']").value = data[i][type + "_item_id"];
 					$(response_list).find("select.select-response-rule").select2();
+					
 					break;
 				case "direct":
 					var card = data[i].card;
