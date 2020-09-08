@@ -102,7 +102,7 @@ public class SurveyVo extends SearchVo{
 		return e_date;
 	}
 	public void setE_date(String e_date) {
-		this.e_date = e_date;
+		this.e_date = e_date + " 23:59:59";
 	}
 	public String getCreate_user() {
 		return create_user;
