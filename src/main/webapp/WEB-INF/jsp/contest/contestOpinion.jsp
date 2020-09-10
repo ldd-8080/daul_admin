@@ -60,7 +60,6 @@
 <script type="text/javascript">
 	$(function() {
 		getcontestOpinionList();
-		getContestOpinionFileList();
 	});
 
 	function setContestOpinionListTable(ContestList) {
