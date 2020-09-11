@@ -30,7 +30,7 @@ import egovframework.com.user.vo.UserVo;
 @Controller
 @RequestMapping(value="/qna")
 public class QnaController {
-	protected Log log = LogFactory.getLog(cmmnInterceptor.class);
+	protected Log log = LogFactory.getLog(QnaController.class);
 	
 	@Resource(name = "qnaService")
 	private QnaService qnaService;
@@ -51,7 +51,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value = "/qnaListPage.do")
-	public String suggestionListPage() {
+	public String qnaListPage() {
 		return "qna/qnaList";
 	}
 	
