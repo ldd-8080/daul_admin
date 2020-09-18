@@ -29,12 +29,13 @@ public class UserValidator implements Validator{
 		String emailRegExp = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
 		String phoneRegExp = "^[0-9]{2,3}\\-[0-9]{3,4}\\-[0-9]{4}";
 		String pwRegExp = "^(?=.*[a-z])(?=.*[0-9]).{8,15}";
+		String idRegExp = "^[a-zA-Z0-9_]{5,15}";
 		
 		if (user_id == null || user_id.trim().isEmpty()) {
 			errors.rejectValue("user_id", "user_id", "이 항목은 필수값 입니다.");
 		} else {
-			if (user_id.length() < 4 || user_id.length() > 10) {
-				errors.rejectValue("user_id", "user_id", "4~10자리로 입력해주세요.");
+			if (!user_id.matches(idRegExp)) {
+				errors.rejectValue("user_id", "user_id", "영문자, 숫자, 특수문자 _만 사용 가능하며 5~15자리로 입력해 주세요.");
 			}
 		}
 		

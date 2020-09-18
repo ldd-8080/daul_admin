@@ -275,12 +275,13 @@
 	});
 	
 	var userIdFlag = false;
+	var idRule = /^[a-zA-Z0-9_]{5,15}$/;
 	
 	$("#userIdCheck").click(function() {
 		var userId = $("#user_id").val();
 		
-		if (userId.length < 4 || userId.length > 10) {
-			alert("ID는 4~10자리로 입력해주세요.");
+		if (!idRule.test(userId)) {
+			alert("아이디는 영문자, 숫자, 특수문자 _만 사용가능 하며 5~15자리로 입력해 주세요.");
 			return false;
 		}
 		
