@@ -134,5 +134,5 @@
 	$("#user_id").val("admin");
 	$("#pw").val("1234qwer");
 
-	$("#login-btn").trigger("click");
+	/* $("#login-btn").trigger("click"); */
 </script>

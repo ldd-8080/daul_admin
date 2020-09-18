@@ -39,15 +39,14 @@
 		    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 		    	]]>
 		    </if>
-			ORDER BY ref ASC, indent DESC
+			ORDER BY ref ASC, indent
 		) sub
 	ORDER BY sub.num DESC;
 	</select>
 	
 	<select id = "selectQnaReplyIdx" resultType="String">
-		SELECT CONCAT(#{qna_idx},'-',LPAD(count(*)+1,'2','0')) as 'qna_idx'
+		SELECT CONCAT('QNA-',LPAD(count(*)+1,'6','0')) as 'qna_idx'
 		FROM daul_qna 
-		WHERE ref = #{qna_idx}
 	</select>
 	
 	<insert id = "insertQnaReply">
@@ -111,6 +110,4 @@
 		   SET view_count = view_count + 1
 		 WHERE qna_idx = #{qna_idx}
 	</update>
-	
-	
 </mapper>

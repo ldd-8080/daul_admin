@@ -71,7 +71,7 @@
 							</div>
 				            <div class="form-group form-material row">
 								<div class="col-md-12 text-right">
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="boardRegistBtn" data-title="공지사항" formaction="/board/boardInsert.do">등록 </button>
+									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="boardRegistBtn" data-title="공지사항" formaction="/board/boardInsert.do">등록</button>
 									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="boardListBtn">목록 </button>
 								</div>
 							</div>

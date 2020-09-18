@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -365,6 +366,30 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 		
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/serializedObj.do", method = RequestMethod.POST)
+	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
+		System.out.println("params === " + params);
+		try {
+//			//저장전에 해당 intent_id가 있으면 다 지움
+//			if(chatbotService.checkIntentId((String)params.get("intent_id")) != 0) {
+//				chatbotService.deleteIntentId((String)params.get("intent_id"));
+//			}
+//			List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
+//			if(list != null) {
+//				for (int i = 0; i < list.size(); i++) {
+//					if(list.get(i) != null) {
+//						list.get(i).put("intent_id", params.get("intent_id"));
+//					}
+//				}
+//				chatbotService.registResponeList(session, list);
+//			}
+		}catch(Exception e){
+			log.debug("ChatbotController - serializedObj.do - Exception");
+
+		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

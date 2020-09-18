@@ -45,13 +45,13 @@
 									<form:errors style="color:red;" path="content" />
 								</div>
 							</div>
-							<%-- 		<div class="form-group row">
+							<div class="form-group row">
 								<div class="col-md-1"></div>
-									<label class="col-md-2 col-form-label">대표이미지 </label>
-									<div class="col-md-8">
-		                    			<input type="file" accept="image/*" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
-		                  			</div>
-							</div> --%>
+								<label class="col-md-2 col-form-label">대표이미지 </label>
+								<div class="col-md-8">
+									<input type="file" accept="image/*" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png" />
+								</div>
+							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">공모기간 </label>
