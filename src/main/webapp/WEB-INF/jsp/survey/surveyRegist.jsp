@@ -2,8 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyRegist.js"></script>
-
 <!-- Page -->
 <div class="page">
 	<div class="page-content container-fluid">
@@ -80,19 +78,18 @@
 							</div>
 
 							<hr />
-							
-							<div id="survey-list">
-								<input type="hidden" name="survey_id" id="list_survey_id" />
-							</div>
-
-
-							<div class="form-group form-material row">
-								<div class="col-md-12 text-right">
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" data-title="설문조사" formaction="/survey/registSurvey.do">등록</button>
-									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록</button>
-								</div>
-							</div>
 						</form:form>
+							
+						<form id="survey-list">
+							<input type="hidden" name="survey_id" id="list_survey_id" />
+						</form>
+
+						<div class="form-group form-material row">
+							<div class="col-md-12 text-right">
+								<button type="button" class="btn btn-primary waves-effect waves-classic" id="registSurvey" data-title="설문조사">등록</button>
+								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록</button>
+							</div>
+						</div>
 						<!-- Output Box - Rule -->
 
 						<!-- Output - Button Group -->
@@ -100,7 +97,7 @@
 							<p class="mb-5 font-size-16 font-weight-400 " style="color: #616161;">+ 설문추가</p>
 							<div class="btn-group mt-5">
 								<div class="btn-group" role="group">
-									<button type="button" class="btn w-80 px-0" data-title="text" id="outputTextbox">
+									<button type="button" class="btn w-80 px-0" id="add_survey_list_btn">
 										<i class="icon md-comment-more font-size-20" aria-hidden="true"></i>
 										<br>
 										<span class="text-uppercase hidden-sm-down">설문추가</span>
@@ -113,72 +110,71 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$("#registSurvey").click(function() {
+</div>
 
-			var rep_img = $("#input-file-now-custom-1").val();
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyRegist.js"></script>
+<script type="text/javascript">
+	$("#registSurvey").click(function() {
 
-			/* if(typeof rep_img == "undefined" || rep_img == '' || rep_img == null){
-				alert("대표사진을 넣어주세요.");
-				return false;
-			} */
+		var rep_img = $("#input-file-now-custom-1").val();
 
-			if ($("#question-list").children().length < 2) {
-				alert("항목을 2개 이상 추가해주세요.");
-				return false;
-			} else {
-
+		if ($("#survey-list").children("div").length < 1) {
+			alert("설문 목록을 1개 이상 추가해 주세요.");
+			return false;
+		} else {
+			var survey_list_arr = $("#survey-list").children("div");
+			
+			for (var i = 0; i <survey_list_arr.length; i++) {
+				var survey_list = survey_list_arr[i];
+				var q_list = $("#" + survey_list.id + "_q_list");
+				
+				if (q_list.children().length < 2) {
+					alert("설문 항목을 2개 이상 추가해 주세요.");
+					return false;
+				}
 			}
-
-			if (!submitConfirm($(this)))
-				return false;
-		});
-
-		var globalIdx = 0;
-
-		window.onload = function() {
-			//document.getElementById("jstree").querySelectorAll("ul.jstree-no-dots ul.jstree-children ul.jstree-children")[0].querySelector("a").click();
-
-			var allOutputAddBtn = document.querySelectorAll("[id^='output']");
-
-			allOutputAddBtn.forEach(function(t) {
-				t.addEventListener("click", function() {
-					var title = t.querySelector(".hidden-sm-down").innerHTML;
-					var tKey = t.dataset.title;
-
-					var obj = { name : tKey };
-					obj[obj.name] = title;
-
-					addResponseListHtml(obj);
-				});
-			});
 		}
+
+		if (!submitConfirm($(this)))	return false;
 		
-		$("#chatbot-regist-btn").click(function() {
-	 		//if (!submitConfirm($(this))) return false;
-	 		
-	 		saveSurveyData();
-	 	});
+		saveSurveyData();
 		
-		function saveSurveyData() {
-	 	
-	 		var request = $.ajax({
-	 			url: "/survey/serializedObj.do",
-				method: "post",
-				contentType: "application/json",
-				//enctype: "multipart/form-data",
-				//dataType: "json",
-				data: JSON.stringify($("#survey-list").serializeObject())
-	 		});
-	 		
-	 		request.done(function(data) {
-	 			console.log("saveChatbotData", data);
-	 		});
-	 		
-	 		request.fail(function(error) {
-				console.log(error);
-				console.log("request fail");
-			});	
-	 	}
-		
-	</script>
+		$("#surveyVo").attr("action", "/survey/registSurvey.do");
+		$("#surveyVo").submit();
+	});
+
+	var globalIdx = 0;
+
+	$("#chatbot-regist-btn").click(function() {
+ 		//if (!submitConfirm($(this))) return false;
+ 		
+ 		saveSurveyData();
+ 	});
+	
+	function saveSurveyData() {
+ 	
+ 		var request = $.ajax({
+ 			url: "/survey/serializedObj.do",
+			method: "post",
+			contentType: "application/json",
+			//enctype: "multipart/form-data",
+			//dataType: "json",
+			data: JSON.stringify($("#survey-list").serializeObject())
+ 		});
+ 		
+ 		request.done(function(data) {
+ 			console.log("saveChatbotData", data);
+ 		});
+ 		
+ 		request.fail(function(error) {
+			console.log(error);
+			console.log("request fail");
+		});	
+ 	}
+	
+	var add_survey_list_btn = document.getElementById("add_survey_list_btn");
+	
+	add_survey_list_btn.addEventListener("click", function() {
+		addSurveyListHtml();
+	});
+</script>

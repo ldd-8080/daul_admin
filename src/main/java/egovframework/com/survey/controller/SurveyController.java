@@ -72,7 +72,7 @@ public class SurveyController {
 	@Transactional
 	@RequestMapping(value="/registSurvey.do", method=RequestMethod.POST)
 	public String registSurvey(HttpSession session, @ModelAttribute  SurveyVo vo, BindingResult bindingResult, HttpServletRequest request) throws Exception{
-
+		log.debug("registSurvey.do vo" + vo);
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
 		
