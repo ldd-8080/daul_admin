@@ -56,7 +56,8 @@
 			create_user,
 			create_date,
 			update_user,
-			update_date	
+			update_date	,
+			type
 		)
 		VALUES
 		(
@@ -66,7 +67,8 @@
 			#{create_user},
 			sysdate(),
 			#{update_user},
-			sysdate()
+			sysdate(),
+			#{type}
 			
 		) 
 	</insert>

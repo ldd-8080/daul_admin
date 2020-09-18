@@ -12,10 +12,17 @@ public class FaqVo extends SearchVo {
 	private String update_date;
 	private String del_chk;
 	private int num;
+	private String type;
 	
 	
 	
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public int getNum() {
 		return num;
 	}

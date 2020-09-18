@@ -92,7 +92,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">x</span>
 				</button>
-				<h4 class="modal-title">FAQ</h4>
+				<h4 class="modal-title">FAQ 등록</h4>
 			</div>
 			<div class="modal-body">
 				<form id="faq-modal-form">
@@ -105,8 +105,18 @@
 						<h4 class="example-title">응답</h4>
 						<textarea class="form-control" id="answer-reg" name="answer" rows="5"></textarea>
 						<span class="text-left" style="color: red;" id="chk-error-answer"></span>
+						<h4 class="example-title">자주하는 질문 종류</h4>
+						<div class="input-group-prepend w-p25">				
+							<select data-plugin="selectpicker" name="type">
+								<option value="main" selected>공통</option>
+								<option value="suggestion">열린제안</option>
+								<option value="survey">설문조사</option>
+								<option value="contest">나눔공모</option>
+							</select>
+						</div>
+						
 					</div>
-
+						
 					<span class="text-left" id="chk-error"></span>
 					<div style="text-align: center">
 						<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-btn" data-title="FAQ">등록</button>
@@ -117,7 +127,7 @@
 			</div>
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-default btn-pure" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
+       			<button type="button" class="btn btn-primary">Save changes</button> -->
 			</div>
 		</div>
 	</div>
@@ -147,13 +157,13 @@
 						<input type="hidden" id="faq_idx_update" name="faq_idx" />
 
 					</div>
-
 					<span class="text-left" id="chk-error"></span>
 					<div style="text-align: center">
 						<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-update-btn" data-title="FAQ">수정</button>
 						<button type="button" class="btn btn-default waves-effect waves-classics" id="faq-modal-delete-btn" data-title="FAQ">삭제</button>
 						<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn2">취 &nbsp;&nbsp; 소</button>
 					</div>
+					
 				</form>
 
 			</div>
