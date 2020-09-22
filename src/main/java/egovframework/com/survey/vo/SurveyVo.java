@@ -1,5 +1,7 @@
 package egovframework.com.survey.vo;
 
+import java.util.List;
+
 import egovframework.com.cmmn.util.SearchVo;
 
 
@@ -42,6 +44,8 @@ public class SurveyVo extends SearchVo{
 	private String q_seq;
 	
 	private int num;
+	
+	private List<SurveyQuestionVo> questionList;
 	
 	public String getQ_seq() {
 		return q_seq;
@@ -102,7 +106,7 @@ public class SurveyVo extends SearchVo{
 		return e_date;
 	}
 	public void setE_date(String e_date) {
-		this.e_date = e_date + " 23:59:59";
+		this.e_date = e_date;
 	}
 	public String getCreate_user() {
 		return create_user;
@@ -140,14 +144,22 @@ public class SurveyVo extends SearchVo{
 	public void setNum(int num) {
 		this.num = num;
 	}
+	public List<SurveyQuestionVo> getQuestionList() {
+		return questionList;
+	}
+	public void setQuestionList(List<SurveyQuestionVo> questionList) {
+		this.questionList = questionList;
+	}
 	
 	@Override
 	public String toString() {
-		return "SurveyVo [survey_idx=" + survey_idx + ", title=" + title + ", content=" + content + ", survey_type="
-				+ survey_type + ", s_date=" + s_date + ", e_date=" + e_date + ", create_user=" + create_user
-				+ ", create_date=" + create_date + ", update_user=" + update_user + ", update_date=" + update_date
-				+ ", del_chk=" + del_chk + ", question_content=" + question_content + ", q_seq="
-				+ q_seq + ", surveyFile= " + surveyFile +"]";
+		return "SurveyVo [survey_idx=" + survey_idx + ", question_idx=" + question_idx + ", title=" + title
+				+ ", content=" + content + ", survey_type=" + survey_type + ", s_date=" + s_date + ", e_date=" + e_date
+				+ ", create_user=" + create_user + ", create_date=" + create_date + ", update_user=" + update_user
+				+ ", update_date=" + update_date + ", del_chk=" + del_chk + ", opinion_count=" + opinion_count
+				+ ", participation_count=" + participation_count + ", question_content=" + question_content
+				+ ", surveyFile=" + surveyFile + ", q_seq=" + q_seq + ", num=" + num + ", questionList=" + questionList
+				+ "]";
 	}
 
 	

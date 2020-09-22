@@ -49,7 +49,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">대표이미지 </label>
 								<div class="col-md-8">
-									<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" path="surveyFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png" />
+									<input type="file" accept="image/*" id="input-file-now-custom-1" name="repFile" id="surveyFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png" />
 								</div>
 							</div>
 							<div class="form-group row">
@@ -68,7 +68,7 @@
 										</div>
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<span calss="input-group-text"> &nbsp;_&nbsp;</span>
+												<span class="input-group-text"> &nbsp;_&nbsp;</span>
 											</div>
 											<form:input type="text" class="form-control" path="e_date" />
 
@@ -78,18 +78,19 @@
 							</div>
 
 							<hr />
-						</form:form>
 							
-						<form id="survey-list">
-							<input type="hidden" name="survey_id" id="list_survey_id" />
-						</form>
-
-						<div class="form-group form-material row">
-							<div class="col-md-12 text-right">
-								<button type="button" class="btn btn-primary waves-effect waves-classic" id="registSurvey" data-title="설문조사">등록</button>
-								<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록</button>
+							<div id="survey-list">
+								<input type="hidden" name="survey_id" id="list_survey_id" />
 							</div>
-						</div>
+							
+							<div class="form-group form-material row">
+								<div class="col-md-12 text-right">
+									<button type="submit" class="btn btn-primary waves-effect waves-classic" id="registSurvey" data-title="설문조사" formaction="/survey/registSurvey.do">등록</button>
+									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록</button>
+								</div>
+							</div>
+						</form:form>
+
 						<!-- Output Box - Rule -->
 
 						<!-- Output - Button Group -->
@@ -136,42 +137,10 @@
 		}
 
 		if (!submitConfirm($(this)))	return false;
-		
-		saveSurveyData();
-		
-		$("#surveyVo").attr("action", "/survey/registSurvey.do");
-		$("#surveyVo").submit();
 	});
 
 	var globalIdx = 0;
 
-	$("#chatbot-regist-btn").click(function() {
- 		//if (!submitConfirm($(this))) return false;
- 		
- 		saveSurveyData();
- 	});
-	
-	function saveSurveyData() {
- 	
- 		var request = $.ajax({
- 			url: "/survey/serializedObj.do",
-			method: "post",
-			contentType: "application/json",
-			//enctype: "multipart/form-data",
-			//dataType: "json",
-			data: JSON.stringify($("#survey-list").serializeObject())
- 		});
- 		
- 		request.done(function(data) {
- 			console.log("saveChatbotData", data);
- 		});
- 		
- 		request.fail(function(error) {
-			console.log(error);
-			console.log("request fail");
-		});	
- 	}
-	
 	var add_survey_list_btn = document.getElementById("add_survey_list_btn");
 	
 	add_survey_list_btn.addEventListener("click", function() {

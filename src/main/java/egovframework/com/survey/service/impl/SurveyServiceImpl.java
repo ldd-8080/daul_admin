@@ -1,6 +1,7 @@
 package egovframework.com.survey.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +28,7 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	
 	@Override
 	public List<Map<String, String>> selectSurveyList(SurveyVo vo) throws Exception {
-		
-		List<Map<String,String>> list = new ArrayList();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		
 		list = surveyMapper.selectSurveyList(vo);
 		return list;
@@ -41,7 +41,6 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 
 	@Override
 	public void updateSurvey(SurveyVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		surveyMapper.updateSurvey(vo);
 	}
 	
@@ -53,36 +52,67 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 	}
 
 	@Override
-	public void registQuestion(Map<String, Object> map) throws Exception {
+	public void registQuestion(Map<String, String> map) throws Exception {
 		surveyMapper.registQuestion(map);
 		
 	}
 
 	@Override
 	public SurveyVo selectSurveyDetail(SurveyVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		return surveyMapper.selectSurveyDetail(vo);
 	}
 
 	@Override
-	public List<Map<String, String>> selectSurveyQuestion(SurveyVo vo) throws Exception {
+	public List<Map<String, Object>> selectSurveyQuestion(SurveyVo vo) throws Exception {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> titleList = new ArrayList<>();
+		List<Map<String, Object>> contentList = new ArrayList<>();
 		
-		List<Map<String,String>> list = new ArrayList();
+		try {
+			list = surveyMapper.selectSurveyQuestionList(vo);
+			
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> qesMap = list.get(i);
+				
+				if (qesMap.get("ref").equals(qesMap.get("question_idx"))) {
+					titleList.add(qesMap);
+				} else {
+					contentList.add(qesMap);
+				}
+			}
+			
+			for (int j = 0; j < titleList.size(); j++) {
+				Map<String, Object> titleMap = titleList.get(j);
+				titleMap.put("title", titleMap.get("question_content"));
+				
+				List<Map<String, Object>> content = new ArrayList<>();
+				
+				for (int k = 0; k < contentList.size(); k++) {
+					Map<String, Object> contentMap = contentList.get(k);
+					
+					if (titleMap.get("ref").equals(contentMap.get("ref"))) {
+						content.add(contentMap);
+					}
+				}
+				
+				titleMap.put("question_content", content);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		list = surveyMapper.selectSurveyQuestionList(vo);
-		return list;
+		return titleList;
 	}
 
 	@Override
 	public void deleteSurveyQuestion(SurveyVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		surveyMapper.deleteSurveyQuestion(vo);
 		
 	}
 
 	@Override
 	public List<Map<String, String>> selectSurveyResult(SurveyVo vo) throws Exception {
-		List<Map<String,String>> list = new ArrayList();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		
 		list = surveyMapper.selectSurveyResult(vo);
 		return list;
@@ -90,7 +120,7 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 
 	@Override
 	public List<Map<String, String>> selectParticipation(SurveyVo vo) throws Exception {
-		List<Map<String,String>> list = new ArrayList();
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		
 		list = surveyMapper.selectParticipation(vo);
 		return list;
@@ -98,14 +128,12 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 
 	@Override
 	public void deleteParticipation(SurveyVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		surveyMapper.deleteParticipation(vo);
 		
 	}
 
 	@Override
 	public List<Map<String, String>> selectSurveyFile(FileVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		return surveyMapper.selectSurveyFile(vo);
 	}
 
@@ -117,9 +145,7 @@ public class SurveyServiceImpl extends EgovAbstractServiceImpl implements Survey
 
 	@Override
 	public void deleteFile(FileVo vo) throws Exception {
-		// TODO Auto-generated method stub
 		surveyMapper.deleteFile(vo);
-		
 	}
 
 	@Override

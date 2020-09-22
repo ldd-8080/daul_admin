@@ -29,6 +29,7 @@ import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.service.SurveyService;
 import egovframework.com.survey.vo.SurveyOpinionVo;
+import egovframework.com.survey.vo.SurveyQuestionVo;
 import egovframework.com.survey.vo.SurveyVo;
 import egovframework.com.user.vo.UserVo;
 
@@ -84,9 +85,6 @@ public class SurveyController {
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    vo.setCreate_user(userVo.getUser_id());		    
 			
-			String question_content_arr = vo.getQuestion_content();
-			String[] questionArr = question_content_arr.split(",");
-			
 			vo.setSurvey_idx(surveyService.selectSurveyIdx());
 			
 			surveyService.registSurvey(vo);
@@ -96,7 +94,6 @@ public class SurveyController {
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getSurvey_idx());
 			
-			//List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, repFile);
 			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 			System.out.println("fileList == " + fileList);
 			
@@ -105,37 +102,60 @@ public class SurveyController {
 				surveyService.insertFile(fileVo);
 			}		
 			
-			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
+			List<SurveyQuestionVo> questionList = vo.getQuestionList();
 			
-			for(int j = 0; j < questionArr.length ;j++) {
-				String question_idx; 
-				String question_content;
+			String parent_qes_idx;
+			
+			List<Map<String, String>> resQuestionList = new ArrayList<Map<String, String>>();
+			int idx = 1;
+			
+			for (int j = 0; j < questionList.size(); j++) {
 				
-				question_idx = vo.getSurvey_idx()+'-'+String.format("%02d",j+1);
-				question_content = questionArr[j];
+				parent_qes_idx = vo.getSurvey_idx() + '-' + String.format("%02d", idx++);
+				SurveyQuestionVo qesVo = questionList.get(j);
 				
-				Map<String, Object> questionInfo = new HashMap<String, Object>();
+				Map<String, String> qesMap = new HashMap<>();
+				qesMap.put("question_idx", parent_qes_idx);
+				qesMap.put("survey_idx", vo.getSurvey_idx());
+				qesMap.put("ref", parent_qes_idx);
+				qesMap.put("question_content", qesVo.getTitle());
+				qesMap.put("select_type", qesVo.getType());
 				
-				questionInfo.put("survey_idx", vo.getSurvey_idx());
-				questionInfo.put("question_idx", question_idx);
-				questionInfo.put("question_content", question_content);
-				questionList.add(questionInfo);			
+				resQuestionList.add(qesMap);
+				
+				List<String> qes_content_list = qesVo.getQuestion_content();
+				
+				if (qes_content_list != null) {
+					for (int k = 0; k < qes_content_list.size(); k++) {
+						String qes_content = qes_content_list.get(k);
+						
+						Map<String, String> qesMap2 = new HashMap<>();
+						qesMap2.put("question_idx", vo.getSurvey_idx() + '-' + String.format("%02d", idx++));
+						qesMap2.put("survey_idx", vo.getSurvey_idx());
+						qesMap2.put("ref", parent_qes_idx);
+						qesMap2.put("question_content", qes_content);
+						qesMap2.put("select_type", qesVo.getType());
+						
+						resQuestionList.add(qesMap2);
+					}
+				}
 			}
 			
-			for(int i=0; i<questionList.size(); i++) {
-				surveyService.registQuestion(questionList.get(i));
+			for (int l = 0; l < resQuestionList.size(); l++) {
+				surveyService.registQuestion(resQuestionList.get(l));
 			}
-	        
+			
 			return "redirect:/survey/surveyList.do";
 		}catch(Exception e) {
 			return "common/error.jsp";
 		}
 	}
+	
 	@Transactional
 	@RequestMapping(value="/updateSurvey.do", method=RequestMethod.POST)
 	public String updateSurvey(HttpSession session, @ModelAttribute @Valid SurveyVo vo,ModelMap model ,HttpServletRequest request, 
 							   HttpServletResponse response, BindingResult bindingResult) throws Exception{
-
+		log.debug("updateSurvey.do vo" + vo);
 		SurveyValidator surveyValidator = new SurveyValidator();
 		surveyValidator.validate(vo, bindingResult);
 		
@@ -144,17 +164,11 @@ public class SurveyController {
 			return "survey/surveyDetail";
 		}
 		try {
-
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    vo.setUpdate_user(userVo.getUser_id());		    
 
-			String question_content_arr = vo.getQuestion_content();
-			String[] questionArr = question_content_arr.split(",");
-	
 			surveyService.updateSurvey(vo);
 			
-			List<Map<String, Object>> questionList = new ArrayList<Map<String, Object>>();
-		
 			FileVo fileVo = new FileVo();
 			
 			fileVo.setCreate_user(vo.getCreate_user());
@@ -176,29 +190,51 @@ public class SurveyController {
 				}		
 			}
 			
-			
 			surveyService.deleteSurveyQuestion(vo);
-		
 			
-			for(int j = 0; j < questionArr.length ;j++) {
-				String question_idx; 
-				String question_content;
+		 	List<SurveyQuestionVo> questionList = vo.getQuestionList();
+			
+			String parent_qes_idx;
+			
+			List<Map<String, String>> resQuestionList = new ArrayList<Map<String, String>>();
+			int idx = 1;
+			
+			for (int j = 0; j < questionList.size(); j++) {
 				
-				question_idx = vo.getSurvey_idx()+'-'+String.format("%02d",j+1);
-				question_content = questionArr[j];
+				parent_qes_idx = vo.getSurvey_idx() + '-' + String.format("%02d", idx++);
+				SurveyQuestionVo qesVo = questionList.get(j);
 				
-				Map<String, Object> questionInfo = new HashMap<String, Object>();
+				Map<String, String> qesMap = new HashMap<>();
+				qesMap.put("question_idx", parent_qes_idx);
+				qesMap.put("survey_idx", vo.getSurvey_idx());
+				qesMap.put("ref", parent_qes_idx);
+				qesMap.put("question_content", qesVo.getTitle());
+				qesMap.put("select_type", qesVo.getType());
 				
-				questionInfo.put("survey_idx", vo.getSurvey_idx());
-				questionInfo.put("question_idx", question_idx);
-				questionInfo.put("question_content", question_content);
-				questionList.add(questionInfo);			
+				resQuestionList.add(qesMap);
+				
+				List<String> qes_content_list = qesVo.getQuestion_content();
+				
+				if (qes_content_list != null) {
+					for (int k = 0; k < qes_content_list.size(); k++) {
+						String qes_content = qes_content_list.get(k);
+						
+						Map<String, String> qesMap2 = new HashMap<>();
+						qesMap2.put("question_idx", vo.getSurvey_idx() + '-' + String.format("%02d", idx++));
+						qesMap2.put("survey_idx", vo.getSurvey_idx());
+						qesMap2.put("ref", parent_qes_idx);
+						qesMap2.put("question_content", qes_content);
+						qesMap2.put("select_type", qesVo.getType());
+						
+						resQuestionList.add(qesMap2);
+					}
+				}
 			}
 			
-			for(int i=0; i<questionList.size(); i++) {
-				surveyService.registQuestion(questionList.get(i));
+			for (int l = 0; l < resQuestionList.size(); l++) {
+				surveyService.registQuestion(resQuestionList.get(l));
 			}
-	        
+			
 			return "redirect:/survey/surveyList.do";
 		}catch(Exception e) {
 			return "common/error.jsp";
@@ -209,22 +245,15 @@ public class SurveyController {
 	public String surveyDetail(ModelMap model, @RequestParam("survey_idx") String survey_idx) throws Exception{
 		SurveyVo surveyVo = new SurveyVo();
 
-		List<Map<String,String>> surveyQuestionList = new ArrayList<Map<String, String>>();
-		List<Map<String,String>> surveyResult = new ArrayList<Map<String, String>>();
-		List<Map<String,String>> surveyParticipation = new ArrayList<Map<String, String>>();
+		List<Map<String, String>> surveyResult = new ArrayList<Map<String, String>>();
 		List<SurveyOpinionVo> surveyOpinionList = null;
 		
 		try {
 			surveyVo.setSurvey_idx(survey_idx);
 			surveyVo = surveyService.selectSurveyDetail(surveyVo);
 			
-			surveyQuestionList = surveyService.selectSurveyQuestion(surveyVo);
-			
 			//설문조사 결과count가져오기
 			surveyResult = surveyService.selectSurveyResult(surveyVo);
-			System.out.println("surveyResult = " + surveyResult + ",surveyResult.size() = " + surveyResult.size());
-			
-			surveyParticipation = surveyService.selectParticipation(surveyVo);
 			
 			surveyOpinionList = surveyService.selectSurveyOpinionList(surveyVo);
 		}catch(Exception e) {
@@ -232,11 +261,27 @@ public class SurveyController {
 		}
 		model.addAttribute("surveyResult", surveyResult);
 		model.addAttribute("surveyVo",surveyVo);
-		model.addAttribute("surveyQuestionList",surveyQuestionList);
 		model.addAttribute("surveyOpinionList",surveyOpinionList);
 		model.addAttribute("surveyOpinionListSize",surveyOpinionList.size());
 		
 		return "survey/surveyDetail";
+	}
+	
+	@RequestMapping(value="/getSurveyQuestionList.do")
+	public ResponseEntity<?> getSurveyQuestionList(@RequestParam("survey_idx") String survey_idx) throws Exception {
+		List<Map<String, Object>> surveyQuestionList = new ArrayList<Map<String, Object>>();
+		
+		try {
+			SurveyVo surveyVo = new SurveyVo();
+			surveyVo.setSurvey_idx(survey_idx);
+			surveyVo = surveyService.selectSurveyDetail(surveyVo);
+			
+			surveyQuestionList = surveyService.selectSurveyQuestion(surveyVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(surveyQuestionList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/getSurveyOpinionList.do")

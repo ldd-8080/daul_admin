@@ -4,7 +4,7 @@ function surveyHtml(parentIdx) {
 			'<div class="col-md-1"></div>' +
 			'<label class="col-md-2 col-form-label">답변유형 </label>' +
 			'<div class="col-md-6 col-xl-4">' +
-				'<select data-plugin="selectpicker" name="survey[' + parentIdx + '][type]">' +
+				'<select data-plugin="selectpicker" name="questionList[' + parentIdx + '].type">' +
 					'<option value="S">단일선택</option>' +
 					'<option value="P">복수선택</option>' +
 				'</select>' +
@@ -14,7 +14,7 @@ function surveyHtml(parentIdx) {
 			'<div class="col-md-1"></div>' +
 			'<label class="col-md-2 col-form-label">설문제목 </label>' +
 			'<div class="col-md-8">' +
-				'<input type="text" class="form-control" maxlength="100" name="survey[' + parentIdx + '][title]">' +
+				'<input type="text" class="form-control" maxlength="100" name="questionList[' + parentIdx + '].title">' +
 			'</div>' +
 		'</div>' +
 		'<div class="form-group row">' +
@@ -69,7 +69,7 @@ function addSurveyQuestionContentHtml(parentIdx, childIdx) {
 		'<div class="col-md-1"></div>' +
 		'<label class="col-md-2 col-form-label"></label>' +
 		'<div class="col-md-8">' +
-			'<input type="text" class="form-control" name="survey[' + parentIdx + '][question_content][' + childIdx +']"/>' +
+			'<input type="text" class="form-control" name="questionList[' + parentIdx + '].question_content[' + childIdx +']"/>' +
 		'</div>' +
 		'<div class="col-md-1">' +
 			'<button type="button" class="btn btn-primary btn-box-delete" name="q_content_del_btn_' + childIdx + '" >-</button>' +

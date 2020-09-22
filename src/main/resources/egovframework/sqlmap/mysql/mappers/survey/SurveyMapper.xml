@@ -110,20 +110,23 @@
         )
 	</insert>
 	
-	<insert id = "registQuestion" parameterType = "hashmap">
+	<insert id="registQuestion" parameterType="hashmap">
 		INSERT INTO survey_question
-		(
-			question_idx,
-			survey_idx,
-			question_content
-		)
-		VALUES
-		(
-			#{question_idx},
-			#{survey_idx},
-			#{question_content}
-		)
-		
+			 (
+			   question_idx
+			 , survey_idx
+			 , ref
+			 , question_content
+			 , select_type
+			 )
+			 VALUES
+			 (
+			   #{question_idx}
+			 , #{survey_idx}
+			 , #{ref}
+			 , #{question_content}
+			 , #{select_type}
+			 )
 	</insert>
 	
 	<select id="selectSurveyDetail" resultType="egovframework.com.survey.vo.SurveyVo">
@@ -140,12 +143,13 @@
 	</select>
 	
 	<select id="selectSurveyQuestionList" resultType="Map">
-		SELECT 
-			question_idx,
-			question_content,
-			q_seq
-		FROM daul.survey_question
-		WHERE survey_idx = #{survey_idx}
+		SELECT question_idx
+			 , ref
+		     , question_content
+		     , q_seq
+		     , select_type
+		  FROM daul.survey_question
+		 WHERE survey_idx = #{survey_idx}
 	</select>
 	
 	<update id="updateSurvey">

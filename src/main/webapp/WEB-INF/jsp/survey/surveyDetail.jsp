@@ -10,202 +10,160 @@
 <div class="page">
 	<div class="page-content container-fluid">
 		<ol class="breadcrumb">
-	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
-	      <li class="breadcrumb-item">서비스</li>
-	      <li class="breadcrumb-item">설문조사</li>
-	      <li class="breadcrumb-item active">설문조사 상세</li>
-	    </ol>
-        <div class="panel">
-	          <div class="panel-body container-fluid"> 
+			<li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
+			<li class="breadcrumb-item">서비스</li>
+			<li class="breadcrumb-item">설문조사</li>
+			<li class="breadcrumb-item active">설문조사 상세</li>
+		</ol>
+		<div class="panel">
+			<div class="panel-body container-fluid">
 
-	    		<div class="example-wrap">
-	    
-	    
-	    
-                  <div class="nav-tabs-horizontal" data-plugin="tabs">
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
-                          aria-controls="exampleTabsOne" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설&nbsp;&nbsp;문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                      <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
-                          aria-controls="exampleTabsTwo" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;결&nbsp;&nbsp;과&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                      <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
-                          aria-controls="exampleTabsThree" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;댓글&nbsp;(${surveyOpinionListSize})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                    </ul>
-                    <div class="tab-content pt-20">
-                      <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                      	<div class="col-lg-12">
-							<div class="mb-30">
-								<div class="panel">
-									<div class="panel-body">
-										<form:form method="post" modelAttribute="surveyVo" enctype="multipart/form-data">
-										<form:input type="hidden" path="survey_idx"/>
-											<div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">작성자 </label>
-												<div class="col-md-8">
-													<form:input type="text" readonly="true" class="form-control" path="create_user"  value="${login.user_id}"/>
-													<form:errors path="create_user"/>
-												</div>
-											</div>
-											<div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">제목 </label>
-												<div class="col-md-8">
-													<form:input type="text" class="form-control" path="title"/>
-													<form:errors style="color:red;" path="title"/>
-												</div>
-											</div>
-											<div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">설명 </label>
-												<div class="col-md-8">
-													<form:textarea type="text" class="form-control" path="content" rows ="5"/>
-													<form:errors style="color:red;" path="content"/>
-												</div>   
-											</div>
-									<%-- 		<div class="form-group row">
+				<div class="example-wrap">
+
+
+
+					<div class="nav-tabs-horizontal" data-plugin="tabs">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설&nbsp;&nbsp;문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;결&nbsp;&nbsp;과&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+							<li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree" aria-controls="exampleTabsThree" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;댓글&nbsp;(${surveyOpinionListSize})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+						</ul>
+						<div class="tab-content pt-20">
+							<div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+								<div class="col-lg-12">
+									<div class="mb-30">
+										<div class="panel">
+											<div class="panel-body">
+												<form:form method="post" modelAttribute="surveyVo" enctype="multipart/form-data">
+													<form:input type="hidden" path="survey_idx" />
+													<div class="form-group row">
+														<div class="col-md-1"></div>
+														<label class="col-md-2 col-form-label">작성자 </label>
+														<div class="col-md-8">
+															<form:input type="text" readonly="true" class="form-control" path="create_user" value="${login.user_id}" />
+															<form:errors path="create_user" />
+														</div>
+													</div>
+													<div class="form-group row">
+														<div class="col-md-1"></div>
+														<label class="col-md-2 col-form-label">제목 </label>
+														<div class="col-md-8">
+															<form:input type="text" class="form-control" path="title" />
+															<form:errors style="color:red;" path="title" />
+														</div>
+													</div>
+													<div class="form-group row">
+														<div class="col-md-1"></div>
+														<label class="col-md-2 col-form-label">설명 </label>
+														<div class="col-md-8">
+															<form:textarea type="text" class="form-control" path="content" rows="5" />
+															<form:errors style="color:red;" path="content" />
+														</div>
+													</div>
+													<%-- 		<div class="form-group row">
 												<div class="col-md-1"></div>
 												<label class="col-md-2 col-form-label">대표이미지 </label>
 												<div class="col-md-8">
 					                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
 					                  			</div>
 											</div> --%>
-						                  	<div class="form-group row">
-												<div class="col-md-1"></div>
-												<label class="col-md-2 col-form-label">설문기간 </label>		
-													<div class="col-md-6 col-xl-5">
-														<div class="input-daterange" data-plugin="datepicker">
-															<div class="input-group">
+													<div class="form-group row">
+														<div class="col-md-1"></div>
+														<label class="col-md-2 col-form-label">설문기간 </label>
+														<div class="col-md-6 col-xl-5">
+															<div class="input-daterange" data-plugin="datepicker">
+																<div class="input-group">
 																	<div class="input-group-prepend">
 																		<span class="input-group-text">
-																		<i class="icon md-calendar" aria-hidden="true"></i>
+																			<i class="icon md-calendar" aria-hidden="true"></i>
 																		</span>
 																	</div>
-																<form:input type="text" class="form-control" name="s_date" id="s_date" path="s_date" />
-																<form:errors style="color:red;" path="s_date"/>
-															</div>
-															<div class="input-group">
-																<div class="input-group-prepend">
-																	<span calss="input-group-text"> &nbsp;_&nbsp;</span>
+																	<form:input type="text" class="form-control" name="s_date" id="s_date" path="s_date" />
+																	<form:errors style="color:red;" path="s_date" />
 																</div>
-																<form:input type="text" class="form-control" name="e_date" path="e_date" />
-																
+																<div class="input-group">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text"> &nbsp;-&nbsp;</span>
+																	</div>
+																	<form:input type="text" class="form-control" name="e_date" path="e_date" />
+																</div>
 															</div>
 														</div>
 													</div>
-							                </div>
-							                
-							                <hr/>
-							                
-							                <div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label" style="padding-top:25px;">답변유형 </label>
-												<div class="col-md-8">
-												<div class="example">
-								                    <select data-plugin="selectpicker" name = "survey_type">
-								                      <option value="S" <c:if test="${surveyVo.survey_type eq 'S'}">selected</c:if>>단일선택</option>
-								                      <option value="P" <c:if test="${surveyVo.survey_type eq 'P'}">selected</c:if>>복수선택</option>
-								                    </select>
-								                  </div>
+
+													<hr />
+
+													<div id="survey-list">
+													</div>
+
+													<br />
+													<br />
+
+													<div class="col-md-12 text-right">
+														<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" data-title="설문조사" formaction="/survey/updateSurvey.do">수정</button>
+														<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록</button>
+													</div>
+												</form:form>
+												
+												<!-- Output - Button Group -->
+												<div class="mt-30 mb-30 ml-50">
+													<p class="mb-5 font-size-16 font-weight-400 " style="color: #616161;">+ 설문추가</p>
+													<div class="btn-group mt-5">
+														<div class="btn-group" role="group">
+															<button type="button" class="btn w-80 px-0" id="add_survey_list_btn">
+																<i class="icon md-comment-more font-size-20" aria-hidden="true"></i>
+																<br>
+																<span class="text-uppercase hidden-sm-down">설문추가</span>
+															</button>
+														</div>
+													</div>
 												</div>
 											</div>
-							                
-							              
-							                <div class="form-group row">
-												<div class="col-md-1"></div>
-													<label class="col-md-2 col-form-label">설문 항목	</label>								
-												<div class="col-md-8">
-													<button type="button" class="btn btn-primary" id="addQuestion" onclick="addQuestion()">+ 항목 생성</button>		
-												</div>								
-											</div>
-											
-										  <div id = "question-list">
-							                <c:forEach var="result" items="${surveyQuestionList}" varStatus="status">
-								                	
-								              		<div class='form-group row'>
-													    <div class='col-md-3'></div>
-														    <div class='col-md-7'>
-														    	<input type='text' class='form-control' name='question_content' value=" ${ result.question_content}"/>
-														    </div>
-														    <div class='col-md-2'>
-														    	<button type='button' class='btn btn-primary' name = 'question_delete'  >-</button>
-														    </div>
-												    </div>
-											 
-										    	</c:forEach>
-											</div>
-											
-								        <br/>
-								        <br/>
-								        
-											<div class="col-md-12 text-right">
-													<button type="submit" class="btn btn-primary waves-effect waves-classic" id="updateSurvey" data-title="설문조사" formaction="/survey/updateSurvey.do">수정 </button>
-													<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="userList">목록 </button>
-									
-											</div>
-										</form:form>
+										</div>
 									</div>
 								</div>
 							</div>
+
+							<!--두번째탭 -->
+							<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+								<div class="row row-lg">
+
+									<div class="col-md-12">
+										<h4>◦ 투표결과</h4>
+										<div class="example-wrap w-p50 pl-20" id="surveyResultDiv"></div>
+									</div>
+
+									<div class="col-md-12">
+										<h4>
+											◦ 참여자
+											<span class="small">&nbsp;&nbsp;총${ surveyParticipation.size() }명</span>
+										</h4>
+										<div id="surveyParticipationListTable" class="text-break"></div>
+									</div>
+								</div>
+							</div>
+							<!--세번째탭 -->
+							<div class="tab-pane" id="exampleTabsThree" role="tabpanel">
+								<%@ include file="./surveyOpinion.jsp"%>
+							</div>
 						</div>
-                      </div>
-                      
-                      <!--두번째탭 -->
-                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                      <div class="row row-lg">
-                      
-						  <div class="col-md-12">
-							  <h4>◦ 투표결과</h4>
-							<div class="example-wrap w-p50 pl-20" id = "surveyResultDiv"></div>
-						</div>
-						
-						  <div class="col-md-12">
-							  <h4>◦ 참여자<span class="small">&nbsp;&nbsp;총${ surveyParticipation.size() }명</span></h4>
-							<div id="surveyParticipationListTable" class="text-break"></div>
-						</div>		
-									
-               			</div>
-               		</div>
-                    <!--세번째탭 -->
-                    <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                      <%@ include file="./surveyOpinion.jsp" %>
-             	    </div>
-             	    </div> 
-         			
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>
 
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyRegist.js"></script>
 <script type="text/javascript">
 	getSurveyOpinionList();
 	
 	$(window).on("load", function() {
-		console.log($("#s_date").val());
 		var _repFileTarget = $("div[class='dropify-preview']");
 		_repFileTarget.find("span[class='dropify-render']").append("<img src='/survey/getImg.do?survey_idx=${surveyVo.survey_idx}'>");
 		_repFileTarget.attr("style", "display:block");
 	});
 	
-	var s_date = document.getElementById("s_date").value;
-	
-	var today = formatDate(new Date());
-/* 	
-	if(s_date <= today){
-		document.getElementById('addQuestion').setAttribute('disabled', 'disabled');
-		$("button[name='question_delete']").attr("disabled", "disabled");
-		$("input[name='question_content']").attr("readonly", "true");
-		$("input[name='s_date']").attr("readonly", "true");
-		$("input[name='e_date']").attr("readonly", "true");
-		$("div[class='input-daterange']").attr("data-plugin", "");
-		$("select[name='survey_type']").attr("disabled", "disabled");
-	}else{
-		
-	}
-	 */
 	//파일정보 가져오기
 	var ResultList = new Array();
 	var sumCount= 0;
@@ -465,6 +423,67 @@
 	}
 	
 	$("#updateSurvey").click(function() {
+		if ($("#survey-list").children("div").length < 1) {
+			alert("설문 목록을 1개 이상 추가해 주세요.");
+			return false;
+		} else {
+			var survey_list_arr = $("#survey-list").children("div");
+			
+			for (var i = 0; i <survey_list_arr.length; i++) {
+				var survey_list = survey_list_arr[i];
+				var q_list = $("#" + survey_list.id + "_q_list");
+				
+				if (q_list.children().length < 2) {
+					alert("설문 항목을 2개 이상 추가해 주세요.");
+					return false;
+				}
+			}
+		}
+		
 		if (!submitConfirm($(this))) return false;
 	});
+	
+	var globalIdx = 0;
+	
+	var add_survey_list_btn = document.getElementById("add_survey_list_btn");
+	
+	add_survey_list_btn.addEventListener("click", function() {
+		addSurveyListHtml();
+	});
+	
+	getSurveyQuestionList();
+	
+	function getSurveyQuestionList() {
+		var request = $.ajax({
+			url: "/survey/getSurveyQuestionList.do?survey_idx=${surveyVo.survey_idx}",
+			method: "get"
+		});
+		
+		request.done(function(data) {
+			for (var i = 0; i < data.length; i++) {
+				add_survey_list_btn.click();
+				
+				var question = data[i];
+				
+				var survey_div = document.getElementById("survey_" + i);
+				
+				survey_div.querySelector("select").value = question.select_type;
+				survey_div.querySelector("input[name*='title']").value = question.title;
+				
+				var content = question.question_content;
+				
+				var add_q_content_btn = document.getElementById("survey_" + i + "_add_q_content_btn");
+				
+				for (var j = 0; j < content.length; j++) {
+					add_q_content_btn.click();
+					
+					survey_div.querySelector("input[name*='question_content[" + j + "]']").value = content[j].question_content;
+				}
+			}
+		});
+		
+		request.fail(function(error) {
+			console.log("getSurveyQuestionList fail", error);
+		});
+	}
 </script>

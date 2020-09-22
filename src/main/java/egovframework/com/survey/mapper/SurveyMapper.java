@@ -13,9 +13,9 @@ public interface SurveyMapper {
 	List<Map<String,String>> selectSurveyList(SurveyVo vo) throws Exception;
 	String selectSurveyIdx() throws Exception;
 	void registSurvey(SurveyVo vo) throws Exception;
-	void registQuestion(Map<String,Object> map) throws Exception;
+	void registQuestion(Map<String, String> map) throws Exception;
 	SurveyVo selectSurveyDetail(SurveyVo vo) throws Exception;	
-	List<Map<String,String>> selectSurveyQuestionList(SurveyVo vo) throws Exception;
+	List<Map<String, Object>> selectSurveyQuestionList(SurveyVo vo) throws Exception;
 	void updateSurvey(SurveyVo vo) throws Exception;
 	void deleteSurveyQuestion(SurveyVo vo) throws Exception;
 	List<Map<String,String>> selectSurveyResult(SurveyVo vo) throws Exception;
