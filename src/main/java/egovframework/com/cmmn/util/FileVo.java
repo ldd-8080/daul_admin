@@ -1,5 +1,7 @@
 package egovframework.com.cmmn.util;
 
+import java.util.List;
+
 public class FileVo {
 	private String idx;
 	private String org_file_name;
@@ -13,6 +15,9 @@ public class FileVo {
 	// intent
 	private String parent_id;
 	private String intent_id;
+	
+	
+	
 	
 	public String getIdx() {
 		return idx;

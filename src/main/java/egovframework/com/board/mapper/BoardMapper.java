@@ -22,4 +22,6 @@ public interface BoardMapper {
 	void deleteFile(FileVo fileVo) throws Exception;
 	void deleteNotice(BoardVo vo) throws Exception;
 	void increaseViewCount(BoardVo vo) throws Exception;
+	void deleteNoticeFile(FileVo fileVo) throws Exception;
+	void deleteImgFile(Map<String,Object> Param) throws Exception;
 }

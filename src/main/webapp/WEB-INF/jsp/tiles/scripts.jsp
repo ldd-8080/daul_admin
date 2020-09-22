@@ -94,7 +94,48 @@
 <script src="${pageContext.request.contextPath}/js/asprogress/jquery-asProgress.js"></script>    
 <script src="${pageContext.request.contextPath}/js/jquery.serialize-object.js"></script>    
 
+
+<!-- include summernote-ko-KR -->
+	<script src="${pageContext.request.contextPath}/js/summernote/summernote.js"></script>
+	<script src="${pageContext.request.contextPath}/js/summernote/summernote-ko-KR.js"></script>
+
+  
 <script type="text/javascript">
+$(document).ready(function() {
+	$('#summernote').summernote({
+		minHeight: 300,   // set minimum height of editor
+		lang: 'ko-KR', // default: 'en-US'				// 한글 설정
+		placeholder: '최대 5000자까지 쓸 수 있습니다',	//placeholder 설정
+		callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+			onImageUpload : function(files) {
+				uploadSummernoteImageFile(files[0],this)
+			}
+		}
+	});
+});
+
+/**
+* 이미지 파일 업로드
+*/
+function uploadSummernoteImageFile(file, editor) {
+	data = new FormData();
+	data.append("propFile", file);
+	var idx = $("#notice_idx").val();
+	data.append("idx",idx)
+	$.ajax({
+		data : data,
+		type : "POST",
+		url : "uploadSummernoteImageFile.do",
+		contentType : false,
+		processData : false,
+		success : function(data) {
+        	//항상 업로드된 파일의 url이 있어야 한다.
+        	console.log(data);
+			$(editor).summernote('insertImage', data);
+		}
+	});
+}
+
 function submitConfirm($type) {
 	var type = $type.text();
 	var title = $type.data("title");

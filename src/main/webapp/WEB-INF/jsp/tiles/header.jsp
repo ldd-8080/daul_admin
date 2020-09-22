@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrap-extend.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/site/site.min.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/summernote/summernote.css">
 <!-- Plugins -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/animsition/animsition.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/asscrollable/asScrollable.css">

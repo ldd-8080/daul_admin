@@ -1,66 +1,66 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!-- Page -->
 <div class="page">
 	<div class="page-content container-fluid">
-	    <!-- Page -->
-	    <h1 class="page-title">공지사항 상세</h1>
-	    <ol class="breadcrumb">
-	      <li class="breadcrumb-item"><a href="/main/main.do">Home</a></li>
-	      <li class="breadcrumb-item">공지사항</li>
-	      <li class="breadcrumb-item active">공지사항 상세</li>
-	    </ol>
-	
+		<!-- Page -->
+		<h1 class="page-title">공지사항 상세</h1>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="/main/main.do">Home</a>
+			</li>
+			<li class="breadcrumb-item">공지사항</li>
+			<li class="breadcrumb-item active">공지사항 상세</li>
+		</ol>
+
 		<div class="col-lg-12">
 			<div class="mb-30">
 				<div class="panel">
 					<div class="panel-body">
 						<form:form method="post" modelAttribute="boardVo" id="noticeForm">
-			         		<form:input type="hidden" class="form-control" path="notice_idx"/>
-			         		<div class="form-group row">
+							<form:input type="hidden" class="form-control" path="notice_idx" />
+							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">등록자 </label>
 								<div class="col-md-8">
-									<form:input type="text" readonly="true" class="form-control" path="create_user"/>
-									<form:errors path="create_user"/>
+									<form:input type="text" readonly="true" class="form-control" path="create_user" />
+									<form:errors path="create_user" />
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text"  class="form-control" path="title"/>
-									<form:errors path="title"/>
-									<span class="text-left" style="color:red;" id="chk-error-title"></span>
+									<form:input type="text" class="form-control" path="title" />
+									<form:errors path="title" />
+									<span class="text-left" style="color: red;" id="chk-error-title"></span>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">내용 </label>
 								<div class="col-md-8">
-									<form:textarea type="text" class="form-control" path="content" rows="5"/>
-									<form:errors path="content"/>
-									<span class="text-left" style="color:red;" id="chk-error-content"></span>
+									<form:textarea name="content" style="display: none;" path="content" />
+									<div id="summernote"></div>
 								</div>
 							</div>
-					    	<div class="form-group row">
+							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">첨부파일 </label>
 								<div class="col-md-8">
 									<div class="input-group input-group-file" data-plugin="inputGroupFile">
 										<input type="text" class="form-control" id="noticeFileTitle" value="파일 0개" readonly />
-										<span class="input-group-append"> 
-											<span class="btn btn-primary btn-file"> 
-												<i class="icon md-upload" aria-hidden="true"></i> 
+										<span class="input-group-append">
+											<span class="btn btn-primary btn-file">
+												<i class="icon md-upload" aria-hidden="true"></i>
 												<input multiple="multiple" type="file" id="noticeFile" name="noticeFile" />
 											</span>
-										</span> 
+										</span>
 									</div>
 								</div>
-							</div>  
+							</div>
 							<div class="form-gorup row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label"></label>
@@ -68,23 +68,23 @@
 									<div id="noticeFile-list"></div>
 								</div>
 							</div>
-					    
-					        <br/>
-					        <br/>
-					        
+
+							<br />
+							<br />
+
 							<div class="col-md-11 text-right">
-								<div class="example example-buttons"> 
-									<button type="button" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="noticeModifyBtn" >수정 </button>
-									<button type="submit" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="notcieDeleteBtn" name="notcieDeleteBtn" formaction="/board/noticeDelete.do">삭제 </button>
-									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록 </button>
+								<div class="example example-buttons">
+									<button type="button" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="noticeModifyBtn">수정</button>
+									<button type="submit" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="notcieDeleteBtn" name="notcieDeleteBtn" formaction="/board/noticeDelete.do">삭제</button>
+									<button type="button" class="btn btn-default btn-outline waves-effect waves-classic" id="noticeListBtn">목록</button>
 								</div>
 							</div>
 						</form:form>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -95,6 +95,8 @@
 			e.preventDefault();
 			fn_downloadFile($(this));
 		});
+		
+	$('#summernote').summernote('code', '${boardVo.content}');
 	});
    
 	function fn_downloadFile(obj){
@@ -109,6 +111,8 @@
 	$("#noticeModifyBtn").click(function() {
 		if (!submitConfirm($(this))) return false;
 		
+		$('textarea[name="content"]').val($('#summernote').summernote('code'));
+		  
 		$("#noticeFile").attr("type", "text");
 		$("#noticeFile").attr("type", "file");
 		

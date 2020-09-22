@@ -18,4 +18,7 @@ public interface BoardService {
 	int updateNotice(BoardVo vo) throws Exception;
 	void deleteFile(FileVo fileVo) throws Exception;
 	void deleteNotice(BoardVo vo) throws Exception;
+	void deleteNoticeFile(FileVo fileVo) throws Exception;
+	void deleteImgFile(List<Map<String, Object>> imgNameList) throws Exception;
+	
 }

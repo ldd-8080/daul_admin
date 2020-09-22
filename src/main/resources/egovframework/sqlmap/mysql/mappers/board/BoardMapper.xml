@@ -164,9 +164,30 @@
 		   AND del_chk != 'Y'
 	</update>
 	
-		<update id = "increaseViewCount">
+	<update id = "increaseViewCount">
 		UPDATE daul.daul_notice
 		   SET view_count = view_count + 1
 		 WHERE notice_idx = #{notice_idx}
 	</update>
+	
+	<delete id="deleteNoticeFile">
+		DELETE 
+		FROM daul.daul_notice_attach
+		WHERE notice_idx = #{notice_idx}
+	</delete>
+	
+	<delete id="deleteImgFile" parameterType="java.util.HashMap">
+		DELETE
+		FROM daul.daul_notice_attach
+		WHERE save_file_name NOT IN  
+		<foreach collection="list" item="obj" separator="," open="(" close=")">
+   		   #{obj.save_file_name} 
+        </foreach>
+        and notice_idx IN
+        <foreach collection="list" item="obj" separator="," open="(" close=")">
+   		   #{obj.notice_idx} 
+        </foreach>
+	</delete>
+	
+	
 </mapper>

@@ -1,13 +1,20 @@
 package egovframework.com.board.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.com.board.service.BoardService;
 import egovframework.com.board.vo.BoardVo;
@@ -84,9 +92,10 @@ public class BoardController {
 	
 	@RequestMapping(value = "/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(ModelMap model) throws Exception {
+		BoardVo vo = new BoardVo();
+		vo.setNotice_idx(boardService.selectNoticeIdx());
 		
-	
-		model.addAttribute("boardVo", new BoardVo());
+		model.addAttribute("boardVo", vo);
 		return "board/boardWrite";
 	}
 	
@@ -94,31 +103,48 @@ public class BoardController {
 	@RequestMapping(value ="/boardInsert.do", method=RequestMethod.POST)
 	public String boardInsert(HttpSession session,BoardVo vo, BindingResult bindingResult, HttpServletRequest request) 
     		throws Exception {
-		
 		try {
 			BoardValidator boardValidator = new BoardValidator();
 			boardValidator.validate(vo, bindingResult);
-			
+			List<Map<String, Object>> imgNameList = new ArrayList<Map<String, Object>>();
+			   
 			if(bindingResult.hasErrors()) {
 				return "board/boardWrite";
 			}
-			System.out.println("boardInsert.do======");
+			System.out.println("boardInsert.do======" + vo);
+			
+			String imgFileName_arr = vo.getImgFileName();
+			String[] imgFileNameArr = imgFileName_arr.split(",");
+			
+			for(int imgFileNameArrCnt = 0; imgFileNameArrCnt < imgFileNameArr.length; imgFileNameArrCnt++) {
+				Map<String,Object> imgName = new HashMap<String,Object>();
+				imgName.put("notice_idx", vo.getNotice_idx());
+				imgName.put("save_file_name", imgFileNameArr[imgFileNameArrCnt]);
+				imgNameList.add(imgName);
+				
+			}
+				
+			boardService.deleteImgFile(imgNameList);
+				
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			   
-			vo.setNotice_idx(boardService.selectNoticeIdx());
+			//vo.setNotice_idx(boardService.selectNoticeIdx());
 			vo.setCreate_user(userVo.getUser_id());
 			
 			FileVo fileVo = new FileVo();
 				
 			fileVo.setCreate_user(vo.getCreate_user());
 			fileVo.setIdx(vo.getNotice_idx());
-				
+		
 			List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 			System.out.println("fileList == " + fileList);
 			
 			for(int i = 0; i<fileList.size(); i++) {
 				fileVo = fileList.get(i);
-				boardService.insertFile(fileVo);
+				System.out.println("attach_type = " + fileVo.getAttach_type());
+				if(!fileVo.getAttach_type().equals("files")) {
+				   boardService.insertFile(fileVo);
+				}
 			}		
 			//vo.setReg_user(userVo.getUser_seq());
 		    boardService.insertBoard(vo);
@@ -211,5 +237,42 @@ public class BoardController {
 			e.printStackTrace();
 		}
 	 }
+	
+	@RequestMapping(value="/uploadSummernoteImageFile.do",method = RequestMethod.POST)
+	public ResponseEntity<?> uploadSummernoteImageFile(HttpSession session, @RequestParam("propFile") MultipartFile multipartFile, @RequestParam("idx") String idx) throws Exception {
+		System.out.println(multipartFile);
+		
+		String fileRoot = profileCls.getRootPath();	//저장될 외부 파일 경로
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+		
+		String savedFileName = UUID.randomUUID().toString().replaceAll("-", "") + extension;
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		
+		try {	
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			FileVo fileVo = new FileVo();
+			
+			
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+		
+			fileVo.setIdx(idx);
+    		fileVo.setOrg_file_name(originalFileName);
+    		fileVo.setSave_file_name(savedFileName);
+    		fileVo.setFile_size((int)multipartFile.getSize());
+    		fileVo.setCreate_user(userVo.getUser_id());
+    		fileVo.setAttach_type(multipartFile.getName());
+    		
+    		boardService.insertFile(fileVo);
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			e.printStackTrace();
+		}
+		
+		//이미지를 저장하고 return값으로 save_file_name을 넘긴다
+		return new ResponseEntity<>("/cmmn/getImg.do?save_file_name=" + savedFileName, HttpStatus.OK);
+	}
 	
 }

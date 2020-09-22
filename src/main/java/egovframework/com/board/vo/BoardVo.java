@@ -15,10 +15,16 @@ public class BoardVo extends SearchVo{
 	private String del_chk;
 	private int num;
 	private int attach_count;
+	private String imgFileName;
 	
 	
 	
-	
+	public String getImgFileName() {
+		return imgFileName;
+	}
+	public void setImgFileName(String imgFileName) {
+		this.imgFileName = imgFileName;
+	}
 	public int getAttach_count() {
 		return attach_count;
 	}
@@ -96,8 +102,10 @@ public class BoardVo extends SearchVo{
 		return "BoardVo [notice_idx=" + notice_idx + ", title=" + title + ", content=" + content + ", notice_type="
 				+ notice_type + ", view_count=" + view_count + ", create_user=" + create_user + ", create_date="
 				+ create_date + ", update_user=" + update_user + ", update_date=" + update_date + ", del_chk=" + del_chk
-				+ "]";
+				+ ", num=" + num + ", attach_count=" + attach_count + ", imgFileName=" + imgFileName + "]";
 	}
+
+	
 	
 	
 	

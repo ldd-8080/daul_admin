@@ -1,6 +1,7 @@
 package egovframework.com.board.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,6 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardMapper.selectBoardFile(vo);
 		
 	}
-	
 
 	@Override
 	public BoardVo selectBoard(BoardVo vo) throws Exception{
@@ -43,10 +43,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	
 	@Override
 	public void insertBoard(BoardVo vo) throws Exception{
-
-	boardMapper.insertBoard(vo);
-
-		
+		boardMapper.insertBoard(vo);
 	}
 	
 	@Override
@@ -57,7 +54,6 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	@Override
 	public void insertFile(FileVo fileVo) throws Exception {
 		boardMapper.insertFile(fileVo);
-		
 	}
 
 	@Override
@@ -80,6 +76,19 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public void deleteNotice(BoardVo vo) throws Exception {
 		boardMapper.deleteNotice(vo);
 		
+	}
+
+	@Override
+	public void deleteNoticeFile(FileVo fileVo) throws Exception {
+		boardMapper.deleteNoticeFile(fileVo);
+	}
+
+	@Override
+	public void deleteImgFile(List<Map<String, Object>> imgNameList) throws Exception {
+		System.out.println("imgNameList == " + imgNameList);
+		Map<String,Object> Param = new HashMap<String,Object>();
+		Param.put("list", imgNameList);
+		boardMapper.deleteImgFile(Param);
 	}
 	
 	

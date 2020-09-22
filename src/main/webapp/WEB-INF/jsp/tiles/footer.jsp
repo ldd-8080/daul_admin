@@ -7,3 +7,4 @@
 		Crafted with <i class="red-600 icon md-favorite"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
 	</div>
 </footer>
+
