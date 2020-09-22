@@ -200,33 +200,34 @@ public class SurveyController {
 			int idx = 1;
 			
 			for (int j = 0; j < questionList.size(); j++) {
-				
 				parent_qes_idx = vo.getSurvey_idx() + '-' + String.format("%02d", idx++);
 				SurveyQuestionVo qesVo = questionList.get(j);
 				
-				Map<String, String> qesMap = new HashMap<>();
-				qesMap.put("question_idx", parent_qes_idx);
-				qesMap.put("survey_idx", vo.getSurvey_idx());
-				qesMap.put("ref", parent_qes_idx);
-				qesMap.put("question_content", qesVo.getTitle());
-				qesMap.put("select_type", qesVo.getType());
-				
-				resQuestionList.add(qesMap);
-				
-				List<String> qes_content_list = qesVo.getQuestion_content();
-				
-				if (qes_content_list != null) {
-					for (int k = 0; k < qes_content_list.size(); k++) {
-						String qes_content = qes_content_list.get(k);
-						
-						Map<String, String> qesMap2 = new HashMap<>();
-						qesMap2.put("question_idx", vo.getSurvey_idx() + '-' + String.format("%02d", idx++));
-						qesMap2.put("survey_idx", vo.getSurvey_idx());
-						qesMap2.put("ref", parent_qes_idx);
-						qesMap2.put("question_content", qes_content);
-						qesMap2.put("select_type", qesVo.getType());
-						
-						resQuestionList.add(qesMap2);
+				if (qesVo.getType() != null) {
+					Map<String, String> qesMap = new HashMap<>();
+					qesMap.put("question_idx", parent_qes_idx);
+					qesMap.put("survey_idx", vo.getSurvey_idx());
+					qesMap.put("ref", parent_qes_idx);
+					qesMap.put("question_content", qesVo.getTitle());
+					qesMap.put("select_type", qesVo.getType());
+					
+					resQuestionList.add(qesMap);
+					
+					List<String> qes_content_list = qesVo.getQuestion_content();
+					
+					if (qes_content_list != null) {
+						for (int k = 0; k < qes_content_list.size(); k++) {
+							String qes_content = qes_content_list.get(k);
+							
+							Map<String, String> qesMap2 = new HashMap<>();
+							qesMap2.put("question_idx", vo.getSurvey_idx() + '-' + String.format("%02d", idx++));
+							qesMap2.put("survey_idx", vo.getSurvey_idx());
+							qesMap2.put("ref", parent_qes_idx);
+							qesMap2.put("question_content", qes_content);
+							qesMap2.put("select_type", qesVo.getType());
+							
+							resQuestionList.add(qesMap2);
+						}
 					}
 				}
 			}

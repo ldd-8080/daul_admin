@@ -26,6 +26,9 @@ function surveyHtml(parentIdx) {
 		'</div>' +
 		'<div class="form-group" id="survey_' + parentIdx + '_q_list">' +
 		'</div>' +
+		'<div class="col-md-12 text-right">' +
+			'<button type="button" class="btn btn-danger" id="survey_' + parentIdx +'_del_btn">삭제</button>' +
+		'</div>' +
 		'<hr>';
 	
 	return html;
@@ -56,6 +59,13 @@ function addSurveyListHtml() {
 	add_q_content_btn.addEventListener("click", function() {
 		addSurveyQuestionContentHtml(parentIdx, childIdx);
 		childIdx++;
+	});
+	
+	// 설문 항목 삭제 버튼 event
+	var survey_del_btn = div.querySelector("button[id*='del_btn']");
+	
+	survey_del_btn.addEventListener("click", function() {
+		div.remove();
 	});
 	
 	globalIdx++;

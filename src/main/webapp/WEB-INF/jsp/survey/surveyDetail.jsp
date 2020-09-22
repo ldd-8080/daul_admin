@@ -154,7 +154,7 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyRegist.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyQuestion.js"></script>
 <script type="text/javascript">
 	getSurveyOpinionList();
 	
