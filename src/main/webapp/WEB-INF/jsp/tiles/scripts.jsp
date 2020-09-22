@@ -101,23 +101,12 @@
 
   
 <script type="text/javascript">
-$(document).ready(function() {
-	$('#summernote').summernote({
-		minHeight: 300,   // set minimum height of editor
-		lang: 'ko-KR', // default: 'en-US'				// 한글 설정
-		placeholder: '최대 5000자까지 쓸 수 있습니다',	//placeholder 설정
-		callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-			onImageUpload : function(files) {
-				uploadSummernoteImageFile(files[0],this)
-			}
-		}
-	});
-});
 
 /**
 * 이미지 파일 업로드
 */
 function uploadSummernoteImageFile(file, editor) {
+	console.log("uploadSummernoteImageFile");
 	data = new FormData();
 	data.append("propFile", file);
 	var idx = $("#notice_idx").val();

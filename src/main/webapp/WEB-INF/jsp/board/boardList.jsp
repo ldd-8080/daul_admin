@@ -109,22 +109,6 @@ function setBoardListTable(BoardList) {
 	    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
 	    	{name: "create_user", title: "작성자", type: "text", width: 60},
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
-	    	{title: "내용", width: 200,	    		
-				itemTemplate: function(_, item) {
-	    			var result="";
-	    			if(item.content.length > 30){
-	    				result = item.content.substring(0,30)+'...';		    				
-	    			}else{
-	    				result = item.content;
-	    			}
-	    			
-	    			if(item.attach_count > 0){
-	    				result +='&nbsp;&nbsp;<i class="icon wb-file" aria-hidden="true"></i>';
-	    			}
-	    			
-	    			return result;
-	    		}
-	    	}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
 	    	{name: "view_count", title: "조회수", type: "text", width: 50, align: "center"}
     	],

@@ -22,10 +22,10 @@
 			<div class="mb-30">
 				<div class="panel">
 					<div class="panel-body">
-						
+
 						<form:form method="post" modelAttribute="boardVo" enctype="multipart/form-data">
-						<div id="imgFileNameList"></div>
-						<form:input type="hidden" id="notice_idx" value="${boardVo.notice_idx }" path="notice_idx"/>
+							<div id="imgFileNameList"></div>
+							<form:input type="hidden" id="notice_idx" value="${boardVo.notice_idx }" path="notice_idx" />
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">작성자 </label>
@@ -46,7 +46,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">공지내용 </label>
 								<div class="col-md-8">
-									<form:textarea name="content" style="display: none;" path = "content"/>
+									<form:textarea name="content" style="display: none;" path="content" />
 									<div id="summernote"></div>
 								</div>
 							</div>
@@ -92,6 +92,21 @@
 		location.href = "${pageContext.request.contextPath}/board/boardList.do";
 	});
 
+	$(document).ready(function() {
+		
+		$('#summernote').summernote({
+			minHeight: 300,   // set minimum height of editor
+			lang: 'ko-KR', // default: 'en-US'				// 한글 설정
+			placeholder: '최대 2000자까지 쓸 수 있습니다',	//placeholder 설정
+			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				onImageUpload : function(files) {
+					uploadSummernoteImageFile(files[0],this)
+				}
+			}
+		});
+	});
+
+	
 	var noticeFileList = new Array();
 
 	function noticeFileChange() {
@@ -152,35 +167,28 @@
 	$("#boardRegistBtn").click(function() {
 		if (!submitConfirm($(this)))
 			return false;
-		
-	    $('textarea[name="content"]').val($('#summernote').summernote('code'));
-		
-	    appendImgFileName();
-		
+
+		$('textarea[name="content"]').val($('#summernote').summernote('code'));
+
+		appendImgFileName();
+
 	});
 
 	function requestDelete(_this) {
 		var id = $(_this).attr("id").split("_")[1];
 	}
-	
-	function appendImgFileName(){
+
+	function appendImgFileName() {
 		var summernoteElement = document.getElementById("summernote");
-		
+
 		var imgElementList = summernoteElement.parentElement.querySelectorAll("div.note-editor img");
-		
-		for(var i = 0; i < imgElementList.length; i++){
+
+		for (var i = 0; i < imgElementList.length; i++) {
 			console.log(summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1]);
 			var imgFileName = summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1];
-			var str = '<input type="hidden" name="imgFileName" value="' + imgFileName + '">'; 
+			var str = '<input type="hidden" name="imgFileName" value="' + imgFileName + '">';
 			console.log(str);
 			$("#imgFileNameList").append(str);
 		}
-
-
-		
-		
-		
 	}
-	
-	
 </script>

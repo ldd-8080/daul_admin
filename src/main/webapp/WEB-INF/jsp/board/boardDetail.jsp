@@ -20,6 +20,7 @@
 				<div class="panel">
 					<div class="panel-body">
 						<form:form method="post" modelAttribute="boardVo" id="noticeForm">
+							<div id="imgFileNameList"></div>
 							<form:input type="hidden" class="form-control" path="notice_idx" />
 							<div class="form-group row">
 								<div class="col-md-1"></div>
@@ -40,7 +41,7 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
-								<label class="col-md-2 col-form-label">내용 </label>
+								<label class="col-md-2 col-form-label">공지내용 </label>
 								<div class="col-md-8">
 									<form:textarea name="content" style="display: none;" path="content" />
 									<div id="summernote"></div>
@@ -68,10 +69,6 @@
 									<div id="noticeFile-list"></div>
 								</div>
 							</div>
-
-							<br />
-							<br />
-
 							<div class="col-md-11 text-right">
 								<div class="example example-buttons">
 									<button type="button" class="btn btn-primary waves-effect waves-classic" data-title="공지사항" id="noticeModifyBtn">수정</button>
@@ -96,8 +93,22 @@
 			fn_downloadFile($(this));
 		});
 		
-	$('#summernote').summernote('code', '${boardVo.content}');
+	 
+	    $('#summernote').summernote({
+			minHeight: 300,   // set minimum height of editor
+			lang: 'ko-KR', // default: 'en-US'				// 한글 설정
+			placeholder: '최대 2000자까지 쓸 수 있습니다',	//placeholder 설정
+			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+				onImageUpload : function(files) {
+					uploadSummernoteImageFile(files[0],this)
+				}
+			}
+		});
+	    $('#summernote').summernote('code', '${boardVo.content}');
 	});
+	
+
+
    
 	function fn_downloadFile(obj){
 		var save_file_name = obj.siblings("input[name='save_file_name']").val();
@@ -113,6 +124,8 @@
 		
 		$('textarea[name="content"]').val($('#summernote').summernote('code'));
 		  
+		appendImgFileName();
+		
 		$("#noticeFile").attr("type", "text");
 		$("#noticeFile").attr("type", "file");
 		
@@ -309,13 +322,27 @@
 		
 		if (!confirm(msg)) return false;
 		else return true;
+
+		
 	}
 	
 	$("button[name='notcieDeleteBtn']").click(function() {
 		if (!submitConfirm($(this))) return false;
 	});
 	
-	
+	function appendImgFileName() {
+		var summernoteElement = document.getElementById("summernote");
+
+		var imgElementList = summernoteElement.parentElement.querySelectorAll("div.note-editor img");
+
+		for (var i = 0; i < imgElementList.length; i++) {
+			console.log(summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1]);
+			var imgFileName = summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1];
+			var str = '<input type="hidden" name="imgFileName" value="' + imgFileName + '">';
+			console.log(str);
+			$("#imgFileNameList").append(str);
+		}
+	}
 </script>
 
 

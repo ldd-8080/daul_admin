@@ -111,21 +111,21 @@ public class BoardController {
 			if(bindingResult.hasErrors()) {
 				return "board/boardWrite";
 			}
-			System.out.println("boardInsert.do======" + vo);
 			
-			String imgFileName_arr = vo.getImgFileName();
-			String[] imgFileNameArr = imgFileName_arr.split(",");
-			
-			for(int imgFileNameArrCnt = 0; imgFileNameArrCnt < imgFileNameArr.length; imgFileNameArrCnt++) {
-				Map<String,Object> imgName = new HashMap<String,Object>();
-				imgName.put("notice_idx", vo.getNotice_idx());
-				imgName.put("save_file_name", imgFileNameArr[imgFileNameArrCnt]);
-				imgNameList.add(imgName);
+			if(vo.getImgFileName() != null) {
+				String imgFileName_arr = vo.getImgFileName();
+				String[] imgFileNameArr = imgFileName_arr.split(",");
 				
-			}
-				
-			boardService.deleteImgFile(imgNameList);
-				
+				for(int imgFileNameArrCnt = 0; imgFileNameArrCnt < imgFileNameArr.length; imgFileNameArrCnt++) {
+					Map<String,Object> imgName = new HashMap<String,Object>();
+					imgName.put("notice_idx", vo.getNotice_idx());
+					imgName.put("save_file_name", imgFileNameArr[imgFileNameArrCnt]);
+					imgNameList.add(imgName);
+					
+				}
+		
+				boardService.deleteImgFile(imgNameList);
+			}	
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			   
 			//vo.setNotice_idx(boardService.selectNoticeIdx());
@@ -142,8 +142,12 @@ public class BoardController {
 			for(int i = 0; i<fileList.size(); i++) {
 				fileVo = fileList.get(i);
 				System.out.println("attach_type = " + fileVo.getAttach_type());
-				if(!fileVo.getAttach_type().equals("files")) {
-				   boardService.insertFile(fileVo);
+				try {
+					if(!fileVo.getAttach_type().equals("files")) {
+						boardService.insertFile(fileList.get(i));
+					}
+				}catch(NullPointerException e) {
+					System.out.println("nullPoint PASS");
 				}
 			}		
 			//vo.setReg_user(userVo.getUser_seq());
@@ -163,14 +167,28 @@ public class BoardController {
 			
 			BoardValidator boardValidator = new BoardValidator();
 			boardValidator.validate(vo, bindingResult);
+			List<Map<String, Object>> imgNameList = new ArrayList<Map<String, Object>>();
 			
-			
+			if(vo.getImgFileName() != null) {
+				String imgFileName_arr = vo.getImgFileName();
+				String[] imgFileNameArr = imgFileName_arr.split(",");
+				
+				for(int imgFileNameArrCnt = 0; imgFileNameArrCnt < imgFileNameArr.length; imgFileNameArrCnt++) {
+					Map<String,Object> imgName = new HashMap<String,Object>();
+					imgName.put("notice_idx", vo.getNotice_idx());
+					imgName.put("save_file_name", imgFileNameArr[imgFileNameArrCnt]);
+					imgNameList.add(imgName);
+				}
+					
+				boardService.deleteImgFile(imgNameList);
+			}
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setUpdate_user(userVo.getUser_id());
 			
 			if(bindingResult.hasErrors()) {
 				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
 			}
+			
 			log.debug("[공지사항] 공지사항 수정");
 			int result = boardService.updateNotice(vo);
 			
@@ -182,14 +200,23 @@ public class BoardController {
 				
 				List<FileVo> fileList = fileUtil.parseFileInfo(fileVo, request);
 				
-				log.debug("[공지사항] 공지사항 파일 등록" + fileList.size());
-				
+				log.debug("[공지사항] 공지사항 파일 등록" + fileList.size() + "," + fileVo.getAttach_type());
+				System.out.println("attach_type = " + fileVo.getAttach_type());
 				for (int i = 0; i < fileList.size(); i++) {
-					boardService.insertFile(fileList.get(i));
+					fileVo = fileList.get(i);
+					try {
+						if(!fileVo.getAttach_type().equals("files")) {
+							boardService.insertFile(fileList.get(i));
+						}
+					}catch(NullPointerException e) {
+						System.out.println("nullPoint PASS");
+					}
+				
 				}
 			}
 		}catch(Exception e){
 			log.debug("[공지사항] 공지사항 수정 실패");
+			e.printStackTrace();
 		}
 		
 		log.debug("[공지사항] 공지사항 수정 성공");
