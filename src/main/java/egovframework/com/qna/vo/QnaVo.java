@@ -17,11 +17,16 @@ public class QnaVo extends SearchVo {
 	private String auth_type;
 	private int indent;
 	private int num;
+	private String lock_chk;
 	
 	
 	
-	
-	
+	public String getLock_chk() {
+		return lock_chk;
+	}
+	public void setLock_chk(String lock_chk) {
+		this.lock_chk = lock_chk;
+	}
 	public int getNum() {
 		return num;
 	}

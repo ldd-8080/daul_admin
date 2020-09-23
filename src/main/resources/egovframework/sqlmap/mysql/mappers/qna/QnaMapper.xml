@@ -16,7 +16,8 @@
 				parent_qna_idx,
 				DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
 				del_chk,
-				(select auth_type from `user` where user_id = create_user ) as auth_type 
+				(select auth_type from `user` where user_id = create_user ) as auth_type ,
+				lock_chk
 				
 			FROM daul.daul_qna, (SELECT @rownum:=0) TMP
 			WHERE del_chk = 'N'
@@ -39,7 +40,7 @@
 		    	AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 		    	]]>
 		    </if>
-			ORDER BY ref ASC, indent
+			ORDER BY ref ASC, indent DESC, create_date asc 
 		) sub
 	ORDER BY sub.num DESC;
 	</select>
@@ -56,6 +57,7 @@
 			question,
 			content,
 			parent_qna_idx,
+			lock_chk,
 			ref,
 			indent,
 			create_user,
@@ -67,6 +69,7 @@
 			#{question},
 			#{content},
 			#{ref},
+			#{lock_chk},
 			#{ref},
 			1,
 			#{create_user},

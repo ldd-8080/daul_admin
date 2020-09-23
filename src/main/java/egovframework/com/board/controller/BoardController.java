@@ -266,7 +266,7 @@ public class BoardController {
 	 }
 	
 	@RequestMapping(value="/uploadSummernoteImageFile.do",method = RequestMethod.POST)
-	public ResponseEntity<?> uploadSummernoteImageFile(HttpSession session, @RequestParam("propFile") MultipartFile multipartFile, @RequestParam("idx") String idx) throws Exception {
+	public ResponseEntity<?> uploadSummernoteImageFile(HttpSession session, @RequestParam("files") MultipartFile multipartFile, @RequestParam("idx") String idx) throws Exception {
 		System.out.println(multipartFile);
 		
 		String fileRoot = profileCls.getRootPath();	//저장될 외부 파일 경로

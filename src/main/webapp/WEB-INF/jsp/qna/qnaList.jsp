@@ -98,6 +98,7 @@
 			<div class="modal-body">
 				<form id="qna-modal-reply-form">
 					<div class="example-wrap">
+						<input type="hidden" class="form-control" id="reply_lock_chk" name="lock_chk" value="N" />
 						<h4 class="example-title">질문내용</h4>
 						<textarea class="form-control" id="question_content" rows="5" readonly></textarea>
 						<h4 class="example-title">답글제목</h4>
@@ -388,6 +389,20 @@
 								if (args.event.target.tagName == "BUTTON") {
 									document.getElementById("qna_idx_reply").value = args.item.qna_idx;
 									document.getElementById("ref_reply").value = args.item.qna_idx;
+									
+									document.getElementById("question_content").value = args.item.content;
+									document.getElementById("detail_qustion").value = args.item.question;
+									document.getElementById("detail_content").value = args.item.content;
+									document.getElementById("detail_create_user").value = args.item.create_user;
+									document.getElementById("update_qustion").value = args.item.question;
+									document.getElementById("update_content").value = args.item.content;
+									document.getElementById("update_create_user").value = args.item.create_user;
+									document.getElementById("qna_idx_update").value = args.item.qna_idx;
+									document.getElementById("qna_idx_detail").value = args.item.qna_idx;
+									document.getElementById("parent_qna_idx_update").value = args.item.parent_qna_idx;
+									document.getElementById("parent_qna_idx_detail").value = args.item.parent_qna_idx;
+									
+									document.getElementById("reply_lock_chk").value = args.item.lock_chk;									
 
 								} else if (args.event.target.cellIndex == 6) {
 

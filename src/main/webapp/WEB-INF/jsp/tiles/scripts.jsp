@@ -108,7 +108,7 @@
 function uploadSummernoteImageFile(file, editor) {
 	console.log("uploadSummernoteImageFile");
 	data = new FormData();
-	data.append("propFile", file);
+	data.append("files", file);
 	var idx = $("#notice_idx").val();
 	data.append("idx",idx)
 	$.ajax({
