@@ -7601,40 +7601,7 @@ var Buttons_Buttons = /*#__PURE__*/function () {
           click: _this2.context.createInvokeHandlerAndUpdateState('editor.subscript')
         }).render();
       });
-      this.context.memo('button.fontname', function () {
-        var styleInfo = _this2.context.invoke('editor.currentStyle');
-
-        if (_this2.options.addDefaultFonts) {
-          // Add 'default' fonts into the fontnames array if not exist
-          external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.each(styleInfo['font-family'].split(','), function (idx, fontname) {
-            fontname = fontname.trim().replace(/['"]+/g, '');
-
-            if (_this2.isFontDeservedToAdd(fontname)) {
-              if (_this2.options.fontNames.indexOf(fontname) === -1) {
-                _this2.options.fontNames.push(fontname);
-              }
-            }
-          });
-        }
-
-        return _this2.ui.buttonGroup([_this2.button({
-          className: 'dropdown-toggle',
-          contents: _this2.ui.dropdownButtonContents('<span class="note-current-fontname"></span>', _this2.options),
-          tooltip: _this2.lang.font.name,
-          data: {
-            toggle: 'dropdown'
-          }
-        }), _this2.ui.dropdownCheck({
-          className: 'dropdown-fontname',
-          checkClassName: _this2.options.icons.menuCheck,
-          items: _this2.options.fontNames.filter(_this2.isFontInstalled.bind(_this2)),
-          title: _this2.lang.font.name,
-          template: function template(item) {
-            return '<span style="font-family: ' + env.validFontName(item) + '">' + item + '</span>';
-          },
-          click: _this2.context.createInvokeHandlerAndUpdateState('editor.fontName')
-        })]).render();
-      });
+   
       this.context.memo('button.fontsize', function () {
         return _this2.ui.buttonGroup([_this2.button({
           className: 'dropdown-toggle',
@@ -7676,20 +7643,7 @@ var Buttons_Buttons = /*#__PURE__*/function () {
       this.context.memo('button.backcolor', function () {
         return _this2.colorPalette('note-color-back', _this2.lang.color.background, true, false);
       });
-      this.context.memo('button.ul', function () {
-        return _this2.button({
-          contents: _this2.ui.icon(_this2.options.icons.unorderedlist),
-          tooltip: _this2.lang.lists.unordered + _this2.representShortcut('insertUnorderedList'),
-          click: _this2.context.createInvokeHandler('editor.insertUnorderedList')
-        }).render();
-      });
-      this.context.memo('button.ol', function () {
-        return _this2.button({
-          contents: _this2.ui.icon(_this2.options.icons.orderedlist),
-          tooltip: _this2.lang.lists.ordered + _this2.representShortcut('insertOrderedList'),
-          click: _this2.context.createInvokeHandler('editor.insertOrderedList')
-        }).render();
-      });
+     
       var justifyLeft = this.button({
         contents: this.ui.icon(this.options.icons.alignLeft),
         tooltip: this.lang.paragraph.left + this.representShortcut('justifyLeft'),
