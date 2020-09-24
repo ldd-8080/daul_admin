@@ -84,7 +84,9 @@ public class ContestController {
 		
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			vo.setCreate_user(userVo.getUser_id());
-			vo.setAdmin_contest_idx(contestService.selectAdminContestIdx());
+			
+			String contestIdx = CmmnUtil.generateKeyWithPrefix("AC");
+			vo.setAdmin_contest_idx(contestIdx);
 	
 			System.out.println(vo);
 	

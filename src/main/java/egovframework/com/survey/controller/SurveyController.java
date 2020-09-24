@@ -20,11 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.survey.service.SurveyService;
@@ -85,7 +85,8 @@ public class SurveyController {
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    vo.setCreate_user(userVo.getUser_id());		    
 			
-			vo.setSurvey_idx(surveyService.selectSurveyIdx());
+		    String surveyIdx = CmmnUtil.generateKeyWithPrefix("SV");
+			vo.setSurvey_idx(surveyIdx);
 			
 			surveyService.registSurvey(vo);
 			
@@ -358,7 +359,8 @@ public class SurveyController {
 				// 등록하고자 하는 댓글과 최상위 댓글 사이에 있는 댓글들의 indent를 수정하여 depth 설정
 				surveyService.updateChildSurveyOpinion(topOpnVo);
 				
-				opinionIdx = surveyService.selectSurveyOpinionIdx();
+				//opinionIdx = surveyService.selectSurveyOpinionIdx();
+				opinionIdx = CmmnUtil.generateKeyWithPrefix("SVOP");
 				vo.setOpinion_idx(opinionIdx);
 				vo.setSurvey_ref(topOpnVo.getSurvey_ref());
 				vo.setSurvey_indent(topOpnVo.getSurvey_indent() + 1);
@@ -368,7 +370,8 @@ public class SurveyController {
 				surveyService.insertSurveyOpinion(vo);
 			} else {
 				// opinionIdx가 없는 경우 -> 제안의 댓글을 등록
-				opinionIdx = surveyService.selectSurveyOpinionIdx();
+				//opinionIdx = surveyService.selectSurveyOpinionIdx();
+				opinionIdx = CmmnUtil.generateKeyWithPrefix("SVOP");
 				vo.setOpinion_idx(opinionIdx);
 				vo.setSurvey_ref(opinionIdx);
 				
@@ -412,30 +415,6 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 		
-		return new ResponseEntity<>("success", HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/serializedObj.do", method = RequestMethod.POST)
-	public ResponseEntity<?> serializedObj(HttpSession session, @RequestBody Map<Object, Object> params) throws Exception {
-		System.out.println("params === " + params);
-		try {
-//			//저장전에 해당 intent_id가 있으면 다 지움
-//			if(chatbotService.checkIntentId((String)params.get("intent_id")) != 0) {
-//				chatbotService.deleteIntentId((String)params.get("intent_id"));
-//			}
-//			List<Map<Object, Object>> list = (List<Map<Object, Object>>) params.get("cardList");
-//			if(list != null) {
-//				for (int i = 0; i < list.size(); i++) {
-//					if(list.get(i) != null) {
-//						list.get(i).put("intent_id", params.get("intent_id"));
-//					}
-//				}
-//				chatbotService.registResponeList(session, list);
-//			}
-		}catch(Exception e){
-			log.debug("ChatbotController - serializedObj.do - Exception");
-
-		}
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

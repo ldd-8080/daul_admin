@@ -62,7 +62,6 @@
 		       c.suggestion_idx,
 		       c.title, 
 		       c.content, 
-		       c.like_count,     
 		       c.create_user,
 		       DATE_FORMAT(c.create_date, '%Y-%m-%d') as create_date,
 			   (
@@ -120,14 +119,12 @@
 					     , SUM(public_cnt)		AS public_cnt
 					     , sgst.title
 					     , sgst.content
-					     , sgst.like_count
 					     , sgst.create_user
 					     , sgst.create_date
 					  FROM (
 					  		SELECT sm.suggestion_idx
 					  		     , sm.title
 					  		     , sm.content 
-					  		     , sm.like_count 
 					  		     , sm.create_user 
 					  		     , DATE_FORMAT(sm.create_date, '%Y-%m-%d') as create_date 
 					  		     , so.opinion_idx 
@@ -228,7 +225,6 @@
 		       opinion_idx
              , suggestion_idx
              , opinion_content
-             , like_count
              , create_user
              , create_date
              , del_chk
@@ -241,7 +237,6 @@
 		       #{opinion_idx}
              , #{suggestion_idx}
              , #{opinion_content}
-             , #{like_count}
              , #{create_user}
              , SYSDATE()
              , 'N'
