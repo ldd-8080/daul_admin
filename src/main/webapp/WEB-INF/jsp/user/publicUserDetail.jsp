@@ -20,7 +20,7 @@
 	    			<div class="mb-30">
     					<div class="panel">
     						<div class="panel-body text-center">
-    							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/images/placeholder.png" alt="...">
+    							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/img/placeholder.png" alt="...">
     							<p class="form-control-plaintext"><b>회원가입일 : </b>${userVo.reg_date}</p>
     							<p class="form-control-plaintext"><b>최종로그인 : </b>${userVo.last_login_date}</p>
     						</div>

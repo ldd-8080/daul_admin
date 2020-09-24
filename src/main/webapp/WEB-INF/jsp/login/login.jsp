@@ -8,7 +8,7 @@
 		<div class="panel">
 			<div class="panel-body">
 				<div class="brand">
-					<img class="brand-img" src="${pageContext.request.contextPath}/images/logo-colored.png" alt="...">
+					<img class="brand-img" src="${pageContext.request.contextPath}/img/logo-colored.png" alt="...">
 					<h2 class="brand-text font-size-18">관리자 로그인</h2>
 				</div>
 				<form id="login-form">
@@ -24,7 +24,7 @@
 					<button type="button" class="btn btn-primary btn-block btn-lg mt-40" id="login-btn">로그인</button>
 
 					<button type="button" class="btn btn-primary btn-block btn-lg mt-40" id="logoutbtn">로그아웃</button>
-					<a id="kakao-login-btn"></a>
+					
 				</form>
 			</div>
 		</div>
@@ -32,72 +32,7 @@
 </div>
 <!-- End Page -->
 <script type="text/javascript">
-	Kakao.init('999d41a6f19235ee8e6d382a1535fde5');
-	console.log(Kakao.isInitialized());
-
-	Kakao.Auth.createLoginButton({ container : '#kakao-login-btn', success : function(authObj) {
-		Kakao.API.request({ url : '/v2/user/me', success : function(res) {
-			console.log(JSON.stringify(res));
-			console.log(JSON.stringify(res.kakao_account.email));
-			console.log(JSON.stringify(res.id));
-
-			//로그인시 회원db에 고유id가 없으면 회원가입페이지로가서 정보 입력하도록,
-			//있을시 자동로그인
-		}, fail : function(error) {
-			console.log('login success, but failed to request user information: ' + JSON.stringify(error));
-		}, });
-	}, fail : function(err) {
-		alert(JSON.stringify(err));
-	} });
-
-	function logoutbtn() {
-		if (!Kakao.Auth.getAccessToken()) {
-			console.log('Not logged in.');
-			return;
-		}
-		Kakao.Auth.logout(function() {
-			console.log(Kakao.Auth.getAccessToken());
-
-			//토큰을못쓰게 하는거고 서비스 로그아웃기능 추가해야함
-		});
-	}
-
-	$("#logoutbtn").click(function() {
-		unlinkApp();
-	});
-
-	function unlinkApp() {
-		Kakao.API.request({ url : '/v1/user/unlink', success : function(res) {
-			console.log('success: ' + JSON.stringify(res))
-		}, fail : function(err) {
-			console.log('fail: ' + JSON.stringify(err))
-		}, })
-	}
-
-	/* Kakao.Auth.createLoginButton({
-		container:'#kakao-login-btn',
-		success: function(authObj){
-			Kakao.API.request({
-				url:'/v1/user/me',
-				success:function(res){
-					console.log(res);
-					
-					var userID = res.id;
-					var userEmail = res.account_email;
-					
-					console.log(userID);
-					console.log(userEmail);
-				},
-				fail:function(errer){
-					alert(JSON.stringify(error));
-				}
-			});
-		},
-		fail:function(err){
-			alert(JSON.stringify(err));
-		}
-	});
-	 */
+	
 
 	$("#user_id").keydown(function(key) {
 		if (key.keyCode === 13)
@@ -134,5 +69,5 @@
 	$("#user_id").val("admin");
 	$("#pw").val("Ekdhf123!");
 
-	/* $("#login-btn").trigger("click"); */
+	$("#login-btn").trigger("click");
 </script>

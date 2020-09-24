@@ -7,7 +7,7 @@
 		<div class="panel">
 			<div class="panel-body">
 				<div class="brand">
-					<img class="brand-img" src="${pageContext.request.contextPath}/images/logo-colored.png" alt="...">
+					<img class="brand-img" src="${pageContext.request.contextPath}/img/logo-colored.png" alt="...">
 					<h2 class="brand-text font-size-18">Remark</h2>
 				</div>
 				<form:form method="post" action="/user/signUp.do" modelAttribute="userVo" id="signUpForm">

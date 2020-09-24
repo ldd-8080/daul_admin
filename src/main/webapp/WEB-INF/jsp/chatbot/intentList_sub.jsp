@@ -71,7 +71,7 @@
                 <div class="media">
                   <div class="pr-10">
                     <a class="avatar" href="javascript:void(0)">
-                      <img src="${pageContext.request.contextPath}/images/user.png" alt="...">
+                      <img src="${pageContext.request.contextPath}/img/user.png" alt="...">
                     </a>
                   </div>
                   <div class="media-body">
@@ -111,7 +111,7 @@
                 <div class="media">
                   <div class="pr-10">
                     <a class="avatar " href="javascript:void(0)">
-                      <img src="${pageContext.request.contextPath}/images/chatbot.png" alt="...">
+                      <img src="${pageContext.request.contextPath}/img/chatbot.png" alt="...">
                     </a>
                   </div>
                   <div class="media-body">

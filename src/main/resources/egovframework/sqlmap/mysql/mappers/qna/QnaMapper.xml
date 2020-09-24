@@ -17,7 +17,8 @@
 				DATE_FORMAT(create_date, '%Y-%m-%d') as create_date,
 				del_chk,
 				(select auth_type from `user` where user_id = create_user ) as auth_type ,
-				lock_chk
+				lock_chk,
+				auth_user
 				
 			FROM daul.daul_qna, (SELECT @rownum:=0) TMP
 			WHERE del_chk = 'N'
@@ -61,7 +62,8 @@
 			ref,
 			indent,
 			create_user,
-			create_date
+			create_date,
+			auth_user
 		)
 		VALUES
 		(
@@ -73,7 +75,8 @@
 			#{ref},
 			1,
 			#{create_user},
-			sysdate()
+			sysdate(),
+			#{auth_user}
 			
 		) 
 	</insert>

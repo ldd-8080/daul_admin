@@ -8,8 +8,8 @@
 
 <title>e-DAUL</title>
 
-<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/images/apple-touch-icon.png">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/img/apple-touch-icon.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico">
 
 <!-- Stylesheets -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.min.css">

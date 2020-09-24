@@ -99,6 +99,7 @@
 				<form id="qna-modal-reply-form">
 					<div class="example-wrap">
 						<input type="hidden" class="form-control" id="reply_lock_chk" name="lock_chk" value="N" />
+						<input type="hidden" class="form-control" id="reply_auth_user" name="auth_user" />
 						<h4 class="example-title">질문내용</h4>
 						<textarea class="form-control" id="question_content" rows="5" readonly></textarea>
 						<h4 class="example-title">답글제목</h4>
@@ -402,7 +403,8 @@
 									document.getElementById("parent_qna_idx_update").value = args.item.parent_qna_idx;
 									document.getElementById("parent_qna_idx_detail").value = args.item.parent_qna_idx;
 									
-									document.getElementById("reply_lock_chk").value = args.item.lock_chk;									
+									document.getElementById("reply_lock_chk").value = args.item.lock_chk;		
+									document.getElementById("reply_auth_user").value = args.item.create_user;		
 
 								} else if (args.event.target.cellIndex == 6) {
 

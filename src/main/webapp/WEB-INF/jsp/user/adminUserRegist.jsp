@@ -21,7 +21,7 @@
 	    			<div class="mb-30">
     					<div class="panel">
     						<div class="panel-body text-center">
-    							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/images/placeholder.png" alt="...">
+    							<img class="rounded-circle mb-10" width="150" height="150" src="${pageContext.request.contextPath}/img/placeholder.png" alt="...">
     						</div>
     					</div>
 	    			</div>

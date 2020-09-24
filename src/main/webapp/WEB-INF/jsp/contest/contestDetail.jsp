@@ -66,7 +66,7 @@
 											<label class="col-md-2 col-form-label">대표이미지 </label>
 											<div class="col-md-8">
 												<input type="file" accept="image/*" id="repFile"
-													name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/images/placeholder.png"/>
+													name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/img/placeholder.png"/>
 											</div>
 										</div> --%>
 
