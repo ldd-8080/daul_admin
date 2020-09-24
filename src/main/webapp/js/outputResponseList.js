@@ -241,11 +241,11 @@ function cardHtml(obj, parentIdx, childIdx) {
 			        </div>`;
 		case "image" :
 			return `
-				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
+				<img class="card-img-top img-fluid card-block-evt card-block-img" src="../img/placeholder.png" alt="Card image cap" />
 				<input type="file" style="display: none" class="card-img" name="${obj.name}"/>
 				<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value=""/>`;
 		case "card"  :
-			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../images/placeholder.png" alt="Card image cap" />
+			return `<img class="card-img-top img-fluid card-block-evt card-block-img" src="../img/placeholder.png" alt="Card image cap" />
 					<input type="file" style="display: none" class="card-img" name="${obj.name}"/>
 					<input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][img_attach_id]" value=""/>
                     <div class="card-block card-block-evt card-block-title-text">
@@ -522,7 +522,7 @@ function imgPopoverEvent(response_card_id) {
 				reader.readAsDataURL(file);
 				
 			} else {
-				popover_target.attr("src", "../images/placeholder.png").width(popover_target.width()).height(popover_target.height());
+				popover_target.attr("src", "../img/placeholder.png").width(popover_target.width()).height(popover_target.height());
 				popover_target.next().attr("type", "text");
 				popover_target.next().attr("type", "file");
 			}
@@ -673,7 +673,7 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
                </div>
                <div class="pl-20">
                  <a href="javascript:void(0)">
-                   <img class="image w-50 h-50" src="../images/placeholder.png" alt="...">
+                   <img class="image w-50 h-50" src="../img/placeholder.png" alt="...">
                    <input type="file" style="display: none" class="card-img" name="list"/>
                    <input type="hidden" name="cardList[${parentIdx}][card][${childIdx}][list][${listBtnIdx}][img_attach_id]" value=""/>
                  </a>
@@ -741,7 +741,7 @@ function listBtnPopoverEvent(response_card_id, parentIdx, childIdx) {
 					
 					reader.readAsDataURL(file);
 				} else {
-					img.attr("src", "../images/placeholder.png").width(img.width()).height(img.height());
+					img.attr("src", "../img/placeholder.png").width(img.width()).height(img.height());
 					popover_target.next().attr("type", "text");
 					popover_target.next().attr("type", "file");
 				}

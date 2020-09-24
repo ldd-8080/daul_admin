@@ -30,7 +30,6 @@
 		</div>
 	</div>
 </div>
-<!-- End Page -->
 <script type="text/javascript">
 	
 
