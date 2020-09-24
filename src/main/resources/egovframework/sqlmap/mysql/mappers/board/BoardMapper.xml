@@ -68,27 +68,44 @@
 	</select>
 	
 	<select id="selectBoard" resultType="egovframework.com.board.vo.BoardVo">
-		SELECT 
-			notice_idx,
-			title,
-			content,
-			create_user
-		FROM daul.daul_notice  
-		WHERE notice_idx  = #{notice_idx}
+		SELECT notice_idx
+			 , title
+			 , content
+			 , create_user
+			 , notice_type
+		  FROM daul.daul_notice  
+		 WHERE notice_idx  = #{notice_idx}
 	</select>
 	
 	<insert id="insertBoard">
-		INSERT INTO daul_notice (notice_idx,title, content,notice_type ,create_user,create_date, del_chk)
-		values
-		(#{notice_idx},#{title},#{content},'main' ,#{create_user},now(),'N') 
+		INSERT INTO daul_notice 
+			 ( notice_idx
+			 , title
+			 , content
+			 , notice_type 
+			 , create_user
+			 , create_date
+			 , del_chk
+			 )
+		VALUES
+			 (
+			   #{notice_idx}
+			 , #{title}
+			 , #{content}
+			 , #{notice_type} 
+			 , #{create_user}
+			 , now()
+			 , 'N'
+			 ) 
 	</insert>
 	
 	<update id = "updateNotice">
 		UPDATE daul.daul_notice
-		   SET update_user = #{update_user},
-		       update_date = SYSDATE(),
-		       title = #{title},
-		       content = #{content}
+		   SET update_user = #{update_user}
+		     , update_date = SYSDATE()
+		     , title = #{title}
+		     , content = #{content}
+		     , notice_type = #{notice_type}
 		 WHERE notice_idx = #{notice_idx} 
 	
 	</update>

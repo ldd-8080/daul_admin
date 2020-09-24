@@ -93,7 +93,6 @@ public class BoardController {
 	@RequestMapping(value = "/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(ModelMap model) throws Exception {
 		BoardVo vo = new BoardVo();
-		vo.setNotice_idx(boardService.selectNoticeIdx());
 		
 		model.addAttribute("boardVo", vo);
 		return "board/boardWrite";
@@ -112,6 +111,9 @@ public class BoardController {
 				return "board/boardWrite";
 			}
 			
+			String notice_idx = CmmnUtil.generateKeyWithPrefix("NT");
+			vo.setNotice_idx(notice_idx);
+			
 			if(vo.getImgFileName() != null) {
 				String imgFileName_arr = vo.getImgFileName();
 				String[] imgFileNameArr = imgFileName_arr.split(",");
@@ -128,7 +130,6 @@ public class BoardController {
 			}	
 			UserVo userVo = (UserVo) session.getAttribute("login");
 			   
-			//vo.setNotice_idx(boardService.selectNoticeIdx());
 			vo.setCreate_user(userVo.getUser_id());
 			
 			FileVo fileVo = new FileVo();

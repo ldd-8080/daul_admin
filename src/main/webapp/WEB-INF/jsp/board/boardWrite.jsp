@@ -25,13 +25,25 @@
 
 						<form:form method="post" modelAttribute="boardVo" enctype="multipart/form-data">
 							<div id="imgFileNameList"></div>
-							<form:input type="hidden" id="notice_idx" value="${boardVo.notice_idx }" path="notice_idx" />
+							<%-- <form:input type="hidden" id="notice_idx" value="${boardVo.notice_idx }" path="notice_idx" /> --%>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">작성자 </label>
 								<div class="col-md-8">
 									<form:input type="text" readonly="true" class="form-control" value="${login.user_id}" path="create_user" />
 									<form:errors path="create_user" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-1"></div>
+								<label class="col-md-2 col-form-label">구분 </label>
+								<div class="col-md-8">
+									<form:select data-plugin="selectpicker" class="w-p100" path="notice_type">
+	    								<option value="main">일반</option>
+	    								<option value="survey">설문조사</option>
+	    								<option value="contest">나눔공모</option>
+	    							</form:select>
+	    							<form:errors style="color:red;" path="notice_type"/>
 								</div>
 							</div>
 							<div class="form-group row">

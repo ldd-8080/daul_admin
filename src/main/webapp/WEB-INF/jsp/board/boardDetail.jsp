@@ -32,6 +32,18 @@
 							</div>
 							<div class="form-group row">
 								<div class="col-md-1"></div>
+								<label class="col-md-2 col-form-label">구분 </label>
+								<div class="col-md-8">
+									<form:select data-plugin="selectpicker" class="w-p100" path="notice_type">
+	    								<option value="main">일반</option>
+	    								<option value="survey">설문조사</option>
+	    								<option value="contest">나눔공모</option>
+	    							</form:select>
+	    							<form:errors style="color:red;" path="notice_type"/>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
 									<form:input type="text" class="form-control" path="title" />
@@ -152,7 +164,7 @@
         	}
         	
 		   	if(typeof(data) == "string"){
-			location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + data;
+				location.href = "${pageContext.request.contextPath}/board/boardDetail.do?notice_idx=" + data;
 		   	}
 		});
 	});

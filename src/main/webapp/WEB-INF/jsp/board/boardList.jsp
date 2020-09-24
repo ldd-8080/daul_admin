@@ -108,6 +108,17 @@ function setBoardListTable(BoardList) {
 	    fields: [
 	    	{name: "num",title: "번호", type: "text", width: 40, align: "center"},
 	    	{name: "create_user", title: "작성자", type: "text", width: 60},
+	    	{title: "구분", type: "text", width: 60,
+	    		itemTemplate: function(_, item) {
+	    			var result = "";
+	    			
+	    			if (item.notice_type === "main")			result = "일반";
+	    			else if (item.notice_type === "survey")		result = "설문조사";
+	    			else if (item.notice_type === "contest")	result = "나눔공모";
+	    			else										result = "구분없음";
+	    			
+	    			return result;
+	    		}},
 	    	{name: "title", title: "제목", type: "text", width: 150}, 
 	    	{name: "create_date", title: "등록일", type: "text", width: 100, align: "center"},
 	    	{name: "view_count", title: "조회수", type: "text", width: 50, align: "center"}
