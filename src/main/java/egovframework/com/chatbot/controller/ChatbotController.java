@@ -364,7 +364,7 @@ public class ChatbotController {
 	
 	@RequestMapping(value="/registImg.do", method=RequestMethod.POST)
 	public ResponseEntity<?> registImg(HttpServletRequest request, @RequestParam Map<String, Object> params) throws Exception {
-		List<Long> id = null;
+		List<String> id = null;
 		
 		try {
 			FileVo fileVo = new FileVo();
@@ -372,7 +372,7 @@ public class ChatbotController {
 			id = CmmnUtil.generateKeys(fileList.size());
 			
 			for (int i = 0; i < fileList.size(); i++) {
-				fileList.get(i).setIdx(String.valueOf(id.get(i)));
+				fileList.get(i).setIdx(id.get(i));
 				
 				log.debug("[Chatbot Intent] Chatbot Intent 이미지 파일 등록");
 				chatbotService.insertImageFile(fileList.get(i));
