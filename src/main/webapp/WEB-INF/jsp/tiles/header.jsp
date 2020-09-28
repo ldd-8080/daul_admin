@@ -79,8 +79,6 @@
 <script src="${pageContext.request.contextPath}/js/jsgrid/jsgrid.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jstree/jstree.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap-tokenfield/bootstrap-tokenfield.js"></script>
-<script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 <script src="${pageContext.request.contextPath}/js/babel-external-helpers/babel-external-helpers.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin.js"></script>
 <script src="${pageContext.request.contextPath}/js/webui-popover/jquery.webui-popover.js"></script>

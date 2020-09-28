@@ -5,8 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     
 <!-- Page -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/surveyRegist.js"></script>
-
 <div class="page">
 	<div class="page-content container-fluid">
 		<ol class="breadcrumb">
@@ -17,11 +15,7 @@
 		</ol>
 		<div class="panel">
 			<div class="panel-body container-fluid">
-
 				<div class="example-wrap">
-
-
-
 					<div class="nav-tabs-horizontal" data-plugin="tabs">
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;설&nbsp;&nbsp;문&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
@@ -60,13 +54,13 @@
 															<form:errors style="color:red;" path="content" />
 														</div>
 													</div>
-													<%-- 		<div class="form-group row">
-												<div class="col-md-1"></div>
-												<label class="col-md-2 col-form-label">대표이미지 </label>
-												<div class="col-md-8">
-					                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/img/placeholder.png"/>
-					                  			</div>
-											</div> --%>
+													<%-- <div class="form-group row">
+														<div class="col-md-1"></div>
+														<label class="col-md-2 col-form-label">대표이미지 </label>
+														<div class="col-md-8">
+							                    			<input type="file" id="repFile" name="repFile" data-plugin="dropify" data-default-file="${pageContext.request.contextPath}/img/placeholder.png"/>
+							                  			</div>
+													</div> --%>
 													<div class="form-group row">
 														<div class="col-md-1"></div>
 														<label class="col-md-2 col-form-label">설문기간 </label>
@@ -136,7 +130,7 @@
 									<div class="col-md-12">
 										<h4>
 											◦ 참여자
-											<span class="small">&nbsp;&nbsp;총${ surveyParticipation.size() }명</span>
+											<span class="small" id="total_user_count">  총 0명</span>
 										</h4>
 										<div id="surveyParticipationListTable" class="text-break"></div>
 									</div>
@@ -166,42 +160,51 @@
 	
 	//파일정보 가져오기
 	var ResultList = new Array();
-	var sumCount= 0;
-	var ResultPerList = new Array();
 	
 	<c:forEach var="result" items="${surveyResult}">
 		var result = {};
-		result.question_content = "${result.question_content}";
-		result.question_count = "${result.question_count}";
+		result.question_idx			= 	"${result.question_idx}";
+		result.survey_idx			= 	"${result.survey_idx}";
+		result.ref 					=	"${result.ref}";
+		result.question_content 	= 	"${result.question_content}";
+		result.total_question_count	= 	"${result.total_question_count}";
+		result.question_count 		= 	"${result.question_count}";
+		result.question_per 		= 	"${result.question_per}";
+		result.type 				=	"${result.type}";
 		ResultList.push(result);
 	</c:forEach>
+
+	var survey_result_div = document.getElementById("surveyResultDiv");
 	
-	if (ResultList.length > 0) {
-		for (var result of ResultList) {
-			sumCount += parseInt(result.question_count);
-		}
+	for (var i = 0; i < ResultList.length; i++) {
+		var data = ResultList[i];
 		
-		for (var result2 of ResultList){
+		var html;
+		
+		if (data.ref === data.question_idx) {
+			var div = document.createElement("div");
+			div.classList.add("p-10");
+			div.id = data.ref;
 			
-			result2.result_per = 100-((result2.question_count / sumCount) * 100);
-			if(isNaN(result2.result_per))result2.result_per=100;
-			ResultPerList.push(result2);
-		}
-	}
-	
-	if(ResultPerList.length > 0){
-		var index = 1;
-		for(var resultPer of ResultPerList){
-			console.log(resultPer.question_content);
-			var str = '<h6 class="font-size-16">' +index + '.&nbsp;' +resultPer.question_content+' ('+resultPer.question_count+'표)</h6>'+
-			'<div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">'+
-			'<div class="progress-bar" aria-valuemin="-100" aria-valuemax="0" aria-valuenow="-' + resultPer.result_per+'" role="progressbar">'+
-			'<span class="progress-label"></span>' +
-			'</div>'+
-			'</div>';
+			html =
+				'<h6 class="font-size-16">' + data.question_content + '</h6>' +
+				'<div class="mb-20"></div>' +
+				'<div class="ml-30" name="child_question_list"></div>';
 			
-			$("#surveyResultDiv").append(str);
-			index++;
+			div.innerHTML = html;
+			
+			survey_result_div.append(div);
+		} else {
+			html = 
+				'<h6 class="font-size-16">' + data.question_content + ' (' + data.question_count + '표)</h6>' +
+				'<div class="progress" data-labeltype="percentage" data-goal="-40" data-plugin="progress">' +
+					'<div class="progress-bar" aria-valuemin="0" aria-valuemax="-100" aria-valuenow="-' + data.question_per + '" role="progressbar">' +
+						'<span class="progress-label"></span>' +
+					'</div>' +
+				'</div>';
+			
+			var parent_div = document.getElementById(data.ref).querySelector("div[name='child_question_list']");
+			parent_div.innerHTML += html;
 		}
 	}
 	
@@ -247,6 +250,8 @@
 	
 	//설문조사 참여자 리스트
 	function setSurveyParticipationListTable(ParticipationList) {
+		document.getElementById("total_user_count").innerHTML = "  총 " + ParticipationList.length + "명";
+		
 		$('#surveyParticipationListTable').jsGrid({
 			
 			//height: "500px",
