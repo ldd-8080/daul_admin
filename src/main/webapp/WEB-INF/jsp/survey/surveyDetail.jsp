@@ -121,10 +121,9 @@
 							<!--두번째탭 -->
 							<div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
 								<div class="row row-lg">
-
 									<div class="col-md-12">
 										<h4>◦ 투표결과</h4>
-										<div class="example-wrap w-p50 pl-20" id="surveyResultDiv"></div>
+										<div class="example-wrap w-p100 pl-20" id="surveyResultDiv"></div>
 									</div>
 
 									<div class="col-md-12">
@@ -187,9 +186,9 @@
 			div.id = data.ref;
 			
 			html =
-				'<h6 class="font-size-16">' + data.question_content + '</h6>' +
+				'<h6 class="font-size-16">' + data.question_content + ' (총 ' + data.total_question_count + '표)</h6>' +
 				'<div class="mb-20"></div>' +
-				'<div class="ml-30" name="child_question_list"></div>';
+				'<div class="ml-30 w-p50" name="child_question_list"></div>';
 			
 			div.innerHTML = html;
 			
