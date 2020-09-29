@@ -133,7 +133,7 @@
 	    								<div class="col-md-2"></div>
 		    							<label class="col-md-2 col-form-label">전화번호 <span class="required">*</span></label>
 		    							<div class="col-md-6">
-		    								<form:input type="text" class="form-control" path="phone" placeholder="ex) xxx-xxxx-xxxx"/>
+		    								<form:input type="text" class="form-control" path="phone" placeholder="- 없이 숫자만 입력" maxlength="11"/>
 		    								<form:errors style="color:red;" path="phone"/>
 		    							</div>
 	    							</div>
