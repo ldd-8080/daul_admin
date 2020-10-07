@@ -228,9 +228,7 @@
 <!-- 비밀번호 변경 모달 끝 -->
 <script type="text/javascript">
 	var pwFlag = false;
-	var pwRule = /^(?=.*[a-z])(?=.*[0-9]).{8,15}$/;
-	
-	
+	var pwRule = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 	
 	function passwordCheck() {
 		var pw = $("#pw").val();
@@ -248,7 +246,7 @@
 		// 비밀번호가 빈값이 아닐때만 비밀번호 규칙 확인
 		if (pw !== "") {
 			if (!pwRule.test(pw)) {
-				$("#pw-chk-error").text("영문자, 숫자가 포함된 8~15자리로 입력해 주세요.");
+				$("#pw-chk-error").text("영문자, 숫자, 특수문자가 포함된 8~15자리로 입력해 주세요.");
 				pwFlag = true;
 			} else {
 				$("#pw-chk-error").text("");
