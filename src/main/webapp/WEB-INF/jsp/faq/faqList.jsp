@@ -213,10 +213,14 @@
 	});
 
 	function insertFaq() {
-		var request = $.ajax({ url : "/faq/insertFaq.do", method : "post",
-		//contentType: "application/json",
-		//dataType: "json",
-		data : $("#faq-modal-form").serialize() });
+		var request = $.ajax({ 
+			url : "/faq/insertFaq.do", 
+			method : "post",
+			//contentType: "application/json",
+			//dataType: "json",
+			data : $("#faq-modal-form").serialize() 
+		});
+		
 		request.done(function(data) {
 			if (typeof (data) == "object") {
 				valid(data);

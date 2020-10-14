@@ -62,7 +62,7 @@ public class FaqController {
 	
 	@RequestMapping(value="/insertFaq.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity insertFaq(HttpSession session,FaqVo vo , BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> insertFaq(HttpSession session, FaqVo vo , BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
 			FaqValidator faqValidator = new FaqValidator();
@@ -89,7 +89,7 @@ public class FaqController {
 	
 	@RequestMapping(value="/updateFaq.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity updateFaq(HttpSession session, FaqVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> updateFaq(HttpSession session, FaqVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
 			FaqValidator faqValidator = new FaqValidator();
@@ -116,7 +116,7 @@ public class FaqController {
 	
 	@RequestMapping(value="/deleteFaq.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity deleteFaq(HttpSession session, @ModelAttribute FaqVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> deleteFaq(HttpSession session, @ModelAttribute FaqVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		try {
 			
 			   UserVo userVo = (UserVo) session.getAttribute("login");
