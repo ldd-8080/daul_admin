@@ -25,7 +25,6 @@ public class FaqServiceImpl extends EgovAbstractServiceImpl implements FaqServic
 
 	@Override
 	public void insertFaq(FaqVo vo) throws Exception {
-		vo.setFaq_idx(faqMapper.selectFaqIdx());
 		faqMapper.insertFaq(vo);		
 	}
 	

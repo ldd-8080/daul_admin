@@ -87,7 +87,7 @@ public class SuggestionController {
 			vo.setSuggestion_idx(suggestionIdx);
 			
 			log.debug("[열린제안] 열린제안 등록");
-			int result = suggestionService.registSuggestion(vo);
+			int result = suggestionService.insertSuggestion(vo);
 			log.debug("suggestion insert result : " + result);
 			if (result > 0) {
 				FileVo fileVo = new FileVo();

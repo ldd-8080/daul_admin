@@ -79,6 +79,10 @@ public class FaqController {
 	       String sessionUser = userVo.getUser_id();
 	       vo.setCreate_user(sessionUser);
 	       vo.setUpdate_user(sessionUser);
+	       
+	       String faqIdx = CmmnUtil.generateKeyWithPrefix("FQ");
+	       vo.setFaq_idx(faqIdx);
+	       
 	       faqService.insertFaq(vo);
 			
 			return new ResponseEntity<>("success", HttpStatus.OK);

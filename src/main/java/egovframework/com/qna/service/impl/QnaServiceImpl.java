@@ -1,8 +1,6 @@
 package egovframework.com.qna.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,16 +19,12 @@ public class QnaServiceImpl extends EgovAbstractServiceImpl implements QnaServic
 	
 	@Override
 	public List<QnaVo> selectQnaList(QnaVo vo) throws Exception {
-		
 		return qnaMapper.selectQnaList(vo);
 	}
 
 	@Override
 	public void insertQnaReply(QnaVo vo) throws Exception {
-		vo.setQna_idx(qnaMapper.selectQnaReplyIdx(vo));
-		System.out.println(vo);
 		qnaMapper.insertQnaReply(vo);
-		
 	}
 
 	@Override

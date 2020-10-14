@@ -8,7 +8,7 @@
 		FROM suggestion_main 
 	</select>
 	
-	<insert id="registSuggestion">
+	<insert id="insertSuggestion">
 		INSERT INTO daul.suggestion_main
 		     (
 		       suggestion_idx
