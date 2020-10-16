@@ -75,6 +75,8 @@ public class FaqController {
 	       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
 	    	   throw new Exception(); 
 	       }
+	       vo.setAnswer(vo.getAnswer().replace("&lt;", "<").replace("&gt;", ">"));
+	       
 		   UserVo userVo = (UserVo) session.getAttribute("login");
 	       String sessionUser = userVo.getUser_id();
 	       vo.setCreate_user(sessionUser);
@@ -106,6 +108,7 @@ public class FaqController {
 		       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
 		    	   throw new Exception(); 
 		       }
+		       vo.setAnswer(vo.getAnswer().replace("&lt;", "<").replace("&gt;", ">"));
 			   UserVo userVo = (UserVo) session.getAttribute("login");
 		       String sessionUser = userVo.getUser_id();
 		       vo.setCreate_user(sessionUser);
