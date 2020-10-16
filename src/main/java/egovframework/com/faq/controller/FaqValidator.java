@@ -25,7 +25,7 @@ public class FaqValidator implements Validator{
 			errors.rejectValue("question","question","이 항목은 필수값 입니다.");			
 		}
 		
-		if(answer.length() > 1000) {
+		if(answer.length() > 10000) {
 			errors.rejectValue("answer","answer","질의는 1000자 이내로 작성해주세요.");
 		}
 		if(question.length() > 1000) {

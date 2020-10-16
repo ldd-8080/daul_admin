@@ -77,6 +77,12 @@ public class FaqVo extends SearchVo {
 	public void setDel_chk(String del_chk) {
 		this.del_chk = del_chk;
 	}
+	@Override
+	public String toString() {
+		return "FaqVo [faq_idx=" + faq_idx + ", question=" + question + ", answer=" + answer + ", create_user="
+				+ create_user + ", create_date=" + create_date + ", update_user=" + update_user + ", update_date="
+				+ update_date + ", del_chk=" + del_chk + ", num=" + num + ", type=" + type + "]";
+	}
 	
 	
 	

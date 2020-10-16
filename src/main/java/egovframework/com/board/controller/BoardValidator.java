@@ -30,8 +30,8 @@ public class BoardValidator implements Validator{
 		if(title.length() > 100) {
 			errors.rejectValue("title","title","제목은 100자 이내로 작성해주세요.");
 		}
-		if(content.length() > 5000) {
-			errors.rejectValue("content","content","내용은 5000자 이내로 작성해주세요.");
+		if(content.length() > 2000) {
+			errors.rejectValue("content","content","내용은 2000자 이내로 작성해주세요.");
 		}
 	}
 }

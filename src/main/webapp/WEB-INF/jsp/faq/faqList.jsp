@@ -103,10 +103,12 @@
 						<textarea class="form-control" id="question-reg" name="question" rows="5"></textarea>
 						<span class="text-left" style="color: red;" id="chk-error-question"></span>
 						<h4 class="example-title">응답</h4>
-						<textarea class="form-control" id="answer-reg" name="answer" rows="5"></textarea>
+						<!-- <textarea class="form-control" id="answer-reg" name="answer" rows="5"></textarea> -->
+						<textarea name="answer" style="display: none;"  id="answer-reg" ></textarea>
+						<div id="summernote"></div>
 						<span class="text-left" style="color: red;" id="chk-error-answer"></span>
 						<h4 class="example-title">자주하는 질문 종류</h4>
-						<div class="input-group-prepend w-p25">				
+						<div class="input-group-prepend w-p25">
 							<select data-plugin="selectpicker" name="type">
 								<option value="main" selected>공통</option>
 								<option value="suggestion">열린제안</option>
@@ -114,10 +116,9 @@
 								<option value="contest">나눔공모</option>
 							</select>
 						</div>
-						
+
 					</div>
-						
-					<span class="text-left" id="chk-error"></span>
+
 					<div style="text-align: center">
 						<button type="button" class="btn btn-primary waves-effect waves-classics" id="faq-modal-btn" data-title="FAQ">등록</button>
 						<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn">취소</button>
@@ -152,8 +153,9 @@
 						<h4 class="example-title">질의</h4>
 						<textarea class="form-control" id="question_update" name="question" rows="5"></textarea>
 						<h4 class="example-title">응답</h4>
-						<textarea class="form-control" id="answer_update" name="answer" rows="5"></textarea>
-
+						<!-- <textarea class="form-control" id="answer_update" name="answer" rows="5"></textarea> -->
+						<textarea name="answer" style="display: none;"  id="answer_update" ></textarea>
+						<div id="summernote2"></div>
 						<input type="hidden" id="faq_idx_update" name="faq_idx" />
 
 					</div>
@@ -163,7 +165,7 @@
 						<button type="button" class="btn btn-default waves-effect waves-classics" id="faq-modal-delete-btn" data-title="FAQ">삭제</button>
 						<button type="button" class="btn btn-default waves-effect waves-classics" data-dismiss="modal" aria-label="Close" id="faq-modal-cancle-btn2">취 &nbsp;&nbsp; 소</button>
 					</div>
-					
+
 				</form>
 
 			</div>
@@ -187,11 +189,17 @@
 			$("#chk-error-answer").text('');
 			$("#question-reg").val('');
 			$("#answer-reg").val('');
+			$('#summernote').summernote('code', '');
+			
 		});
 
 		$("#faq-modal-btn").click(function() {
 			if (!submitConfirm($(this)))
 				return false;
+
+			$('textarea[name="answer"]').val($('#summernote').summernote('code'));
+
+			appendImgFileName();
 
 			insertFaq();
 		});
@@ -200,6 +208,11 @@
 			if (!submitConfirm($(this)))
 				return false;
 
+			$('textarea[name="answer"]').val($('#summernote2').summernote('code'));
+
+			appendImgFileName();
+
+			
 			updateFaq();
 		});
 
@@ -331,7 +344,7 @@
 						$("#question_update").val(args.item.question);
 						$("#answer_update").val(args.item.answer);
 						$("#faq_idx_update").val(idx);
-
+						$('#summernote2').summernote('code', args.item.answer);
 						//location.href = "${pageContext.request.contextPath}/contest/contestDetail.do?admin_contest_idx=" + idx;
 					} });
 	}
@@ -381,4 +394,55 @@
 			}
 		}
 	}
+
+	$(document).ready(function() {
+
+		$('#summernote').summernote({ minHeight : 300, // set minimum height of editor
+		lang : 'ko-KR', // default: 'en-US'				// 한글 설정
+		placeholder : '최대 2000자까지 쓸 수 있습니다', //placeholder 설정
+		callbacks : { //여기 부분이 이미지를 첨부하는 부분
+		onImageUpload : function(files) {
+			uploadSummernoteImageFile(files[0], this)
+		} } });
+		
+		$('#summernote2').summernote({ minHeight : 300, // set minimum height of editor
+			lang : 'ko-KR', // default: 'en-US'				// 한글 설정
+			placeholder : '최대 2000자까지 쓸 수 있습니다', //placeholder 설정
+			callbacks : { //여기 부분이 이미지를 첨부하는 부분
+			onImageUpload : function(files) {
+				uploadSummernoteImageFile(files[0], this)
+			} } });
+
+
+	});
+
+	
+	function appendImgFileName() {
+		var summernoteElement = document.getElementById("summernote");
+
+		var imgElementList = summernoteElement.parentElement.querySelectorAll("div.note-editor img");
+
+		for (var i = 0; i < imgElementList.length; i++) {
+			console.log(summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1]);
+			var imgFileName = summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1];
+			var str = '<input type="hidden" name="imgFileName" value="' + imgFileName + '">';
+			console.log(str);
+			$("#imgFileNameList").append(str);
+		}
+	}
+	
+	function appendImgFileName2() {
+		var summernoteElement = document.getElementById("summernote2");
+
+		var imgElementList = summernoteElement.parentElement.querySelectorAll("div.note-editor img");
+
+		for (var i = 0; i < imgElementList.length; i++) {
+			console.log(summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1]);
+			var imgFileName = summernoteElement.parentElement.querySelectorAll("div.note-editor img")[i].src.split("=")[1];
+			var str = '<input type="hidden" name="imgFileName" value="' + imgFileName + '">';
+			console.log(str);
+			$("#imgFileNameList").append(str);
+		}
+	}
+	
 </script>

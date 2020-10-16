@@ -105,6 +105,7 @@ public class BoardController {
 		try {
 			BoardValidator boardValidator = new BoardValidator();
 			boardValidator.validate(vo, bindingResult);
+			System.out.println(bindingResult.toString());
 			List<Map<String, Object>> imgNameList = new ArrayList<Map<String, Object>>();
 			   
 			if(bindingResult.hasErrors()) {
