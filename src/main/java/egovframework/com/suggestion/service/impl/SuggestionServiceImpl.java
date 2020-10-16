@@ -25,8 +25,8 @@ public class SuggestionServiceImpl extends EgovAbstractServiceImpl implements Su
 	}
 
 	@Override
-	public int registSuggestion(SuggestionVo vo) throws Exception {
-		return suggestionMapper.registSuggestion(vo);
+	public int insertSuggestion(SuggestionVo vo) throws Exception {
+		return suggestionMapper.insertSuggestion(vo);
 	}
 
 	@Override

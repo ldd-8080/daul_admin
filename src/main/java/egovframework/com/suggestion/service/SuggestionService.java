@@ -11,7 +11,7 @@ public interface SuggestionService {
 
 	String selectSuggestionIdx() throws Exception;
 
-	int registSuggestion(SuggestionVo vo) throws Exception;
+	int insertSuggestion(SuggestionVo vo) throws Exception;
 
 	void insertFile(FileVo fileVo) throws Exception;
 

@@ -1,7 +1,6 @@
 package egovframework.com.qna.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import egovframework.com.cmmn.interceptor.cmmnInterceptor;
 import egovframework.com.cmmn.util.CmmnUtil;
-import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.qna.service.QnaService;
 import egovframework.com.qna.vo.QnaVo;
 import egovframework.com.user.vo.UserVo;
@@ -56,8 +53,8 @@ public class QnaController {
 	}
 	
 	
-	@RequestMapping(value="/insertQnaReply",method = RequestMethod.POST)
-	public ResponseEntity insertQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	@RequestMapping(value="/insertQnaReply", method = RequestMethod.POST)
+	public ResponseEntity<?> insertQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			QnaValidator qnaValidator = new QnaValidator();
 			qnaValidator.validate(vo, bindingResult);
@@ -69,8 +66,11 @@ public class QnaController {
 			UserVo userVo = (UserVo) session.getAttribute("login");
 		    String sessionUser = userVo.getUser_id();
 		    vo.setCreate_user(sessionUser);
+		    
+		    String qnaReplyIdx = CmmnUtil.generateKeyWithPrefix("QARP");
+		    vo.setQna_idx(qnaReplyIdx);
+		    
 		    qnaService.insertQnaReply(vo);
-		     
 			
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}catch(Exception e) {
@@ -79,7 +79,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/updateQnaReply",method = RequestMethod.POST)
-	public ResponseEntity updateQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult ,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity<?> updateQnaReply(HttpSession session, QnaVo vo, BindingResult bindingResult ,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			QnaValidator qnaValidator = new QnaValidator();
 			qnaValidator.validate(vo, bindingResult);
@@ -101,7 +101,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/deleteQnaReply",method = RequestMethod.POST)
-	public ResponseEntity deleteQnaReply(HttpSession session, @ModelAttribute QnaVo vo,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity<?> deleteQnaReply(HttpSession session, @ModelAttribute QnaVo vo,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			System.out.println(vo);
 			
@@ -117,7 +117,7 @@ public class QnaController {
 	}
 	
 	@RequestMapping(value="/increaseViewCount",method = RequestMethod.GET)
-	public ResponseEntity increaseViewCount(HttpSession session, @RequestParam("qna_idx") String qna_idx ,HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ResponseEntity<?> increaseViewCount(HttpSession session, @RequestParam("qna_idx") String qna_idx ,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		try {
 			QnaVo qnaVo = new QnaVo();
 			qnaVo.setQna_idx(qna_idx);
