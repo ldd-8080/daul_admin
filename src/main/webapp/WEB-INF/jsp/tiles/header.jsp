@@ -52,13 +52,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/material-design/material-design.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/brand-icons/brand-icons.min.css">
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
-
-<!-- Icons -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font/web-icons/web-icons.css">
+<!-- Icons -->
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/uikit/icon.css">
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/custom.css">
-
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jstree/jstree.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-tokenfield/bootstrap-tokenfield.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/webui-popover/webui-popover.css">

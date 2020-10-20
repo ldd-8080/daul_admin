@@ -3,7 +3,8 @@
 <div class="site-menubar site-menubar-dark">
 	<div class="site-menubar-body">
 		<ul class="site-menu" data-plugin="menu">
-			<li class="site-menu-item has-sub">
+			<li class="site-menu-category"></li>
+			<li class="site-menu-item">
 				<a class="animsition-link" href="/main/main.do">
 					<i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
 					<span class="site-menu-title">대시보드</span>

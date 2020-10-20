@@ -23,8 +23,6 @@
 					<span class="text-left" id="chk-error"></span>
 					<button type="button" class="btn btn-primary btn-block btn-lg mt-40" id="login-btn">로그인</button>
 
-					<button type="button" class="btn btn-primary btn-block btn-lg mt-40" id="logoutbtn">로그아웃</button>
-					
 				</form>
 			</div>
 		</div>
