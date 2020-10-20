@@ -51,7 +51,7 @@
 						</a>
 					</li>
 					<li class="site-menu-item">
-						<a class="animsition-link" href="#">
+						<a class="animsition-link" href="/mileage/mileagePage.do">
 							<span class="site-menu-title">마일리지</span>
 						</a>
 					</li>
@@ -94,7 +94,7 @@
 						</a>
 					</li>
 					<li class="site-menu-item">
-						<a class="animsition-link" href="#">
+						<a class="animsition-link" href="/chatbotStats/chatbotStatsPage.do">
 							<span class="site-menu-title">응답 통계/기록</span>
 						</a>
 					</li>
@@ -108,7 +108,7 @@
 				</a>
 				<ul class="site-menu-sub">
 					<li class="site-menu-item">
-						<a class="animsition-link" href="#">
+						<a class="animsition-link" href="/message/notificaionTalkPage.do">
 							<span class="site-menu-title">알림톡 자동발송설정</span>
 						</a>
 					</li>

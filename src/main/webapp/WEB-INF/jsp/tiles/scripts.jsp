@@ -12,6 +12,9 @@
 <script src="${pageContext.request.contextPath}/js/waves/waves.js"></script>
 
 <!-- Plugins -->
+<script src="${pageContext.request.contextPath}/js/chartist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
+
 <script src="${pageContext.request.contextPath}/js/switchery/switchery.js"></script>
 <script src="${pageContext.request.contextPath}/js/intro-js/intro.js"></script>
 <script src="${pageContext.request.contextPath}/js/screenfull/screenfull.js"></script>
@@ -72,8 +75,8 @@
 <script src="${pageContext.request.contextPath}/js/Site.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/asscrollable.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/slidepanel.js"></script>
-<script src="${pageContext.request.contextPath}/js/Plugin/switchery.js"></script>
-<script src="${pageContext.request.contextPath}/js/Plugin/matchheight.js"></script>
+<script src="${pageContext.request.contextPath}/js/Plugin/switchery.js"></script><%-- 
+<script src="${pageContext.request.contextPath}/js/Plugin/matchheight.js"></script> --%>
 <script src="${pageContext.request.contextPath}/js/Plugin/jvectormap.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/peity.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/jquery-placeholder.js"></script>
