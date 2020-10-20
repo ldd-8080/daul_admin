@@ -12,9 +12,6 @@
 <script src="${pageContext.request.contextPath}/js/waves/waves.js"></script>
 
 <!-- Plugins -->
-<script src="${pageContext.request.contextPath}/js/chartist/chartist.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
-
 <script src="${pageContext.request.contextPath}/js/switchery/switchery.js"></script>
 <script src="${pageContext.request.contextPath}/js/intro-js/intro.js"></script>
 <script src="${pageContext.request.contextPath}/js/screenfull/screenfull.js"></script>
@@ -50,10 +47,7 @@
 <script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-validate.js"></script>
 <script src="${pageContext.request.contextPath}/js/blueimp-file-upload/jquery.fileupload-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/dropify/dropify.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/js/Plugin/bootstrap-datepicker.js"></script> --%>
 <script src="${pageContext.request.contextPath}/js/multi-select/jquery.multi-select.js"></script>        
-        
-        
 <script src="${pageContext.request.contextPath}/js/bootstrap-datepicker/bootstrap-datepicker.js"></script>
         
 <!-- Scripts -->

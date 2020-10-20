@@ -84,6 +84,8 @@
 <script src="${pageContext.request.contextPath}/js/webui-popover/jquery.webui-popover.js"></script>
 <script src="${pageContext.request.contextPath}/js/Plugin/select2.js"></script>
 <script src="${pageContext.request.contextPath}/js/select2/select2.full.js"></script>
+<script src="${pageContext.request.contextPath}/js/chartist/chartist.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
 
 <script type="text/javascript">
 	Breakpoints();

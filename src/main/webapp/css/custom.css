@@ -2,3 +2,57 @@
 .non-display {
 	display: none !important;
 }
+
+#widgetChatbot .ct-chart .ct-label.ct-vertical, #widgetLinearea .ct-chart .ct-label.ct-horizontal {
+	font-size: 14px;
+}
+
+#widgetChatbot .ct-chart .ct-area {
+	fill-opacity: 0.4;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-a .ct-area {
+	fill: #E1E4FC;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-b .ct-area {
+	fill: #C3F7F2;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-c .ct-area {
+	fill: #FFDBDC;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-a .ct-point {
+	stroke: #7D8EFA;
+	stroke-width: 7px;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-b .ct-point {
+	stroke: #28C7B7;
+	stroke-width: 7px;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-c .ct-point {
+	stroke: #FF666B;
+	stroke-width: 7px;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-a .ct-line {
+	stroke: #7D8EFA;
+	stroke-width: 2px;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-b .ct-line {
+	stroke: #28C7B7;
+	stroke-width: 2px;
+}
+
+#widgetChatbot .ct-chart .ct-series.ct-series-c .ct-line {
+	stroke: #FF666B;
+	stroke-width: 2px;
+}
+
+#widgetChatbot ul .icon {
+	vertical-align: text-bottom;
+}
