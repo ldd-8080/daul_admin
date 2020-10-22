@@ -5,23 +5,30 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.com.main.service.MainService;
-import egovframework.com.user.vo.UserVo;
+import egovframework.com.main.vo.MainVo;
 
 @Controller
 @RequestMapping(value = "/main/*")
 public class MainController {
 
+	protected Log log = LogFactory.getLog(MainController.class);
+	
 	@Resource(name = "mainService")
 	private MainService mainService;
 	
 	@RequestMapping(value = "/main.do")
 	public String home(ModelMap model) throws Exception{
 		try {
+			MainVo mainVo = mainService.getMemberCount();
+			
+			model.addAttribute("mainVo", mainVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,4 +54,6 @@ public class MainController {
 		
 		return "main/main";
 	}
+	
+	
 }

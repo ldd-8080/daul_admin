@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.com.main.mapper.MainMapper;
 import egovframework.com.main.service.MainService;
+import egovframework.com.main.vo.MainVo;
 import egovframework.rte.fdl.cmmn.EgovAbstractServiceImpl;
 
 @Service("mainService")
@@ -25,6 +26,11 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		list = mainMapper.selectDummyList();
 		
 		return list;
+	}
+
+	@Override
+	public MainVo getMemberCount() throws Exception {
+		return mainMapper.getMemberCount();
 	}
 
 }

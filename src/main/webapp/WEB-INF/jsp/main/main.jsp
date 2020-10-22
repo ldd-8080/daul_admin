@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/maindashboard/maindashboard.js"></script>
 <!-- Page -->
 <div class="page">
 	<div class="page-content container-fluid">
@@ -17,7 +21,7 @@
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 방문</span>
-							<span class="counter-number">6,381</span>
+							<span class="counter-number">12312</span>
 						</div>
 					</div>
 				</div>
@@ -46,8 +50,8 @@
 
 			<div class="col-sm-6 col-lg-4 col-xl-2">
 				<!-- Card -->
-				<div class="card card-shadow card-responsive card-block p-20">
-					<div class="counter counter-md">
+				<div class="card card-shadow card-responsive card-block p-20" id = "member-board">
+				 	<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
 							<i class="icon wb-user mr-5 green-600 font-size-18" aria-hidden="true"></i>신규 회원
 						</div>
@@ -57,9 +61,9 @@
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 회원</span>
-							<span class="counter-number">6,381 </span>
+							<span class="counter-number">${mainVo.memberCount } </span>
 						</div>
-					</div>
+					</div> 
 				</div>
 				<!-- End Card -->
 			</div>
@@ -914,4 +918,7 @@
 	$('#btnClosePopoverDateRange').click( function() {
 		$('#btnPopoverDateRange').webuiPopover('hide');
 	});
+	
+	
+	
 </script>

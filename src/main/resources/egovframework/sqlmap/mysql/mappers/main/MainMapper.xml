@@ -6,4 +6,9 @@
 	<select id="selectDummyList" resultType="Map">
 		select * from out_user;
 	</select>
+	
+	<select id="getMemberCount" resultType="egovframework.com.main.vo.MainVo">
+		select count(*) as memberCount from user;
+	</select>
+	
 </mapper>
