@@ -21,7 +21,15 @@ public class SuggestionVo extends SearchVo{
 	
 	private int num;
 	
+	private int opinion_cnt;
 	
+	
+	public int getOpinion_cnt() {
+		return opinion_cnt;
+	}
+	public void setOpinion_cnt(int opinion_cnt) {
+		this.opinion_cnt = opinion_cnt;
+	}
 	public int getAdmin_cnt() {
 		return admin_cnt;
 	}

@@ -13,7 +13,8 @@
 				<div class="card card-shadow card-responsive card-block p-20">
 					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-home mr-5 indigo-600 font-size-18" aria-hidden="true"></i>홈페이지 방문
+							<i class="icon wb-home mr-5 indigo-600 font-size-18" aria-hidden="true"></i>
+							홈페이지 방문
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">오늘</span>
@@ -33,7 +34,8 @@
 				<div class="card card-shadow card-responsive card-block p-20">
 					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-chat-working mr-5 yellow-700 font-size-18" aria-hidden="true"></i>카카오 챗봇 응답
+							<i class="icon wb-chat-working mr-5 yellow-700 font-size-18" aria-hidden="true"></i>
+							카카오 챗봇 응답
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">오늘</span>
@@ -50,20 +52,21 @@
 
 			<div class="col-sm-6 col-lg-4 col-xl-2">
 				<!-- Card -->
-				<div class="card card-shadow card-responsive card-block p-20" id = "member-board">
-				 	<div class="counter counter-md">
+				<div class="card card-shadow card-responsive card-block p-20" id="member-board">
+					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-user mr-5 green-600 font-size-18" aria-hidden="true"></i>신규 회원
+							<i class="icon wb-user mr-5 green-600 font-size-18" aria-hidden="true"></i>
+							신규 회원
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">55</span>
+							<span class="counter-number">${mainVo.daysMemberCount }</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 회원</span>
 							<span class="counter-number">${mainVo.memberCount } </span>
 						</div>
-					</div> 
+					</div>
 				</div>
 				<!-- End Card -->
 			</div>
@@ -73,15 +76,16 @@
 				<div class="card card-shadow card-responsive card-block p-20">
 					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-envelope mr-5 red-500 font-size-18" aria-hidden="true"></i>신규 제안
+							<i class="icon wb-envelope mr-5 red-500 font-size-18" aria-hidden="true"></i>
+							신규 제안
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">55</span>
+							<span class="counter-number">${mainVo.daysSuggestionCount }</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 제안</span>
-							<span class="counter-number">6,381 </span>
+							<span class="counter-number">${mainVo.suggestionCount }</span>
 						</div>
 					</div>
 				</div>
@@ -93,15 +97,16 @@
 				<div class="card card-shadow card-responsive card-block p-20">
 					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-list-bulleted mr-5 orange-500 font-size-18" aria-hidden="true"></i>설문/공모 참여
+							<i class="icon wb-list-bulleted mr-5 orange-500 font-size-18" aria-hidden="true"></i>
+							설문/공모 참여
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">55</span>
+							<span class="counter-number">${mainVo.daysSurveyCount  + mainVo.daysContestCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 참여</span>
-							<span class="counter-number">6,381 </span>
+							<span class="counter-number">${mainVo.surveyCount + mainVo.contestCount  }</span>
 						</div>
 					</div>
 				</div>
@@ -113,15 +118,16 @@
 				<div class="card card-shadow card-responsive card-block p-20">
 					<div class="counter counter-md">
 						<div class="counter-label text-uppercase">
-							<i class="icon wb-reply mr-5 blue-grey-700 font-size-18" aria-hidden="true"></i>신규 댓글
+							<i class="icon wb-reply mr-5 blue-grey-700 font-size-18" aria-hidden="true"></i>
+							신규 댓글
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">55</span>
+							<span class="counter-number">${mainVo.daysOpinionCount }</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 댓글</span>
-							<span class="counter-number">6,381 </span>
+							<span class="counter-number">${mainVo.opinionCount } </span>
 						</div>
 					</div>
 				</div>
@@ -150,10 +156,17 @@
 							</div>
 							<div class="card-header-actions">
 								<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
-									<li class="nav-item "><a class="active nav-link">지난 7일</a></li>
-									<li class="nav-item"><a class="nav-link">지난 30일</a></li>
-									<li class="nav-item"><a class="nav-link">지난 90일</a></li>
-									<li class="nav-item"><a class="nav-link" id="btnPopoverDateRange" data-toggle="modal">임의 기간 설정</a>
+									<li class="nav-item ">
+										<a class="active nav-link">지난 7일</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link">지난 30일</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link">지난 90일</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="btnPopoverDateRange" data-toggle="modal">임의 기간 설정</a>
 
 
 										<div id="popoverDateRange" style="display: none;">
@@ -177,15 +190,26 @@
 													<button id="btnClosePopoverDateRange" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
 												</div>
 											</div>
-										</div> <!-- End Pop with table --></li>
+										</div>
+										<!-- End Pop with table -->
+									</li>
 								</ul>
 							</div>
 						</div>
 						<div class="ct-chart h-300"></div>
 						<ul class="list-inline text-center mt-20 mb-0">
-							<li class="list-inline-item"><i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>PC BROWSER</li>
-							<li class="list-inline-item ml-35"><i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>MOBILE PHONE</li>
-							<li class="list-inline-item ml-35"><i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>MOBILE PHONE</li>
+							<li class="list-inline-item">
+								<i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>
+								PC BROWSER
+							</li>
+							<li class="list-inline-item ml-35">
+								<i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>
+								MOBILE PHONE
+							</li>
+							<li class="list-inline-item ml-35">
+								<i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>
+								MOBILE PHONE
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -200,8 +224,12 @@
 						</h4>
 						<div class="card-header-actions">
 							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
-								<li class="nav-item"><a class="active nav-link">이번주</a></li>
-								<li class="nav-item"><a class="nav-link">이번달</a></li>
+								<li class="nav-item">
+									<a class="active nav-link">이번주</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">이번달</a>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -337,48 +365,17 @@
 						<div class="list-group list-group-dividered list-group-full h-350" data-plugin="scrollable">
 							<div data-role="container">
 								<div data-role="content">
-									<a class="list-group-item justify-content-between" href="javascript:void(0)">
-										<small class="badge badge-round badge-danger float-right">new</small>
-										<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-										<p class="mb-0 small">대기환경 이슈를 위한 소통 이슈를 위한 소통 위한 소통 소통...</p>
-										<p class="mb-0 small">
-											김선호 | 댓글 21 | 공감 31 |
-											<time class="media-meta">2018-06-12 20:50:48</time>
-										</p>
-									</a>
-									<a class="list-group-item justify-content-between" href="javascript:void(0)">
-										<small class="badge badge-round badge-danger float-right">new</small>
-										<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-										<p class="mb-0 small">대기환경 이슈를 위한 소통 이슈를 위한 소통 위한 소통 소통...</p>
-										<p class="mb-0 small">
-											김선호 | 댓글 21 | 공감 31 |
-											<time class="media-meta">2018-06-12 20:50:48</time>
-										</p>
-									</a>
-									<a class="list-group-item justify-content-between" href="javascript:void(0)">
-										<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-										<p class="mb-0 small">대기환경 이슈를 위한 소통 이슈를 위한 소통 위한 소통 소통...</p>
-										<p class="mb-0 small">
-											김선호 | 댓글 21 | 공감 31 |
-											<time class="media-meta">2018-06-12 20:50:48</time>
-										</p>
-									</a>
-									<a class="list-group-item justify-content-between" href="javascript:void(0)">
-										<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-										<p class="mb-0 small">대기환경 이슈를 위한 소통 이슈를 위한 소통 위한 소통 소통...</p>
-										<p class="mb-0 small">
-											김선호 | 댓글 21 | 공감 31 |
-											<time class="media-meta">2018-06-12 20:50:48</time>
-										</p>
-									</a>
-									<a class="list-group-item justify-content-between" href="javascript:void(0)">
-										<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-										<p class="mb-0 small">대기환경 이슈를 위한 소통 이슈를 위한 소통 위한 소통 소통...</p>
-										<p class="mb-0 small">
-											김선호 | 댓글 21 | 공감 31 |
-											<time class="media-meta">2018-06-12 20:50:48</time>
-										</p>
-									</a>
+									<c:forEach var="sgst" items="${mainSuggestionList}">
+										<a class="list-group-item justify-content-between" href="javascript:void(0)">
+											<small class="badge badge-round badge-danger float-right">new</small>
+											<h6 class="media-heading">${sgst.title }</h6>
+											<p class="mb-0 small">${sgst.content }</p>
+											<p class="mb-0 small">
+												${sgst.create_user } | 댓글 ${sgst.opinion_cnt } | 공감 ${sgst.like_count } |
+												<time class="media-meta">${sgst.create_date }</time>
+											</p>
+										</a>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -398,18 +395,14 @@
 					</div>
 					<div class="card-block py-10">
 						<div class="list-group list-group-dividered list-group-full">
-							<a class="list-group-item justify-content-between" href="javascript:void(0)">
-								<small class="badge badge-round badge-success float-right">진행중</small>
-								<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-								<p class="mb-0 small">기간 | 2018-06-12 ~ 2018-06-12</p>
-								<p class="mb-0 small">댓글 21 | 참여 31</p>
-							</a>
-							<a class="list-group-item justify-content-between" href="javascript:void(0)">
-								<small class="badge badge-round badge-default float-right">종료</small>
-								<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-								<p class="mb-0 small">기간 | 2018-06-12 ~ 2018-06-12</p>
-								<p class="mb-0 small">댓글 21 | 참여 31</p>
-							</a>
+							<c:forEach var="survey" items="${mainSurveyList}">
+								<a class="list-group-item justify-content-between" href="javascript:void(0)">
+									<small class="badge badge-round badge-success float-right">진행중</small>
+									<h6 class="media-heading">${survey.title }</h6>
+									<p class="mb-0 small">기간 | ${survey.s_date } ~ ${survey.e_date }</p>
+									<p class="mb-0 small">댓글 ${survey.opinion_count } | 참여 ${survey.participation_count }</p>
+								</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -427,18 +420,14 @@
 					</div>
 					<div class="card-block py-10">
 						<div class="list-group list-group-dividered list-group-full">
-							<a class="list-group-item justify-content-between">
-								<small class="badge badge-round badge-success float-right">진행중</small>
-								<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-								<p class="mb-0 small">공모기간 | 2018-06-12 ~ 2018-06-12</p>
-								<p class="mb-0 small">참여 31</p>
-							</a>
-							<a class="list-group-item justify-content-between" href="javascript:void(0)">
-								<small class="badge badge-round badge-default float-right">종료</small>
-								<h6 class="media-heading">대기환경 이슈를 위한 소통 플랫폼.</h6>
-								<p class="mb-0 small">공모기간 | 2018-06-12 ~ 2018-06-12</p>
-								<p class="mb-0 small">참여 31</p>
-							</a>
+							<c:forEach var="contest" items="${mainContestList}">
+								<a class="list-group-item justify-content-between">
+									<small class="badge badge-round badge-success float-right">진행중</small>
+									<h6 class="media-heading">${contest.title}</h6>
+									<p class="mb-0 small">공모기간 | ${contest.contest_s_date } ~ ${contest.contest_e_date }</p>
+									<p class="mb-0 small">참여 ${contest.user_contest_cnt }</p>
+								</a>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -452,10 +441,18 @@
 						</h4>
 						<div class="card-header-actions">
 							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
-								<li class="nav-item "><a class="active nav-link">지난 7일</a></li>
-								<li class="nav-item"><a class="nav-link">지난 30일</a></li>
-								<li class="nav-item"><a class="nav-link">지난 90일</a></li>
-								<li class="nav-item"><a class="nav-link">임의 기간 설정</a></li>
+								<li class="nav-item ">
+									<a class="active nav-link">지난 7일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">지난 30일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">지난 90일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">임의 기간 설정</a>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -596,10 +593,18 @@
 						</h4>
 						<div class="card-header-actions">
 							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
-								<li class="nav-item "><a class="active nav-link">지난 7일</a></li>
-								<li class="nav-item"><a class="nav-link">지난 30일</a></li>
-								<li class="nav-item"><a class="nav-link">지난 90일</a></li>
-								<li class="nav-item"><a class="nav-link">임의 기간 설정</a></li>
+								<li class="nav-item ">
+									<a class="active nav-link">지난 7일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">지난 30일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">지난 90일</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link">임의 기간 설정</a>
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -841,7 +846,7 @@
 <!-- End Page -->
 
 <!-- DateRange Modal -->
-<div class="modal " id="exampleFormModal" aria-hidden="false" aria-labelledby="exampleFormModalLabel"role="dialog" tabindex="-1">
+<div class="modal " id="exampleFormModal" aria-hidden="false" aria-labelledby="exampleFormModalLabel" role="dialog" tabindex="-1">
 	<div class="modal-dialog modal-simple modal-center">
 		<form class="modal-content">
 			<div class="modal-header">
@@ -850,75 +855,43 @@
 				</button>
 				<h4 class="modal-title" id="exampleFormModalLabel">기간 설정</h4>
 			</div>
-			<div class="modal-body">
-			</div>
+			<div class="modal-body"></div>
 		</form>
 	</div>
 </div>
 <!-- End Modal -->
 
 <script type="text/javascript">
-	new Chartist.Line('#widgetOverall .ct-chart', { 
-		labels : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'], 
-		series : [
-			[100, 50, 70, 110, 150, 200, 230], 
-			[80, 40, 60, 90, 100, 190, 210], 
-			[20, 10, 10, 20, 50, 10, 20]
-		] 
-	}, 
-	{ 
-		low : 0, 
-		showArea : true, 
-		showPoint : true, 
-		showLine : true, 
-		fullWidth : true,
-		chartPadding : { 
-			top : 0, 
-			right : 20, 
-			bottom : 0, 
-			left : 30 
-		}, 
-		axisX : { 
-			showGrid : false, 
-			labelOffset : { 
-				x : -14, 
-				y : 0 
-			} 
-		},
-		axisY : { 
-			labelOffset : { 
-				x : -10, 
-				y : 0 
-			}, 
-			labelInterpolationFnc : function labelInterpolationFnc(num) {
-				return num % 1 === 0 ? num : false;
-			} 
-		} 
-	});
+	new Chartist.Line('#widgetOverall .ct-chart', { labels : [
+			'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
+	], series : [
+			[
+					100, 50, 70, 110, 150, 200, 230
+			], [
+					80, 40, 60, 90, 100, 190, 210
+			], [
+					20, 10, 10, 20, 50, 10, 20
+			]
+	] }, { low : 0, showArea : true, showPoint : true, showLine : true, fullWidth : true,
+		chartPadding : { top : 0, right : 20, bottom : 0, left : 30 }, axisX : { showGrid : false, labelOffset : { x : -14, y : 0 } },
+		axisY : { labelOffset : { x : -10, y : 0 }, labelInterpolationFnc : function labelInterpolationFnc(num) {
+			return num % 1 === 0 ? num : false;
+		} } });
 	$("#inputStartDate").val(lastMonth());
 	$("#inputEndDate").val(today());
-	
+
 	var defaults = Plugin.getDefaults("webuiPopover"); // Example Webui Popover Pop with Table
-	
-	var tableSettings = {
-		title: '기간 설정',
-		url:'#popoverDateRange',
-		width: 400,
-		animation:'fade',
-		dismissible:false,
-		backdrop:true,
-		closeable:true, //display close button or not
-		onShow: function($element) {
+
+	var tableSettings = { title : '기간 설정', url : '#popoverDateRange', width : 400, animation : 'fade', dismissible : false, backdrop : true,
+		closeable : true, //display close button or not
+		onShow : function($element) {
 			console.log(lastMonth());
 		} // callback after show
 	};
-	
+
 	$('#btnPopoverDateRange').webuiPopover($.extend({}, defaults, tableSettings));
-	
-	$('#btnClosePopoverDateRange').click( function() {
+
+	$('#btnClosePopoverDateRange').click(function() {
 		$('#btnPopoverDateRange').webuiPopover('hide');
 	});
-	
-	
-	
 </script>

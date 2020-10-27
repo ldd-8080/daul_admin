@@ -7,8 +7,133 @@
 		select * from out_user;
 	</select>
 	
-	<select id="getMemberCount" resultType="egovframework.com.main.vo.MainVo">
-		select count(*) as memberCount from user;
+	<select id="getDashboardCount" resultType="egovframework.com.main.vo.MainVo">
+		select * from (
+						(select count(*) as memberCount from user) a,
+						(select count(*) as daysMemberCount from user where reg_date >= date_add(now(), interval -7 day)) b,
+						(select count(*) as suggestionCount from suggestion_main) c,
+						(select count(*) as daysSuggestionCount from suggestion_main  where create_date >= date_add(now(), interval -7 day)) d,
+						(select count(*) as surveyCount from survey_participation) e,
+						(select count(*) as daysSurveyCount from survey_participation  where create_date >= date_add(now(), interval -7 day)) f,
+						(select count(*) as contestCount from contest_user) g,
+						(select count(*) as daysContestCount from contest_user  where create_date >= date_add(now(), interval -7 day)) h,
+						(select count(*) as opinionCount from (
+																select opinion_idx from suggestion_opinion
+																union
+																select  opinion_idx  from survey_opinion 
+						) oc) i,
+						(select count(*) as daysOpinionCount from (
+																select opinion_idx from suggestion_opinion where create_date >= date_add(now(), interval -7 day)
+																union
+																select  opinion_idx  from survey_opinion where create_date >= date_add(now(), interval -7 day)
+						) 7oc) j
+					 )
 	</select>
 	
+	<select id="selectMainSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
+		SELECT @rownum:=@rownum+1 AS num
+		  		     , sub.suggestion_idx
+		  		     , sub.title
+		  		     , sub.content
+		  		     , sub.like_count
+		  		     , sub.create_user
+		  		     , DATE_FORMAT(sub.create_date, '%Y-%m-%d %H:%i:%s') as create_date
+		  		     , sub.opinion_cnt
+		  		     , sub.like_per
+		  		     , sub.name
+		  		     , sub.auth_type
+				  FROM (
+				  		SELECT sm.*
+				  		     , CASE WHEN (like_count / 50 * 100) >= 100 THEN 100 ELSE (like_count / 50 * 100) END AS like_per
+				  		  FROM (
+								SELECT s.suggestion_idx
+									 , s.title
+									 , s.content
+									 , (SELECT COUNT(*) FROM daul.user_like where parent_idx = s.suggestion_idx) AS like_count
+									 , s.create_user
+									 , s.create_date
+									 , (SELECT count(*) FROM suggestion_opinion a WHERE a.suggestion_idx = s.suggestion_idx) AS opinion_cnt
+									 , b.name
+									 ,b.auth_type
+								  FROM suggestion_main s
+								  LEFT JOIN daul.user b ON s.create_user = b.user_id 
+								 WHERE del_chk != 'Y'
+								  ) sm
+						) sub, (SELECT @rownum:=0) TMP
+				   WHERE 1=1 
+				   AND create_date >= date_add(now(), interval -30 day)
+				   ORDER BY num DESC
+	</select>
+	
+	<select id="selectMainContestList" resultType="egovframework.com.contest.vo.ContestVo">	
+		SELECT *
+			  FROM (
+			SELECT @rownum:=@rownum+1 AS num,
+			       (
+			        SELECT count(*)
+			          FROM contest_user
+			         WHERE admin_contest_idx = a.admin_contest_idx
+			       ) AS user_contest_cnt,
+					admin_contest_idx,
+					create_user,
+					title,
+					content,
+					DATE_FORMAT(contest_s_date, '%Y-%m-%d %H:%i:%s') AS contest_s_date,
+					DATE_FORMAT(contest_e_date, '%Y-%m-%d %H:%i:%s') AS contest_e_date,
+					DATE_FORMAT(submit_s_date, '%Y-%m-%d %H:%i:%s') AS submit_s_date,
+					DATE_FORMAT(submit_e_date, '%Y-%m-%d %H:%i:%s') AS submit_e_date,
+					DATE_FORMAT(create_date, '%Y-%m-%d %H:%i:%s') AS create_date,
+							<![CDATA[
+							case when contest_e_date < SYSDATE() then '공모종료'
+								 when contest_s_date > SYSDATE() then '공모전'
+				 	             when contest_e_date > SYSDATE() and SYSDATE() > contest_s_date then '공모진행중'
+				 	        ]]>
+					end as ing,
+					name
+					FROM daul.contest_admin a
+			   LEFT JOIN daul.user b
+				      ON a.create_user = b.user_id 
+						, (SELECT @rownum:=0) TMP
+						   WHERE del_chk != 'Y'
+			               ORDER BY create_date ASC
+			) sub
+			LIMIT 0,5
+	</select>
+		
+	<select id="selectMainSurveyList" resultType="egovframework.com.survey.vo.SurveyVo">		
+		SELECT @rownum:=@rownum+1 					AS num
+				 , a.survey_idx
+				 , (
+				    SELECT count(*) 
+				      FROM survey_opinion 
+				     WHERE survey_idx = a.survey_idx
+				   ) AS opinion_count
+				 , (
+				   SELECT  count(DISTINCT  participation_user)
+				      FROM survey_participation 
+				     WHERE survey_idx = a.survey_idx
+				   ) AS participation_count
+				 , a.title
+				 , a.content
+				 , DATE_FORMAT(a.s_date, '%Y-%m-%d %H:%i:%s') 		AS s_date
+				 , DATE_FORMAT(a.e_date, '%Y-%m-%d %H:%i:%s') 		AS e_date
+				 , a.survey_type
+				 , a.create_user
+				 , DATE_FORMAT(a.create_date, '%Y-%m-%d %H:%i:%s') AS create_date
+				 , b.name
+				 <![CDATA[
+				 , case when e_date < SYSDATE() then '투표완료'
+					  when s_date > SYSDATE() then '투표전'
+	 	              when e_date > SYSDATE() and SYSDATE() > s_date then '투표중'
+	 	         ]]>
+	             end as ing	
+			  FROM daul.survey_main a
+			   LEFT JOIN daul.user b
+			    ON a.create_user = b.user_id 
+			     , (SELECT @rownum:=0) TMP
+			  WHERE del_chk != 'Y'
+			  ORDER BY create_date desc
+			  LIMIT 0,5
+		</select>	  
+			  
 </mapper>

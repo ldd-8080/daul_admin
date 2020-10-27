@@ -18,7 +18,45 @@ public class ContestVo extends SearchVo{
 	private String del_chk;
 	
 	private int num;
+
+	private int user_contest_cnt;
+	private String user_title;
+	private String ing;
+	private String user_name;
+	private String login_user;
 	
+	
+	
+	public int getUser_contest_cnt() {
+		return user_contest_cnt;
+	}
+	public void setUser_contest_cnt(int user_contest_cnt) {
+		this.user_contest_cnt = user_contest_cnt;
+	}
+	public String getUser_title() {
+		return user_title;
+	}
+	public void setUser_title(String user_title) {
+		this.user_title = user_title;
+	}
+	public String getIng() {
+		return ing;
+	}
+	public void setIng(String ing) {
+		this.ing = ing;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getLogin_user() {
+		return login_user;
+	}
+	public void setLogin_user(String login_user) {
+		this.login_user = login_user;
+	}
 	public String getAdmin_contest_idx() {
 		return admin_contest_idx;
 	}

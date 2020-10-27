@@ -21,9 +21,28 @@ public class SurveyVo extends SearchVo{
 	private String del_chk;
 	private int opinion_count;
 	private int participation_count;
+	private String ing;
+	private String answer;
+	private String question_content;
+	private String surveyFile;
+	private String q_seq;
+	private int num;
+	
 	
 	
 
+	public String getIng() {
+		return ing;
+	}
+	public void setIng(String ing) {
+		this.ing = ing;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
 	public int getOpinion_count() {
 		return opinion_count;
 	}
@@ -37,14 +56,6 @@ public class SurveyVo extends SearchVo{
 		this.participation_count = participation_count;
 	}
 
-	private String question_content;
-
-	private String surveyFile;
-	
-	private String q_seq;
-	
-	private int num;
-	
 	private List<SurveyQuestionVo> questionList;
 	
 	public String getQ_seq() {

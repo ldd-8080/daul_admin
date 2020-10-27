@@ -11,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.main.service.MainService;
 import egovframework.com.main.vo.MainVo;
+import egovframework.com.suggestion.vo.SuggestionVo;
+import egovframework.com.survey.vo.SurveyVo;
 
 @Controller
 @RequestMapping(value = "/main/*")
@@ -25,10 +28,19 @@ public class MainController {
 	
 	@RequestMapping(value = "/main.do")
 	public String home(ModelMap model) throws Exception{
+		List<SuggestionVo> mainSuggestionList = null;
+		List<ContestVo> mainContestList = null;
+		List<SurveyVo> mainSurveyList = null;
 		try {
-			MainVo mainVo = mainService.getMemberCount();
+			MainVo mainVo = mainService.getDashboardCount();
+			mainSuggestionList = mainService.selectMainSuggestionList();
+			mainContestList = mainService.selectMainContestList();
+			mainSurveyList = mainService.selectMainSurveyList();
 			
 			model.addAttribute("mainVo", mainVo);
+			model.addAttribute("mainSuggestionList", mainSuggestionList);
+			model.addAttribute("mainContestList", mainContestList);
+			model.addAttribute("mainSurveyList", mainSurveyList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
