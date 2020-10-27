@@ -10,6 +10,4 @@ public interface MileageService {
 	List<MileageVo> selectMileageList() throws Exception;
 
 	void updateMileage(Map<String, String> map) throws Exception;
-
-	MileageVo selectMileage(String action_id) throws Exception;
 }

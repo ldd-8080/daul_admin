@@ -75,20 +75,4 @@ public class CmmnUtil {
 		} catch (Exception e) {
 		}
 	}
-	
-	public String checkMileageSaving(String action_id) throws Exception{
-		String mileage_value = null;
-		
-		try {
-			MileageVo vo = mileageService.selectMileage(action_id);
-			
-			if ("Y".equals(vo.getOn_off())) {
-				mileage_value = vo.getMileage_value();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return mileage_value;
-	}
 }

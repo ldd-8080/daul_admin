@@ -16,10 +16,4 @@
 		     , mileage_value = #{mileage_value}
 		 WHERE idx = #{idx}
 	</update>
-	
-	<select id="selectMileage" resultType="egovframework.com.mileage.vo.MileageVo">
-		SELECT *
-		  FROM daul.mileage
-		 WHERE action_id = #{action_id}
-	</select>
 </mapper>

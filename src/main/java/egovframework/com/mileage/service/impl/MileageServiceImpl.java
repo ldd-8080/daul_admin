@@ -26,9 +26,4 @@ public class MileageServiceImpl extends EgovAbstractServiceImpl implements Milea
 	public void updateMileage(Map<String, String> map) throws Exception {
 		mileageMapper.updateMileage(map);
 	}
-
-	@Override
-	public MileageVo selectMileage(String action_id) throws Exception {
-		return mileageMapper.selectMileage(action_id);
-	}
 }
