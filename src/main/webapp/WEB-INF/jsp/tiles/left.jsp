@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+\<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div class="site-menubar site-menubar-dark">
 	<div class="site-menubar-body">
@@ -109,7 +109,7 @@
 				</a>
 				<ul class="site-menu-sub">
 					<li class="site-menu-item">
-						<a class="animsition-link" href="/message/notificaionTalkPage.do">
+						<a class="animsition-link" href="/notification/notificaionTalkPage.do">
 							<span class="site-menu-title">알림톡 자동발송설정</span>
 						</a>
 					</li>
