@@ -14,12 +14,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.mileage.service.MileageService;
+import egovframework.com.mileage.vo.MileageVo;
+
 @Component("cmmnUtil")
 @RequestMapping(value="/cmmn")
 public class CmmnUtil {
     //private Log log = LogFactory.getLog(this.getClass());
 	@Resource(name="fileUtil")
 	private FileUtil fileUtil;
+	
+	@Resource(name="mileageService")
+	private MileageService mileageService;
 	
 	public List<Map<String, String>> getValid(BindingResult bindingResult) {
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -70,4 +76,19 @@ public class CmmnUtil {
 		}
 	}
 	
+	public String checkMileageSaving(String action_id) throws Exception{
+		String mileage_value = null;
+		
+		try {
+			MileageVo vo = mileageService.selectMileage(action_id);
+			
+			if ("Y".equals(vo.getOn_off())) {
+				mileage_value = vo.getMileage_value();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return mileage_value;
+	}
 }

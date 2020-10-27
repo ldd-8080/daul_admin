@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="egovframework.com.mileage.mapper.MileageMapper">
+
+	<select id="selectMileageList" resultType="egovframework.com.mileage.vo.MileageVo">
+		SELECT m.*
+		     , ac.action_name 
+		  FROM daul.mileage m
+		  LEFT JOIN daul.action_code ac ON ac.action_idx = m.action_id
+		 ORDER BY m.idx
+	</select>
+	
+	<update id="updateMileage">
+		UPDATE daul.mileage
+		   SET on_off = #{on_off}
+		     , mileage_value = #{mileage_value}
+		 WHERE idx = #{idx}
+	</update>
+	
+	<select id="selectMileage" resultType="egovframework.com.mileage.vo.MileageVo">
+		SELECT *
+		  FROM daul.mileage
+		 WHERE action_id = #{action_id}
+	</select>
+</mapper>
