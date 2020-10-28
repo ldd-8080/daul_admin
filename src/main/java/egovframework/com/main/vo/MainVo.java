@@ -15,7 +15,16 @@ public class MainVo extends SearchVo{
 	private int daysOpinionCount;
 	
 	private String visitor_cnt;
+	private String reg_date;
 	
+
+	public String getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
 
 	public String getVisitor_cnt() {
 		return visitor_cnt;
