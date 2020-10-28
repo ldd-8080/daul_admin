@@ -13,10 +13,30 @@ public class MainVo extends SearchVo{
 	private int daysContestCount;
 	private int opinionCount;
 	private int daysOpinionCount;
+	private int daysVisitorCount;
+	private int VisitorCount;
 	
 	private String visitor_cnt;
 	private String reg_date;
 	
+
+	
+	
+	public int getDaysVisitorCount() {
+		return daysVisitorCount;
+	}
+
+	public void setDaysVisitorCount(int daysVisitorCount) {
+		this.daysVisitorCount = daysVisitorCount;
+	}
+
+	public int getVisitorCount() {
+		return VisitorCount;
+	}
+
+	public void setVisitorCount(int visitorCount) {
+		VisitorCount = visitorCount;
+	}
 
 	public String getReg_date() {
 		return reg_date;
