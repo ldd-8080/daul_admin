@@ -56,4 +56,9 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		return mainMapper.selectVisitorCnt(vo);
 	}
 
+	@Override
+	public List<MainVo> selectMileageRank(MainVo vo) throws Exception {
+		return mainMapper.selectMileageRank(vo);
+	}
+
 }

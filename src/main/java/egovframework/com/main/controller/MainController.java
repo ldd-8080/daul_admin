@@ -76,8 +76,7 @@ public class MainController {
 	public ResponseEntity<?> selectVisitorCnt(MainVo vo) throws Exception {
 		List<MainVo> visitorCntList =  null;
 		try {
-			//시작일,종료일 vo에 넣어서 불러
-			
+
 			visitorCntList = mainService.selectVisitorCnt(vo);
 			
 		} catch (Exception e) {
@@ -86,5 +85,21 @@ public class MainController {
 		
 		return new ResponseEntity<>(visitorCntList, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value="/selectMileageRank.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectMileageRank(MainVo vo) throws Exception {
+		List<MainVo> mileageRankList =  null;
+		try {
+			//days에 조회할 일수 넣어서 조회 ex)이전7일이면 days = 7
+			mileageRankList = mainService.selectMileageRank(vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(mileageRankList, HttpStatus.OK);
+	}
+	
 	
 }

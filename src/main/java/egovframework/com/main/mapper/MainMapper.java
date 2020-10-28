@@ -23,4 +23,6 @@ public interface MainMapper {
 	List<SurveyVo> selectMainSurveyList() throws Exception;
 	
 	List<MainVo> selectVisitorCnt(MainVo vo) throws Exception;
+	
+	List<MainVo> selectMileageRank(MainVo vo) throws Exception;
 }

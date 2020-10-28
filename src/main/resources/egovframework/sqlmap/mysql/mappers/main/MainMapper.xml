@@ -9,40 +9,40 @@
 	
 	<select id="getDashboardCount" resultType="egovframework.com.main.vo.MainVo">
 	select * from (
-						(select count(*) as memberCount from user) a,
-						(select count(*) as daysMemberCount from user where reg_date >= date_add(now(), interval -7 day)) b,
-						(select count(*) as suggestionCount from suggestion_main) c,
-						(select count(*) as daysSuggestionCount from suggestion_main  where create_date >= date_add(now(), interval -7 day)) d,
-						(select count(*) as surveyCount from survey_participation) e,
-						(select count(*) as daysSurveyCount from survey_participation  where create_date >= date_add(now(), interval -7 day)) f,
-						(select count(*) as contestCount from contest_user) g,
-						(select count(*) as daysContestCount from contest_user  where create_date >= date_add(now(), interval -7 day)) h,
-						(select count(*) as opinionCount from (
-																select opinion_idx from suggestion_opinion
-																union
-																select  opinion_idx  from survey_opinion 
-						) oc) i,
-						(select count(*) as daysOpinionCount from (
-																select opinion_idx from suggestion_opinion where create_date >= date_add(now(), interval -7 day)
-																union
-																select  opinion_idx  from survey_opinion where create_date >= date_add(now(), interval -7 day)
-						) 7oc) j,
-						(select count(*) as daysVisitorCount from (
-							(
-								select count(*) from user_log
-								where requestURI = '/main/main.do'
-								and reg_date >= date_add(now(), interval -7 day) 
-								group by ip
-							) ul
-						) )k ,
-						(select count(*) as VisitorCount from (
-							(
-								select count(*) from user_log
-								where requestURI = '/main/main.do'
-								group by ip
-							) ul
-						) ) l
-					 )
+				(select count(*) as memberCount from user) a,
+				(select count(*) as daysMemberCount from user where reg_date >= date_add(now(), interval -7 day)) b,
+				(select count(*) as suggestionCount from suggestion_main) c,
+				(select count(*) as daysSuggestionCount from suggestion_main  where create_date >= date_add(now(), interval -7 day)) d,
+				(select count(*) as surveyCount from survey_participation) e,
+				(select count(*) as daysSurveyCount from survey_participation  where create_date >= date_add(now(), interval -7 day)) f,
+				(select count(*) as contestCount from contest_user) g,
+				(select count(*) as daysContestCount from contest_user  where create_date >= date_add(now(), interval -7 day)) h,
+				(select count(*) as opinionCount from (
+														select opinion_idx from suggestion_opinion
+														union
+														select  opinion_idx  from survey_opinion 
+				) oc) i,
+				(select count(*) as daysOpinionCount from (
+														select opinion_idx from suggestion_opinion where create_date >= date_add(now(), interval -7 day)
+														union
+														select  opinion_idx  from survey_opinion where create_date >= date_add(now(), interval -7 day)
+				) 7oc) j,
+				(select count(*) as daysVisitorCount from (
+					(
+						select count(*) from user_log
+						where requestURI = '/main/main.do'
+						and reg_date >= date_add(now(), interval -7 day) 
+						group by ip
+					) ul
+				) )k ,
+				(select count(*) as VisitorCount from (
+					(
+						select count(*) from user_log
+						where requestURI = '/main/main.do'
+						group by ip
+					) ul
+				) ) l
+			 )
 	</select>
 	
 	<select id="selectMainSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
@@ -152,21 +152,33 @@
 		</select>	  
 			  
 	<select id="selectVisitorCnt" resultType="egovframework.com.main.vo.MainVo">
-	
-	SELECT count(*) AS visitor_cnt, DATE_FORMAT(a.reg_date, '%Y-%m-%d') as reg_date
-	FROM (
-			(SELECT *
-			   FROM user_log 
-			  WHERE requestURI = '/main/main.do'
-		      GROUP BY ip ) a
-		)
+		SELECT count(*) AS visitor_cnt, DATE_FORMAT(a.reg_date, '%Y-%m-%d') as reg_date
+		FROM (
+				(SELECT *
+				   FROM user_log 
+				  WHERE requestURI = '/main/main.do'
+			      GROUP BY ip ) a
+			)
 	 	<![CDATA[
 		   WHERE reg_date >= date_format(concat(#{search_s_date} , ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
 		   AND reg_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 		 ]]>
 		GROUP BY DATE_FORMAT(a.reg_date, '%Y-%m-%d')
 		ORDER BY reg_date DESC
-
 	</select>
 	
+	
+	<select id="selectMileageRank" resultType="egovframework.com.main.vo.MainVo" >
+		SELECT b.user_id,b.phone,b.name, sum(a.mileage_value) as total_mileage
+	      ,(SELECT count(*) FROM suggestion_main WHERE create_user = b.user_id and del_chk = 'N') as suggestion_count
+	      ,(SELECT count(*) FROM survey_participation WHERE participation_user = b.user_id group by survey_idx ) as survey_count
+	      ,(SELECT count(*) FROM contest_user WHERE create_user = b.user_id and del_chk = 'N') as contest_count
+	      <![CDATA[
+	      ,(SELECT sum(mileage_value) FROM user_mileage WHERE user_id = b.phone and reg_date  >= date_add(now(), interval -#{days} day) ) as daysMileage
+		  ]]>
+		FROM user_mileage a
+		JOIN user b
+		ON a.user_id = b.phone
+		GROUP BY b.name
+	</select>
 </mapper>

@@ -19,9 +19,91 @@ public class MainVo extends SearchVo{
 	private String visitor_cnt;
 	private String reg_date;
 	
+	private int total_mileage;
+	private String user_id;
+	private String name;
+	private String phone;
+	private int suggestion_count;
+	private int survey_count;
+	private int contest_count;
+	private int daysMileage;
+	
+	private int days;
+	
+	
+	
+	public int getDays() {
+		return days;
+	}
 
-	
-	
+	public void setDays(int days) {
+		this.days = days;
+	}
+
+	public int getTotal_mileage() {
+		return total_mileage;
+	}
+
+	public void setTotal_mileage(int total_mileage) {
+		this.total_mileage = total_mileage;
+	}
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public int getSuggestion_count() {
+		return suggestion_count;
+	}
+
+	public void setSuggestion_count(int suggestion_count) {
+		this.suggestion_count = suggestion_count;
+	}
+
+	public int getSurvey_count() {
+		return survey_count;
+	}
+
+	public void setSurvey_count(int survey_count) {
+		this.survey_count = survey_count;
+	}
+
+	public int getContest_count() {
+		return contest_count;
+	}
+
+	public void setContest_count(int contest_count) {
+		this.contest_count = contest_count;
+	}
+
+	public int getDaysMileage() {
+		return daysMileage;
+	}
+
+	public void setDaysMileage(int daysMileage) {
+		this.daysMileage = daysMileage;
+	}
+
 	public int getDaysVisitorCount() {
 		return daysVisitorCount;
 	}
