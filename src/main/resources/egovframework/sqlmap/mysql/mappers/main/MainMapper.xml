@@ -8,41 +8,54 @@
 	</select>
 	
 	<select id="getDashboardCount" resultType="egovframework.com.main.vo.MainVo">
-	select * from (
-				(select count(*) as memberCount from user) a,
-				(select count(*) as daysMemberCount from user where reg_date >= date_add(now(), interval -7 day)) b,
-				(select count(*) as suggestionCount from suggestion_main) c,
-				(select count(*) as daysSuggestionCount from suggestion_main  where create_date >= date_add(now(), interval -7 day)) d,
-				(select count(*) as surveyCount from survey_participation) e,
-				(select count(*) as daysSurveyCount from survey_participation  where create_date >= date_add(now(), interval -7 day)) f,
-				(select count(*) as contestCount from contest_user) g,
-				(select count(*) as daysContestCount from contest_user  where create_date >= date_add(now(), interval -7 day)) h,
-				(select count(*) as opinionCount from (
-														select opinion_idx from suggestion_opinion
-														union
-														select  opinion_idx  from survey_opinion 
-				) oc) i,
-				(select count(*) as daysOpinionCount from (
-														select opinion_idx from suggestion_opinion where create_date >= date_add(now(), interval -7 day)
-														union
-														select  opinion_idx  from survey_opinion where create_date >= date_add(now(), interval -7 day)
-				) 7oc) j,
-				(select count(*) as daysVisitorCount from (
-					(
-						select count(*) from user_log
-						where requestURI = '/main/main.do'
-						and reg_date >= date_add(now(), interval -7 day) 
-						group by ip
-					) ul
-				) )k ,
-				(select count(*) as VisitorCount from (
-					(
-						select count(*) from user_log
-						where requestURI = '/main/main.do'
-						group by ip
-					) ul
-				) ) l
-			 )
+		SELECT * 
+		  FROM (
+		  		(SELECT COUNT(*) AS memberCount FROM user) a,
+				<![CDATA[(SELECT COUNT(*) AS daysMemberCount FROM user where reg_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) b,]]>
+				(SELECT COUNT(*) AS suggestionCount FROM suggestion_main) c,
+				<![CDATA[(SELECT COUNT(*) AS daysSuggestionCount FROM suggestion_main  where create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) d,]]>
+				(SELECT COUNT(*) AS surveyCount FROM survey_participation) e,
+				<![CDATA[(SELECT COUNT(*) AS daysSurveyCount FROM survey_participation  where create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) f,]]>
+				(SELECT COUNT(*) AS contestCount FROM contest_user) g,
+				<![CDATA[(SELECT COUNT(*) AS daysContestCount FROM contest_user WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) h,]]>
+				(SELECT COUNT(*) AS opinionCount FROM (
+													   SELECT opinion_idx FROM suggestion_opinion 
+													   UNION 
+													   SELECT opinion_idx FROM survey_opinion
+													  ) oc
+				) i,
+				(SELECT COUNT(*) AS daysOpinionCount FROM (
+														   <![CDATA[
+														   SELECT opinion_idx FROM suggestion_opinion WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY) 
+														   UNION
+														   SELECT  opinion_idx FROM survey_opinion WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)
+														   ]]>
+														  ) 7oc
+				) j,
+				(SELECT COUNT(*) AS daysVisitorCount FROM (
+														   SELECT COUNT(*) 
+														     FROM user_log
+														    WHERE requestURI = '/main/main.do'
+														      <![CDATA[
+														      AND reg_date >= DATE_FORMAT(CURDATE(), '%Y-%m-%d 00:00:00')
+														      ]]> 
+														    GROUP BY ip
+														   ) ul 
+				) k ,
+				(SELECT COUNT(*) AS visitorCount FROM (
+											  		   SELECT *
+													     FROM (
+													  		   SELECT ip 
+													  		   		, DATE_FORMAT(reg_date, '%Y-%m-%d')	AS reg_date 
+													  		     FROM daul.user_log 
+													  		    WHERE requestURI = '/main/main.do'
+													  	      ) a
+													    GROUP BY reg_date, ip
+											  	      ) a
+			    ) l,
+			    <![CDATA[(SELECT COUNT(*) AS daysChatbotCount FROM (SELECT * FROM daul.chatbot_log WHERE create_date >= DATE_FORMAT(CURDATE(), '%Y-%m-%d 00:00:00')) cl) m ,]]>
+			    (SELECT COUNT(*) AS chatbotCount FROM daul.chatbot_log) n
+			   )
 	</select>
 	
 	<select id="selectMainSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">

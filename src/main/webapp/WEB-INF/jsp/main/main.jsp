@@ -18,11 +18,11 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">오늘</span>
-							<span class="counter-number">132</span>
+							<span class="counter-number">${mainVo.daysVisitorCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 방문</span>
-							<span class="counter-number">12312</span>
+							<span class="counter-number">${mainVo.visitorCount}</span>
 						</div>
 					</div>
 				</div>
@@ -39,11 +39,11 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">오늘</span>
-							<span class="counter-number">132</span>
+							<span class="counter-number">${mainVo.daysChatbotCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 응답</span>
-							<span class="counter-number">6,381</span>
+							<span class="counter-number">${mainVo.chatbotCount}</span>
 						</div>
 					</div>
 				</div>
@@ -60,11 +60,11 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">${mainVo.daysMemberCount }</span>
+							<span class="counter-number">${mainVo.daysMemberCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 회원</span>
-							<span class="counter-number">${mainVo.memberCount } </span>
+							<span class="counter-number">${mainVo.memberCount} </span>
 						</div>
 					</div>
 				</div>
@@ -81,11 +81,11 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">${mainVo.daysSuggestionCount }</span>
+							<span class="counter-number">${mainVo.daysSuggestionCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 제안</span>
-							<span class="counter-number">${mainVo.suggestionCount }</span>
+							<span class="counter-number">${mainVo.suggestionCount}</span>
 						</div>
 					</div>
 				</div>
@@ -102,11 +102,11 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">${mainVo.daysSurveyCount  + mainVo.daysContestCount}</span>
+							<span class="counter-number">${mainVo.daysSurveyCount + mainVo.daysContestCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 참여</span>
-							<span class="counter-number">${mainVo.surveyCount + mainVo.contestCount  }</span>
+							<span class="counter-number">${mainVo.surveyCount + mainVo.contestCount}</span>
 						</div>
 					</div>
 				</div>
@@ -123,17 +123,16 @@
 						</div>
 						<div class="counter-number-group">
 							<span class="counter-number-related font-size-14">최근7일</span>
-							<span class="counter-number">${mainVo.daysOpinionCount }</span>
+							<span class="counter-number">${mainVo.daysOpinionCount}</span>
 						</div>
 						<div class="counter-label text-uppercase ">
 							<span class="counter-number-related small">누적 댓글</span>
-							<span class="counter-number">${mainVo.opinionCount } </span>
+							<span class="counter-number">${mainVo.opinionCount} </span>
 						</div>
 					</div>
 				</div>
 				<!-- End Card -->
 			</div>
-
 
 			<div class="col-xl-9">
 				<div class="card card-shadow card-responsive p-10" id="widgetOverall">
@@ -390,13 +389,15 @@
 							<div class="card-header-actions">
 								<a class="btn btn-pure p-0" href="#">목록 보기</a>
 							</div>
-						</h4>
+<!-- 						</h4> -->
 					</div>
 					<div class="card-block py-10">
 						<div class="list-group list-group-dividered list-group-full">
 							<c:forEach var="survey" items="${mainSurveyList}">
 								<a class="list-group-item justify-content-between" href="javascript:void(0)">
-									<small class="badge badge-round badge-success float-right">진행중</small>
+									<c:if test="${survey.ing eq '투표중'}"><small class="badge badge-round badge-success float-right">${survey.ing}</small></c:if>
+									<c:if test="${survey.ing eq '투표전'}"><small class="badge badge-round badge-default float-right">${survey.ing}</small></c:if>
+									<c:if test="${survey.ing eq '투표완료'}"><small class="badge badge-round badge-danger float-right">${survey.ing}</small></c:if>
 									<h6 class="media-heading">${survey.title }</h6>
 									<p class="mb-0 small">기간 | ${survey.s_date } ~ ${survey.e_date }</p>
 									<p class="mb-0 small">댓글 ${survey.opinion_count } | 참여 ${survey.participation_count }</p>
@@ -421,7 +422,9 @@
 						<div class="list-group list-group-dividered list-group-full">
 							<c:forEach var="contest" items="${mainContestList}">
 								<a class="list-group-item justify-content-between">
-									<small class="badge badge-round badge-success float-right">진행중</small>
+									<c:if test="${contest.ing eq '공모진행중'}"><small class="badge badge-round badge-success float-right">${contest.ing}</small></c:if>
+									<c:if test="${contest.ing eq '공모전'}"><small class="badge badge-round badge-default float-right">${contest.ing}</small></c:if>
+									<c:if test="${contest.ing eq '공모종료'}"><small class="badge badge-round badge-danger float-right">${contest.ing}</small></c:if>
 									<h6 class="media-heading">${contest.title}</h6>
 									<p class="mb-0 small">공모기간 | ${contest.contest_s_date } ~ ${contest.contest_e_date }</p>
 									<p class="mb-0 small">참여 ${contest.user_contest_cnt }</p>
@@ -838,9 +841,9 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
+</div>
 <!-- </div> -->
 <!-- End Page -->
 

@@ -14,7 +14,9 @@ public class MainVo extends SearchVo{
 	private int opinionCount;
 	private int daysOpinionCount;
 	private int daysVisitorCount;
-	private int VisitorCount;
+	private int visitorCount;
+	private int daysChatbotCount;
+	private int chatbotCount;
 	
 	private String visitor_cnt;
 	private String reg_date;
@@ -113,11 +115,27 @@ public class MainVo extends SearchVo{
 	}
 
 	public int getVisitorCount() {
-		return VisitorCount;
+		return visitorCount;
 	}
 
 	public void setVisitorCount(int visitorCount) {
-		VisitorCount = visitorCount;
+		this.visitorCount = visitorCount;
+	}
+
+	public int getDaysChatbotCount() {
+		return daysChatbotCount;
+	}
+
+	public void setDaysChatbotCount(int daysChatbotCount) {
+		this.daysChatbotCount = daysChatbotCount;
+	}
+
+	public int getChatbotCount() {
+		return chatbotCount;
+	}
+
+	public void setChatbotCount(int chatbotCount) {
+		this.chatbotCount = chatbotCount;
 	}
 
 	public String getReg_date() {
