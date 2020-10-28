@@ -137,15 +137,21 @@
 		</select>	  
 			  
 	<select id="selectVisitorCnt" resultType="egovframework.com.main.vo.MainVo">
-		SELECT count(*) as visitor_cnt
-		  FROM user_log 
-		 WHERE requestURI = '/main/main.do'
-		 <![CDATA[
-		   AND reg_date >= date_format(concat(#{search_s_date} , ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+	
+	SELECT count(*) AS visitor_cnt
+	FROM (
+			(SELECT *
+			   FROM user_log 
+			  WHERE requestURI = '/main/main.do'
+		      GROUP BY ip ) a
+		)
+	 	<![CDATA[
+		   WHERE reg_date >= date_format(concat(#{search_s_date} , ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
 		   AND reg_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 		 ]]>
-		 GROUP BY  DATE_FORMAT(reg_date, '%Y-%m-%d')
-		 ORDER BY reg_Date DESC
+		GROUP BY DATE_FORMAT(a.reg_date, '%Y-%m-%d')
+		ORDER BY reg_date DESC
+
 	</select>
 	
 </mapper>
