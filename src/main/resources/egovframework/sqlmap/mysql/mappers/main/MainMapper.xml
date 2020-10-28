@@ -138,7 +138,7 @@
 			  
 	<select id="selectVisitorCnt" resultType="egovframework.com.main.vo.MainVo">
 	
-	SELECT count(*) AS visitor_cnt, DATE_FORMAT(a.reg_date, '%Y-%m-%d')
+	SELECT count(*) AS visitor_cnt, DATE_FORMAT(a.reg_date, '%Y-%m-%d') as reg_date
 	FROM (
 			(SELECT *
 			   FROM user_log 
