@@ -1,6 +1,7 @@
 package egovframework.com.notification.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,5 +21,10 @@ public class NotificationSerivceImpl extends EgovAbstractServiceImpl implements 
 	@Override
 	public List<NotificationVo> selectNotificationList() throws Exception {
 		return notificationMapper.selectNotificationList();
+	}
+
+	@Override
+	public void updateNotification(Map<String, String> map) throws Exception {
+		notificationMapper.updateNotification(map);
 	}
 }

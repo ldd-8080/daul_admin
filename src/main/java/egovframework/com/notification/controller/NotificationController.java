@@ -2,14 +2,19 @@ package egovframework.com.notification.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.notification.service.NotificationService;
 import egovframework.com.notification.vo.NotificationVo;
@@ -55,5 +60,27 @@ public class NotificationController {
 		model.addAttribute("contestNotiList", contestNotiList);
 		
 		return "notification/notificationTalkPage";
+	}
+	
+	@RequestMapping(value="/modifyNotification.do", method=RequestMethod.POST)
+	public ResponseEntity<?> modifyNotification(@RequestBody Map<String, Object> params) throws Exception {
+		try {
+			List<Map<String, String>> notificationList = (List<Map<String, String>>) params.get("data");
+			
+			for (Map<String, String> map : notificationList) {
+				if (!map.containsKey("on_off")) {
+					map.put("on_off", "N");
+				}
+				
+				log.debug("[알림톡] 알림톡 수정");
+				notificationService.updateNotification(map);
+			}
+		} catch (Exception e) {
+			log.debug("[알림톡] 알림톡 수정 실패");
+			e.printStackTrace();
+		}
+		
+		log.debug("[알림톡] 알림톡 수정 완료");
+		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

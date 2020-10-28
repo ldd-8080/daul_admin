@@ -162,6 +162,7 @@
 			
 			request.done(function(data) {
 				console.log("modifyMileage", data);
+				if (data === "success") alert("수정이 완료 되었습니다.");
 			});
 			
 			request.fail(function(error) {

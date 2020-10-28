@@ -9,4 +9,11 @@
 		  LEFT JOIN daul.action_code ac ON ac.action_idx = nt.action_id
 		 ORDER BY nt.idx
 	</select>
+	
+	<update id="updateNotification">
+		UPDATE daul.notification_talk
+		   SET on_off = #{on_off}
+		     , template_id = #{template_id}
+		 WHERE idx = #{idx}
+	</update>
 </mapper>
