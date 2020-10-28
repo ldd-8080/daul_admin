@@ -152,19 +152,33 @@
 		</select>	  
 			  
 	<select id="selectVisitorCnt" resultType="egovframework.com.main.vo.MainVo">
-		SELECT count(*) AS visitor_cnt, DATE_FORMAT(a.reg_date, '%Y-%m-%d') as reg_date
-		FROM (
-				(SELECT *
-				   FROM user_log 
-				  WHERE requestURI = '/main/main.do'
-			      GROUP BY ip ) a
-			)
-	 	<![CDATA[
-		   WHERE reg_date >= date_format(concat(#{search_s_date} , ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
-		   AND reg_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
-		 ]]>
-		GROUP BY DATE_FORMAT(a.reg_date, '%Y-%m-%d')
-		ORDER BY reg_date DESC
+		SELECT a.reg_date
+		     , COUNT(a.ip) AS visitor_cnt
+		  FROM (
+		  		SELECT a.date AS reg_date
+				     , ul.ip
+				  FROM (
+				  		SELECT a.date 
+						  FROM (
+						    	SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as date
+							      FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+						    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+						    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+						    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+							   ) a
+						 WHERE a.date BETWEEN #{search_s_date} AND #{search_e_date}
+						 ORDER BY a.date
+				  	   ) a
+				  LEFT JOIN (
+				  			 SELECT ip
+					  			  , DATE_FORMAT(reg_date, '%Y-%m-%d') AS reg_date
+					  		   FROM daul.user_log
+					  		  WHERE requestURI = '/main/main.do'
+				  			) ul ON a.date = ul.reg_date
+				 GROUP BY a.date, ul.ip
+				 ORDER BY a.date, ul.ip
+		  	   ) a
+		 GROUP BY a.reg_date
 	</select>
 	
 	

@@ -165,7 +165,7 @@
 <!-- End Page -->
 
 <script type="text/javascript">
-	$("#inputStartDate").val(lastMonth());
+	$("#inputStartDate").val(lastMonth(1));
 	$("#inputEndDate").val(today());
 	
 	new Chartist.Line("#widgetChatbot .ct-chart", { 

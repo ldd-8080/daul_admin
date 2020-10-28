@@ -115,11 +115,11 @@
 		return getDateStr(d);
 	}
 
-	/* 오늘로부터 한달전 날짜 반환 */
-	function lastMonth() {
+	/* 오늘로부터 n달전 날짜 반환 */
+	function lastMonth(n) {
 		var d = new Date();
 		var monthOfYear = d.getMonth();
-		d.setMonth(monthOfYear - 1);
+		d.setMonth(monthOfYear - n);
 		return getDateStr(d);
 	}
 </script>

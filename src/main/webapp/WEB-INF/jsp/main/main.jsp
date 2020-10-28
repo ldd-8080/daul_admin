@@ -145,34 +145,33 @@
 					<div class="card-block pt-5">
 						<div class="mb-40 ">
 							<div class="btn-group dropdown">
-								<a href="#" class="text-body dropdown-toggle blue-grey-700 text-uppercase" data-toggle="dropdown">홈페이지 이용 현황</a>
-								<div class="dropdown-menu" role="menu">
-									<a class="dropdown-item" href="#" role="menuitem">홈페이지 이용 현황</a>
-									<a class="dropdown-item" href="#" role="menuitem">카카오톡 챗봇 응답 현황</a>
-									<a class="dropdown-item" href="#" role="menuitem">열린제안 등록 현황</a>
-									<a class="dropdown-item" href="#" role="menuitem">설문조사/공모제안 참여 현황</a>
-									<a class="dropdown-item" href="#" role="menuitem">댓글 등록 현황</a>
+								<a class="text-body dropdown-toggle blue-grey-700 text-uppercase" data-toggle="dropdown" id="dropdown_main">홈페이지 이용 현황</a>
+								<div class="dropdown-menu" role="menu" id="dropdown_menu">
+									<input type="hidden" id="req_url" value="selectVisitorCnt"/>
+									<a class="dropdown-item" role="menuitem" id="dropdown_visit" data-url="selectVisitorCnt">홈페이지 이용 현황</a>
+									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt1">카카오톡 챗봇 응답 현황</a>
+									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt2">열린제안 등록 현황</a>
+									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt3">설문조사/공모제안 참여 현황</a>
+									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt4">댓글 등록 현황</a>
 								</div>
 							</div>
 							<div class="card-header-actions">
-								<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
+								<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="chart_date">
 									<li class="nav-item ">
-										<a class="active nav-link">지난 7일</a>
+										<a class="active nav-link" id="last_1_week">지난 7일</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link">지난 30일</a>
+										<a class="nav-link" id="last_1_month">지난 30일</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link">지난 90일</a>
+										<a class="nav-link" id="last_3_month">지난 90일</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" id="btnPopoverDateRange" data-toggle="modal">임의 기간 설정</a>
-
-
 										<div id="popoverDateRange" style="display: none;">
 											<div class="row ">
 												<div class="col-xl-12 form-group">
-													<div class="datepicker input-daterange">
+													<div class="datepicker input-daterange" data-plugin="datepicker">
 														<div class="input-group">
 															<span class="input-group-addon w-40 pt-5">
 																<i class="icon md-calendar" aria-hidden="true"></i>
@@ -186,7 +185,7 @@
 													</div>
 												</div>
 												<div class="col-md-12 text-right">
-													<button class="btn btn-primary" data-dismiss="modal" type="button">설정</button>
+													<button class="btn btn-primary" data-dismiss="modal" type="button" id="set_ran_date_btn">설정</button>
 													<button id="btnClosePopoverDateRange" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
 												</div>
 											</div>
@@ -197,7 +196,7 @@
 							</div>
 						</div>
 						<div class="ct-chart h-300"></div>
-						<ul class="list-inline text-center mt-20 mb-0">
+						<!-- <ul class="list-inline text-center mt-20 mb-0">
 							<li class="list-inline-item">
 								<i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>
 								PC BROWSER
@@ -210,7 +209,7 @@
 								<i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>
 								MOBILE PHONE
 							</li>
-						</ul>
+						</ul> -->
 					</div>
 				</div>
 			</div>
@@ -842,7 +841,7 @@
 
 		</div>
 	</div>
-</div>
+<!-- </div> -->
 <!-- End Page -->
 
 <!-- DateRange Modal -->
@@ -860,33 +859,31 @@
 	</div>
 </div>
 <!-- End Modal -->
-
+<form id="chart_search_form">
+	<input type="hidden" name="search_s_date" id="search_s_date"/>
+	<input type="hidden" name="search_e_date" id="search_e_date"/>
+</form>
 <script type="text/javascript">
-	new Chartist.Line('#widgetOverall .ct-chart', { labels : [
-			'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
-	], series : [
-			[
-					100, 50, 70, 110, 150, 200, 230
-			], [
-					80, 40, 60, 90, 100, 190, 210
-			], [
-					20, 10, 10, 20, 50, 10, 20
-			]
-	] }, { low : 0, showArea : true, showPoint : true, showLine : true, fullWidth : true,
-		chartPadding : { top : 0, right : 20, bottom : 0, left : 30 }, axisX : { showGrid : false, labelOffset : { x : -14, y : 0 } },
-		axisY : { labelOffset : { x : -10, y : 0 }, labelInterpolationFnc : function labelInterpolationFnc(num) {
-			return num % 1 === 0 ? num : false;
-		} } });
-	$("#inputStartDate").val(lastMonth());
+	var search_s_date = document.getElementById("search_s_date");
+	var search_e_date = document.getElementById("search_e_date");
+	search_e_date.value = today();
+	
+	$("#inputStartDate").val(lastMonth(1));
 	$("#inputEndDate").val(today());
 
 	var defaults = Plugin.getDefaults("webuiPopover"); // Example Webui Popover Pop with Table
 
-	var tableSettings = { title : '기간 설정', url : '#popoverDateRange', width : 400, animation : 'fade', dismissible : false, backdrop : true,
-		closeable : true, //display close button or not
-		onShow : function($element) {
-			console.log(lastMonth());
-		} // callback after show
+	var tableSettings = { 
+			title : '기간 설정', 
+			url : '#popoverDateRange', 
+			width : 400, 
+			animation : 'fade',
+			dismissible : false, 
+			backdrop : true,
+			closeable : true, //display close button or not
+			onShow : function($element) {
+				search_s_date.value = $("#inputStartDate").val();
+			} // callback after show
 	};
 
 	$('#btnPopoverDateRange').webuiPopover($.extend({}, defaults, tableSettings));
@@ -894,4 +891,122 @@
 	$('#btnClosePopoverDateRange').click(function() {
 		$('#btnPopoverDateRange').webuiPopover('hide');
 	});
+	
+	var set_ran_date_btn = document.getElementById("set_ran_date_btn");
+	set_ran_date_btn.addEventListener("click", function() {
+		search_s_date.value = $("#inputStartDate").val();
+		
+		$('#btnPopoverDateRange').webuiPopover('hide');
+		
+		selectChartData();
+	});
+	
+	var chart_date_a = document.getElementById("chart_date").querySelectorAll("a");
+	
+	for (var j = 0; j < chart_date_a.length; j++) {
+		let a = chart_date_a[j];
+		
+		a.addEventListener("click", function(e) {
+			for (var k = 0; k < chart_date_a.length; k++) {
+				let a = chart_date_a[k];
+				a.classList.remove("active");
+			}
+			console.log(e.target);
+			if (!e.target.classList.contains("active"))	e.target.classList.add("active");
+			
+			// 날짜설정
+			var id = e.target.id;
+			if (id === "last_1_week")		search_s_date.value = lastWeek();
+			else if (id === "last_1_month")	search_s_date.value = lastMonth(1);
+			else if (id === "last_3_month")	search_s_date.value = lastMonth(3);
+			
+			// 데이터 요청
+			if (id !== "btnPopoverDateRange")	selectChartData();
+		});
+	}
+	
+	var dropdown_menu = document.getElementById("dropdown_menu");
+	var dropdown_menu_child = dropdown_menu.children;
+	var req_url = document.getElementById("req_url");
+	
+	for (var i = 0; i < dropdown_menu_child.length; i++) {
+		let child = dropdown_menu_child[i];
+		
+		child.addEventListener("click", function(e) {
+			document.getElementById("dropdown_main").text = e.target.text;
+			req_url.value = e.target.dataset.url;
+			// 데이터 요청
+			selectChartData();
+		});
+	}
+	
+	function selectChartData() {
+		var URL = "/main/" + req_url.value + ".do";
+		
+		var request = $.ajax({
+			url: URL,
+			method: "post",
+			data: $("#chart_search_form").serialize()
+		});
+		
+		request.done(function(data) {
+			console.log("selectChartData success", data);
+			setChart(data);
+		});
+		
+		request.fail(function(error) {
+			console.log("selectChartData fail", error);
+		});
+	}
+	
+	function setChart(data) {
+		var labels_arr = [];
+		var series_arr = [];
+		
+		for (var i = 0; i < data.length; i++) {
+			var d = data[i];
+			labels_arr.push(d.reg_date);
+			series_arr.push(Number(d.visitor_cnt));
+		}
+		
+		new Chartist.Line('#widgetOverall .ct-chart', { 
+			labels : labels_arr, 
+			series : [
+				series_arr
+			] 
+		}, 
+		{ 
+			low : 0, 
+			showArea : true, 
+			showPoint : true, 
+			showLine : true, 
+			fullWidth : true,
+			chartPadding : { 
+				top : 20, 
+				right : 20, 
+				bottom : 0, 
+				left : 10 
+			}, 
+			axisX : { 
+				showGrid : false, 
+				labelOffset : { 
+					x : -14, 
+					y : 0 
+				} 
+			},
+			axisY : { 
+				labelOffset : { 
+					x : -10, 
+					y : 0 
+				}, 
+				labelInterpolationFnc : function labelInterpolationFnc(num) {
+					return num % 1 === 0 ? num : false;
+				} 
+			} 
+		});
+	}
+	
+	window.onload = function() {
+		document.getElementById("last_1_week").click();
+	}
 </script>
