@@ -1,6 +1,8 @@
 package egovframework.com.main.vo;
 
-public class MainVo {
+import egovframework.com.cmmn.util.SearchVo;
+
+public class MainVo extends SearchVo{
 	private int memberCount;
 	private int daysMemberCount;
 	private int suggestionCount;
@@ -12,6 +14,16 @@ public class MainVo {
 	private int opinionCount;
 	private int daysOpinionCount;
 	
+	private String visitor_cnt;
+	
+
+	public String getVisitor_cnt() {
+		return visitor_cnt;
+	}
+
+	public void setVisitor_cnt(String visitor_cnt) {
+		this.visitor_cnt = visitor_cnt;
+	}
 
 	public int getDaysMemberCount() {
 		return daysMemberCount;

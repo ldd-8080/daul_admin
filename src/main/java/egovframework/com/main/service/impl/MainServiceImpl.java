@@ -51,4 +51,9 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		return mainMapper.selectMainSurveyList();
 	}
 
+	@Override
+	public List<MainVo> selectVisitorCnt(MainVo vo) throws Exception {
+		return mainMapper.selectVisitorCnt(vo);
+	}
+
 }

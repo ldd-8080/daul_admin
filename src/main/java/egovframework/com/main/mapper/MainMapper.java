@@ -21,4 +21,6 @@ public interface MainMapper {
 	List<ContestVo> selectMainContestList() throws Exception;
 
 	List<SurveyVo> selectMainSurveyList() throws Exception;
+	
+	List<MainVo> selectVisitorCnt(MainVo vo) throws Exception;
 }

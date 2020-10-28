@@ -7,13 +7,17 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.main.service.MainService;
 import egovframework.com.main.vo.MainVo;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
 import egovframework.com.survey.vo.SurveyVo;
 
@@ -67,5 +71,20 @@ public class MainController {
 		return "main/main";
 	}
 	
+	
+	@RequestMapping(value="/selectVisitorCnt.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectVisitorCnt(MainVo vo) throws Exception {
+		List<MainVo> visitorCntList =  null;
+		try {
+			//시작일,종료일 vo에 넣어서 불러
+			
+			visitorCntList = mainService.selectVisitorCnt(vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(visitorCntList, HttpStatus.OK);
+	}
 	
 }
