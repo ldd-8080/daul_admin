@@ -208,4 +208,7 @@
 		ON a.user_id = b.phone
 		GROUP BY b.name
 	</select>
+	
+	<select id="selectKeywordList" resultType="map">
+	</select>
 </mapper>

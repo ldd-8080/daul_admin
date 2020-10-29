@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/maindashboard/maindashboard.js"></script>
 <!-- Page -->
 <div class="page">
 	<div class="page-content container-fluid">
@@ -171,16 +170,18 @@
 											<div class="row ">
 												<div class="col-xl-12 form-group">
 													<div class="datepicker input-daterange" data-plugin="datepicker">
-														<div class="input-group">
-															<span class="input-group-addon w-40 pt-5">
-																<i class="icon md-calendar" aria-hidden="true"></i>
-															</span>
-															<input type="text" id="inputStartDate" class="form-control static_option" name="start" />
-														</div>
-														<div class="input-group">
-															<span class="input-group-addon w-40 pt-5">to</span>
-															<input type="text" id="inputEndDate" class="form-control static_option" name="end" />
-														</div>
+														<form id="chart_search_form">
+															<div class="input-group">
+																<span class="input-group-addon w-40 pt-5">
+																	<i class="icon md-calendar" aria-hidden="true"></i>
+																</span>
+																<input type="text" id="inputStartDate" class="form-control static_option" name="search_s_date" />
+															</div>
+															<div class="input-group">
+																<span class="input-group-addon w-40 pt-5">to</span>
+																<input type="text" id="inputEndDate" class="form-control static_option" name="search_e_date" />
+															</div>
+														</form>
 													</div>
 												</div>
 												<div class="col-md-12 text-right">
@@ -862,15 +863,11 @@
 	</div>
 </div>
 <!-- End Modal -->
-<form id="chart_search_form">
+<%-- <form id="chart_search_form">
 	<input type="hidden" name="search_s_date" id="search_s_date"/>
 	<input type="hidden" name="search_e_date" id="search_e_date"/>
-</form>
+</form> --%>
 <script type="text/javascript">
-	var search_s_date = document.getElementById("search_s_date");
-	var search_e_date = document.getElementById("search_e_date");
-	search_e_date.value = today();
-	
 	$("#inputStartDate").val(lastMonth(1));
 	$("#inputEndDate").val(today());
 
@@ -885,7 +882,6 @@
 			backdrop : true,
 			closeable : true, //display close button or not
 			onShow : function($element) {
-				search_s_date.value = $("#inputStartDate").val();
 			} // callback after show
 	};
 
@@ -896,12 +892,15 @@
 	});
 	
 	var set_ran_date_btn = document.getElementById("set_ran_date_btn");
-	set_ran_date_btn.addEventListener("click", function() {
-		search_s_date.value = $("#inputStartDate").val();
+	var test;
+	set_ran_date_btn.addEventListener("click", function(e) {
+		console.log(e);
+		test = e;
+		//search_s_date.value = $("#inputStartDate").val();
 		
 		$('#btnPopoverDateRange').webuiPopover('hide');
 		
-		selectChartData();
+		//selectChartData();
 	});
 	
 	var chart_date_a = document.getElementById("chart_date").querySelectorAll("a");
@@ -916,6 +915,8 @@
 			}
 			console.log(e.target);
 			if (!e.target.classList.contains("active"))	e.target.classList.add("active");
+			
+			var search_s_date = document.getElementById("chart_search_form").querySelector("input[name='search_s_date']");
 			
 			// 날짜설정
 			var id = e.target.id;
@@ -1010,6 +1011,9 @@
 	}
 	
 	window.onload = function() {
+		var search_e_date = document.getElementById("chart_search_form").querySelector("input[name='search_e_date']");
+		search_e_date.value = today();
+		
 		document.getElementById("last_1_week").click();
 	}
 </script>

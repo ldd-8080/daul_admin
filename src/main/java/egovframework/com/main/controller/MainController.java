@@ -101,5 +101,17 @@ public class MainController {
 		return new ResponseEntity<>(mileageRankList, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/selectKeywordList.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectKeywordList(MainVo vo) throws Exception {
+		List<Map<String, String>> keywordList = null;
+		
+		try {
+			keywordList = mainService.selectKeywordList(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<> (keywordList, HttpStatus.OK);
+	}
 	
 }

@@ -61,4 +61,8 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 		return mainMapper.selectMileageRank(vo);
 	}
 
+	@Override
+	public List<Map<String, String>> selectKeywordList(MainVo vo) throws Exception {
+		return mainMapper.selectKeywordList(vo);
+	}
 }

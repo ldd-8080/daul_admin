@@ -23,4 +23,6 @@ public interface MainService {
 	List<MainVo> selectVisitorCnt(MainVo vo) throws Exception;
 	
 	List<MainVo> selectMileageRank(MainVo vo) throws Exception;
+
+	public List<Map<String, String>> selectKeywordList(MainVo vo) throws Exception;
 }

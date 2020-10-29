@@ -62,6 +62,8 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/webui-popover/webui-popover.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/notebook/notebook.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/intents/intents.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/jqcloud/jqcloud.css">
+
 <!--[if lt IE 9]>
 <script src="../../global/vendor/html5shiv/html5shiv.min.js"></script>
 <![endif]-->
@@ -84,6 +86,7 @@
 <script src="${pageContext.request.contextPath}/js/select2/select2.full.js"></script>
 <script src="${pageContext.request.contextPath}/js/chartist/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
+<script src="${pageContext.request.contextPath}/js/jqcloud/jqcloud.js"></script>
 
 <script type="text/javascript">
 	Breakpoints();
