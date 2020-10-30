@@ -75,6 +75,7 @@
 
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/js/jquery/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/js/jqcloud/jqcloud.js"></script>
 <script src="${pageContext.request.contextPath}/js/breakpoints/breakpoints.js"></script>
 <script src="${pageContext.request.contextPath}/js/jsgrid/jsgrid.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jstree/jstree.js"></script>
@@ -86,7 +87,6 @@
 <script src="${pageContext.request.contextPath}/js/select2/select2.full.js"></script>
 <script src="${pageContext.request.contextPath}/js/chartist/chartist.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
-<script src="${pageContext.request.contextPath}/js/jqcloud/jqcloud.js"></script>
 
 <script type="text/javascript">
 	Breakpoints();

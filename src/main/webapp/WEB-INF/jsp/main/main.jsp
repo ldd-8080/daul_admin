@@ -154,43 +154,18 @@
 								</div>
 							</div>
 							<div class="card-header-actions">
-								<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="chart_date">
+								<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="chart_date_list" data-form="chart_search_form">
 									<li class="nav-item ">
-										<a class="active nav-link" id="last_1_week">지난 7일</a>
+										<a class="nav-link" data-range="one_week">지난 7일</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="last_1_month">지난 30일</a>
+										<a class="nav-link" data-range="one_month">지난 30일</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="last_3_month">지난 90일</a>
+										<a class="nav-link" data-range="three_month">지난 90일</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" id="btnPopoverDateRange" data-toggle="modal">임의 기간 설정</a>
-										<div id="popoverDateRange" style="display: none;">
-											<div class="row ">
-												<div class="col-xl-12 form-group">
-													<div class="datepicker input-daterange" data-plugin="datepicker">
-														<form id="chart_search_form">
-															<div class="input-group">
-																<span class="input-group-addon w-40 pt-5">
-																	<i class="icon md-calendar" aria-hidden="true"></i>
-																</span>
-																<input type="text" id="inputStartDate" class="form-control static_option" name="search_s_date" />
-															</div>
-															<div class="input-group">
-																<span class="input-group-addon w-40 pt-5">to</span>
-																<input type="text" id="inputEndDate" class="form-control static_option" name="search_e_date" />
-															</div>
-														</form>
-													</div>
-												</div>
-												<div class="col-md-12 text-right">
-													<button class="btn btn-primary" data-dismiss="modal" type="button" id="set_ran_date_btn">설정</button>
-													<button id="btnClosePopoverDateRange" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
-												</div>
-											</div>
-										</div>
-										<!-- End Pop with table -->
 									</li>
 								</ul>
 							</div>
@@ -443,18 +418,19 @@
 							<span class="text-truncate">제안 이슈 키워드</span>
 						</h4>
 						<div class="card-header-actions">
-							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
+							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="keyword_date_list" data-form="keyword_search_form">
 								<li class="nav-item ">
-									<a class="active nav-link">지난 7일</a>
+									<a class="nav-link" data-range="one_week">지난 7일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">지난 30일</a>
+									<a class="nav-link" data-range="one_month">지난 30일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">지난 90일</a>
+									<a class="nav-link" data-range="three_month">지난 90일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">임의 기간 설정</a>
+									<!-- <a class="nav-link">임의 기간 설정</a> -->
+									<a class="nav-link" id="btnPopoverDateRange2" data-toggle="modal">임의 기간 설정</a>
 								</li>
 							</ul>
 						</div>
@@ -462,101 +438,13 @@
 					<div class="card-block pt-30">
 						<div class="row ">
 							<div class="col-lg-8">
-								<div class="h-400" style="background-image: url('/img/word_cloud.png'); background-position: center; background-repeat: no-repeat; background-size: contain;"></div>
+								<div id="keyword_jqcloud_div" class="jqcloud"></div>
 							</div>
 							<div class="col-lg-4">
 								<h5 class="">이슈 키워드 순위</h5>
 								<ul class="list-group list-group-dividered list-group-full h-350" data-plugin="scrollable">
 									<div data-role="container">
-										<div data-role="content">
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">1</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">2</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">3</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">4</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">5</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">6</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">7</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="pr-20">8</div>
-													<div class="media-body w-full">
-														<div class="float-right">
-															<small>823</small>
-														</div>
-														Willard Wood
-													</div>
-												</div>
-											</li>
+										<div data-role="content" id="keyword_list_div">
 											<li class="list-group-item">
 												<div class="media">
 													<div class="pr-20">9</div>
@@ -595,18 +483,18 @@
 							<span class="text-truncate">댓글 감정 분석</span>
 						</h4>
 						<div class="card-header-actions">
-							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
+							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="emotion_date_list" data-form="emotion_search_form">
 								<li class="nav-item ">
-									<a class="active nav-link">지난 7일</a>
+									<a class="nav-link" data-range="one_week">지난 7일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">지난 30일</a>
+									<a class="nav-link" data-range="one_month">지난 30일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">지난 90일</a>
+									<a class="nav-link" data-range="three_month">지난 90일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">임의 기간 설정</a>
+									<a class="nav-link" id="btnPopoverDateRange3" data-toggle="modal">임의 기간 설정</a>
 								</li>
 							</ul>
 						</div>
@@ -863,70 +751,177 @@
 	</div>
 </div>
 <!-- End Modal -->
-<%-- <form id="chart_search_form">
+<div id="popoverDateRange" style="display: none;">
+	<div class="row ">
+		<div class="col-xl-12 form-group">
+			<div class="datepicker input-daterange" data-plugin="datepicker">
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">
+						<i class="icon md-calendar" aria-hidden="true"></i>
+					</span>
+					<input type="text" id="inputStartDate" class="form-control static_option" name="start" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">to</span>
+					<input type="text" id="inputEndDate" class="form-control static_option" name="end"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-right">
+			<button class="btn btn-primary" data-dismiss="modal" type="button" id="set_ran_date_btn" data-type="chart">설정</button>
+			<button id="btnClosePopoverDateRange" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
+		</div>
+	</div>
+</div>
+<div id="popoverDateRange2" style="display: none;">
+	<div class="row ">
+		<div class="col-xl-12 form-group">
+			<div class="datepicker input-daterange" data-plugin="datepicker">
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">
+						<i class="icon md-calendar" aria-hidden="true"></i>
+					</span>
+					<input type="text" id="inputStartDate2" class="form-control static_option" name="start" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">to</span>
+					<input type="text" id="inputEndDate2" class="form-control static_option" name="end"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-right">
+			<button class="btn btn-primary" data-dismiss="modal" type="button" id="set_ran_date_btn2" data-type="keyword">설정</button>
+			<button id="btnClosePopoverDateRange2" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
+		</div>
+	</div>
+</div>
+<div id="popoverDateRange3" style="display: none;">
+	<div class="row ">
+		<div class="col-xl-12 form-group">
+			<div class="datepicker input-daterange" data-plugin="datepicker">
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">
+						<i class="icon md-calendar" aria-hidden="true"></i>
+					</span>
+					<input type="text" id="inputStartDate3" class="form-control static_option" name="start" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon w-40 pt-5">to</span>
+					<input type="text" id="inputEndDate3" class="form-control static_option" name="end"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-right">
+			<button class="btn btn-primary" data-dismiss="modal" type="button" id="set_ran_date_btn3" data-type="emotion">설정</button>
+			<button id="btnClosePopoverDateRange3" class="btn btn-default" data-dismiss="modal" type="button">닫기</button>
+		</div>
+	</div>
+</div>
+
+<form id="chart_search_form">
 	<input type="hidden" name="search_s_date" id="search_s_date"/>
 	<input type="hidden" name="search_e_date" id="search_e_date"/>
-</form> --%>
+</form>
+<form id="keyword_search_form">
+	<input type="hidden" name="search_s_date" id="search_s_date2"/>
+	<input type="hidden" name="search_e_date" id="search_e_date2"/>
+</form>
+<form id="emotion_search_form">
+	<input type="hidden" name="search_s_date" id="search_s_date3"/>
+	<input type="hidden" name="search_e_date" id="search_e_date3"/>
+</form>
 <script type="text/javascript">
-	$("#inputStartDate").val(lastMonth(1));
-	$("#inputEndDate").val(today());
-
 	var defaults = Plugin.getDefaults("webuiPopover"); // Example Webui Popover Pop with Table
 
-	var tableSettings = { 
-			title : '기간 설정', 
-			url : '#popoverDateRange', 
-			width : 400, 
-			animation : 'fade',
-			dismissible : false, 
-			backdrop : true,
-			closeable : true, //display close button or not
-			onShow : function($element) {
-			} // callback after show
-	};
+	// popover option
+	function setPopover(target, form_id) {
+		var tableSettings = { 
+				title : '기간 설정', 
+				url : target, 
+				width : 400, 
+				animation : 'fade',
+				dismissible : false, 
+				backdrop : true,
+				closeable : true, //display close button or not
+				onShow: function($element) {
+					$element.find("input[name='start']").val($("#" + form_id + " input[name='search_s_date']").val());
+					$element.find("input[name='end']").val($("#" + form_id + " input[name='search_e_date']").val());
+				}
+		};
+	
+		return tableSettings;
+	}
 
-	$('#btnPopoverDateRange').webuiPopover($.extend({}, defaults, tableSettings));
-
-	$('#btnClosePopoverDateRange').click(function() {
-		$('#btnPopoverDateRange').webuiPopover('hide');
-	});
+	// 임의 기간 설정 버튼 클릭시 활성화 되는 popover 설정
+	$('#btnPopoverDateRange').webuiPopover($.extend({}, defaults, setPopover('#popoverDateRange', 'chart_search_form')));
+	$('#btnPopoverDateRange2').webuiPopover($.extend({}, defaults, setPopover('#popoverDateRange2', 'keyword_search_form')));
+	$('#btnPopoverDateRange3').webuiPopover($.extend({}, defaults, setPopover('#popoverDateRange3', 'emotion_search_form')));
+	// popover 닫기 버튼 이벤트
+	$('#btnClosePopoverDateRange').click(function() {$("#btnPopoverDateRange").webuiPopover('hide');});
+	$('#btnClosePopoverDateRange2').click(function() {$("#btnPopoverDateRange2").webuiPopover('hide');});
+	$('#btnClosePopoverDateRange3').click(function() {$("#btnPopoverDateRange3").webuiPopover('hide');});
 	
-	var set_ran_date_btn = document.getElementById("set_ran_date_btn");
-	var test;
-	set_ran_date_btn.addEventListener("click", function(e) {
-		console.log(e);
-		test = e;
-		//search_s_date.value = $("#inputStartDate").val();
-		
-		$('#btnPopoverDateRange').webuiPopover('hide');
-		
-		//selectChartData();
-	});
+	// popover 설정 버튼 이벤트
+	var set_btn_all = document.querySelectorAll("button[id*='set_ran_date_btn']");
 	
-	var chart_date_a = document.getElementById("chart_date").querySelectorAll("a");
-	
-	for (var j = 0; j < chart_date_a.length; j++) {
-		let a = chart_date_a[j];
+	for (var i = 0; i < set_btn_all.length; i++) {
+		let set_btn = set_btn_all[i];
 		
-		a.addEventListener("click", function(e) {
-			for (var k = 0; k < chart_date_a.length; k++) {
-				let a = chart_date_a[k];
-				a.classList.remove("active");
-			}
-			console.log(e.target);
-			if (!e.target.classList.contains("active"))	e.target.classList.add("active");
+		set_btn.addEventListener("click", function(e) {
+			var type = e.target.dataset.type;
 			
-			var search_s_date = document.getElementById("chart_search_form").querySelector("input[name='search_s_date']");
+			var search_s_date = document.getElementById(type + "_search_form").querySelector("input[name='search_s_date']");
+			var search_e_date = document.getElementById(type + "_search_form").querySelector("input[name='search_e_date']");
+			search_s_date.value = e.target.parentElement.previousElementSibling.querySelector("input[name='start']").value;
+			search_e_date.value = e.target.parentElement.previousElementSibling.querySelector("input[name='end']").value;
 			
-			// 날짜설정
-			var id = e.target.id;
-			if (id === "last_1_week")		search_s_date.value = lastWeek();
-			else if (id === "last_1_month")	search_s_date.value = lastMonth(1);
-			else if (id === "last_3_month")	search_s_date.value = lastMonth(3);
+			e.target.nextElementSibling.click();
 			
-			// 데이터 요청
-			if (id !== "btnPopoverDateRange")	selectChartData();
+			//selectChartData();
 		});
+	}
+	
+	var chart_date_list = document.getElementById("chart_date_list");
+	dateRangeAClickEvent(chart_date_list);
+	var keyword_date_list = document.getElementById("keyword_date_list");
+	dateRangeAClickEvent(keyword_date_list);
+	var emotion_date_list = document.getElementById("emotion_date_list");
+	dateRangeAClickEvent(emotion_date_list);
+	
+	function dateRangeAClickEvent(el) {
+		var el_a_list = el.querySelectorAll("a");
+		
+		// 지난7일,30일,90일 버튼 클릭 이벤트
+		for (var j = 0; j < el_a_list.length; j++) {
+			let a = el_a_list[j];
+			
+			a.addEventListener("click", function(e) {
+				for (var k = 0; k < el_a_list.length; k++) {
+					let a = el_a_list[k];
+					a.classList.remove("active");
+				}
+				
+				if (!e.target.classList.contains("active"))	e.target.classList.add("active");
+				
+				var form_id = el.dataset.form;
+				var search_s_date = document.getElementById(form_id).querySelector("input[name='search_s_date']");
+				var search_e_date = document.getElementById(form_id).querySelector("input[name='search_e_date']");
+				
+				// 날짜설정
+				var range = e.target.dataset.range;
+	
+				if (range !== undefined) {
+					if 		(range === "one_week")		search_s_date.value = lastWeek();
+					else if (range === "one_month")		search_s_date.value = lastMonth(1);
+					else if (range === "three_month")	search_s_date.value = lastMonth(3);
+					search_e_date.value = today();
+					
+					if 		(form_id.indexOf("chart") > -1)		selectChartData();
+					else if (form_id.indexOf("keyword") > -1)	selectKeywordData();
+					else if (form_id.indexOf("emotion") > -1)	console.log("emotion");
+				}
+			});
+		}
 	}
 	
 	var dropdown_menu = document.getElementById("dropdown_menu");
@@ -1009,11 +1004,65 @@
 			} 
 		});
 	}
+	var test;
+	function selectKeywordData() {
+		var request = $.ajax({
+			url: "/main/selectKeywordList.do",
+			method: "post",
+			data: $("#keyword_search_form").serialize()
+		});
+		
+		request.done(function(data) {
+			console.log("selectKeywordList success", data);
+			test = data;
+			var el = document.getElementById("keyword_list_div");
+			
+			while (el.hasChildNodes()) {
+			    el.childNodes[0].remove();
+			}
+			
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				
+				var li = document.createElement("li");
+				li.classList.add("list-group-item");
+				
+				var html = 
+					'<div class="media">' +
+						'<div class="pr-20">' + (i+1) + '</div>' +
+						'<div class="media-body w-full">' +
+							'<div class="float-right">' +
+								'<small>' + d.keyword_cnt + '</small>' +
+							'</div>' +
+							d.keyword +
+						'</div>' +
+					'</div>';
+				
+				li.innerHTML = html;
+				el.append(li);
+			}
+			
+			var words = [];
+			
+			data.forEach(function(d, i) {
+				words.push({text: d.keyword, weight: Number(d.keyword_cnt)});
+			});
+
+			$("#keyword_jqcloud_div").jQCloud(words, {
+				width: $("#keyword_jqcloud_div").parent().width(),
+				height: $("#keyword_jqcloud_div").parent().height()
+			});
+		});
+		
+		request.fail(function(error) {
+			console.log("selectKeywordList fail", error);
+		});
+	}
 	
 	window.onload = function() {
-		var search_e_date = document.getElementById("chart_search_form").querySelector("input[name='search_e_date']");
-		search_e_date.value = today();
-		
-		document.getElementById("last_1_week").click();
+		var el_a_list = document.querySelectorAll("a.nav-link[data-range='one_week']");
+		for(var i = 0; i < el_a_list.length; i++) {
+			el_a_list[i].click();
+		}
 	}
 </script>

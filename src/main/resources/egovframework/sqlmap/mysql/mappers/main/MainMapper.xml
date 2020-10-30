@@ -210,5 +210,11 @@
 	</select>
 	
 	<select id="selectKeywordList" resultType="map">
+		SELECT keyword
+		     , SUM(keyword_cnt) AS keyword_cnt
+		  FROM daul.keyword_frequency
+		 GROUP BY keyword
+		 ORDER BY SUM(keyword_cnt) DESC
+		        , keyword
 	</select>
 </mapper>
