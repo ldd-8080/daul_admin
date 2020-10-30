@@ -694,6 +694,7 @@
 		  FROM chatbot_condition_list
 		 WHERE del_chk = 'N'
 	</select>
+	
 	<select id = "checkIntentName" resultType="int">
 		SELECT COUNT(*) 
 		  FROM chatbot_intent_list 
@@ -702,4 +703,31 @@
 		   AND type = 'I'
 	</select>
 	
+	<select id="getChatbotStatsList" resultType="egovframework.com.chatbot.vo.ChatbotStatsVo">
+		  SELECT a.kakaochannel_key, a.utterance, a.intent_id, a.intent_title, a.module, a.create_date, b.name 
+		  FROM daul.chatbot_log a
+          LEFT JOIN user b
+          ON a.kakaochannel_key = b.kakaochannel_key
+          WHERE 1=1
+            <if test="search_type == 'utterance'">
+		   		AND utterance like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_type == 'intent_title'">
+		   		AND intent_title like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_type == 'name'">
+		   		AND name like concat('%', #{search}, '%')
+		   </if>
+		   <if test="search_s_date != null and search_s_date != ''">
+			   <![CDATA[
+			   AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
+			   ]]>
+		   </if>
+		   <if test="search_e_date != null and search_e_date != ''">
+			   <![CDATA[
+			   AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+			   ]]>
+		   </if>
+		  ORDER BY a.create_date DESC
+	</select>
 </mapper> 

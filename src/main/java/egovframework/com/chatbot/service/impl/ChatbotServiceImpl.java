@@ -13,6 +13,7 @@ import com.ibatis.common.logging.Log;
 import egovframework.com.chatbot.mapper.ChatbotMapper;
 import egovframework.com.chatbot.service.ChatbotService;
 import egovframework.com.chatbot.vo.BtnVo;
+import egovframework.com.chatbot.vo.ChatbotStatsVo;
 import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
@@ -468,6 +469,11 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 	@Override
 	public int checkIntentName(IntentVo vo) throws Exception {
 		return chatbotMapper.checkIntentName(vo);
+	}
+
+	@Override
+	public List<ChatbotStatsVo> getChatbotStatsList(ChatbotStatsVo vo) throws Exception {
+		return chatbotMapper.getChatbotStatsList(vo);
 	}
 
 	

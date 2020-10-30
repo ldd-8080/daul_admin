@@ -9,7 +9,7 @@
 				<div class="panel panel-bordered">
 					<div class="panel-heading">
 						<h5 class="panel-title">챗봇 응답 현황</h5>
-		                <!-- <div class="panel-actions panel-actions-keep">
+						<!-- <div class="panel-actions panel-actions-keep">
 		                  <button id="btnMoveAddForm" type="button" class="btn btn-primary">
 		                    <i class="icon md-plus"></i>등록</button>
 		                </div> -->
@@ -66,94 +66,93 @@
 							<div class="card-block pt-5">
 								<div class="ct-chart h-300"></div>
 								<ul class="list-inline text-center mt-20 mb-0">
-									<li class="list-inline-item"><i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>전체 응답</li>
-									<li class="list-inline-item ml-35"><i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>응답 성공</li>
-									<li class="list-inline-item ml-35"><i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>응답 실패</li>
+									<li class="list-inline-item">
+										<i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>
+										전체 응답
+									</li>
+									<li class="list-inline-item ml-35">
+										<i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>
+										응답 성공
+									</li>
+									<li class="list-inline-item ml-35">
+										<i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>
+										응답 실패
+									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
+
+
 			<div class="col-12">
 				<div class="panel panel-bordered">
 					<div class="panel-heading">
 						<h5 class="panel-title">챗봇 응답 기록</h5>
-		                <!-- <div class="panel-actions panel-actions-keep">
+						<!-- <div class="panel-actions panel-actions-keep">
 		                  <button id="btnMoveAddForm" type="button" class="btn btn-primary">
 		                    <i class="icon md-plus"></i>등록</button>
 		                </div> -->
 					</div>
 					<div class="panel-body">
-						<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 ">
-							<div class="row">
-								<div class="col-sm-12">
-									<table class="table table-hover dataTable table-striped w-full dtr-inline" data-plugin="dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1153px;">
-										<thead>
-											<tr role="row">
-												<!-- <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Question</th> -->
-												<!-- <th tabindex="0" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Answer</th> -->
-												<th class="w-p5">idx</th>
-												<th class="w-p10">채널</th>
-												<th class="w-p30">질의</th>
-												<th class="w-p15">응답</th>
-												<th class="w-p15">인텐트</th>
-												<th class="w-p15">시간</th>
-												<th class="w-p10">사용자</th>
-											</tr>
-										</thead>
-										<!-- <tfoot>
-				                          <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Date</th><th rowspan="1" colspan="1">Salary</th></tr>
-				                        </tfoot> -->
-										<tbody>
-											<tr class="hand" role="row">
-												<td>19</td>
-												<td>Kakao</td>
-												<td>안녕하세요</td>
-												<td>응답 성공</td>
-												<td>챗봇시작하기</td>
-												<td>2020-10-09 10:22:24</td>
-												<td>
-													<a href="">김선호</a>
-												</td>
-											</tr>
-											<tr class="hand" role="row">
-												<td>14</td>
-												<td>Kakao</td>
-												<td>너 바보냐?</td>
-												<td>응답 실패</td>
-												<td>no_understand</td>
-												<td>2020-10-09 10:21:20</td>
-												<td>
-													<a href="">김선호</a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="row mt-10">
-								<div class="col-sm-12 col-md-5">
-									<select class="form-control float-left w-100 mr-10">
-										<option value="10">10</option>
-										<option value="25">25</option>
-										<option value="50">50</option>
-										<option value="100">100</option>
-										<option value="all">All</option>
-									</select>
-									<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing ${startIndex} to ${endIndex} of ${itemLength} entries</div>
-								</div>
-								<div class="col-sm-12 col-md-7">
-									<div class="dataTables_paginate paging_simple_numbers float-right" id="DataTables_Table_0_paginate">
-										<ul class="pagination">
-											<li class="paginate_button page-item previous" id="DataTables_Table_0_previous"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li>
-											<li class="paginate_button page-item"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a></li>
-											<li class="paginate_button page-item"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a></li>
-											<li class="paginate_button page-item"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a></li>
-											<li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" data-dt-idx="6" tabindex="0" class="page-link">Next</a></li>
-										</ul>
+
+						<form id="search-form">
+							<div class="form-group row">
+								<!-- 등록일 -->
+								<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
+								<div class="col-md-5">
+									<div class="input-daterange" data-plugin="datepicker">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">
+													<i class="icon md-calendar" aria-hidden="true"></i>
+												</span>
+											</div>
+											<input type="text" class="form-control" name="search_s_date" />
+										</div>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">-</span>
+											</div>
+											<input type="text" class="form-control" name="search_e_date" />
+										</div>
 									</div>
 								</div>
+								<!-- 검색어 -->
+								<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
+								<div class="col-md-5">
+									<div class="input-group">
+										<div class="input-group-prepend w-p25">
+											<select data-plugin="selectpicker" name="search_type">
+												<option value="" selected>선택하세요</option>
+												<option value="utterance">질의</option>
+												<option value="intent_title">인텐트</option>
+												<option value="name">사용자</option>
+											</select>
+										</div>
+										<!-- <input type="text" class="form-control"> -->
+										<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()">
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-lg-12">
+									<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색</button>
+								</div>
+							</div>
+						</form>
+						<!-- 목록 테이블 -->
+						<div class="panel">
+							<header class="panel-heading">
+								<div class="panel-actions"></div>
+							</header>
+							<br />
+							<div class="panel-body" style="padding-top: 20px; padding-bottom: 1px;">
+								<div id="statsListTable" class="text-break"></div>
 							</div>
 						</div>
 					</div>
@@ -162,49 +161,106 @@
 		</div>
 	</div>
 </div>
+
+
 <!-- End Page -->
 
 <script type="text/javascript">
 	$("#inputStartDate").val(lastMonth(1));
 	$("#inputEndDate").val(today());
-	
-	new Chartist.Line("#widgetChatbot .ct-chart", { 
-		labels : ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'], 
-		series : [
-			[100, 50, 70, 110, 100, 200, 230], 
-			[80, 40, 60, 90, 90, 190, 140], 
-			[20, 10, 10, 20, 10, 10, 90]
-		]
-	}, 
-	{ 
-		low : 0, 
-		showArea : true, 
-		showPoint : true, 
-		showLine : true, 
-		lineSmooth : false, 
-		fullWidth : true,
-		chartPadding : { 
-			top : 0, 
-			right : 10, 
-			bottom : 0, 
-			left : 0 
-		}, 
-		axisX : { 
-			showGrid : false, 
-			labelOffset : { 
-				x : -14, 
-				y : 0 
-			} 
-		},
-		axisY : { 
-			labelOffset : { 
-				x : -10, 
-				y : 0 
-			}, 
-			labelInterpolationFnc : function labelInterpolationFnc(num) {
-				return num % 1 === 0 ? num : false;
-			} 
-		}, 
-		plugins : [Chartist.plugins.tooltip()] 
+
+	new Chartist.Line("#widgetChatbot .ct-chart", { labels : [
+			'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
+	], series : [
+			[
+					100, 50, 70, 110, 100, 200, 230
+			], [
+					80, 40, 60, 90, 90, 190, 140
+			], [
+					20, 10, 10, 20, 10, 10, 90
+			]
+	] }, { low : 0, showArea : true, showPoint : true, showLine : true, lineSmooth : false, fullWidth : true,
+		chartPadding : { top : 0, right : 10, bottom : 0, left : 0 }, axisX : { showGrid : false, labelOffset : { x : -14, y : 0 } },
+		axisY : { labelOffset : { x : -10, y : 0 }, labelInterpolationFnc : function labelInterpolationFnc(num) {
+			return num % 1 === 0 ? num : false;
+		} }, plugins : [
+			Chartist.plugins.tooltip()
+		] });
+
+	function getChatbotStatsList() {
+		var request = $.ajax({ url : "/chatbotStats/getChatbotStatsList.do", method : "get", data : $("#search-form").serialize() });
+
+		request.done(function(data) {
+			console.log(data);
+
+			setChatbotStatsListTable(data);
+		});
+
+		request.fail(function(error) {
+			console.log(error);
+		});
+	}
+
+	$(function() {
+		var today = formatDate(new Date());
+		var preday = formatPreDate(new Date());
+		$("input[name='search_s_date']").val(preday);
+		$("input[name='search_e_date']").val(today);
+		getChatbotStatsList();
 	});
+
+	$("#searchBtn").click(function() {
+		getChatbotStatsList();
+	});
+
+	function enterKey() {
+		if (window.event.keyCode === 13) {
+			getChatbotStatsList();
+		}
+	}
+
+	function setChatbotStatsListTable(statsList) {
+		$('#statsListTable').jsGrid(
+				{
+					//height: "500px",
+					width : "100%",
+
+					//autoload:true,
+					sorting : true,
+					paging : true,
+					//pageIndex: 1, default: 1
+					pageSize : 10, // default: 20
+					//pageButtonCount: 5, default: 15
+
+					data : statsList,
+
+					fields : [
+							{ title : "채널", type : "text", width : 20, align : "center",	    		
+								itemTemplate: function(_, item) {
+					    			return "kakao";
+					    		}
+							},
+							{ name : "utterance", title : "질의", type : "text", width : 70, align : "center" },
+							{ title : "응답", type : "text", width : 20, align : "center",	    		
+								itemTemplate: function(_, item) {
+									var result = "";
+									
+									if(item.intent_title == "no_response"){
+										result = "응답 실패";
+									}else{
+										result = "응답 성공";
+									}
+									
+					    			return result;
+					    		}
+							},
+							
+							{ name : "intent_title", title : "인텐트", type : "text", width : 20, align : "center" },
+							{ name : "create_date", title : "시간", type : "text", width : 20, align : "center" },
+							{ name : "name", title : "사용자", type : "text", width : 20, align : "center" }
+					],
+
+					rowClick : function(args) {
+					} });
+	}
 </script>

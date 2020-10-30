@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import egovframework.com.chatbot.vo.BtnVo;
+import egovframework.com.chatbot.vo.ChatbotStatsVo;
 import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
@@ -94,6 +95,6 @@ public interface ChatbotMapper {
 	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
 	List<IntentVo> getIntentListInBtn() throws Exception;
 	
-	
+	List<ChatbotStatsVo> getChatbotStatsList(ChatbotStatsVo vo) throws Exception;
 	
 }

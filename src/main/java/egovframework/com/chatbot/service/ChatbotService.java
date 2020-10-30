@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import egovframework.com.chatbot.vo.ChatbotStatsVo;
 import egovframework.com.chatbot.vo.ConditionVo;
 import egovframework.com.chatbot.vo.InputVo;
 import egovframework.com.chatbot.vo.IntentVo;
@@ -57,4 +58,6 @@ public interface ChatbotService {
 	List<SkillVo> selectSkillList(SkillVo vo) throws Exception;
 	List<ConditionVo> selectConditionList(ConditionVo vo) throws Exception;
 	List<IntentVo> getIntentListInBtn() throws Exception;
+	
+	List<ChatbotStatsVo> getChatbotStatsList(ChatbotStatsVo vo) throws Exception;
 }
