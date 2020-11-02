@@ -10,10 +10,39 @@ public class ChatbotStatsVo extends SearchVo {
 	private String module;
 	private String create_date;
 	private String name;
+	private String total_count;
+	private String success_count;
+	private String fail_count;
+	private String date;
 	
 	
 	
 	
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getTotal_count() {
+		return total_count;
+	}
+	public void setTotal_count(String total_count) {
+		this.total_count = total_count;
+	}
+	public String getSuccess_count() {
+		return success_count;
+	}
+	public void setSuccess_count(String success_count) {
+		this.success_count = success_count;
+	}
+	public String getFail_count() {
+		return fail_count;
+	}
+	public void setFail_count(String fail_count) {
+		this.fail_count = fail_count;
+	}
 	public String getName() {
 		return name;
 	}

@@ -60,4 +60,7 @@ public interface ChatbotService {
 	List<IntentVo> getIntentListInBtn() throws Exception;
 	
 	List<ChatbotStatsVo> getChatbotStatsList(ChatbotStatsVo vo) throws Exception;
+	
+	List<ChatbotStatsVo> getChatbotStatsCount(ChatbotStatsVo vo) throws Exception;
+	
 }

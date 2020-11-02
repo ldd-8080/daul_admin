@@ -476,5 +476,10 @@ public class ChatbotServiceImpl extends EgovAbstractServiceImpl implements Chatb
 		return chatbotMapper.getChatbotStatsList(vo);
 	}
 
+	@Override
+	public List<ChatbotStatsVo> getChatbotStatsCount(ChatbotStatsVo vo) throws Exception {
+		return chatbotMapper.getChatbotStatsCount(vo);
+	}
+
 	
 }

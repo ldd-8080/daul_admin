@@ -97,4 +97,5 @@ public interface ChatbotMapper {
 	
 	List<ChatbotStatsVo> getChatbotStatsList(ChatbotStatsVo vo) throws Exception;
 	
+	List<ChatbotStatsVo> getChatbotStatsCount(ChatbotStatsVo vo) throws Exception;
 }

@@ -16,22 +16,56 @@
 					</div>
 					<div class="panel-body">
 						<div class="row mb-20">
-							<div class="col-sm-12 col-md-6 col-xl-8">
-								<label class="float-left mr-10">기간</label>
-								<div class="datepicker input-daterange float-left w-400">
-									<div class="input-daterange" data-plugin="datepicker">
-										<div class="input-group">
-											<span class="input-group-addon w-40 pt-5">
-												<i class="icon md-calendar" aria-hidden="true"></i>
-											</span>
-											<input type="text" id="inputStartDate" class="form-control static_option" name="start" />
+							<div class="col-xl-40">
+								<form id="search-form">
+									<div class="form-group row">
+										<!-- 등록일 -->
+										<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
+										<div class="col-md-5">
+											<div class="input-daterange" data-plugin="datepicker">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">
+															<i class="icon md-calendar" aria-hidden="true"></i>
+														</span>
+													</div>
+													<input type="text" class="form-control" name="search_s_date" />
+												</div>
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">-</span>
+													</div>
+													<input type="text" class="form-control" name="search_e_date" />
+												</div>
+											</div>
 										</div>
-										<div class="input-group">
-											<span class="input-group-addon w-40 pt-5">to</span>
-											<input type="text" id="inputEndDate" class="form-control static_option" name="end" />
+										<!-- 검색어 -->
+										<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
+										<div class="col-md-5">
+											<div class="input-group">
+												<div class="input-group-prepend w-p25">
+													<select data-plugin="selectpicker" name="search_type">
+														<option value="" selected>선택하세요</option>
+														<option value="utterance">질의</option>
+														<option value="intent_title">인텐트</option>
+														<option value="name">사용자</option>
+													</select>
+												</div>
+												<!-- <input type="text" class="form-control"> -->
+												<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()">
+											</div>
 										</div>
 									</div>
-								</div>
+									<div class="form-group row">
+										<div class="col-lg-12">
+											<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="row mb-20">
+							<div class="col-sm-12 col-md-6 col-xl-8">
 							</div>
 							<div class="col-sm-12 col-md-6 col-xl-4">
 								<div class="row no-space">
@@ -39,7 +73,7 @@
 										<div class="counter ">
 											<div class="counter-label ">챗봇 응답</div>
 											<div class="counter-number-group text-truncate">
-												<span class="counter-number">1,800</span>
+												<span class="counter-number" id="totalCnt"></span>
 											</div>
 										</div>
 									</div>
@@ -47,7 +81,7 @@
 										<div class="counter ">
 											<div class="counter-label ">응답 성공</div>
 											<div class="counter-number-group text-truncate">
-												<span class="counter-number">1,000</span>
+												<span class="counter-number" id="successCnt"></span>
 											</div>
 										</div>
 									</div>
@@ -55,14 +89,14 @@
 										<div class="counter ">
 											<div class="counter-label ">응답 실패</div>
 											<div class="counter-number-group text-truncate">
-												<span class="counter-number">800</span>
+												<span class="counter-number" id="failCnt"></span>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="card p-20" id="widgetChatbot">
+						<div class="card p-20" id="widgetOverall">
 							<div class="card-block pt-5">
 								<div class="ct-chart h-300"></div>
 								<ul class="list-inline text-center mt-20 mb-0">
@@ -100,51 +134,7 @@
 					</div>
 					<div class="panel-body">
 
-						<form id="search-form">
-							<div class="form-group row">
-								<!-- 등록일 -->
-								<label class="col-md-1 col-form-label"><strong>등록일 </strong></label>
-								<div class="col-md-5">
-									<div class="input-daterange" data-plugin="datepicker">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">
-													<i class="icon md-calendar" aria-hidden="true"></i>
-												</span>
-											</div>
-											<input type="text" class="form-control" name="search_s_date" />
-										</div>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">-</span>
-											</div>
-											<input type="text" class="form-control" name="search_e_date" />
-										</div>
-									</div>
-								</div>
-								<!-- 검색어 -->
-								<label class="col-md-1 col-form-label"><strong>검색어 </strong></label>
-								<div class="col-md-5">
-									<div class="input-group">
-										<div class="input-group-prepend w-p25">
-											<select data-plugin="selectpicker" name="search_type">
-												<option value="" selected>선택하세요</option>
-												<option value="utterance">질의</option>
-												<option value="intent_title">인텐트</option>
-												<option value="name">사용자</option>
-											</select>
-										</div>
-										<!-- <input type="text" class="form-control"> -->
-										<input type="text" class="form-control" name="search" placeholder="검색어를 입력하세요." onkeyup="enterKey()">
-									</div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-lg-12">
-									<button type="button" class="btn btn-primary btn-outline float-right waves-effect waves-classic" id="searchBtn">검색</button>
-								</div>
-							</div>
-						</form>
+						
 						<!-- 목록 테이블 -->
 						<div class="panel">
 							<header class="panel-heading">
@@ -169,31 +159,106 @@
 	$("#inputStartDate").val(lastMonth(1));
 	$("#inputEndDate").val(today());
 
-	new Chartist.Line("#widgetChatbot .ct-chart", { labels : [
-			'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'
-	], series : [
-			[
-					100, 50, 70, 110, 100, 200, 230
-			], [
-					80, 40, 60, 90, 90, 190, 140
-			], [
-					20, 10, 10, 20, 10, 10, 90
-			]
-	] }, { low : 0, showArea : true, showPoint : true, showLine : true, lineSmooth : false, fullWidth : true,
-		chartPadding : { top : 0, right : 10, bottom : 0, left : 0 }, axisX : { showGrid : false, labelOffset : { x : -14, y : 0 } },
-		axisY : { labelOffset : { x : -10, y : 0 }, labelInterpolationFnc : function labelInterpolationFnc(num) {
-			return num % 1 === 0 ? num : false;
-		} }, plugins : [
-			Chartist.plugins.tooltip()
-		] });
 
+
+	function setChart(data) {
+			console.log("data = " + data);
+		var labels_arr = [];
+		var total_arr = [];
+		var success_arr = [];
+		var fail_arr = [];
+		
+		var total = 0;
+		var success = 0;
+		var fail = 0;
+		
+		if(data.length < 20){
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				labels_arr.push(d.date);
+				total_arr.push(Number(d.total_count));
+				success_arr.push(Number(d.success_count));
+				fail_arr.push(Number(d.fail_count));
+				
+				total += Number(d.total_count);
+				success += Number(d.success_count);
+				fail += Number(d.fail_count);
+			}
+		}else{
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				if((i%5) != 0){
+					labels_arr.push("");
+				}else{
+					labels_arr.push(d.date);
+				}
+				total_arr.push(Number(d.total_count));
+				success_arr.push(Number(d.success_count));
+				fail_arr.push(Number(d.fail_count));
+				
+				total += Number(d.total_count);
+				success += Number(d.success_count);
+				fail += Number(d.fail_count);
+				
+			}
+		}
+	
+		 document.getElementById("totalCnt").innerHTML = total;
+		 document.getElementById("successCnt").innerHTML = success;
+		 document.getElementById("failCnt").innerHTML = fail;
+		 
+		console.log("total == " + total);
+		console.log("success == " + success);
+		console.log("fail == " + fail);
+		new Chartist.Line('#widgetOverall .ct-chart', { 
+			labels : labels_arr, 
+			series : [
+				total_arr,
+				success_arr,
+				fail_arr
+			]
+		}, 
+		{ 
+			low : 0, 
+			showArea : true, 
+			showPoint : true, 
+			showLine : true, 
+			fullWidth : true,
+			chartPadding : { 
+				top : 20, 
+				right : 20, 
+				bottom : 0, 
+				left : 10 
+			}, 
+			axisX : { 
+				showGrid : false, 
+				labelOffset : { 
+					x : -14, 
+					y : 0 
+				} 
+			},
+			axisY : { 
+				labelOffset : { 
+					x : -10, 
+					y : 0 
+				}, 
+				labelInterpolationFnc : function labelInterpolationFnc(num) {
+					return num % 1 === 0 ? num : false;
+				} 
+			} 
+		});
+	}
+	
 	function getChatbotStatsList() {
 		var request = $.ajax({ url : "/chatbotStats/getChatbotStatsList.do", method : "get", data : $("#search-form").serialize() });
 
 		request.done(function(data) {
 			console.log(data);
 
-			setChatbotStatsListTable(data);
+			setChatbotStatsListTable(data.list);
+			
+			//selectChartData();
+			setChart(data.countList);
 		});
 
 		request.fail(function(error) {
@@ -203,7 +268,7 @@
 
 	$(function() {
 		var today = formatDate(new Date());
-		var preday = formatPreDate(new Date());
+		var preday = formatPreWeekDate(new Date());
 		$("input[name='search_s_date']").val(preday);
 		$("input[name='search_e_date']").val(today);
 		getChatbotStatsList();

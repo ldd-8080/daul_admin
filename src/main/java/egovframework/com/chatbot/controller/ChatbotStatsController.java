@@ -1,6 +1,8 @@
 package egovframework.com.chatbot.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,15 +32,32 @@ public class ChatbotStatsController {
 	@RequestMapping(value="/getChatbotStatsList.do")
 	public ResponseEntity<?> getChatbotStatsList(ChatbotStatsVo vo) throws Exception{
 		List<ChatbotStatsVo> chatbotStatsList = null;
+		List<ChatbotStatsVo> chatbotStatsCountList = null;
+		Map<String, Object> resMap = new HashMap<>();
 		
 		try {
 			chatbotStatsList = chatbotService.getChatbotStatsList(vo);
+			chatbotStatsCountList = chatbotService.getChatbotStatsCount(vo);
+			
+			resMap.put("list", chatbotStatsList);
+			resMap.put("countList", chatbotStatsCountList);
+		}catch(Exception e) {
+			
+		}
+		return new ResponseEntity<>(resMap, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getChatbotStatsCount.do")
+	public ResponseEntity<?> getChatbotStatsCount(ChatbotStatsVo vo) throws Exception{
+		List<ChatbotStatsVo> chatbotStatsCountList = null;
+		
+		try {
+			chatbotStatsCountList = chatbotService.getChatbotStatsCount(vo);
+			System.out.println("chatbotStatsCountList = " + chatbotStatsCountList);
 			
 		}catch(Exception e) {
 			
 		}
-		return new ResponseEntity<>(chatbotStatsList, HttpStatus.OK);
+		return new ResponseEntity<>(chatbotStatsCountList, HttpStatus.OK);
 	}
-	
-	
 }
