@@ -114,4 +114,29 @@ public class MainController {
 		return new ResponseEntity<> (keywordList, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/selectEmotionOpinionList.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectEmotionOpinionList(MainVo vo) throws Exception {
+		List<Map<String, String>> opinionList = null;
+		
+		try {
+			opinionList = mainService.selectEmotionOpinionList(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(opinionList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/selectUserMileageList.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectUserMileageList(MainVo vo) throws Exception {
+		List<Map<String, String>> userMileageList = null;
+		
+		try {
+			userMileageList = mainService.selectUserMileageList(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(userMileageList, HttpStatus.OK);
+	}
 }

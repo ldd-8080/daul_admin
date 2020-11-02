@@ -24,9 +24,7 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 	
 	@Override
 	public List<Map<String, String>> selectDummyList() throws Exception{
-		List<Map<String, String>> list = new ArrayList();
-		
-		list = mainMapper.selectDummyList();
+		List<Map<String, String>> list = mainMapper.selectDummyList();
 		
 		return list;
 	}
@@ -64,5 +62,15 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 	@Override
 	public List<Map<String, String>> selectKeywordList(MainVo vo) throws Exception {
 		return mainMapper.selectKeywordList(vo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectEmotionOpinionList(MainVo vo) throws Exception {
+		return mainMapper.selectEmotionOpinionList(vo);
+	}
+
+	@Override
+	public List<Map<String, String>> selectUserMileageList(MainVo vo) throws Exception {
+		return mainMapper.selectUserMileageList(vo);
 	}
 }

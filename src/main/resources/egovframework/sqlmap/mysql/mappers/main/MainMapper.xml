@@ -213,8 +213,66 @@
 		SELECT keyword
 		     , SUM(keyword_cnt) AS keyword_cnt
 		  FROM daul.keyword_frequency
+		 WHERE DATE_FORMAT(create_date, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{search_s_date}, '%Y-%m-%d') AND DATE_FORMAT(#{search_e_date}, '%Y-%m-%d') 
 		 GROUP BY keyword
 		 ORDER BY SUM(keyword_cnt) DESC
 		        , keyword
+	</select>
+	
+	<select id="selectEmotionOpinionList" resultType="map">
+		SELECT so.opinion_idx
+		     , so.opinion_content
+		     , DATE_FORMAT(so.create_date, '%Y-%m-%d %H:%i:%s')	AS create_date
+		     , so.emotion_type
+		     , ROUND(so.emotion_score, 2) 						AS emotion_score
+		     , sm.title
+		     , sm.suggestion_idx								AS idx
+		     , '열린제안'											AS type
+		  FROM daul.suggestion_opinion so
+		  LEFT JOIN daul.suggestion_main sm ON sm.suggestion_idx = so.suggestion_idx
+		 WHERE DATE_FORMAT(so.create_date, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{search_s_date}, '%Y-%m-%d') AND DATE_FORMAT(#{search_e_date}, '%Y-%m-%d')
+		   AND so.emotion_type != 'normal'
+		   AND so.del_chk != 'Y'
+		 UNION ALL
+		SELECT so.opinion_idx
+		     , so.opinion_content
+		     , DATE_FORMAT(so.create_date, '%Y-%m-%d %H:%i:%s')
+		     , so.emotion_type
+		     , ROUND(so.emotion_score, 2)
+		     , sm.title
+		     , sm.survey_idx
+		     , '설문조사'
+		  FROM daul.survey_opinion so
+		  LEFT JOIN daul.survey_main sm ON sm.survey_idx = so.survey_idx
+		 WHERE DATE_FORMAT(so.create_date, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{search_s_date}, '%Y-%m-%d') AND DATE_FORMAT(#{search_e_date}, '%Y-%m-%d')
+		   AND so.emotion_type != 'normal'
+		   AND so.del_chk != 'Y'
+		 ORDER BY create_date DESC
+	</select>
+	
+	<select id="selectUserMileageList" resultType="map">
+		SELECT *
+		     , (um.sgst_op_cnt + um.survey_op_cnt) AS op_cnt
+		  FROM (
+		  		SELECT *
+					 , (SELECT COUNT(*) FROM daul.suggestion_main WHERE create_user = um.user_id AND del_chk != 'Y') AS sgst_cnt
+					 , (SELECT COUNT(*) FROM daul.survey_participation WHERE participation_user = um.user_id) AS survey_cnt
+					 , (SELECT COUNT(*) FROM daul.contest_user WHERE create_user = um.user_id AND del_chk != 'Y') AS contest_cnt
+					 , (SELECT COUNT(*) FROM daul.suggestion_opinion WHERE create_user = um.user_id AND del_chk != 'Y') AS sgst_op_cnt
+					 , (SELECT COUNT(*) FROM daul.survey_opinion WHERE create_user = um.user_id AND del_chk != 'Y') AS survey_op_cnt
+				  FROM (
+				  		SELECT um.board_id
+						     , SUM(um.mileage_value)	AS total_mileage_value
+						     , um.reg_date
+						     , u.user_id 
+						     , u.name
+						     , u.phone
+						     , u.auth_type 
+						  FROM daul.user_mileage um
+						  LEFT JOIN daul.user u ON u.phone = um.user_id
+						 WHERE DATE_FORMAT(um.reg_date, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{search_s_date}, '%Y-%m-%d') AND DATE_FORMAT(#{search_e_date}, '%Y-%m-%d')
+						 GROUP BY um.user_id
+				  	   ) um
+		       ) um
 	</select>
 </mapper>

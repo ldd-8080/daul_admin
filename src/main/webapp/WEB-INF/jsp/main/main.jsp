@@ -171,20 +171,6 @@
 							</div>
 						</div>
 						<div class="ct-chart h-300"></div>
-						<!-- <ul class="list-inline text-center mt-20 mb-0">
-							<li class="list-inline-item">
-								<i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>
-								PC BROWSER
-							</li>
-							<li class="list-inline-item ml-35">
-								<i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>
-								MOBILE PHONE
-							</li>
-							<li class="list-inline-item ml-35">
-								<i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>
-								MOBILE PHONE
-							</li>
-						</ul> -->
 					</div>
 				</div>
 			</div>
@@ -197,12 +183,12 @@
 							<span class="text-truncate">마일리지</span>
 						</h4>
 						<div class="card-header-actions">
-							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters">
+							<ul class="nav nav-tabs-sm nav-pills nav-pills-rounded product-filters" id="mileage_date_list" data-form="mileage_search_form">
 								<li class="nav-item">
-									<a class="active nav-link">이번주</a>
+									<a class="nav-link" data-range="one_week">지난 7일</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link">이번달</a>
+									<a class="nav-link" data-range="one_month">지난 30일</a>
 								</li>
 							</ul>
 						</div>
@@ -210,97 +196,7 @@
 					<div class="card-block py-5">
 						<ul class="list-group list-group-dividered list-group-full" style="height: 380px;" data-plugin="scrollable">
 							<div data-role="container">
-								<div data-role="content">
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-info ml-5">전문가</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-default ml-5">일반인</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-default ml-5">일반인</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-info ml-5">전문가</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-info ml-5">전문가</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
-									<li class="list-group-item">
-										<div class="media">
-											<div class="pr-10">
-												<span class="badge badge-default ml-5">일반인</span>
-											</div>
-											<div class="media-body w-full">
-												<div class="float-right text-right">
-													<p class="mb-0 blue-600">123</p>
-													<small>누적 2,123</small>
-												</div>
-												<p class="mb-0">홍길동(id2234)</p>
-												<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-											</div>
-										</div>
-									</li>
+								<div data-role="content" id="mileage_list_div">
 									<li class="list-group-item">
 										<div class="media">
 											<div class="pr-10">
@@ -321,9 +217,7 @@
 						</ul>
 					</div>
 				</div>
-
 			</div>
-
 
 			<div class="col-xxl-4 col-lg-6">
 				<div class="card card-shadow card-responsive p-10" id="widgetSuggestion">
@@ -505,97 +399,7 @@
 								<h5 class="blue-600">😊 긍정 댓글</h5>
 								<ul class="list-group list-group-dividered list-group-full h-350" data-plugin="scrollable">
 									<div data-role="container">
-										<div data-role="content">
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right blue-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무 잘했어요. 항상 이러면 좋을텐데요...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
+										<div data-role="content" id="positive_opinion_list_div">
 											<li class="list-group-item">
 												<div class="media">
 													<div class="media-body w-full">
@@ -613,106 +417,7 @@
 								<h5 class="red-600">😡 부정 댓글</h5>
 								<ul class="list-group list-group-dividered list-group-full h-350" data-plugin="scrollable">
 									<div data-role="container">
-										<div data-role="content">
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item">
-												<div class="media">
-													<div class="media-body w-full">
-														<div class="float-right red-600">0.92</div>
-														<p class="mb-0">이건 진짜 너무하네요. 이러지 맙시다 좀...</p>
-														<small>[열린제안] 대기환경 이슈를 위한 소통 플.. | 2018-06-12 20:50:48</small>
-													</div>
-												</div>
-											</li>
+										<div data-role="content" id="negative_opinion_list_div">
 											<li class="list-group-item">
 												<div class="media">
 													<div class="media-body w-full">
@@ -830,6 +535,10 @@
 	<input type="hidden" name="search_s_date" id="search_s_date3"/>
 	<input type="hidden" name="search_e_date" id="search_e_date3"/>
 </form>
+<form id="mileage_search_form">
+	<input type="hidden" name="search_s_date" id="search_s_date4"/>
+	<input type="hidden" name="search_e_date" id="search_e_date4"/>
+</form>
 <script type="text/javascript">
 	var defaults = Plugin.getDefaults("webuiPopover"); // Example Webui Popover Pop with Table
 
@@ -877,7 +586,9 @@
 			
 			e.target.nextElementSibling.click();
 			
-			//selectChartData();
+			if 		(type.indexOf("chart") > -1)	selectChartData();
+			else if (type.indexOf("keyword") > -1)	selectKeywordData();
+			else if (type.indexOf("emotion") > -1)	selectEmotionOpinionData();
 		});
 	}
 	
@@ -887,6 +598,8 @@
 	dateRangeAClickEvent(keyword_date_list);
 	var emotion_date_list = document.getElementById("emotion_date_list");
 	dateRangeAClickEvent(emotion_date_list);
+	var mileage_date_list = document.getElementById("mileage_date_list");
+	dateRangeAClickEvent(mileage_date_list);
 	
 	function dateRangeAClickEvent(el) {
 		var el_a_list = el.querySelectorAll("a");
@@ -918,7 +631,8 @@
 					
 					if 		(form_id.indexOf("chart") > -1)		selectChartData();
 					else if (form_id.indexOf("keyword") > -1)	selectKeywordData();
-					else if (form_id.indexOf("emotion") > -1)	console.log("emotion");
+					else if (form_id.indexOf("emotion") > -1)	selectEmotionOpinionData();
+					else if (form_id.indexOf("mileage") > -1)	selectUserMileageData();
 				}
 			});
 		}
@@ -1004,7 +718,7 @@
 			} 
 		});
 	}
-	var test;
+	
 	function selectKeywordData() {
 		var request = $.ajax({
 			url: "/main/selectKeywordList.do",
@@ -1014,7 +728,7 @@
 		
 		request.done(function(data) {
 			console.log("selectKeywordList success", data);
-			test = data;
+			
 			var el = document.getElementById("keyword_list_div");
 			
 			while (el.hasChildNodes()) {
@@ -1048,6 +762,7 @@
 				words.push({text: d.keyword, weight: Number(d.keyword_cnt)});
 			});
 
+			$("#keyword_jqcloud_div").jQCloud("destroy");
 			$("#keyword_jqcloud_div").jQCloud(words, {
 				width: $("#keyword_jqcloud_div").parent().width(),
 				height: $("#keyword_jqcloud_div").parent().height()
@@ -1059,6 +774,118 @@
 		});
 	}
 	
+	function selectEmotionOpinionData() {
+		var request = $.ajax({
+			url: "/main/selectEmotionOpinionList.do",
+			method: "post",
+			data: $("#emotion_search_form").serialize()
+		});
+		
+		request.done(function(data) {
+			console.log("selectEmotionOpinionList success", data);
+			
+			var el = document.querySelectorAll("div[id*='opinion_list_div']");
+			
+			for (var i = 0; i < el.length; i++) {
+				while (el[i].hasChildNodes()) {
+				    el[i].childNodes[0].remove();
+				}
+			}
+			
+			for (var j = 0; j < data.length; j++) {
+				var d = data[j];
+				var emotion_type = d.emotion_type;
+				
+				if (d.title.length > 15) {
+					d.title = d.title.substring(0, 15) + "...";
+				}
+				
+				var div = document.querySelector("div[id='" + emotion_type + "_opinion_list_div']");
+				
+				var li = document.createElement("li");
+				li.classList.add("list-group-item");
+				
+				var html = 
+					'<div class="media">' +
+						'<div class="media-body w-full">' +
+							'<div class="float-right blue-600">' + d.emotion_score + '</div>' +
+							'<p class="mb-0">' + d.opinion_content + '</p>' +
+							'<small>[' + d.type + '] ' + d.title + ' | ' + d.create_date + '</small>' +
+						'</div>' +
+					'</div>';
+				
+				li.innerHTML = html;
+				div.append(li);
+			}
+		});
+		
+		request.fail(function(error) {
+			console.log("selectEmotionOpinionList fail", error);
+		});
+	}
+	
+	function selectUserMileageData() {
+		var request = $.ajax({
+			url: "/main/selectUserMileageList.do",
+			method: "post",
+			data: $("#mileage_search_form").serialize()
+		});
+		
+		request.done(function(data) {
+			console.log("selectUserMileageList success", data);
+			
+			var el = document.getElementById("mileage_list_div");
+			
+			while (el.hasChildNodes()) {
+			    el.childNodes[0].remove();
+			}
+			
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				
+				var li = document.createElement("li");
+				li.classList.add("list-group-item");
+				
+				var html = 
+					'<div class="media">' +
+						'<div class="pr-10">' +
+							'<span class="badge badge-default ml-5">일반인</span>' +
+						'</div>' +
+						'<div class="media-body w-full">' +
+							'<div class="float-right text-right">' +
+								'<p class="mb-0 blue-600">' + d.total_mileage_value + '</p>' +
+								/* '<small>누적 ' + d.total_mileage_value + '</small>' + */
+							'</div>' +
+							'<p class="mb-0">' + d.name + '(' + d.user_id + ')</p>' +
+							'<small>제안 ' + d.sgst_cnt + '회 | 설문 ' + d.survey_cnt + '회 | 공모 ' + d.contest_cnt + '회 | 댓글 ' + d.op_cnt + '회</small>' +
+						'</div>' +
+					'</div>';
+					
+				li.innerHTML = html;
+				el.append(li);
+			}
+			/* <li class="list-group-item">
+				<div class="media">
+					<div class="pr-10">
+						<span class="badge badge-default ml-5">일반인</span>
+					</div>
+					<div class="media-body w-full">
+						<div class="float-right text-right">
+							<p class="mb-0 blue-600">123</p>
+							<small>누적 2,123</small>
+						</div>
+						<p class="mb-0">홍길동(id2234)</p>
+						<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
+					</div>
+				</div>
+			</li> */
+		});
+		
+		request.fail(function(error) {
+			console.log("selectUserMileageList fail", error);
+		});
+	}
+		
 	window.onload = function() {
 		var el_a_list = document.querySelectorAll("a.nav-link[data-range='one_week']");
 		for(var i = 0; i < el_a_list.length; i++) {

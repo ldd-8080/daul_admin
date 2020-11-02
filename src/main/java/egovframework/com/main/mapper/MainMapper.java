@@ -27,4 +27,8 @@ public interface MainMapper {
 	List<MainVo> selectMileageRank(MainVo vo) throws Exception;
 
 	List<Map<String, String>> selectKeywordList(MainVo vo) throws Exception;
+
+	List<Map<String, String>> selectEmotionOpinionList(MainVo vo) throws Exception;
+
+	List<Map<String, String>> selectUserMileageList(MainVo vo) throws Exception;
 }
