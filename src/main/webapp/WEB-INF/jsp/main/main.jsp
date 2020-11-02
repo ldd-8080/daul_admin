@@ -846,10 +846,14 @@
 				var li = document.createElement("li");
 				li.classList.add("list-group-item");
 				
+				if 		(d.auth_type === "admin")	var auth_type = '<span class="badge badge-danger ml-5">관리자</span>'; 
+				else if (d.auth_type === "public")	var auth_type = '<span class="badge badge-default ml-5">일반인</span>';
+				else if (d.auth_type === "pro")		var auth_type = '<span class="badge badge-info ml-5">전문가</span>';
+				
 				var html = 
 					'<div class="media">' +
 						'<div class="pr-10">' +
-							'<span class="badge badge-default ml-5">일반인</span>' +
+							auth_type +
 						'</div>' +
 						'<div class="media-body w-full">' +
 							'<div class="float-right text-right">' +
@@ -864,21 +868,6 @@
 				li.innerHTML = html;
 				el.append(li);
 			}
-			/* <li class="list-group-item">
-				<div class="media">
-					<div class="pr-10">
-						<span class="badge badge-default ml-5">일반인</span>
-					</div>
-					<div class="media-body w-full">
-						<div class="float-right text-right">
-							<p class="mb-0 blue-600">123</p>
-							<small>누적 2,123</small>
-						</div>
-						<p class="mb-0">홍길동(id2234)</p>
-						<small>제안 30회 | 댓글 438회 | 설문 8회 ...</small>
-					</div>
-				</div>
-			</li> */
 		});
 		
 		request.fail(function(error) {
