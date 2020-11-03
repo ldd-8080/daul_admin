@@ -676,11 +676,31 @@
 		var labels_arr = [];
 		var series_arr = [];
 		
-		for (var i = 0; i < data.length; i++) {
+		if(data.length < 9){
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				labels_arr.push(d.reg_date);
+				series_arr.push(Number(d.visitor_cnt));
+			}
+		}else{
+			for (var i = 0; i < data.length; i++) {
+				var d = data[i];
+				
+				if ((i%5) != 0) {
+					labels_arr.push("");
+				} else {
+					labels_arr.push(d.reg_date);
+				}
+				
+				series_arr.push(Number(d.visitor_cnt));
+			}
+		}
+		
+		/* for (var i = 0; i < data.length; i++) {
 			var d = data[i];
 			labels_arr.push(d.reg_date);
 			series_arr.push(Number(d.visitor_cnt));
-		}
+		} */
 		
 		new Chartist.Line('#widgetOverall .ct-chart', { 
 			labels : labels_arr, 
