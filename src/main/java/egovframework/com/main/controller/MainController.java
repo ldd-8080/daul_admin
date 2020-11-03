@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import egovframework.com.contest.vo.ContestVo;
 import egovframework.com.main.service.MainService;
 import egovframework.com.main.vo.MainVo;
-import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
 import egovframework.com.survey.vo.SurveyVo;
 

@@ -22,6 +22,7 @@ public class SuggestionVo extends SearchVo{
 	private int num;
 	
 	private int opinion_cnt;
+	private boolean isNew;
 	
 	
 	public int getOpinion_cnt() {
@@ -114,12 +115,19 @@ public class SuggestionVo extends SearchVo{
 	public void setNum(int num) {
 		this.num = num;
 	}
+	public boolean getIsNew() {
+		return isNew;
+	}
+	public void setIsNew(boolean isNew) {
+		this.isNew = isNew;
+	}
 	
 	@Override
 	public String toString() {
 		return "SuggestionVo [suggestion_idx=" + suggestion_idx + ", title=" + title + ", content=" + content
 				+ ", view_count=" + view_count + ", like_count=" + like_count + ", create_user=" + create_user
 				+ ", create_date=" + create_date + ", update_user=" + update_user + ", update_date=" + update_date
-				+ ", del_chk=" + del_chk + ", pro_cnt=" + pro_cnt + ", public_cnt=" + public_cnt + "]";
+				+ ", del_chk=" + del_chk + ", pro_cnt=" + pro_cnt + ", public_cnt=" + public_cnt + ", admin_cnt="
+				+ admin_cnt + ", num=" + num + ", opinion_cnt=" + opinion_cnt + ", isNew=" + isNew + "]";
 	}
 }

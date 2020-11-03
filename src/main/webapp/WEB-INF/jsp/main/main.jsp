@@ -235,7 +235,7 @@
 								<div data-role="content">
 									<c:forEach var="sgst" items="${mainSuggestionList}">
 										<a class="list-group-item justify-content-between" href="/suggestion/suggestionDetailPage.do?suggestion_idx=${sgst.suggestion_idx}">
-											<small class="badge badge-round badge-danger float-right">new</small>
+											<c:if test="${sgst.isNew eq true}"><small class="badge badge-round badge-danger float-right">new</small></c:if>
 											<h6 class="media-heading">${sgst.title }</h6>
 											<p class="mb-0 small">${sgst.content }</p>
 											<p class="mb-0 small">

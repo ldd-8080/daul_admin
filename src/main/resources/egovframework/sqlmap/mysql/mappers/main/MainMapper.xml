@@ -60,37 +60,39 @@
 	
 	<select id="selectMainSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
 		SELECT @rownum:=@rownum+1 AS num
-		  		     , sub.suggestion_idx
-		  		     , sub.title
-		  		     , sub.content
-		  		     , sub.like_count
-		  		     , sub.create_user
-		  		     , DATE_FORMAT(sub.create_date, '%Y-%m-%d %H:%i:%s') as create_date
-		  		     , sub.opinion_cnt
-		  		     , sub.like_per
-		  		     , sub.name
-		  		     , sub.auth_type
-				  FROM (
-				  		SELECT sm.*
-				  		     , CASE WHEN (like_count / 50 * 100) >= 100 THEN 100 ELSE (like_count / 50 * 100) END AS like_per
-				  		  FROM (
-								SELECT s.suggestion_idx
-									 , s.title
-									 , s.content
-									 , (SELECT COUNT(*) FROM daul.user_like where parent_idx = s.suggestion_idx) AS like_count
-									 , s.create_user
-									 , s.create_date
-									 , (SELECT count(*) FROM suggestion_opinion a WHERE a.suggestion_idx = s.suggestion_idx) AS opinion_cnt
-									 , b.name
-									 ,b.auth_type
-								  FROM suggestion_main s
-								  LEFT JOIN daul.user b ON s.create_user = b.user_id 
-								 WHERE del_chk != 'Y'
-								  ) sm
-						) sub, (SELECT @rownum:=0) TMP
-				   WHERE 1=1 
-				   AND create_date >= date_add(now(), interval -30 day)
-				   ORDER BY num DESC
+  		     , sub.suggestion_idx
+  		     , sub.title
+  		     , sub.content
+  		     , sub.like_count
+  		     , sub.create_user
+  		     , DATE_FORMAT(sub.create_date, '%Y-%m-%d %H:%i:%s') as create_date
+  		     , sub.opinion_cnt
+  		     , sub.like_per
+  		     , sub.name
+  		     , sub.auth_type
+  		     , (CASE WHEN DATE_FORMAT(sub.create_date, '%Y-%m-%d') >= DATE_ADD(CURDATE(), INTERVAL -7 DAY) THEN true ELSE false END) AS isNew
+		  FROM (
+		  		SELECT sm.*
+		  		     , CASE WHEN (like_count / 50 * 100) >= 100 THEN 100 ELSE (like_count / 50 * 100) END AS like_per
+		  		  FROM (
+						SELECT s.suggestion_idx
+							 , s.title
+							 , s.content
+							 , (SELECT COUNT(*) FROM daul.user_like where parent_idx = s.suggestion_idx) AS like_count
+							 , s.create_user
+							 , s.create_date
+							 , (SELECT count(*) FROM suggestion_opinion a WHERE a.suggestion_idx = s.suggestion_idx) AS opinion_cnt
+							 , b.name
+							 , b.auth_type
+						  FROM suggestion_main s
+						  LEFT JOIN daul.user b ON s.create_user = b.user_id 
+						 WHERE del_chk != 'Y'
+						 ORDER BY s.create_date DESC
+						  ) sm
+				) sub, (SELECT @rownum:=0) TMP
+		   WHERE 1=1 
+		   AND create_date >= date_add(now(), interval -30 day)
+		   ORDER BY num
 	</select>
 	
 	<select id="selectMainContestList" resultType="egovframework.com.contest.vo.ContestVo">	
@@ -274,5 +276,6 @@
 						 GROUP BY um.user_id
 				  	   ) um
 		       ) um
+		 ORDER BY total_mileage_value DESC
 	</select>
 </mapper>
