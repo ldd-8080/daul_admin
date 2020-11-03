@@ -38,7 +38,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-toolbar navbar-right navbar-toolbar-right mr-5">
-				<li class="nav-item dropdown">
+				<!-- <li class="nav-item dropdown">
 					<a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false" data-animation="scale-up" role="button">
 						<i class="icon wb-bell" aria-hidden="true"></i>
 						<span class="badge badge-pill badge-danger up">5</span>
@@ -122,7 +122,7 @@
 							</div>
 						</div>
 					</div>
-				</li>
+				</li> -->
 				<li class="nav-item dropdown">
 					<a class="nav-link navbar-avatar waves-effect waves-light waves-round" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
 						<span class="avatar avatar-online">

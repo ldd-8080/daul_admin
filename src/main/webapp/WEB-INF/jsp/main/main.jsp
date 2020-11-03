@@ -825,10 +825,12 @@
 				var li = document.createElement("li");
 				li.classList.add("list-group-item");
 				
+				var color = emotion_type === "positive" ? "blue" : "red";
+				
 				var html = 
 					'<div class="media">' +
 						'<div class="media-body w-full">' +
-							'<div class="float-right blue-600">' + d.emotion_score + '</div>' +
+							'<div class="float-right ' + color + '-600">' + d.emotion_score + '</div>' +
 							'<p class="mb-0">' + d.opinion_content + '</p>' +
 							'<small>[' + d.type + '] ' + d.title + ' | ' + d.create_date + '</small>' +
 						'</div>' +
