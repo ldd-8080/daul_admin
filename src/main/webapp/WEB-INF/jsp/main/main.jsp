@@ -225,7 +225,7 @@
 						<h4 class="card-title">
 							<span class="text-truncate">열린제안</span>
 							<div class="card-header-actions">
-								<a class="btn btn-pure p-0" href="#">목록 보기</a>
+								<a class="btn btn-pure p-0" href="/suggestion/suggestionListPage.do">목록 보기</a>
 							</div>
 						</h4>
 					</div>
@@ -234,7 +234,7 @@
 							<div data-role="container">
 								<div data-role="content">
 									<c:forEach var="sgst" items="${mainSuggestionList}">
-										<a class="list-group-item justify-content-between" href="javascript:void(0)">
+										<a class="list-group-item justify-content-between" href="/suggestion/suggestionDetailPage.do?suggestion_idx=${sgst.suggestion_idx}">
 											<small class="badge badge-round badge-danger float-right">new</small>
 											<h6 class="media-heading">${sgst.title }</h6>
 											<p class="mb-0 small">${sgst.content }</p>
@@ -257,14 +257,14 @@
 						<h4 class="card-title">
 							<span class="text-truncate">설문조사</span>
 							<div class="card-header-actions">
-								<a class="btn btn-pure p-0" href="#">목록 보기</a>
+								<a class="btn btn-pure p-0" href="/survey/surveyList.do">목록 보기</a>
 							</div>
-<!-- 						</h4> -->
+ 						</h4>
 					</div>
 					<div class="card-block py-10">
 						<div class="list-group list-group-dividered list-group-full">
 							<c:forEach var="survey" items="${mainSurveyList}">
-								<a class="list-group-item justify-content-between" href="javascript:void(0)">
+								<a class="list-group-item justify-content-between" href="/survey/surveyDetail.do?survey_idx=${survey.survey_idx}">
 									<c:if test="${survey.ing eq '투표중'}"><small class="badge badge-round badge-success float-right">${survey.ing}</small></c:if>
 									<c:if test="${survey.ing eq '투표전'}"><small class="badge badge-round badge-default float-right">${survey.ing}</small></c:if>
 									<c:if test="${survey.ing eq '투표완료'}"><small class="badge badge-round badge-danger float-right">${survey.ing}</small></c:if>
@@ -284,14 +284,14 @@
 						<h4 class="card-title">
 							<span class="text-truncate">공모제안</span>
 							<div class="card-header-actions">
-								<a class="btn btn-pure p-0" href="#">목록 보기</a>
+								<a class="btn btn-pure p-0" href="/contest/contestListPage.do">목록 보기</a>
 							</div>
 						</h4>
 					</div>
 					<div class="card-block py-10">
 						<div class="list-group list-group-dividered list-group-full">
 							<c:forEach var="contest" items="${mainContestList}">
-								<a class="list-group-item justify-content-between">
+								<a class="list-group-item justify-content-between" href="/contest/contestDetail.do?admin_contest_idx=${contest.admin_contest_idx}">
 									<c:if test="${contest.ing eq '공모진행중'}"><small class="badge badge-round badge-success float-right">${contest.ing}</small></c:if>
 									<c:if test="${contest.ing eq '공모전'}"><small class="badge badge-round badge-default float-right">${contest.ing}</small></c:if>
 									<c:if test="${contest.ing eq '공모종료'}"><small class="badge badge-round badge-danger float-right">${contest.ing}</small></c:if>
