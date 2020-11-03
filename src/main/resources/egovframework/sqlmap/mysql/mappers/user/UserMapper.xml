@@ -211,4 +211,36 @@
 	
 	</select>
 	
+	<select id="getUserNotificationYN" resultType="String">
+		SELECT talk_chk 
+		  FROM daul.user
+		 WHERE user_id = (
+							SELECT create_user 
+						  	  FROM suggestion_main 
+						 	 WHERE suggestion_idx = #{suggestion_idx}
+	 					)
+	</select>
+	
+	<select id="getActionYN" resultType="String">
+		SELECT on_off 
+		  FROM daul.notification_talk
+		 WHERE action_id=#{action_id}
+	</select>
+	
+	<select id="getNotificationVo" resultType="egovframework.com.cmmn.NotificationVo">
+		SELECT name, phone, talk_chk
+		  FROM daul.user
+		 WHERE user_id = (
+							SELECT create_user 
+						  	  FROM suggestion_main 
+						 	 WHERE suggestion_idx = #{suggestion_idx}
+	 					)
+	</select>
+	
+	<select id="getTmpNum" resultType="String">
+		SELECT template_id 
+		  FROM notification_talk
+		 WHERE action_id = #{action_id}
+	</select>
+	
 </mapper>

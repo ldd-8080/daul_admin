@@ -18,6 +18,8 @@ public class SuggestionOpinionVo extends UserVo{
 	private int suggestion_step;
 	
 	private int num;
+
+	private String reg_user;
 	
 	public String getOpinion_idx() {
 		return opinion_idx;
@@ -109,7 +111,7 @@ public class SuggestionOpinionVo extends UserVo{
 		return "SuggestionOpinionVo [opinion_idx=" + opinion_idx + ", suggestion_idx=" + suggestion_idx
 				+ ", parent_opinion_idx=" + parent_opinion_idx + ", opinion_content=" + opinion_content
 				+ ", like_count=" + like_count + ", create_user=" + create_user + ", create_date=" + create_date
-				+ ", update_user=" + update_user + ", update_date=" + update_date + ", del_chk=" + del_chk
+				+ ", reg_user=" + reg_user + ", update_date=" + update_date + ", del_chk=" + del_chk
 				+ ", suggestion_ref=" + suggestion_ref + ", suggestion_indent=" + suggestion_indent
 				+ ", suggestion_step=" + suggestion_step + "]";
 	}

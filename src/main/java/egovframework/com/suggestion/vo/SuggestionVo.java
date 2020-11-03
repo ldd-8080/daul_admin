@@ -23,7 +23,15 @@ public class SuggestionVo extends SearchVo{
 	
 	private int opinion_cnt;
 	private boolean isNew;
+	private String reg_user;
 	
+	
+	public String getReg_user() {
+		return reg_user;
+	}
+	public void setReg_user(String reg_user) {
+		this.reg_user = reg_user;
+	}
 	
 	public int getOpinion_cnt() {
 		return opinion_cnt;

@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmmn.CallNotificationTalkAPI;
+import egovframework.com.cmmn.NotificationVo;
 import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.suggestion.service.SuggestionService;
 import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
+import egovframework.com.user.service.UserService;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -42,6 +45,12 @@ public class SuggestionController {
 	@Resource(name = "cmmnUtil")
 	private CmmnUtil cmmnUtil;
 
+	@Resource(name="userService")
+	private UserService userService;
+
+	@Resource(name="callNotificationTalkAPI")
+	private CallNotificationTalkAPI callNotificationTalkAPI;
+	
 	@RequestMapping(value="/suggestionListPage.do")
 	public String suggestionListPage() {
 		return "suggestion/suggestionList";
@@ -264,7 +273,8 @@ public class SuggestionController {
 			
 			SuggestionOpinionValidator suggestionOpinionValidator = new SuggestionOpinionValidator();
 			suggestionOpinionValidator.validate(vo, bindingResult);
-			
+			NotificationVo notificationVo = new NotificationVo();
+			notificationVo.setAction_id("SGOP01");
 			
 			if(bindingResult.hasErrors()) {
 				return new ResponseEntity<>(bindingResult.getFieldError().getDefaultMessage(), HttpStatus.OK);
@@ -299,7 +309,31 @@ public class SuggestionController {
 				
 				log.debug("[열린제안] 열린제안 댓글 등록");
 				suggestionService.insertSuggestionOpinion(vo);
+				
+				//사용자 및 알람톡ON-OFF여부 확인 
+				String user_noti_yn = userService.getUserNotificationYN(vo);
+				String action_noti_yn = userService.getActionYN(notificationVo);
+				
+				if(user_noti_yn.equals("Y") && action_noti_yn.equals("Y")) {
+					System.out.println("user_noti_yn = " + user_noti_yn);
+					System.out.println("action_noti_yn = " + action_noti_yn);
+					
+					//의견등록한 원글의 작성자 이름이랑 번호 가져오기 
+					notificationVo = userService.getNotificationVo(vo);
+					notificationVo.setAction_id("SGOP01");
+					
+					
+					//notificationVo.setName(vo.getName());
+					//notificationVo.setPhone(vo.getPhone());
+					callNotificationTalkAPI.CallAPI(notificationVo);
+					
+				}else {
+					System.out.println("user_noti_yn222 = " + user_noti_yn);
+					System.out.println("action_noti_yn222 = " + action_noti_yn);
+				}
+				
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -32,6 +32,7 @@
       			<textarea class="form-control" name="opinion_content" id="opinion_content_textarea" rows="5"></textarea>
       			<span class="text-left" style="color:red;" id="chk-error-regist"></span>
       			<input type="hidden" name="suggestion_idx" value="${suggestionVo.suggestion_idx}"/>
+      			<input type="hidden" name="reg_user" value="${suggestionVo.create_user}"/>
       			<input type="hidden" name="opinion_idx" id="opinion_idx" value=""/>
       		</div>
         	

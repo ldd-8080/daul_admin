@@ -2,6 +2,8 @@ package egovframework.com.user.mapper;
 
 import java.util.List;
 
+import egovframework.com.cmmn.NotificationVo;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.user.vo.UserVo;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
@@ -22,4 +24,12 @@ public interface UserMapper {
 	int selectUserIdCheck(String user_id) throws Exception;
 	
 	UserVo selectUserCnt(UserVo vo) throws Exception;
+	
+	String getUserNotificationYN(UserVo vo) throws Exception;
+	
+	String getActionYN(NotificationVo vo) throws Exception;
+
+	NotificationVo getNotificationVo(SuggestionOpinionVo vo) throws Exception;
+	
+	String getTmpNum(String action_id) throws Exception;
 }

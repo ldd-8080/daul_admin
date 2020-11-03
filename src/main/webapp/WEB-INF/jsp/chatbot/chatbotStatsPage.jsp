@@ -15,8 +15,8 @@
 		                </div> -->
 					</div>
 					<div class="panel-body">
-						<div class="row mb-20">
-							<div class="col-xl-40">
+						<div class="row mb-20" style="place-content: center;">
+							<div class="col-xl-40 pr-60 pl-60" style="min-width: -webkit-fill-available;text-align: center;">
 								<form id="search-form">
 									<div class="form-group row">
 										<!-- 등록일 -->

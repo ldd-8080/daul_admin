@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import egovframework.com.cmmn.NotificationVo;
+import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.user.mapper.UserMapper;
 import egovframework.com.user.service.UserService;
 import egovframework.com.user.vo.UserVo;
@@ -56,6 +58,26 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	@Override
 	public UserVo selectUserCnt(UserVo vo) throws Exception {
 		return userMapper.selectUserCnt(vo);
+	}
+
+	@Override
+	public String getUserNotificationYN(UserVo vo) throws Exception {
+		return userMapper.getUserNotificationYN(vo);
+	}
+
+	@Override
+	public String getActionYN(NotificationVo vo) throws Exception {
+		return userMapper.getActionYN(vo);
+	}
+
+	@Override
+	public NotificationVo getNotificationVo(SuggestionOpinionVo vo) throws Exception {
+		return userMapper.getNotificationVo(vo);
+	}
+
+	@Override
+	public String getTmpNum(String action_id) throws Exception {
+		return userMapper.getTmpNum(action_id);
 	}
 
 }
