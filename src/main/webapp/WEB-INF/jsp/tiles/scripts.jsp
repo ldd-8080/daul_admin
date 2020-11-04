@@ -133,35 +133,4 @@ function submitConfirm($type) {
 	if (!confirm(msg)) return false;
 	else return true;
 }
-
-function formatDate(date) { 
-	var d = new Date(date), 
-		month = '' + (d.getMonth() + 1), 
-		day = '' + d.getDate(), 
-		year = d.getFullYear(); 
-	if (month.length < 2) month = '0' + month; 
-	if (day.length < 2) day = '0' + day; 
-	return [year, month, day].join('-'); 
-}
-
-function formatPreDate(date) { 
-	var d = new Date(date), 
-		month = '' + (d.getMonth() - 2 ), 
-		day = '' + d.getDate(), 
-		year = d.getFullYear(); 
-	if (month.length < 2) month = '0' + month; 
-	if (day.length < 2) day = '0' + day; 
-	return [year, month, day].join('-'); 
-}
-
-
-function formatPreWeekDate(date) { 
-	var d = new Date(date), 
-		month = '' + (d.getMonth()), 
-		day = '' + d.getDate(), 
-		year = d.getFullYear(); 
-	if (month.length < 2) month = '0' + month; 
-	if (day.length < 2) day = '0' + day; 
-	return [year, month, day].join('-'); 
-}
 </script>

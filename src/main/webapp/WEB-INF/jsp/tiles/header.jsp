@@ -101,7 +101,10 @@
 	
 	/* 날짜 객체 받아서 문자열로 리턴하는 함수 */
 	function getDateStr(myDate) {
-		return (myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate());
+		var month = myDate.getMonth() + 1;
+		var day = myDate.getDate();
+		
+		return (myDate.getFullYear() + '-' + (month < 10 ? "0" + month : month) + '-' + (day < 10 ? "0" + day : day));
 	}
 
 	/* 오늘 날짜를 문자열로 반환 */
