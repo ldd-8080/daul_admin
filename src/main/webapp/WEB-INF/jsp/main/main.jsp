@@ -147,10 +147,10 @@
 								<div class="dropdown-menu" role="menu" id="dropdown_menu">
 									<input type="hidden" id="req_url" value="selectVisitorCnt"/>
 									<a class="dropdown-item" role="menuitem" id="dropdown_visit" data-url="selectVisitorCnt">홈페이지 이용 현황</a>
-									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt1">카카오톡 챗봇 응답 현황</a>
-									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt2">열린제안 등록 현황</a>
-									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt3">설문조사/공모제안 참여 현황</a>
-									<a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt4">댓글 등록 현황</a>
+									<!-- <a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt1">카카오톡 챗봇 응답 현황</a> -->
+									<a class="dropdown-item" role="menuitem" data-url="selectSuggestionCnt">열린제안 등록 현황</a>
+									<a class="dropdown-item" role="menuitem" data-url="selectSurveyContestCnt">설문조사/공모제안 참여 현황</a>
+									<!-- <a class="dropdown-item" role="menuitem" data-url="selectVisitorCnt4">댓글 등록 현황</a> -->
 								</div>
 							</div>
 							<div class="card-header-actions">
@@ -171,6 +171,17 @@
 							</div>
 						</div>
 						<div class="ct-chart h-300"></div>
+						<ul class="list-inline text-center mt-20 mb-0" id="chart_caption_list">
+							<li class="list-inline-item">
+								<i class="icon wb-large-point indigo-600 mr-10" aria-hidden="true"></i>PC BROWSER
+							</li>
+							<li class="list-inline-item ml-35">
+								<i class="icon wb-large-point teal-600 mr-10" aria-hidden="true"></i>MOBILE PHONE
+							</li>
+							<li class="list-inline-item ml-35">
+								<i class="icon wb-large-point red-600 mr-10" aria-hidden="true"></i>MOBILE PHONE
+							</li>
+		                </ul>
 					</div>
 				</div>
 			</div>
@@ -675,38 +686,53 @@
 	function setChart(data) {
 		var labels_arr = [];
 		var series_arr = [];
+
+		var ul = document.getElementById("chart_caption_list");
 		
-		if(data.length < 9){
-			for (var i = 0; i < data.length; i++) {
-				var d = data[i];
-				labels_arr.push(d.reg_date);
-				series_arr.push(Number(d.visitor_cnt));
-			}
-		}else{
-			for (var i = 0; i < data.length; i++) {
-				var d = data[i];
+		while (ul.hasChildNodes()) {
+			ul.childNodes[0].remove();
+		}
+		
+		for (var d in data) {
+			var mapData = data[d];
+			var arr = [];
+			labels_arr = [];
+			
+			for (var i = 0; i < mapData.length; i++) {
+				var cntData = mapData[i];
 				
-				if ((i%5) != 0) {
-					labels_arr.push("");
+				if (mapData.length < 9) {
+					labels_arr.push(cntData.create_date);
 				} else {
-					labels_arr.push(d.reg_date);
+					if ((i % 5) !== 0) {
+						labels_arr.push("");
+					} else {
+						labels_arr.push(cntData.create_date);
+					}
 				}
 				
-				series_arr.push(Number(d.visitor_cnt));
+				arr.push(cntData.total_cnt);
+			}
+			
+			series_arr.push(arr);
+			
+			if (d === "surveyCnt" || d === "contestCnt") {
+				var title = d === "surveyCnt" ? "설문조사" : "공모제안";
+				var color = d === "surveyCnt" ? "indigo" : "teal";
+				
+				var li = document.createElement("li");
+				li.classList.add("list-inline-item");
+				
+				var html = '<i class="icon wb-large-point ' + color + '-600 mr-10" aria-hidden="true"></i>' + title;
+				
+				li.innerHTML = html;
+				ul.append(li);
 			}
 		}
 		
-		/* for (var i = 0; i < data.length; i++) {
-			var d = data[i];
-			labels_arr.push(d.reg_date);
-			series_arr.push(Number(d.visitor_cnt));
-		} */
-		
 		new Chartist.Line('#widgetOverall .ct-chart', { 
 			labels : labels_arr, 
-			series : [
-				series_arr
-			] 
+			series : series_arr
 		}, 
 		{ 
 			low : 0, 

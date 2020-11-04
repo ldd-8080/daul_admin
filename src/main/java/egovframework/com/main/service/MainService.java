@@ -29,4 +29,10 @@ public interface MainService {
 	public List<Map<String, String>> selectEmotionOpinionList(MainVo vo) throws Exception;
 
 	public List<Map<String, String>> selectUserMileageList(MainVo vo) throws Exception;
+
+	public List<MainVo> selectSuggestionCnt(MainVo vo) throws Exception;
+
+	public List<MainVo> selectSurveyCnt(MainVo vo) throws Exception;
+
+	public List<MainVo> selectContestCnt(MainVo vo) throws Exception;
 }

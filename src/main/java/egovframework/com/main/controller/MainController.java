@@ -1,5 +1,6 @@
 package egovframework.com.main.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,22 +71,6 @@ public class MainController {
 		return "main/main";
 	}
 	
-	
-	@RequestMapping(value="/selectVisitorCnt.do", method=RequestMethod.POST)
-	public ResponseEntity<?> selectVisitorCnt(MainVo vo) throws Exception {
-		List<MainVo> visitorCntList =  null;
-		try {
-
-			visitorCntList = mainService.selectVisitorCnt(vo);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return new ResponseEntity<>(visitorCntList, HttpStatus.OK);
-	}
-	
-	
 	@RequestMapping(value="/selectMileageRank.do", method=RequestMethod.POST)
 	public ResponseEntity<?> selectMileageRank(MainVo vo) throws Exception {
 		List<MainVo> mileageRankList =  null;
@@ -137,5 +122,56 @@ public class MainController {
 		}
 		
 		return new ResponseEntity<>(userMileageList, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/selectVisitorCnt.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectVisitorCnt(MainVo vo) throws Exception {
+		List<MainVo> visitorCntList =  null;
+		Map<String, Object> resMap = new HashMap<>();
+		
+		try {
+			visitorCntList = mainService.selectVisitorCnt(vo);
+			
+			resMap.put("visitorCnt", visitorCntList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(resMap, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/selectSuggestionCnt.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectSuggestionCnt(MainVo vo) throws Exception {
+		List<MainVo> suggestionCntList = null;
+		Map<String, Object> resMap = new HashMap<>();
+		
+		try {
+			suggestionCntList = mainService.selectSuggestionCnt(vo);
+			
+			resMap.put("suggestionCnt", suggestionCntList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(resMap, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/selectSurveyContestCnt.do", method=RequestMethod.POST)
+	public ResponseEntity<?> selectSurveyContestCnt(MainVo vo) throws Exception {
+		List<MainVo> surveyCntList = null;
+		List<MainVo> contestCntList = null;
+		Map<String, Object> resMap = new HashMap<>();
+		
+		try {
+			surveyCntList = mainService.selectSurveyCnt(vo);
+			contestCntList = mainService.selectContestCnt(vo);
+			
+			resMap.put("surveyCnt", surveyCntList);
+			resMap.put("contestCnt", contestCntList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(resMap, HttpStatus.OK);
 	}
 }

@@ -73,4 +73,19 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 	public List<Map<String, String>> selectUserMileageList(MainVo vo) throws Exception {
 		return mainMapper.selectUserMileageList(vo);
 	}
+
+	@Override
+	public List<MainVo> selectSuggestionCnt(MainVo vo) throws Exception {
+		return mainMapper.selectSuggestionCnt(vo);
+	}
+
+	@Override
+	public List<MainVo> selectSurveyCnt(MainVo vo) throws Exception {
+		return mainMapper.selectSurveyCnt(vo);
+	}
+
+	@Override
+	public List<MainVo> selectContestCnt(MainVo vo) throws Exception {
+		return mainMapper.selectContestCnt(vo);
+	}
 }

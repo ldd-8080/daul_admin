@@ -31,8 +31,8 @@ public class MainVo extends SearchVo{
 	private int daysMileage;
 	
 	private int days;
-	
-	
+	private String total_cnt;
+	private String create_date;
 	
 	public int getDays() {
 		return days;
@@ -234,5 +234,20 @@ public class MainVo extends SearchVo{
 		this.memberCount = memberCount;
 	}
 
-	
+	public String getTotal_cnt() {
+		return total_cnt;
+	}
+
+	public void setTotal_cnt(String total_cnt) {
+		this.total_cnt = total_cnt;
+	}
+
+	public String getCreate_date() {
+		return create_date;
+	}
+
+	public void setCreate_date(String create_date) {
+		this.create_date = create_date;
+	}
+
 }

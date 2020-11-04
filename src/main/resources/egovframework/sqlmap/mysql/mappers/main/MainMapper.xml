@@ -167,10 +167,10 @@
 		</select>	  
 			  
 	<select id="selectVisitorCnt" resultType="egovframework.com.main.vo.MainVo">
-		SELECT a.reg_date
-		     , COUNT(a.ip) AS visitor_cnt
+		SELECT a.create_date
+		     , COUNT(a.ip) AS total_cnt
 		  FROM (
-		  		SELECT a.date AS reg_date
+		  		SELECT a.date AS create_date
 				     , ul.ip
 				  FROM (
 				  		SELECT a.date 
@@ -193,7 +193,7 @@
 				 GROUP BY a.date, ul.ip
 				 ORDER BY a.date, ul.ip
 		  	   ) a
-		 GROUP BY a.reg_date
+		 GROUP BY a.create_date
 	</select>
 	
 	
@@ -277,5 +277,67 @@
 				  	   ) um
 		       ) um
 		 ORDER BY total_mileage_value DESC
+	</select>
+	
+	<select id="selectSuggestionCnt" resultType="egovframework.com.main.vo.MainVo">
+		SELECT a.date 					AS create_date
+		     , IFNULL(sm.total_cnt, 0)	AS total_cnt
+		  FROM (
+		    	SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as date
+			      FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+			   ) a
+		  LEFT JOIN (
+		  			 SELECT COUNT(*)								AS total_cnt
+		  			      , DATE_FORMAT(create_date, '%Y-%m-%d')	AS create_date
+		  			   FROM daul.suggestion_main
+		  			  WHERE del_chk != 'Y'
+		  			  GROUP BY DATE_FORMAT(create_date, '%Y-%m-%d')
+		  			) sm ON sm.create_date = a.date
+		 WHERE a.date BETWEEN #{search_s_date} AND #{search_e_date}
+		 ORDER BY a.date
+	</select>
+	
+	<select id="selectSurveyCnt" resultType="egovframework.com.main.vo.MainVo">
+		SELECT a.date 					AS create_date
+		     , IFNULL(sp.total_cnt, 0)	AS total_cnt
+		  FROM (
+		    	SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as date
+			      FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+			   ) a
+		  LEFT JOIN (
+		  			 SELECT COUNT(*)								AS total_cnt
+		  			      , DATE_FORMAT(create_date, '%Y-%m-%d')	AS create_date
+		  			   FROM daul.survey_participation
+		  			  GROUP BY DATE_FORMAT(create_date, '%Y-%m-%d')
+		  			) sp ON sp.create_date = a.date
+		 WHERE a.date BETWEEN #{search_s_date} AND #{search_e_date}
+		 ORDER BY a.date
+	</select>
+	
+	<select id="selectContestCnt" resultType="egovframework.com.main.vo.MainVo">
+		SELECT a.date 					AS create_date
+		     , IFNULL(cu.total_cnt, 0)	AS total_cnt
+		  FROM (
+		    	SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as date
+			      FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+		    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+			   ) a
+		  LEFT JOIN (
+		  			 SELECT COUNT(*)								AS total_cnt
+		  			      , DATE_FORMAT(create_date, '%Y-%m-%d')	AS create_date
+		  			   FROM daul.contest_user
+		  			  WHERE del_chk != 'Y'
+		  			  GROUP BY DATE_FORMAT(create_date, '%Y-%m-%d')
+		  			) cu ON cu.create_date = a.date
+		 WHERE a.date BETWEEN #{search_s_date} AND #{search_e_date}
+		 ORDER BY a.date
 	</select>
 </mapper>
