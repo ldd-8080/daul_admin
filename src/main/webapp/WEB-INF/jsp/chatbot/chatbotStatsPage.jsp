@@ -156,11 +156,6 @@
 <!-- End Page -->
 
 <script type="text/javascript">
-	$("#inputStartDate").val(lastMonth(1));
-	$("#inputEndDate").val(today());
-
-
-
 	function setChart(data) {
 			console.log("data = " + data);
 		var labels_arr = [];
@@ -266,9 +261,10 @@
 		});
 	}
 
+	var today = today();
+	var preday = lastWeek();
+	
 	$(function() {
-		var today = today();
-		var preday = lastWeek();
 		$("input[name='search_s_date']").val(preday);
 		$("input[name='search_e_date']").val(today);
 		getChatbotStatsList();
