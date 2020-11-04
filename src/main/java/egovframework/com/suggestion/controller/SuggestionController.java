@@ -25,6 +25,7 @@ import egovframework.com.cmmn.NotificationVo;
 import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.cmmn.util.FileUtil;
 import egovframework.com.cmmn.util.FileVo;
+import egovframework.com.mileage.service.MileageService;
 import egovframework.com.suggestion.service.SuggestionService;
 import egovframework.com.suggestion.vo.SuggestionOpinionVo;
 import egovframework.com.suggestion.vo.SuggestionVo;
@@ -47,6 +48,9 @@ public class SuggestionController {
 
 	@Resource(name="userService")
 	private UserService userService;
+	
+	@Resource(name="mileageService")
+	private MileageService mileageService;
 
 	@Resource(name="callNotificationTalkAPI")
 	private CallNotificationTalkAPI callNotificationTalkAPI;
@@ -250,6 +254,7 @@ public class SuggestionController {
 			
 			log.debug("[열린제안] 열린제안 삭제");
 			int result = suggestionService.deleteSuggestion(vo);
+			mileageService.deleteMileage(vo.getSuggestion_idx());
 			
 			if (result > 0) {
 				log.debug("[열린제안] 열린제안 댓글 삭제");

@@ -16,4 +16,10 @@
 		     , mileage_value = #{mileage_value}
 		 WHERE idx = #{idx}
 	</update>
+	
+	<delete id="deleteMileage">
+		DELETE FROM daul.user_mileage
+		 WHERE board_id = #{idx}
+	</delete>
+	
 </mapper>
