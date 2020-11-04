@@ -105,7 +105,7 @@
 		   </if>
 		  
 	) sub
-	ORDER BY sub.num DESC; 
+	ORDER BY sub.num DESC 
 </select> 
 	
 	<!-- <select id="selectSuggestionList" resultType="egovframework.com.suggestion.vo.SuggestionVo">
@@ -247,16 +247,18 @@
 	</insert>
 	
 	<select id="selectSuggestionOpinionList" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
-		SELECT @rownum:=@rownum+1 AS num
-			 , so.*
-		     , u.auth_type 
-		  FROM daul.suggestion_opinion so
-		  LEFT JOIN daul.user u ON so.create_user = u.user_id 
-		  INNER JOIN (SELECT @rownum:=0) TMP
-		 <!-- WHERE so.del_chk != 'Y' --> 
-		 WHERE so.suggestion_idx = #{suggestion_idx}
-		 ORDER BY so.suggestion_ref
-		        , so.suggestion_step
+		SELECT * FROM (
+			SELECT @rownum:=@rownum+1 AS num
+					 , so.*
+				     , u.auth_type 
+				  FROM daul.suggestion_opinion so
+				  LEFT JOIN daul.user u ON so.create_user = u.user_id 
+				  INNER JOIN (SELECT @rownum:=0) TMP
+				 WHERE so.suggestion_idx = #{suggestion_idx}
+				 ORDER BY so.suggestion_ref
+				        , so.suggestion_step desc
+		) sub
+		order by sub.num desc
 	</select>
 	
 	<select id="selectParentSuggestionOpinion" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
