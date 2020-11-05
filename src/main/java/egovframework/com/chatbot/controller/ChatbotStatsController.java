@@ -22,7 +22,7 @@ public class ChatbotStatsController {
 	@Resource(name="chatbotService")
 	private ChatbotService chatbotService;
 	
-	@RequestMapping(value = "chatbotStatsPage.do")
+	@RequestMapping(value = "/chatbotStatsPage.do")
 	public String notificationTalkPage(ModelMap model) throws  Exception{
 		
 		return "chatbot/chatbotStatsPage";

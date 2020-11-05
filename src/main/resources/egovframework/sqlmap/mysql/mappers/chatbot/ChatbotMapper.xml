@@ -703,36 +703,78 @@
 		   AND type = 'I'
 	</select>
 	
+	<sql id="whereByChatbotStats">
+		<if test="search_type == 'utterance'">
+	   		AND utterance like concat('%', #{search}, '%')
+	    </if>
+	    <if test="search_type == 'intent_title'">
+	   		AND intent_title like concat('%', #{search}, '%')
+	    </if>
+	    <if test="search_type == 'name'">
+	   		AND name like concat('%', #{search}, '%')
+	    </if>
+	</sql>
+	
 	<select id="getChatbotStatsList" resultType="egovframework.com.chatbot.vo.ChatbotStatsVo">
 		  SELECT a.kakaochannel_key, a.utterance, a.intent_id, a.intent_title, a.module, a.create_date, b.name 
 		  FROM daul.chatbot_log a
           LEFT JOIN user b
           ON a.kakaochannel_key = b.kakaochannel_key
           WHERE 1=1
-            <if test="search_type == 'utterance'">
-		   		AND utterance like concat('%', #{search}, '%')
-		   </if>
-		   <if test="search_type == 'intent_title'">
-		   		AND intent_title like concat('%', #{search}, '%')
-		   </if>
-		   <if test="search_type == 'name'">
-		   		AND name like concat('%', #{search}, '%')
-		   </if>
-		   <if test="search_s_date != null and search_s_date != ''">
+            <include refid="whereByChatbotStats"/>
+		    <if test="search_s_date != null and search_s_date != ''">
 			   <![CDATA[
 			   AND create_date >= date_format(concat(#{search_s_date}, ' 00:00:00'), '%Y-%m-%d %H:%i:%s')
 			   ]]>
-		   </if>
-		   <if test="search_e_date != null and search_e_date != ''">
+		    </if>
+		    <if test="search_e_date != null and search_e_date != ''">
 			   <![CDATA[
 			   AND create_date <= date_format(concat(#{search_e_date}, ' 23:59:59'), '%Y-%m-%d %H:%i:%s')
 			   ]]>
-		   </if>
+		    </if>
 		  ORDER BY a.create_date DESC
 	</select>
 	
 	<select id = "getChatbotStatsCount" resultType="egovframework.com.chatbot.vo.ChatbotStatsVo">
-		SELECT c.date, c.total_count, b.success_count, a.fail_count FROM (
+		SELECT a.date
+		     , IFNULL(cl.total_dialog_cnt, 0)	AS success_count
+		     , IFNULL(cl.total_nonRes_cnt, 0)	AS fail_count
+		     , IFNULL(cl.total_cnt, 0)			AS total_count
+		  FROM (
+		  		SELECT a.date 
+				  FROM (
+				    	SELECT CURDATE() - INTERVAL (a.a + (10 * b.a) + (100 * c.a) + (1000 * d.a) ) DAY as date
+					      FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS a
+				    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS b
+				    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS c
+				    CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS d
+					   ) a
+				 WHERE a.date BETWEEN #{search_s_date} AND #{search_e_date}
+				 ORDER BY a.date
+		  	   ) a
+		  LEFT JOIN (
+		  			 SELECT create_date
+					      , sum(dialogCnt)		AS total_dialog_cnt
+					      , sum(nonResCnt)		AS total_nonRes_cnt
+					      , COUNT(*)			AS total_cnt
+					   FROM (
+					  		 SELECT idx
+							      , intent_title
+							      , utterance
+							      , name
+							      , module
+							      , DATE_FORMAT(create_date, '%Y-%m-%d') 						AS create_date
+							      , CASE WHEN module = 'DialogAdapter' THEN 1 ELSE 0 END 		AS dialogCnt
+							      , CASE WHEN module = 'NonResponseAdapter' THEN 1 ELSE 0 END 	AS nonResCnt
+							   FROM daul.chatbot_log a
+							   LEFT JOIN user b ON a.kakaochannel_key = b.kakaochannel_key
+							  ORDER BY create_date DESC, module
+					  	    ) a
+					  WHERE 1=1
+					  <include refid="whereByChatbotStats"/>
+					  GROUP BY a.create_date
+		  			) cl ON a.date = cl.create_date
+		<!-- SELECT c.date, c.total_count, b.success_count, a.fail_count FROM (
 		(
 				SELECT a.date, count(cl.module) AS total_count FROM (  
 					(
@@ -806,7 +848,7 @@
 			) a
 			on b.date = a.date
 		)
-		ORDER BY date
+		ORDER BY date -->
 	</select>
 	
 	

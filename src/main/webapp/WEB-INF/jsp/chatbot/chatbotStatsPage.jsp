@@ -157,7 +157,7 @@
 
 <script type="text/javascript">
 	function setChart(data) {
-			console.log("data = " + data);
+		console.log("data = ", data);
 		var labels_arr = [];
 		var total_arr = [];
 		var success_arr = [];
@@ -261,12 +261,10 @@
 		});
 	}
 
-	var today = today();
-	var preday = lastWeek();
 	
 	$(function() {
-		$("input[name='search_s_date']").val(preday);
-		$("input[name='search_e_date']").val(today);
+		$("input[name='search_s_date']").val(lastWeek());
+		$("input[name='search_e_date']").val(today());
 		getChatbotStatsList();
 	});
 

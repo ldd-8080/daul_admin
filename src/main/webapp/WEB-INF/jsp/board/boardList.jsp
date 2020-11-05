@@ -91,8 +91,6 @@
 <!-- End Page -->
 </div>
 <script type="text/javascript">
-	var today = today();
-	var preday = lastMonth(3);
 function setBoardListTable(BoardList) {
 	$('#boardListTable').jsGrid({
 	    //height: "500px",
@@ -156,8 +154,8 @@ function setBoardListTable(BoardList) {
 	
 	$(function() {
 
-		$("input[name='search_s_date']").val(preday);
-		$("input[name='search_e_date']").val(today);
+		$("input[name='search_s_date']").val(lasMonth(3));
+		$("input[name='search_e_date']").val(today());
 		getBoardList();
 	});
 	

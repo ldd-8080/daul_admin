@@ -86,9 +86,6 @@
 	</div>
 </div>
 <script type="text/javascript">
-	var today = today();
-	var preday = lastMonth(3);
-
 	function setSgstListTable(sgstList) {
 		$('#sgstListTable').jsGrid({
 		    //height: "500px",
@@ -157,8 +154,8 @@
 	
 	$(function() {
 	
-		$("input[name='search_s_date']").val(preday);
-		$("input[name='search_e_date']").val(today);
+		$("input[name='search_s_date']").val(lastMonth());
+		$("input[name='search_e_date']").val(today());
 		getSuggestionList();
 	});
 	
