@@ -85,6 +85,9 @@
 	</div>
 </div>
 <script type="text/javascript">
+	var today = today();
+	var preday = lastMonth(3);
+
 	function setContestListTable(ContestList) {
 		$('#contestListTable').jsGrid(
 				{
@@ -145,9 +148,7 @@
 	}
 
 	$(function() {
-		var today = today();
-		var preday = lastMonth(3);
-		console.log(today);
+
 		$("input[name='search_s_date']").val(preday);
 		$("input[name='search_e_date']").val(today);
 		getcontestList();

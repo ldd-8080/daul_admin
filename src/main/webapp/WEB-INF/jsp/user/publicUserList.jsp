@@ -88,7 +88,8 @@
 <!-- End Page -->
 </div>
 <script type="text/javascript">
-	
+	var today = today();
+	var preday = lastMonth(3);
 	
 	$("#publicUserCreate").click(function() {
 		location.href = "${pageContext.request.contextPath}/user/userRegistPage.do?auth_type=public";
@@ -164,8 +165,6 @@
 	}
 
 	$(function() {
-		var today = today();
-		var preday = lastMonth(3);
 		$("input[name='search_s_date']").val(preday);
 		$("input[name='search_e_date']").val(today);
 		getUserList();

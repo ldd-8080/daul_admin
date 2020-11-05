@@ -33,6 +33,7 @@ public class NotificationController {
 		List<NotificationVo> sgstNotiList = new ArrayList<>();
 		List<NotificationVo> surveyNotiList = new ArrayList<>();
 		List<NotificationVo> contestNotiList = new ArrayList<>();
+		List<NotificationVo> userNotiList = new ArrayList<>();
 		
 		try {
 			log.debug("[알림톡] 알림톡 목록 조회");
@@ -47,6 +48,8 @@ public class NotificationController {
 					surveyNotiList.add(vo);
 				} else if (vo.getAction_id().indexOf("CT") > -1) {
 					contestNotiList.add(vo);
+				}else if (vo.getAction_id().indexOf("U") > -1) {
+					userNotiList.add(vo);
 				}
 			}
 		} catch (Exception e) {
@@ -58,6 +61,7 @@ public class NotificationController {
 		model.addAttribute("sgstNotiList", sgstNotiList);
 		model.addAttribute("surveyNotiList", surveyNotiList);
 		model.addAttribute("contestNotiList", contestNotiList);
+		model.addAttribute("userNotiList", userNotiList);
 		
 		return "notification/notificationTalkPage";
 	}
