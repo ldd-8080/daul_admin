@@ -247,18 +247,18 @@
 	</insert>
 	
 	<select id="selectSuggestionOpinionList" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">
-		SELECT * FROM (
-			SELECT @rownum:=@rownum+1 AS num
-					 , so.*
+		SELECT @rownum:=@rownum+1	AS num, sub.* FROM (
+			SELECT  so.*
 				     , u.auth_type 
 				  FROM daul.suggestion_opinion so
 				  LEFT JOIN daul.user u ON so.create_user = u.user_id 
 				  INNER JOIN (SELECT @rownum:=0) TMP
 				 WHERE so.suggestion_idx = #{suggestion_idx}
-				 ORDER BY so.suggestion_ref
-				        , so.suggestion_step desc
+				 ORDER BY so.suggestion_ref ASC
+				        , so.suggestion_indent DESC
+				        , create_date ASC
 		) sub
-		order by sub.num desc
+		ORDER BY num DESC
 	</select>
 	
 	<select id="selectParentSuggestionOpinion" resultType="egovframework.com.suggestion.vo.SuggestionOpinionVo">

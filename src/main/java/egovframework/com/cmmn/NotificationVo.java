@@ -40,6 +40,11 @@ public class NotificationVo {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	@Override
+	public String toString() {
+		return "NotificationVo [user_id=" + user_id + ", name=" + name + ", phone=" + phone + ", action_id=" + action_id
+				+ ", talk_chk=" + talk_chk + "]";
+	}
 	
 	
 

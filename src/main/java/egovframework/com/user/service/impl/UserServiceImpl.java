@@ -71,7 +71,7 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 	}
 
 	@Override
-	public NotificationVo getNotificationVo(SuggestionOpinionVo vo) throws Exception {
+	public NotificationVo getNotificationVo(UserVo vo) throws Exception {
 		return userMapper.getNotificationVo(vo);
 	}
 

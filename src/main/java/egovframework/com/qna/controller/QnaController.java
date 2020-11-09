@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import egovframework.com.cmmn.CallNotificationTalkAPI;
+import egovframework.com.cmmn.NotificationVo;
 import egovframework.com.cmmn.util.CmmnUtil;
 import egovframework.com.qna.service.QnaService;
 import egovframework.com.qna.vo.QnaVo;
+import egovframework.com.user.service.UserService;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -34,6 +37,12 @@ public class QnaController {
 	
 	@Resource(name = "cmmnUtil")
 	private CmmnUtil cmmnUtil;
+
+	@Resource(name="userService")
+	private UserService userService;
+
+	@Resource(name="callNotificationTalkAPI")
+	private CallNotificationTalkAPI callNotificationTalkAPI;
 	
 	@RequestMapping(value="/getQnaList.do", method = RequestMethod.GET)
 	public ResponseEntity<?> qnaList(ModelMap model, QnaVo vo) throws Exception{
@@ -58,6 +67,9 @@ public class QnaController {
 		try {
 			QnaValidator qnaValidator = new QnaValidator();
 			qnaValidator.validate(vo, bindingResult);
+			NotificationVo notificationVo = new NotificationVo();
+			notificationVo.setAction_id("QARP01");
+			
 			
 			if(bindingResult.hasErrors()) {
 				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
@@ -71,6 +83,29 @@ public class QnaController {
 		    vo.setQna_idx(qnaReplyIdx);
 		    
 		    qnaService.insertQnaReply(vo);
+		    
+		  //사용자 및 알람톡ON-OFF여부 확인 
+		    userVo.setReg_user(vo.getAuth_user());
+		    System.out.println(userVo.getReg_user());
+		    
+			String user_noti_yn = userService.getUserNotificationYN(userVo);
+			String action_noti_yn = userService.getActionYN(notificationVo);
+			
+			if(user_noti_yn.equals("Y") && action_noti_yn.equals("Y")) {
+				
+				//의견등록한 원글의 작성자 이름이랑 번호 가져오기 
+				notificationVo = userService.getNotificationVo(userVo);
+				notificationVo.setAction_id("QARP01");
+				
+				
+				//notificationVo.setName(vo.getName());
+				//notificationVo.setPhone(vo.getPhone());
+				callNotificationTalkAPI.CallAPI(notificationVo);
+				
+			}else {
+				System.out.println("발송안함");
+			}
+			
 			
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}catch(Exception e) {

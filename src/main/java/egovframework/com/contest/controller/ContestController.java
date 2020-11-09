@@ -25,6 +25,7 @@ import egovframework.com.cmmn.util.FileVo;
 import egovframework.com.contest.service.ContestService;
 import egovframework.com.contest.vo.ContestOpinionVo;
 import egovframework.com.contest.vo.ContestVo;
+import egovframework.com.mileage.service.MileageService;
 import egovframework.com.user.vo.UserVo;
 
 @Controller
@@ -41,6 +42,9 @@ public class ContestController {
 	@Resource(name = "cmmnUtil")
 	private CmmnUtil cmmnUtil;
 
+	@Resource(name="mileageService")
+	private MileageService mileageService;
+	
 	@RequestMapping(value = "/contestListPage.do")
 	public String suggestionListPage() {
 		
@@ -167,6 +171,8 @@ public class ContestController {
 		vo.setUser_contest_idx(user_contest_idx);
 		contestService.deleteContestOpinion(vo);
 		
+
+		mileageService.deleteMileage(vo.getUser_contest_idx());
 		
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
