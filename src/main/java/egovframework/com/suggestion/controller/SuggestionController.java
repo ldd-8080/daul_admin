@@ -326,6 +326,7 @@ public class SuggestionController {
 					//의견등록한 원글의 작성자 이름이랑 번호 가져오기 
 					notificationVo = userService.getNotificationVo(vo);
 					notificationVo.setAction_id("SGOP01");
+					notificationVo.setCreate_user(vo.getCreate_user());
 					
 					
 					//notificationVo.setName(vo.getName());

@@ -31,4 +31,6 @@ public interface UserService {
 	NotificationVo getNotificationVo(UserVo vo) throws Exception;
 	
 	String getTmpNum(String action_id) throws Exception;
+	
+	String getAuth(NotificationVo vo) throws Exception;
 }

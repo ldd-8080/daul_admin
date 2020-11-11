@@ -48,7 +48,7 @@ public class NotificationController {
 					surveyNotiList.add(vo);
 				} else if (vo.getAction_id().indexOf("CT") > -1) {
 					contestNotiList.add(vo);
-				}else if (vo.getAction_id().indexOf("U") > -1) {
+				}else if (vo.getAction_id().indexOf("U") > -1 || vo.getAction_id().indexOf("QA") > -1) {
 					userNotiList.add(vo);
 				}
 			}

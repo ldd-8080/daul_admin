@@ -170,6 +170,9 @@ public class CallNotificationTalkAPI {
 			kakao_080 = "Y";
 			tran_replace_type = "S";
 			
+			kakao_add1 = userService.getAuth(vo);
+			System.out.println("kakao_add1(권한) = " + kakao_add1);
+			
 			paramJson += "{ " +
 						" \"tmp_number\": \""+tmp_number+"\", "+
 						" \"kakao_res\": \""+kakao_res+"\", " +
@@ -177,7 +180,7 @@ public class CallNotificationTalkAPI {
 						" \"kakao_sender\": \""+ kakao_sender +"\", " +
 						" \"kakao_name\": \""+ kakao_name +"\", " +
 						" \"kakao_phone\": \""+ kakao_phone +"\", " +
-						" \"kakao_add1\": \"\", " +
+						" \"kakao_add1\": \"" + kakao_add1 + "\", " +
 						" \"kakao_add2\": \"\", " +
 						" \"kakao_add3\": \"\", " +
 						" \"kakao_add4\": \"\", " +

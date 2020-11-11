@@ -80,4 +80,9 @@ public class UserServiceImpl  extends EgovAbstractServiceImpl implements UserSer
 		return userMapper.getTmpNum(action_id);
 	}
 
+	@Override
+	public String getAuth(NotificationVo vo) throws Exception {
+		return userMapper.getAuth(vo);
+	}
+
 }
