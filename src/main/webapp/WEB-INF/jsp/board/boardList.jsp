@@ -154,7 +154,7 @@ function setBoardListTable(BoardList) {
 	
 	$(function() {
 
-		$("input[name='search_s_date']").val(lasMonth(3));
+		$("input[name='search_s_date']").val(lastMonth(3));
 		$("input[name='search_e_date']").val(today());
 		getBoardList();
 	});
