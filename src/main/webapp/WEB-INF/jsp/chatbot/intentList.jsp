@@ -938,7 +938,8 @@ function initialize_jstree(){
       width: 400,
       animation:'fade',
       backdrop:true,
-      closeable: true
+      closeable: true,
+      dismissible: false
     };
     
     var observer = new MutationObserver(function(mutations) {
