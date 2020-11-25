@@ -29,7 +29,9 @@ public interface UserMapper {
 	
 	String getActionYN(NotificationVo vo) throws Exception;
 
-	NotificationVo getNotificationVo(SuggestionOpinionVo vo) throws Exception;
+	NotificationVo getNotificationVo(UserVo vo) throws Exception;
 	
 	String getTmpNum(String action_id) throws Exception;
+
+	String getAuth(NotificationVo vo) throws Exception;
 }

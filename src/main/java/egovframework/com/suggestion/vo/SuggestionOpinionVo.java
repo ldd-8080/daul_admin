@@ -21,6 +21,12 @@ public class SuggestionOpinionVo extends UserVo{
 
 	private String reg_user;
 	
+	public String getReg_user() {
+		return reg_user;
+	}
+	public void setReg_user(String reg_user) {
+		this.reg_user = reg_user;
+	}
 	public String getOpinion_idx() {
 		return opinion_idx;
 	}

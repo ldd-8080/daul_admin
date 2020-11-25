@@ -315,17 +315,18 @@ public class SuggestionController {
 				log.debug("[열린제안] 열린제안 댓글 등록");
 				suggestionService.insertSuggestionOpinion(vo);
 				
+				System.out.println("SuggestionOpinionVo = " + vo);
+				System.out.println("notificationVo = " + notificationVo);
 				//사용자 및 알람톡ON-OFF여부 확인 
 				String user_noti_yn = userService.getUserNotificationYN(vo);
 				String action_noti_yn = userService.getActionYN(notificationVo);
 				
 				if(user_noti_yn.equals("Y") && action_noti_yn.equals("Y")) {
-					System.out.println("user_noti_yn = " + user_noti_yn);
-					System.out.println("action_noti_yn = " + action_noti_yn);
 					
 					//의견등록한 원글의 작성자 이름이랑 번호 가져오기 
 					notificationVo = userService.getNotificationVo(vo);
 					notificationVo.setAction_id("SGOP01");
+					notificationVo.setCreate_user(vo.getCreate_user());
 					
 					
 					//notificationVo.setName(vo.getName());
@@ -333,8 +334,7 @@ public class SuggestionController {
 					callNotificationTalkAPI.CallAPI(notificationVo);
 					
 				}else {
-					System.out.println("user_noti_yn222 = " + user_noti_yn);
-					System.out.println("action_noti_yn222 = " + action_noti_yn);
+					System.out.println("발송안함");
 				}
 				
 			}

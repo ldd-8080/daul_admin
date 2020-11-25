@@ -390,7 +390,6 @@
 								if (args.event.target.tagName == "BUTTON") {
 									document.getElementById("qna_idx_reply").value = args.item.qna_idx;
 									document.getElementById("ref_reply").value = args.item.qna_idx;
-									
 									document.getElementById("question_content").value = args.item.content;
 									document.getElementById("detail_qustion").value = args.item.question;
 									document.getElementById("detail_content").value = args.item.content;

@@ -170,6 +170,50 @@ public class CallNotificationTalkAPI {
 			kakao_080 = "Y";
 			tran_replace_type = "S";
 			
+			kakao_add1 = userService.getAuth(vo);
+			System.out.println("kakao_add1(권한) = " + kakao_add1);
+			
+			paramJson += "{ " +
+						" \"tmp_number\": \""+tmp_number+"\", "+
+						" \"kakao_res\": \""+kakao_res+"\", " +
+						" \"kakao_url\": "+ kakao_url+", " +
+						" \"kakao_sender\": \""+ kakao_sender +"\", " +
+						" \"kakao_name\": \""+ kakao_name +"\", " +
+						" \"kakao_phone\": \""+ kakao_phone +"\", " +
+						" \"kakao_add1\": \"" + kakao_add1 + "\", " +
+						" \"kakao_add2\": \"\", " +
+						" \"kakao_add3\": \"\", " +
+						" \"kakao_add4\": \"\", " +
+						" \"kakao_add5\": \"\", " +
+						" \"kakao_add6\": \"\", " +
+						" \"kakao_add7\": \"\", " +
+						" \"kakao_add8\": \"\", " +
+						" \"kakao_add9\": \"\", " +
+						" \"kakao_add10\": \"\", " +
+						" \"kakao_080\": \""+kakao_080+"\", " +
+						" \"kakao_url1_1\": null, " +
+						" \"kakao_url1_2\": null, " +
+						" \"kakao_url2_1\": null, " +
+						" \"kakao_url2_2\": null, " +
+						" \"kakao_url3_1\": null, " +
+						" \"kakao_url3_2\": null, " +
+						" \"kakao_url4_1\": null, " +
+						" \"kakao_url4_2\": null, " +
+						" \"kakao_url5_1\": null, " +
+						" \"kakao_url5_2\": null, " +
+						" \"TRAN_REPLACE_TYPE\": \""+tran_replace_type+"\" " +
+						" }";
+		}else if(action_id.equals("QARP01")) {
+			tmp_number = userService.getTmpNum(action_id);
+			kakao_res = "N";
+			kakao_url = "null";
+			kakao_sender = "01082980345";
+			kakao_name = vo.getName();
+			kakao_phone = vo.getPhone();
+			
+			kakao_080 = "Y";
+			tran_replace_type = "S";
+			
 			paramJson += "{ " +
 						" \"tmp_number\": \""+tmp_number+"\", "+
 						" \"kakao_res\": \""+kakao_res+"\", " +

@@ -71,21 +71,21 @@ public class FaqController {
 			if(bindingResult.hasErrors()) {
 				return new ResponseEntity<>(cmmnUtil.getValid(bindingResult), HttpStatus.OK);
 			}
+		
+			if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
+			   throw new Exception(); 
+			}
+			vo.setAnswer(vo.getAnswer().replace("&lt;", "<").replace("&gt;", ">"));
 			
-	       if((vo.getQuestion().equals(null)||vo.getQuestion().equals("")) || (vo.getAnswer().equals(null)||vo.getAnswer().equals("")) ) {
-	    	   throw new Exception(); 
-	       }
-	       vo.setAnswer(vo.getAnswer().replace("&lt;", "<").replace("&gt;", ">"));
-	       
-		   UserVo userVo = (UserVo) session.getAttribute("login");
-	       String sessionUser = userVo.getUser_id();
-	       vo.setCreate_user(sessionUser);
-	       vo.setUpdate_user(sessionUser);
-	       
-	       String faqIdx = CmmnUtil.generateKeyWithPrefix("FQ");
-	       vo.setFaq_idx(faqIdx);
-	       
-	       faqService.insertFaq(vo);
+			UserVo userVo = (UserVo) session.getAttribute("login");
+			String sessionUser = userVo.getUser_id();
+			vo.setCreate_user(sessionUser);
+			vo.setUpdate_user(sessionUser);
+			
+			String faqIdx = CmmnUtil.generateKeyWithPrefix("FQ");
+			vo.setFaq_idx(faqIdx);
+			
+			faqService.insertFaq(vo);
 			
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		}catch(Exception e) {

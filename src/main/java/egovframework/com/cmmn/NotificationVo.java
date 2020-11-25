@@ -6,10 +6,19 @@ public class NotificationVo {
 	private String phone;
 	private String action_id;
 	private String talk_chk;
+	private String create_user;
 	
 	
 	
 	
+	
+	
+	public String getCreate_user() {
+		return create_user;
+	}
+	public void setCreate_user(String create_user) {
+		this.create_user = create_user;
+	}
 	public String getTalk_chk() {
 		return talk_chk;
 	}
@@ -39,6 +48,11 @@ public class NotificationVo {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	@Override
+	public String toString() {
+		return "NotificationVo [user_id=" + user_id + ", name=" + name + ", phone=" + phone + ", action_id=" + action_id
+				+ ", talk_chk=" + talk_chk + "]";
 	}
 	
 	

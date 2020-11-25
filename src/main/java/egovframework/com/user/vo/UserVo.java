@@ -24,9 +24,18 @@ public class UserVo  extends SearchVo{
 	private int participation_cnt;
 	private int opinion_cnt;
 	
+	private String reg_user;
 	
 	
 	
+	public String getReg_user() {
+		return reg_user;
+	}
+
+	public void setReg_user(String reg_user) {
+		this.reg_user = reg_user;
+	}
+
 	public int getContest_cnt() {
 		return contest_cnt;
 	}

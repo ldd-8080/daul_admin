@@ -154,7 +154,7 @@
 	
 	$(function() {
 	
-		$("input[name='search_s_date']").val(lastMonth());
+		$("input[name='search_s_date']").val(lastMonth(3));
 		$("input[name='search_e_date']").val(today());
 		getSuggestionList();
 	});
