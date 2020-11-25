@@ -878,7 +878,8 @@ function initialize_jstree(){
       	width: 400,
       	animation:'fade',
       	backdrop:true,
-      	closeable: true
+      	closeable: true,
+	      dismissible: false
     };
     
     var popEditBtnHeader = $('#popoverEditBtnHeader').html()
@@ -890,7 +891,8 @@ function initialize_jstree(){
       width: 400,
       animation:'fade',
       backdrop:true,
-      closeable: true
+      closeable: true,
+      dismissible: false
     };
     
     var popEditImgHeader = $('#popoverEditImgHeader').html()
@@ -902,7 +904,8 @@ function initialize_jstree(){
       width: 400,
       animation:'fade',
       backdrop:true,
-      closeable: true
+      closeable: true,
+      dismissible: false
     };
     
     var popEditTitleTextHeader = $('#popoverEditTitleTextHeader').html()
@@ -914,7 +917,8 @@ function initialize_jstree(){
       width: 400,
       animation:'fade',
       backdrop:true,
-      closeable: true
+      closeable: true,
+      dismissible: false
     };
     
     var popEditListTitleHeader = $('#popoverListTitleHeader').html()
@@ -926,7 +930,8 @@ function initialize_jstree(){
       width: 400,
       animation:'fade',
       backdrop:true,
-      closeable: true
+      closeable: true,
+      dismissible: false
     };
 
     var popoverListItemHeader = $('#popoverListItemHeader').html()
