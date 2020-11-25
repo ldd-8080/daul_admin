@@ -803,9 +803,16 @@
                         var popY1 = offset.top;
                         var popX2 = offset.left + pop.getTarget().width();
                         var popY2 = offset.top + pop.getTarget().height();
+//                        var pt = pointerEventToXY(e);
+//                        var inPop = pt.x >= popX1 && pt.x <= popX2 && pt.y >= popY1 && pt.y <= popY2;
+//                        if (inPop) {
+//                            canHide = false;
+//                            break;
+//                        }
                         var pt = pointerEventToXY(e);
                         var inPop = pt.x >= popX1 && pt.x <= popX2 && pt.y >= popY1 && pt.y <= popY2;
-                        if (inPop) {
+  
+                        if (inPop || ((pt.x === 0 && pt.y === 0) || event.target.nodeName === 'OPTION')) {
                             canHide = false;
                             break;
                         }
