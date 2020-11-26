@@ -62,8 +62,8 @@
 		});
 	}
 
-	$("#user_id").val("admin");
-	$("#pw").val("Ekdhf123!");
+	//$("#user_id").val("admin");
+	//$("#pw").val("Ekdhf123!");
 
-	$("#login-btn").trigger("click");
+	//$("#login-btn").trigger("click");
 </script>

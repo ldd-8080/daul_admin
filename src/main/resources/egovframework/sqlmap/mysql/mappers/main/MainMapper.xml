@@ -19,16 +19,16 @@
 				(SELECT COUNT(*) AS contestCount FROM contest_user) g,
 				<![CDATA[(SELECT COUNT(*) AS daysContestCount FROM contest_user WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) h,]]>
 				(SELECT COUNT(*) AS opinionCount FROM (
-													   SELECT opinion_idx FROM suggestion_opinion 
+													   SELECT opinion_idx FROM suggestion_opinion WHERE del_chk != 'Y' 
 													   UNION 
-													   SELECT opinion_idx FROM survey_opinion
+													   SELECT opinion_idx FROM survey_opinion WHERE del_chk != 'Y'
 													  ) oc
 				) i,
 				(SELECT COUNT(*) AS daysOpinionCount FROM (
 														   <![CDATA[
-														   SELECT opinion_idx FROM suggestion_opinion WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY) 
+														   SELECT opinion_idx FROM suggestion_opinion WHERE del_chk != 'Y' AND create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY) 
 														   UNION
-														   SELECT  opinion_idx FROM survey_opinion WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)
+														   SELECT  opinion_idx FROM survey_opinion WHERE del_chk != 'Y' AND create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)
 														   ]]>
 														  ) 7oc
 				) j,
