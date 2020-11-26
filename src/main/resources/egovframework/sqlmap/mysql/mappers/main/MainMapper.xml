@@ -11,11 +11,11 @@
 		SELECT * 
 		  FROM (
 		  		(SELECT COUNT(*) AS memberCount FROM user) a,
-				<![CDATA[(SELECT COUNT(*) AS daysMemberCount FROM user where reg_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) b,]]>
-				(SELECT COUNT(*) AS suggestionCount FROM suggestion_main) c,
-				<![CDATA[(SELECT COUNT(*) AS daysSuggestionCount FROM suggestion_main  where create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) d,]]>
+				<![CDATA[(SELECT COUNT(*) AS daysMemberCount FROM user WHERE reg_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) b,]]>
+				(SELECT COUNT(*) AS suggestionCount FROM suggestion_main WHERE del_chk != 'Y') c,
+				<![CDATA[(SELECT COUNT(*) AS daysSuggestionCount FROM suggestion_main WHERE del_chk != 'Y' AND create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) d,]]>
 				(SELECT COUNT(*) AS surveyCount FROM survey_participation) e,
-				<![CDATA[(SELECT COUNT(*) AS daysSurveyCount FROM survey_participation  where create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) f,]]>
+				<![CDATA[(SELECT COUNT(*) AS daysSurveyCount FROM survey_participation WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) f,]]>
 				(SELECT COUNT(*) AS contestCount FROM contest_user) g,
 				<![CDATA[(SELECT COUNT(*) AS daysContestCount FROM contest_user WHERE create_date >= DATE_ADD(NOW(), INTERVAL -7 DAY)) h,]]>
 				(SELECT COUNT(*) AS opinionCount FROM (
