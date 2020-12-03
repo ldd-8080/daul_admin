@@ -60,7 +60,9 @@
 								<div class="col-md-8">
 									<form:textarea name="content" style="display: none;" path="content" />
 									<div id="summernote"></div>
+									<p style="color:red;">*내용 입력중 '(작은따옴) 대신 다른 기호로 대체하여 사용해주시기 바랍니다.</p>
 								</div>
+								
 							</div>
 
 							<div class="form-gorup row mb-20">
@@ -109,7 +111,7 @@
 		$('#summernote').summernote({
 			minHeight: 300,   // set minimum height of editor
 			lang: 'ko-KR', // default: 'en-US'				// 한글 설정
-			placeholder: '최대 2000자까지 쓸 수 있습니다',	//placeholder 설정
+			placeholder: '최대 2000자까지 쓸 수 있습니다. ',	//placeholder 설정
 			callbacks: {	//여기 부분이 이미지를 첨부하는 부분
 				onImageUpload : function(files) {
 					uploadSummernoteImageFile(files[0],this)
