@@ -50,7 +50,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title" />
+									<form:input type="text" class="form-control" path="title" id="title" />
 									<form:errors style="color:red;" path="title" />
 								</div>
 							</div>
@@ -177,6 +177,13 @@
 	});
 
 	$("#boardRegistBtn").click(function() {
+		
+		if(document.getElementById('title').value == ""){
+			alert("제목은 필수값 입니다.");
+			return false;
+		}
+		
+		
 		if (!submitConfirm($(this)))
 			return false;
 
@@ -203,4 +210,7 @@
 			$("#imgFileNameList").append(str);
 		}
 	}
+	
+	
+	
 </script>
