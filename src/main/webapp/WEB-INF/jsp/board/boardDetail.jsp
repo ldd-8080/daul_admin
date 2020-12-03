@@ -46,7 +46,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title" />
+									<form:input type="text" class="form-control" path="title" id="title" />
 									<form:errors path="title" />
 									<span class="text-left" style="color: red;" id="chk-error-title"></span>
 								</div>
@@ -57,6 +57,7 @@
 								<div class="col-md-8">
 									<form:textarea name="content" style="display: none;" path="content" />
 									<div id="summernote"></div>
+									<p style="color:red;">*내용 입력중 '(작은따옴) 대신 다른 기호로 대체하여 사용해주시기 바랍니다.</p>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -132,6 +133,12 @@
 	});
   
 	$("#noticeModifyBtn").click(function() {
+		
+		if(document.getElementById('title').value == ""){
+			alert("제목은 필수값 입니다.");
+			return false;
+		}
+		
 		if (!submitConfirm($(this))) return false;
 		
 		$('textarea[name="content"]').val($('#summernote').summernote('code'));
