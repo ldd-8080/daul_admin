@@ -20,9 +20,9 @@ public class BoardValidator implements Validator{
 		String title = boardVo.getTitle();
 		String content = boardVo.getContent();
 		
-		if(title == null || title.trim().isEmpty()) {
-			errors.rejectValue("title","title","이 항목은 필수값 입니다.");			
-		}
+//		if(title == null || title.trim().isEmpty()) {
+//			errors.rejectValue("title","title","이 항목은 필수값 입니다.");			
+//		}
 		if(content == null || content.trim().isEmpty()) {
 			errors.rejectValue("content","content","이 항목은 필수값 입니다.");
 		}
