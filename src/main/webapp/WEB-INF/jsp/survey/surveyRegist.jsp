@@ -33,7 +33,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">제목 </label>
 								<div class="col-md-8">
-									<form:input type="text" class="form-control" path="title" maxlength="100" />
+									<form:input type="text" class="form-control" path="title" maxlength="100" id="title"/>
 									<form:errors style="color:red;" path="title" />
 								</div>
 							</div>
@@ -41,7 +41,7 @@
 								<div class="col-md-1"></div>
 								<label class="col-md-2 col-form-label">설명 </label>
 								<div class="col-md-8">
-									<form:textarea type="text" class="form-control" path="content" rows="5" />
+									<form:textarea type="text" class="form-control" path="content" rows="5" id="content" />
 									<form:errors style="color:red;" path="content" />
 								</div>
 							</div>
@@ -63,14 +63,14 @@
 													<i class="icon md-calendar" aria-hidden="true"></i>
 												</span>
 											</div>
-											<form:input type="text" class="form-control" path="s_date" />
+											<form:input type="text" class="form-control" path="s_date" id="s_date"/>
 											<form:errors style="color:red;" path="s_date" />
 										</div>
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text"> &nbsp;_&nbsp;</span>
 											</div>
-											<form:input type="text" class="form-control" path="e_date" />
+											<form:input type="text" class="form-control" path="e_date" id="e_date" />
 
 										</div>
 									</div>
@@ -119,6 +119,32 @@
 
 		var rep_img = $("#input-file-now-custom-1").val();
 
+		var title = document.getElementById('title').value;
+		var content = document.getElementById('content').value;
+		var s_date = document.getElementById('s_date').value;
+		var e_date = document.getElementById('e_date').value;
+
+		if(title == ""){
+			alert("제목은 필수값 입니다.");
+			return false;
+		}
+		
+		if(content == ""){
+			alert("설명은 필수값 입니다.");
+			return false;
+		}
+		
+		if(s_date == ""){
+			alert("설문시작일은 필수값 입니다.");
+			return false;
+		}
+		
+		if(e_date == ""){
+			alert("설문종료일은 필수값 입니다.");
+			return false;
+		}
+		
+		
 		if ($("#survey-list").children("div").length < 1) {
 			alert("설문 목록을 1개 이상 추가해 주세요.");
 			return false;
